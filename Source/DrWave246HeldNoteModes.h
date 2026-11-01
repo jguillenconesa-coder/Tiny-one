@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
-#include "Envelope246Transition.h"
+#include "Adsr246Pool.h"
 #include "Voice246Activation.h"
 #include "Voice246NoteArgument.h"
 #include "Voice246PolyRelease.h"
@@ -12,13 +12,14 @@ struct DrWave246HeldNoteModesResult {
     unsigned voices=0;
 };
 // Bounded 0x01a84604 caller: NONEMPTY list, selectors 1..3, outer mode zero,
-// six initialized ADSR states, Dr. Wave Core and absent auxiliary modules.
+// Dr. Wave Core and absent auxiliary modules. Pool ready by default, or
+// original lazy access through the optional ready word.
 // No empty-list branch, renderer or consumer of the pending ADSR fields.
 // Guards and result labels are adapter policy, not original void returns/asserts.
 inline DrWave246HeldNoteModesResult drWave246HeldNoteModes(
         Voice246Registers& registers,std::array<Adsr246State,6>& envelopes,
         Voice246ReleaseList& list,const Voice246NoteArgument& argument,
-        uint8_t gate,int16_t selectorWord,int32_t tuning,uint32_t& random) noexcept {
+        uint8_t gate,int16_t selectorWord,int32_t tuning,uint32_t& random,uint32_t* ready=nullptr) noexcept {
     using S=DrWave246HeldNoteModesStatus;
     if(list.count==0||list.count>128)return {};
     if(gate)return {S::gated,0};
@@ -43,9 +44,10 @@ inline DrWave246HeldNoteModesResult drWave246HeldNoteModes(
         const auto pitch=saturate32(int64_t(base)+multiplyQ31(base,deviation));
         if(selector==2)registers.pitch[v]=pitch;
         else {
-            adsr246RequestRestart(envelopes[v],uint32_t(pitch),uint16_t(velocity));
+            auto& env=adsr246Access(envelopes,v,ready);
+            adsr246RequestRestart(env,uint32_t(pitch),uint16_t(velocity));
             const auto gain=note==0?32767u:32768u-note*128u;
-            envelopes[v].gain=(envelopes[v].gain&0xffff0000u)|gain;
+            env.gain=(env.gain&0xffff0000u)|gain;
             // Original auxiliary dispatch returns without callbacks here.
         }
         registers.velocity[v]=velocity;

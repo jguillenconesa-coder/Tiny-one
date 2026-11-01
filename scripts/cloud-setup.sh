@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Workspace-local dependencies for the read-only Codex Debian 13 machine.
 set -euo pipefail
-cd /workspace/OP-1
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
 if [[ ! -x /workspace/.op1-tools/bin/cmake ]]; then
   python3 -m pip install --target /workspace/.op1-tools cmake==4.4.4
 fi

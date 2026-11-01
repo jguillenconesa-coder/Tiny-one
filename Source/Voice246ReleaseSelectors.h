@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
 #include "Voice246PolyRelease.h"
+#include "Adsr246Pool.h"
 #include "Voice246NoteTable.h"
 namespace pocket::reference {
 // Remaining bounded selectors of VoiceCtl 0x01a85058; initialized Dr. Wave
 // objects have a preserving Core release callback. Tuning and schedule explicit.
 inline Voice246ReleaseResult voice246ReleaseSelectors(Voice246ReleaseList& list,
         uint32_t note,int16_t modeWord,std::array<Adsr246State,6>& envelopes,
-        int16_t sustain,int32_t tuning,std::array<int32_t,6>& pitch,uint32_t& random) noexcept {
+        int16_t sustain,int32_t tuning,std::array<int32_t,6>& pitch,uint32_t& random,uint32_t* ready=nullptr) noexcept {
     const int mode=int(floorDivide(modeWord,4096));
     const auto word=[&](size_t p){return uint32_t(list.bytes[p])|(uint32_t(list.bytes[p+1])<<8)|
         (uint32_t(list.bytes[p+2])<<16)|(uint32_t(list.bytes[p+3])<<24);};
@@ -24,7 +25,7 @@ inline Voice246ReleaseResult voice246ReleaseSelectors(Voice246ReleaseList& list,
     --list.count;
     if(!lastMatches)return Voice246ReleaseResult::removed;
     const size_t voices=mode==3?6:1;
-    if(!list.count){for(size_t v=0;v<voices;++v)envelopes[v].noteOff(sustain);}
+    if(!list.count){for(size_t v=0;v<voices;++v)adsr246Access(envelopes,v,ready).noteOff(sustain);}
     else {
         const size_t p=(list.count-1)*20;
         const auto source=word(p+12)?signedPhase(word(p+12)):voice246NotePitch[word(p)];

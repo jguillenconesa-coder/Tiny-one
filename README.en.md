@@ -26,6 +26,10 @@ Version 0.8.0 added optional **[Phase 246 CORE](docs/phase246-native.md)**: a pl
 
 Version 0.7.0 added four stable **Screen: Knob 1 Blue / 2 Green / 3 White / 4 Orange** host parameters. Map them once and the assignments follow the current display across sets 1–4. Old mappings to individual sound parameters keep their original destination. **PURGE BANK** permanently deletes the selected imported bank (or all imported banks with All banks selected), unloads its active audio, and clears its library references after confirmation. Factory sounds, source ZIPs and already saved projects are preserved. Close other instances first. Reimporting an identical manifest replaces validated copies and repairs missing audio without accumulating directories.
 
+[Project status, approximate progress and next delivery batches](docs/project-status.md).
+The [lazy ADSR pool and cold-start event chain](docs/adsr246-lazy-pool.md) are now
+verified; full Dr. Wave integration remains pending.
+
 ## Instruments and controls
 
 [Additional Phase 246 core study bank](docs/phase-core-studies.md): 16 sample

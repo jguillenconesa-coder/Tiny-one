@@ -1,6 +1,6 @@
 # Prepared cloud workspace
 
-The selected checkout is `/workspace/OP-1`. Each cloud task is isolated; use this existing checkout without creating a Git worktree.
+The selected checkout is `/workspace/Tiny-one`. The setup script resolves its repository root from its own location. Each cloud task is isolated; use this existing checkout without creating a Git worktree.
 
 The host system is read-only Debian 13. `scripts/cloud-setup.sh` installs CMake in `/workspace/.op1-tools`, downloads signed Debian package-index metadata from the official mirror and extracts development packages in `/workspace/op1-system/root`. Runtime shared-library links reuse installed system libraries. JUCE 8.0.6 is pinned in `/workspace/juce-sdk`. Nothing requires credentials, an audio server, or system-wide package installation.
 

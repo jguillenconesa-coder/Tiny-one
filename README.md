@@ -28,6 +28,10 @@ La [preparación de nota desde VoiceCtl](docs/cluster246-note-activation.md) con
 
 **Banco adicional:** [16 estudios del núcleo Phase / 13 WAV únicos](docs/phase-core-studies.md), compatibles con 0.7.0. Controles extraídos del firmware y renders contrastados con el núcleo original simulado; siguen siendo estudios experimentales sin el resto del preset original.
 
+[Estado del proyecto, avance aproximado y próximos lotes](docs/project-status.md).
+El arranque diferido ADSR y su cadena de eventos ya están
+[contrastados](docs/adsr246-lazy-pool.md); la integración completa de Dr. Wave sigue pendiente.
+
 ## Descargar
 
 | Paquete | Descarga |

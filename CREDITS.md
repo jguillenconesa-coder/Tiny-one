@@ -314,3 +314,14 @@ loads in the pending write queue. It retains GPL-3.0-or-later and is separate
 from the instrument. Own packet probes and numerical observations are published;
 firmware, original instructions and ELF remain private. See the
 [contract and model limits](docs/drwave246-volume-buffer-modifier.md).
+
+## ADSR lazy pool and consolidated cold-start event chain
+
+Independent C++ reconstruction of the six-state rev246 ADSR accessor, with
+1,024 numeric original-instruction comparisons and 1,536 composed cold-start
+events. The preceding metadata-preserving notification contribution `ec1c182`
+is retained with its original authorship. GNU BF524 with both documented
+writeback patches provides numeric observations; REA 6.8.0 / GNU objdump
+provides bounded static Evidence. Firmware/PDF, original instructions, ELF and
+disassembly remain private; none are linked or packaged in the instrument.
+[Contract and limitations](docs/adsr246-lazy-pool.md).

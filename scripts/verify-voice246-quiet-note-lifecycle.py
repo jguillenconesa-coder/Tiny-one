@@ -17,7 +17,7 @@ IMAGE=sum(n for _,n,_ in REGIONS);RECORD=40+IMAGE+272;RESULT=IMAGE*2+380
 OFF=[]
 for _,n,_ in REGIONS:OFF.append(sum(x[1] for x in REGIONS[:len(OFF)]))
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
-def inputs():
+def inputs(cold_pool=False):
  spec=importlib.util.spec_from_file_location('life',ROOT/'scripts/verify-drwave246-note-lifecycle.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
  old=m.inputs();data=bytearray()
  for c in range(CASES):
@@ -26,14 +26,16 @@ def inputs():
   elif c%16==2:struct.pack_into('<I',header,20,0xffffffff)
   image[4]=1 if (c//128)%4==3 and struct.unpack_from('<I',header,12)[0]==0 else 0 # Off requires gate zero.
   image[4572:4700]=bytes([0,1,128,255][(j+c//128)%4] for j in range(128))
+  if cold_pool:struct.pack_into('<I',image,4384,[0,0x10000,0xffffffff,0][c//128%4])
   data+=header+image+row[-272:]
  return data
 
-def caller():
+def caller(cold_pool=False):
  def copy(label,src,dst,n):
   return f'{src}\n{dst}\nP3 = {n//4};\nLSETUP({label},{label}_end) LC0 = P3;\n{label}: R0 = [P1++];\n{label}_end: [P2++] = R0;\n'
  load='';save=''
  for i,(addr,n,retain) in enumerate(REGIONS):
+  retain=retain or (cold_pool and i==7)
   if retain:load+=f'R0 = [P4];\nCC = R0 == 0;\nIF CC JUMP skip_{i};\n'
   load+=copy('load_'+str(i),f'P0 = {40+OFF[i]};\nP1 = P4 + P0;',f'imm32 P2, {addr}',n)
   if retain:load+=f'skip_{i}:\n'
@@ -43,7 +45,8 @@ def caller():
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for k in ['ldr','assembler','linker','simulator','testutils','output']:p.add_argument('--'+k,type=Path,required=True)
- p.add_argument('--record',action='store_true');a=p.parse_args();out=a.output.resolve()
+ p.add_argument('--record',action='store_true');p.add_argument('--cold-pool',action='store_true');a=p.parse_args();out=a.output.resolve()
+ prefix='voice246-cold-note-lifecycle' if a.cold_pool else 'voice246-quiet-note-lifecycle'
  if out.exists() or out.is_relative_to(ROOT):raise ValueError('Use a NEW private directory outside checkout')
  expected=json.loads((ROOT/'docs/firmware/op1-246-ldr-map.json').read_text())['sha256']
  if sha(a.ldr)!=expected:raise ValueError('Only inventoried rev246 supported')
@@ -53,8 +56,8 @@ def main():
   flags,addr,n,arg=struct.unpack_from('<4I',raw,cursor)
   if base<=addr and addr+n<=base+len(image) and not flags&0x1000:image[addr-base:addr-base+n]=(struct.pack('<I',arg)*((n+3)//4))[:n] if flags&0x100 else raw[cursor+16:cursor+16+n]
   cursor+=16+(0 if flags&0x100 else n)
- out.mkdir(mode=0o700,parents=True);(out/'sdram.bin').write_bytes(image);(out/'inputs.bin').write_bytes(inputs())
- load,save=caller();templates=ROOT/'research/blackfin'
+ out.mkdir(mode=0o700,parents=True);(out/'sdram.bin').write_bytes(image);(out/'inputs.bin').write_bytes(inputs(a.cold_pool))
+ load,save=caller(a.cold_pool);templates=ROOT/'research/blackfin'
  conversion=''.join(f'imm32 P0, {0x018c13c4+i*4}\nR0 = [P0];\nimm32 P0, 0x01aa6fd0\nCALL (P0);\nimm32 P0, {0x0106b3cc+i*4}\n[P0] = R0;\n' for i in range(256))
  source=(templates/'voice-quiet-note-lifecycle.s.in').read_text()
  for k,v in {'WORK':out.as_posix(),'LOAD':load,'BEFORE':save.replace('save_','before_'),'AFTER':save.replace('save_','after_'),'COEFFICIENTS':conversion,'RECORD':str(RECORD),'IMAGE':str(IMAGE),'BYTES':str(CASES*RESULT),'ACTIVITY':''}.items():source=source.replace('@'+k+'@',v)
@@ -99,14 +102,25 @@ def main():
   previous=after
  if previous!=0:raise RuntimeError('Final list not empty')
  artifacts={}
- for name,path in [('voice246-quiet-note-lifecycle-input.bin',out/'inputs.bin'),('voice246-quiet-note-lifecycle-output.bin',out/'output.bin')]:
+ for name,path in [(prefix+'-input.bin',out/'inputs.bin'),(prefix+'-output.bin',out/'output.bin')]:
   fixture=ROOT/'Tests/ReferenceVectors'/name
   if a.record:fixture.write_bytes(path.read_bytes())
   if fixture.read_bytes()!=path.read_bytes():raise RuntimeError('Oracle differs: '+name)
   artifacts[name]={'bytes':path.stat().st_size,'sha256':sha(path)}
- report={'ldr_sha256':expected,'entries':['0x01a85750','0x01a85840'],'notification_entries':['0x019e2e64','0x019e2dc0'],'output_getter':'0x01a69360..0x01a6936c','output_word':'0x01dfe03c','explicit_output_word':0,'context':'Original constructor metadata 1, full outer on/off, initialized pools, selectors 1-3, output word zero. No notification transport or erased metadata.','records':CASES,'streams':12,'blocks_per_stream':128,'counts':counts,'image_bytes':IMAGE,'input_bytes':RECORD,'output_bytes':RESULT,'regions':[{'address':hex(a),'bytes':n,'retained_in_stream':r} for a,n,r in REGIONS],'artifacts':artifacts,'tools':{str(x):sha(x) for x in [a.assembler,a.linker,a.simulator]},'model':'GNU BF524 with both documented writeback patches; not hardware or pipeline validation','limitations':['Event order, controls/tuning/selection and ADSR render voice/volume explicit; no recovered scheduler or host integration.','List, activity, registers, pools, RNG, notification map, output word and monitor sentinels retained within each sequence; inner gate explicit per event and zero for off.','Output word zero is a supplied precondition, not a factory default. No packet preparation, actual transport, pending-field consumer or pitch-buffer producer.']}
+ report={'ldr_sha256':expected,'entries':['0x01a85750','0x01a85840'],'notification_entries':['0x019e2e64','0x019e2dc0'],'output_getter':'0x01a69360..0x01a6936c','output_word':'0x01dfe03c','explicit_output_word':0,'cold_pool':a.cold_pool,'context':'Original constructor metadata 1, full outer on/off, selectors 1-3, output word zero. No notification transport or erased metadata.','records':CASES,'streams':12,'blocks_per_stream':128,'counts':counts,'image_bytes':IMAGE,'input_bytes':RECORD,'output_bytes':RESULT,'regions':[{'address':hex(addr),'bytes':n,'retained_in_stream':r or (a.cold_pool and addr==0x01b6053c)} for addr,n,r in REGIONS],'artifacts':artifacts,'tools':{str(x):sha(x) for x in [a.assembler,a.linker,a.simulator]},'model':'GNU BF524 with both documented writeback patches; not hardware or pipeline validation','limitations':['Event order, controls/tuning/selection and ADSR render voice/volume explicit; no recovered scheduler or host integration.','List, activity, registers, pools, RNG, notification map, output word and monitor sentinels retained within each sequence; inner gate explicit per event and zero for off.','Output word zero is a supplied precondition, not a factory default. No packet preparation, actual transport, pending-field consumer or pitch-buffer producer.']}
  paths=[Path(__file__).resolve(),templates/'voice-quiet-note-lifecycle.s.in',ROOT/'Source/DrWave246NoteModes.h',ROOT/'Source/DrWave246HeldNoteModes.h',ROOT/'Source/Voice246QuietNoteDispatch.h',ROOT/'Source/Voice246NoteDispatch.h',ROOT/'Tests/Voice246QuietNoteLifecycleTests.cpp',ROOT/'scripts/verify-drwave246-note-lifecycle.py',ROOT/'scripts/verify-drwave246-poly-first-free.py',ROOT/'scripts/verify-drwave246-adjusted-note-chain.py',ROOT/'scripts/verify-drwave246-note-event-chain.py',ROOT/'scripts/verify-voice246-release-selectors.py']
  paths+=list((ROOT/'Source').glob('*246*.h'))
+ if a.cold_pool:
+  report['lazy_accessor']='0x0191264c..0x019126d8';report['initial_ready_words']=[0,65536,4294967295,0]
+  ready_changes=0;ready_word=0;terminal=[]
+  for c in range(CASES):
+   x=input_bytes[c*RECORD:(c+1)*RECORD];e=oracle[c*RESULT:(c+1)*RESULT]
+   if struct.unpack_from('<I',x)[0]:ready_word=struct.unpack_from('<I',x,40+4384)[0]
+   after=struct.unpack_from('<I',e,4384)[0];ready_changes+=ready_word!=after;ready_word=after
+   if c%128==127:terminal.append(ready_word)
+  if ready_changes!=3 or terminal!=[1,65536,4294967295,0]*3:raise RuntimeError('Cold/quiet initialization coverage differs')
+  report['ready_changes']=ready_changes;report['terminal_ready_words']=terminal
+
  report['pc_watches']=WATCHES;report['pc_watch_probe_exit_codes']=codes;report['pc_watch_original_run_exit_code']=0
  report['source_sha256']={str(x.relative_to(ROOT)):sha(x) for x in paths}
  report['patches']={str(x.relative_to(ROOT)):sha(x) for x in [templates/'gnu-13.1-dreg-writeback.patch',templates/'gnu-13.1-halfword-writeback.patch']}

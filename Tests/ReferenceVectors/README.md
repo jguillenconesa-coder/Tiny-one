@@ -703,3 +703,24 @@ de salida cero y ADSR explícito. Mapa, lista, actividad, pools y RNG retenidos;
 gate interior suministrado por evento y cero en off. Dos imágenes de 4.760 bytes,
 argumento, ajustes, audio/guardas, retorno y copia local previa al render. Sin
 transporte habilitado ni scheduler. [Contrato](../../docs/voice246-quiet-note-lifecycle.md).
+
+## ADSR lazy pool and cold-start note lifecycle
+
+`adsr246-pool-input.bin`: 1,024 records of 188 bytes, four header words
+(reset, index, optional mutation word index or 0xffffffff, mutation value),
+then ready with four-byte neighbors (12 bytes), pool with eight-byte neighbors
+(160 bytes). Pool contains six 24-byte states. Reset reloads both regions;
+otherwise they are retained. Optional mutation writes one of 36 pool words
+before the original accessor. Output records are 176 bytes: both regions in
+the same order plus the returned original 32-bit address. 200 cold/824 warm
+accesses, six valid indices, 682 explicit state mutations. Invalid original
+asserts are excluded; adapter rejection is tested separately.
+
+`voice246-cold-note-lifecycle-{input,output}.bin` use the quiet-lifecycle format
+above (5,072 / 9,900 bytes, 1,536 events, 512-byte note table before/after output).
+Ready region 0x01b6053c now retains across each stream and starts at
+0/65536/0xffffffff/0 for each of selectors 1–3. Three streams initialize;
+three gated streams stay cold; six keep their original nonzero ready word.
+Full callback/render regions, argument/padding/guard bytes and samples compared.
+The original ready-pool fixtures remain unchanged.
+[Contract/reproduction](../../docs/adsr246-lazy-pool.md).

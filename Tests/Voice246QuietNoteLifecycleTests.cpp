@@ -23,7 +23,7 @@ Adsr246State state(const uint8_t* p){Adsr246State s;s.stage=u32(p);s.blocks=u32(
 void save(uint8_t* p,const Adsr246State& s){const std::array<uint32_t,6> w{{s.stage,s.blocks,uint32_t(s.level),s.field12,s.field16,s.gain}};for(size_t j=0;j<6;++j)put(p+j*4,w[j]);}
 }
 int main(int argc,char** argv){try{
- check(argc==2,"Expected fixture directory");const std::string d=argv[1];auto in=read(d+"/voice246-quiet-note-lifecycle-input.bin"),out=read(d+"/voice246-quiet-note-lifecycle-output.bin");
+ check(argc==2||argc==3,"Expected fixture directory [--cold-pool]");const bool cold=argc==3&&std::string(argv[2])=="--cold-pool";const std::string d=argv[1],prefix=cold?"/voice246-cold-note-lifecycle":"/voice246-quiet-note-lifecycle";auto in=read(d+prefix+"-input.bin"),out=read(d+prefix+"-output.bin");
  check(in.size()==1536*5072&&out.size()==1536*9900+1024,"Wrong lifecycle dimensions");
  constexpr std::array<size_t,21> offsets{{0,2576,3240,3464,4240,4368,4376,4384,4392,4400,4408,4440,4452,4464,4476,4524,4556,4568,4704,4744,4748}};
  constexpr std::array<size_t,21> sizes{{2576,664,224,776,128,8,8,8,8,8,32,12,12,12,48,32,12,136,40,4,12}};
@@ -33,7 +33,7 @@ int main(int argc,char** argv){try{
  for(size_t i=0;i<128;++i)check(u32(out.data()+i*4)==uint32_t(voice246NotePitch[i]),"Original note table differs");
  check(std::memcmp(out.data(),out.data()+out.size()-512,512)==0,"Note table changed");
  for(size_t c=0;c<1536;++c){const auto* p=in.data()+c*5072;const auto* e=out.data()+512+c*9900;
-  for(size_t j=0;j<21;++j)if(u32(p)||!(j==0||j==1||j==2||j==3||j==5||j==6||j==14||j>=17))std::memcpy(image.data()+offsets[j],p+40+offsets[j],sizes[j]);
+  for(size_t j=0;j<21;++j)if(u32(p)||!(j==0||j==1||j==2||j==3||j==5||j==6||j==14||j>=17||(cold&&j==7)))std::memcpy(image.data()+offsets[j],p+40+offsets[j],sizes[j]);
   image[4]=p[44]; // Explicit event gate; release requires zero.
   for(size_t j=0;j<6;++j)pool[j]=state(image.data()+2580+j*24);
   Voice246ReleaseList list;std::memcpy(list.bytes.data(),image.data()+8,2560);list.count=u32(image.data()+2568);
@@ -56,22 +56,23 @@ int main(int argc,char** argv){try{
   DrWave246Pool waves{};std::memcpy(waves.data(),image.data()+3240,216);
   Voice246Registers registers;for(size_t i=0;i<6;++i){registers.active[i]=image[3504+i];registers.velocity[i]=s16(image.data()+3512+i*2);registers.pitch[i]=signedPhase(u32(image.data()+4136+i*4));}
   const Voice246Note note{u32(argument.data()),u32(argument.data()+4),u32(argument.data()+8),signedPhase(u32(argument.data()+12))};
-  auto random=u32(image.data()+4368);
+  auto random=u32(image.data()+4368);auto ready=u32(image.data()+4384);
   std::array<uint8_t,128> map{};std::memcpy(map.data(),image.data()+4572,128);const auto oldMap=map;
   Voice246NoteArgument local{};put(local.data(),0x11223344);put(local.data()+4,0xdeadbeef);put(local.data()+8,0x55667788);put(local.data()+12,0xa5a5a5a5);
   check(argument[8]==1&&discriminator==0&&u32(image.data()+4752)==0,"Unbounded notification context");
   if(u32(p+12)==0){
    notes[size_t(mode-1)][note.noteIndex]=true;
    if(list.count==0)++emptyOn;else ++heldOn;
-   const auto result=voice246QuietNoteOn(argument,local,image[4481],map,u32(image.data()+4752),waves,registers,pool,list,image[4],int(u32(image.data()+4400)),int(selected),s16(image.data()+4240+selected*16+8),signedPhase(u32(image.data()+4444)),random);
+   const auto result=voice246QuietNoteOn(argument,local,image[4481],map,u32(image.data()+4752),waves,registers,pool,list,image[4],int(u32(image.data()+4400)),int(selected),s16(image.data()+4240+selected*16+8),signedPhase(u32(image.data()+4444)),random,cold?&ready:nullptr);
    using S=Voice246NoteDispatchResult;check(result!=S::rejected,"Quiet on rejected");
    if(result==S::appended)++appended;else if(result==S::gated)++gated;else ++duplicates;
    for(unsigned v=0;v<(mode==3?6u:1u);++v)voices[v]=true;
   }else{
-   const auto result=voice246QuietNoteOff(argument,local,map,u32(image.data()+4752),list,s16(image.data()+4240+selected*16+8),pool,s16(image.data()+4240+selected*16+4),signedPhase(u32(image.data()+4444)),registers.pitch,random);
+   const auto result=voice246QuietNoteOff(argument,local,map,u32(image.data()+4752),list,s16(image.data()+4240+selected*16+8),pool,s16(image.data()+4240+selected*16+4),signedPhase(u32(image.data()+4444)),registers.pitch,random,cold?&ready:nullptr);
    check(result!=Voice246ReleaseResult::rejected,"Quiet off rejected");
    if(result==Voice246ReleaseResult::removed)++removed;else ++absent;
   }
+  if(cold)put(image.data()+4384,ready);
   for(size_t j=0;j<128;++j)mapChanges+=map[j]!=oldMap[j];
   std::memcpy(image.data()+4572,map.data(),128);put(image.data()+4368,random);
   std::memcpy(image.data()+3240,waves.data(),216);

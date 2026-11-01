@@ -5,6 +5,15 @@ Los presets, bancos, recetas del manual y la comparación con vídeos pasan a un
 etapa posterior. Se conserva la investigación previa como referencia, sin usarla
 para dirigir ajustes de sonido durante esta etapa.
 
+## Coordinación principal y entregas agrupadas
+
+Desde el 1 de noviembre de 2026 esta cuenta coordina el proyecto. El propietario
+autoriza en esta sesión pushes directos verificados a main, sin releases ni
+cambios automáticos de configuración del entorno. Se agrupan dependencias,
+composición y regresión en entregas amplias; no se pide intervención por cada
+oráculo. [Estado, estimación y próximos lotes](project-status.md). Las reservas
+históricas de otra cuenta deben contrastarse con trabajo remoto actual.
+
 ## Un componente activo y criterios de cierre
 
 Se trabaja un bloque DSP cada vez. Un bloqueo se documenta con su dependencia
@@ -166,8 +175,9 @@ ya ejecuta constructor, ambos dispatchers, notificaciones y ADSR con mapa/estado
 retenidos, sin borrar metadata ni inventar transporte. Se contrasta actualización
 del mapa incluso con on bloqueado/duplicado o retirada ausente; la palabra cero
 no se presenta como configuración de fábrica.
-La otra cuenta reserva **acceso/inicialización diferida del pool ADSR**,
-`0x0191264c..0x019126d8`, en `collab/adsr246-lazy-pool`. Aquí el pool sigue ready=1.
+El [accessor e inicialización diferida del pool ADSR](adsr246-lazy-pool.md),
+`0x0191264c..0x019126d8`, ya está contrastado: 1.024 accesos y una cadena
+de 1.536 eventos con ready retenido, pool frío/listo y gates sin inicialización.
 Siguen pendientes buffers iniciales, consumidor de pendientes, reloj, mezcla y salida.
 
 ## Cluster rev246: conservado con dependencias bloqueadas

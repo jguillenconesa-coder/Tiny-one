@@ -1,0 +1,92 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "entry": "0x0191264c",
+  "end_exclusive": "0x019126d8",
+  "routine_sha256": "6695ae3be403bedb026e2c32ccc00478c66cd5942f49ade14b869779e52fb3dc",
+  "initializer": "0x019120ba",
+  "array_helpers": [
+    "0x01aa3862",
+    "0x01aa37c4"
+  ],
+  "cases": 1024,
+  "independent": 512,
+  "streams": 8,
+  "calls_per_stream": 64,
+  "cold": 200,
+  "warm": 824,
+  "input_record_bytes": 188,
+  "output_record_bytes": 176,
+  "pool_base": "0xff8000d4",
+  "ready_word": "0x01b6053c",
+  "monitored_regions": [
+    {
+      "address": "0x01b60538",
+      "bytes": 12
+    },
+    {
+      "address": "0xff8000cc",
+      "bytes": 160
+    }
+  ],
+  "artifacts": {
+    "adsr246-pool-input.bin": {
+      "bytes": 192512,
+      "sha256": "773bb044429a13829886e510ebd8411173160c38582acb312a12e31cf6296231"
+    },
+    "adsr246-pool-output.bin": {
+      "bytes": 180224,
+      "sha256": "0a0c261f48c81c6e2f48a19fcd12f6452dc5604176421031c15c70aa91ba6343"
+    }
+  },
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "source_sha256": {
+    "scripts/verify-adsr246-pool.py": "3f4bbb5c08e58f5ad2ad5fbd947ea062d99363bc2e7c2956e9c42130fcbb46ef",
+    "Source/Adsr246Pool.h": "15a57ba26eac40e5c6e644ecbc3c2d1aff901628b798ec760f40fb4d69bca534",
+    "Source/Envelope246Transition.h": "c1fc3b8b7130d5816da36700c7725e2478d74488d9f699e9b9a9d733dd3c154f",
+    "Tests/Adsr246PoolTests.cpp": "d7f78d8074317ea2d3bf18ae1d6860d1af4204549bd43d74e6ae357ac014c416"
+  },
+  "pc_watches": [
+    "0x01919aa8",
+    "0xffa00000,0xffafffff"
+  ],
+  "pc_watch_probe_exit_codes": [
+    0,
+    5,
+    5,
+    5
+  ],
+  "pc_watch_original_run_exit_code": 0,
+  "model": "GNU BF524 with both documented writeback patches",
+  "limits": [
+    "Valid indices 0..5 only. Original invalid-index assert excluded; adapter rejects before initialization.",
+    "Explicit ready word, poison pool and host-owned event order. No concurrency, allocator, scheduler, L1 or physical audio claim.",
+    "Selected pool/ready regions with guards and returned pointer compared; not full RAM or CPU state."
+  ],
+  "validation": {
+    "linux_ctest": {
+      "passed": 61,
+      "failed": 0,
+      "configuration": "Release, JUCE 8.0.6, VST3 and Standalone"
+    },
+    "asan_ubsan": "passed; detect_leaks=0 due to ptrace restrictions",
+    "independent_oracle_reproduction": "byte-identical in a second fresh private directory without --record",
+    "native_windows_macos": "CI after main push; not part of Linux evidence"
+  },
+  "rea_static_inspection": {
+    "version": "6.8.0",
+    "node": "24.22.1",
+    "provider": "gnu.objdump",
+    "symbol": "original_adsr_get",
+    "evidence_id": "ev_dcb3e0dd73e54f974feaa40aa94f8c53d24ad8c9fb56caa3d0aa12275c259acc",
+    "subject_sha256": "00a783b6de34124b0090853e52f784ec47b7face57c96e30f9fd66c5b8369a6c",
+    "exit_code": 0,
+    "completion_status": "complete",
+    "output_truncated": false,
+    "artifact_changed": false,
+    "scope": "Complete lazy accessor under synthetic symbol; raw instructions and ELF retained privately. Static observation only, not numeric or hardware validation."
+  }
+}

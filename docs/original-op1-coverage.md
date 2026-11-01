@@ -17,6 +17,10 @@ la extracción de texto omitía los diagramas. No se distribuyen el PDF, firmwar
 DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
+[Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
+33 % del objetivo completo, con incertidumbre explícita; no es una medición
+de equivalencia sonora.
+
 ## Motores
 
 Los IDs son observaciones/referencias del perfil rev246, no el orden del selector
@@ -88,6 +92,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Objetivo | Estado |
 | --- | --- |
 | ADSR común | Núcleo, tablas y callbacks contrastados; 2.621.440 muestras / 20.480 estados. |
+| Arranque del pool ADSR | [Accessor e inicialización diferida](adsr246-lazy-pool.md): seis estados, ready de palabra completa, 1.024 accesos y 1.536 eventos compuestos; no completa allocator ni scheduler. |
 | Cuatro campos ADSR adicionales y ruteo | [Entrada de cuatro fuentes a ADSR 0–3](drwave246-envelope-control-input.md), seguida del render: 131.072 muestras / 1.024 estados adicionales. [Selector auxiliar 4 en contexto Dr. Wave](drwave246-envelope-mode-control.md): otras 131.072 muestras, seis estados y scratch dither compartido. Demás campos auxiliares, relevo por voz y salida siguen pendientes. |
 | Envolventes D-synth / D-box / drum dinámica | Pendientes. No quedan completadas por portar el ADSR común. |
 | Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 4.096 llamadas instrument/primeros cuatro ADSR para Digital/Phase; estado independiente por voz. Otros motores, drum y auxiliares pendientes; reloj/allocator propios. |

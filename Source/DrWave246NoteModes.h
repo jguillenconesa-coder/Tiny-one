@@ -2,7 +2,7 @@
 #pragma once
 #include "DrWave246Activation.h"
 #include "Voice246PolyRelease.h"
-#include "Envelope246Transition.h"
+#include "Adsr246Pool.h"
 namespace pocket::reference {
 enum class DrWave246NoteModesStatus { unsupported, gated, disabled, appended };
 struct DrWave246NoteModesResult {
@@ -10,13 +10,14 @@ struct DrWave246NoteModesResult {
     unsigned started=0,restarted=0,blocked=0;
 };
 // Original 0x01a84604: selectors 1-3 with an EMPTY list, and selector 4.
-// Explicit lookup tuning, initialized ADSR, outer mode zero, null auxiliaries.
+// Explicit lookup tuning, outer mode zero, null auxiliaries. ADSR is ready by
+// default; supplying its ready word enables the original lazy pool accessor.
 // Status/guards are adapter policy, not original return values/assert behavior.
 inline DrWave246NoteModesResult drWave246NoteModes(
         DrWave246Pool& waves,Voice246Registers& registers,
         std::array<Adsr246State,6>& envelopes,Voice246ReleaseList& list,
         const Voice246Note& note,uint8_t gate,int loaded,int selected,
-        int selector,int32_t tuning,uint32_t& random) noexcept {
+        int selector,int32_t tuning,uint32_t& random,uint32_t* ready=nullptr) noexcept {
     using S=DrWave246NoteModesStatus;
     if(note.noteIndex>=128||note.explicitPitch!=0||loaded<0||loaded>=8||selected<0||selected>=8)return {};
     if(gate)return {S::gated,0,0,0};
@@ -29,7 +30,7 @@ inline DrWave246NoteModesResult drWave246NoteModes(
     const auto gain=note.noteIndex==0?32767u:32768u-note.noteIndex*128u;
     const unsigned count=selector==3?6u:1u;
     for(unsigned i=0;i<count;++i){
-        auto& env=envelopes[i];const bool active=registers.active[i]!=0;
+        auto& env=adsr246Access(envelopes,i,ready);const bool active=registers.active[i]!=0;
         if(!active){
             env.noteOn();env.gain=(env.gain&0xffff0000u)|gain;
             if(!drWave246CoreNoteOn(waves,loaded,selected,int(i))){++result.blocked;continue;}

@@ -6,6 +6,16 @@ o se puede colaborar desde un fork con pull requests. Cada colaborador utiliza
 su propia cuenta y su propio entorno; el historial de este chat y los archivos
 privados de investigación no se transfieren con el repositorio.
 
+## Cuenta principal y autorización actual
+
+El propietario ha designado esta cuenta como coordinadora principal y ha
+autorizado en esta sesión pushes directos a main después de validar los cambios.
+Ese permiso explícito prevalece sobre el flujo de PR de colaboradores descrito
+más abajo; no autoriza releases ni cambios/publicación del entorno. Priorizar
+entregas amplias conforme a [estado y siguientes lotes](project-status.md), con
+una validación conjunta y sin solicitar confirmaciones rutinarias. Las reservas
+antiguas se contrastan con ramas/PR actuales para no duplicar trabajo.
+
 ## Acceso inicial
 
 1. Para dar escritura directa, el propietario abre [Settings → Collaborators](https://github.com/jguillenconesa-coder/Tiny-one/settings/access),

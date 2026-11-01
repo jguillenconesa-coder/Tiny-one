@@ -7,6 +7,10 @@ Para incorporarte con tu propia cuenta de Codex, consulta la
 Si el entorno nuevo no tiene el firmware ni Blackfin, sigue la
 [preparación DSP entre cuentas](docs/new-account-dsp-setup.md).
 
+El estado coordinado y las entregas agrupadas están en
+[docs/project-status.md](docs/project-status.md); la matriz técnica conserva los
+límites de fidelidad por componente.
+
 1. Compila para el sistema que vayas a probar. El VST3 de Linux no funciona en Windows/macOS.
 2. Ejecuta las suites CTest existentes. En Windows incluye la prueba que carga el módulo VST3.
 3. Para cambios de audio, verifica señal, afinación, estabilidad, liberación de notas y recuperación de estado según lo que modifiques.
