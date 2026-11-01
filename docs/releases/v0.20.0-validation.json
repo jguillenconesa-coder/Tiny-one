@@ -1,0 +1,74 @@
+{
+  "version": "0.20.0",
+  "date": "2026-11-01",
+  "timezone": "Europe/Madrid",
+  "linux_ctest": {
+    "passed": 72,
+    "total": 72,
+    "seconds": 92.75
+  },
+  "linux_build": "standalone and VST3 passed",
+  "oracle": {
+    "blocks": 4096,
+    "samples": 262144,
+    "state_bytes": 36,
+    "display_bytes": 64,
+    "coefficients": 194,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/filter246-validation.json"
+  },
+  "integration": {
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "placement": "authored final mono output bus",
+    "latency_samples": {
+      "44100": 65,
+      "48000": 71,
+      "96000": 141
+    },
+    "bypass": "exact delayed dry, fixed latency",
+    "checks": [
+      "Native kernel identity for 8192 samples with authored guards disabled",
+      "Seven-rate streaming, no underruns, silence, panic and bypass",
+      "Contextual MIDI/proxies and GUI range",
+      "Session/slot/clipboard roundtrip",
+      "Identical audio at 64/257 host buffers with Value FX"
+    ]
+  },
+  "realtime": {
+    "workloads": 228,
+    "new_filter_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "filter_controls_and_enabled_automated": true,
+    "timing": "Diagnostic on shared host, not physical deadline certification"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "scope": "Filter core oracle and standalone output-bus adapter tests",
+    "leak": "disabled in traced environment"
+  },
+  "previous_ci_0_19": {
+    "run_id": 41349361128,
+    "linux": "success",
+    "windows": "success",
+    "macos": "success, universal app/VST3 and pkg"
+  },
+  "native_ci": "Pending workflow triggered by implementation commit",
+  "limitations": [
+    "Mono core verified; original stereo wrapper and full instrument routing not reconstructed.",
+    "Resampling, output DC/silence guard, mix and host scheduling authored.",
+    "Nitro L1 protected tables, OTP key and decrypted memory remain unavailable.",
+    "Real Ableton acceptance and acoustic/hardware comparison pending.",
+    "Original preset replication deferred."
+  ],
+  "estimated_progress": "40% +/-10 points; planning estimate, not acoustic equivalence"
+}

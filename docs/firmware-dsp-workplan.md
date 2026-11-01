@@ -290,3 +290,15 @@ en las cuatro familias nativas, con las dos pasadas Instrument y ADSR. El próxi
 bloque propuesto es Filter/Nitro: identificar el callback legible y contrastar
 coeficientes, estado e impulsos antes de integrarlo. El bloqueo OTP/L1 persiste;
 no se declara resuelto por avanzar en este modulador.
+
+## Entrega 0.20.0: Filter mono y bloqueo Nitro
+
+[Filter 246](filter246-native.md) coincide en 4096 bloques de 64 muestras, estado,
+display y tablas generadas. El bus de salida propio conserva la dependencia del
+pico de bloque completo y declara su latencia fija, incluso en bypass. Value FX,
+MIDI y guardado integrados; no se reconstruye la ruta estéreo original.
+
+Nitro consume palabras protegidas de L1; [registro de offsets](firmware/nitro246-table-blocker.json).
+El siguiente bloque debe evaluar el adaptador híbrido sin atribuirle coeficientes
+originales y continuar las rutas restantes. Sin claves OTP ni captura descifrada,
+la fidelidad de esas dependencias sigue pendiente. No se añaden presets.

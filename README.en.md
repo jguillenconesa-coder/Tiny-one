@@ -1,8 +1,10 @@
-# Pocket One 0.19.0
+# Pocket One 0.20.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.20.0 adds **[Filter 246](docs/filter246-native.md)** on **set 3 → FILTER 246**: Cutoff, Resonance/Follow, Mode and Drive, with Value FX, MIDI and state persistence. The mono core matches 262,144 original-instruction oracle samples. Its authored output-bus adapter reports a fixed latency of about 1.5 ms, including bypass. Hardware matching and real Ableton acceptance remain pending.
 
 Version 0.19.0 adds **[Random 246](docs/random246-native.md)** on **set 4 → RANDOM 246** for Digital/Phase 246 and Dr. Wave/Cluster: amount, speed, Instrument/ADSR destination and LFO envelope. Original RNG, smoothing and both Instrument passes are reconstructed. Host cadence and RNG scheduling remain adapters. MIDI, automation, sessions, slots and clipboard are integrated; original presets remain deferred.
 

@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.19.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.20.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -81,9 +81,9 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Punch | Núcleo mono contrastado con 131.072 muestras, 2.048 estados y display. Integración opcional con conversión de tasa/DC propios. Cola potencialmente sostenida. |
 | Phone | Pendientes procesamiento telefónico, buffer y estados originales. |
 | Spring | Pendiente el reverb original y sus tablas/controles. |
-| Nitro | Pendiente el doble filtro resonante original. |
+| Nitro | Callback legible; tablas L1 parcialmente protegidas. [Offsets y límites](firmware/nitro246-table-blocker.json); pendiente adaptador híbrido. |
 | CWO | Presente en el firmware/DB; pendiente. No está en los seis diagramas de efectos del manual suministrado. |
-| Filter, ruta interna | Función candidata localizada; pendiente reconstruir y contrastar. |
+| Filter, ruta interna | Núcleo mono contrastado: 262.144 muestras, estado/display y 194 coeficientes. Integrado en bus de salida con PDC fijo; tasa/ruteo propios. [Guía](filter246-native.md). |
 | Filtros internos de cada motor y decimación/salida | Pendientes individualmente. Los filtros de salida/adaptación actuales son propios. |
 | EQ y master | Implementación propia; EQ, dinámica y ruteo originales pendientes. |
 

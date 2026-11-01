@@ -2,6 +2,7 @@
 #pragma once
 #include <juce_audio_utils/juce_audio_utils.h>
 #include "Engine.h"
+#include "Filter246Effect.h"
 #include "Phase246Presets.h"
 #include "Phase246Envelopes.h"
 #include "Digital246Presets.h"
@@ -49,7 +50,8 @@ public:
     void applyValue246Preset(int index);
     void applyValueVoice246Preset(int index);
     bool drWave246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==6;}
-    bool punch246Enabled() const {return phaseAudio[20]->load()>.5f;}
+    bool filter246Enabled() const {return phaseAudio[66]->load()>.5f;}
+    bool punch246Enabled() const {return !filter246Enabled()&&phaseAudio[20]->load()>.5f;}
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
     bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&valueVoice246Available();}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
@@ -117,7 +119,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
-    std::array<std::atomic<float>*,66> phaseAudio{};
+    std::array<std::atomic<float>*,71> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;
     enum class Param {engine,tone,color,envelope,effect,attack,decay,sustain,release,lfoRate,lfoDepth,lfoDestination,lfoShape,delayTime,delayFeedback,drive,sampleLoop,sampleRoot,volume,sequencer,tempo,track1,track2,track3,track4,tapePlay,tapeRecord,tapeOverdub,tapeTrack,tapeSpeed,tapeLength,tapeLoop,tapeLoopIn,tapeLoopOut,metronome,inputMonitor,inputGain,tapeRecordGain,eqLow,eqMid,eqHigh,eqMix,masterDrive,masterEcho,masterDelayTime,masterFeedback,clickVolume,seqMode,seqLength,seqRate,seqGate,seqSwing,arpOctaves,seqVelocity,seqEuclidean,seqPulses,seqRotation,sampleClean,Count};
     std::array<std::atomic<float>*,size_t(Param::Count)> audioParameters{};
@@ -158,6 +160,8 @@ private:
     pocket::Sample factorySample(const juce::String& name) const;
     void loadFactoryKit(int index);
     pocket::Engine engine;
+    pocket::Filter246Effect outputFilter;
+    pocket::Phase246Config filterConfig;
     pocket::Tape tape;
     std::atomic<bool> panicRequested{false},panicOutputRequested{false};
     pocket::HeldNotes heldNotes;
@@ -174,7 +178,7 @@ private:
     float eqLowState=0,eqHighState=0,eqLowCoefficient=0,eqHighCoefficient=0;
     std::array<float,3> eqGains{{1,1,1}};
     std::array<float,192000> masterDelay{};size_t masterDelayWrite=0,masterDelayValid=0;
-    void resetOutputHistory() noexcept {masterDelayWrite=masterDelayValid=0;eqLowState=eqHighState=0;clickEnvelope=0;}
+    void resetOutputHistory() noexcept {outputFilter.reset();masterDelayWrite=masterDelayValid=0;eqLowState=eqHighState=0;clickEnvelope=0;}
     float masterDriveSmooth=0,masterEchoSmooth=0,masterTimeSmooth=.281f,eqMixSmooth=0;
     double clickBeat=0,clickPhase=0;float clickEnvelope=0;int64_t lastClickBeat=-1;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PocketProcessor)

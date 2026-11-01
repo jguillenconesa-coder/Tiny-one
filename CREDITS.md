@@ -8,7 +8,7 @@
 
 ## Inspiración y referencias
 
-- **Teenage Engineering — OP-1:** inspiración del instrumento, la disposición de controles y el flujo creativo. Las marcas OP-1 y Teenage Engineering pertenecen a sus respectivos titulares. No hay afiliación, patrocinio ni aprobación. El instrumento no incluye firmware, muestras de fábrica ni logotipos originales. Las reconstrucciones experimentales de DSP se documentan aparte y no se conectan al audio de producción.
+- **Teenage Engineering — OP-1:** inspiración del instrumento, la disposición de controles y el flujo creativo. Las marcas OP-1 y Teenage Engineering pertenecen a sus respectivos titulares. No hay afiliación, patrocinio ni aprobación. El instrumento no incluye firmware, muestras de fábrica ni logotipos originales. Las reconstrucciones de DSP contrastadas y sus adaptadores se documentan por separado; varias se integran en el audio de producción.
 - **OTTO y sus colaboradores:** organización por motores y pantallas, controles vinculados a colores y documentación de un instrumento autónomo. Referencia revisada: [antoinehng/OTTO-1](https://github.com/antoinehng/OTTO-1), revisión `ba534c6c1ed93a6b15cd13a93287b9e8f6f8ca6b`.
 - **TOP-1 y sus colaboradores, incluido D-I-S-K-U-S por sus notas de diseño visual:** referencias de sampler, grabadora de cuatro pistas y relación entre gráficos y parámetros. Referencia revisada: [AlbertSmit/TOP-1](https://github.com/AlbertSmit/TOP-1), revisión `e641d273fb8d0eb4ff2ad1b4a7cd15b8786b62e0`.
 
@@ -368,3 +368,10 @@ meter, eight target words and return, independently repeated. Instrument uses
 eight signals in two passes on four controls; ADSR uses four. Host cadence,
 shared dedicated RNG scheduling and seed are authored adapters. Firmware and
 original instructions are not distributed. See [scope and reproduction](docs/random246-native.md).
+
+Filter 246: reconstrucción independiente del callback mono y de sus tablas, con
+oráculo GNU Blackfin y decompilación privada Ghidra. Los candidatos se localizaron
+con el SDK OP-1 de referencia ya acreditado (revisión
+`ae1945a9c61468f0e0d7cfdd5dd60c2cf9731ff1`). No se copió su DSP. Se reutiliza la
+curva numérica contrastada de Punch; el bus, resampling, DC y mezcla son propios.
+[Pruebas y límites](docs/filter246-native.md). Firmware y decompilaciones no incluidos.

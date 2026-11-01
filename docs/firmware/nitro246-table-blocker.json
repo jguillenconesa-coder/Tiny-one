@@ -1,0 +1,57 @@
+{
+  "component": "Nitro 246",
+  "render": "0x019a62a4",
+  "initializer": "0x019a6884",
+  "converted_table": {
+    "source": "0xff907040",
+    "destination": "0x01d07c18",
+    "words": 5,
+    "converter": "0x01aa6fd0"
+  },
+  "ldr_block": {
+    "address": "0xff906f10",
+    "bytes": 1012,
+    "flags": "0xad682406",
+    "file_offset": 2118620
+  },
+  "partial_encryption_model": "First 8 of each complete 24-byte CALLBACK|INDIRECT payload group; this does not decrypt/validate boot",
+  "words": [
+    {
+      "index": 0,
+      "address": "0xff907040",
+      "offset_in_payload": 304,
+      "offset_mod24": 16,
+      "protected": false
+    },
+    {
+      "index": 1,
+      "address": "0xff907044",
+      "offset_in_payload": 308,
+      "offset_mod24": 20,
+      "protected": false
+    },
+    {
+      "index": 2,
+      "address": "0xff907048",
+      "offset_in_payload": 312,
+      "offset_mod24": 0,
+      "protected": true
+    },
+    {
+      "index": 3,
+      "address": "0xff90704c",
+      "offset_in_payload": 316,
+      "offset_mod24": 4,
+      "protected": true
+    },
+    {
+      "index": 4,
+      "address": "0xff907050",
+      "offset_in_payload": 320,
+      "offset_mod24": 8,
+      "protected": false
+    }
+  ],
+  "additional_dependency": "Render directly reads 0xff907030, at payload offset 288 (mod24=0), also protected under this model",
+  "status": "No invented table values and no Nitro integration; Filter chosen because its initializer/conversion inputs are legible"
+}

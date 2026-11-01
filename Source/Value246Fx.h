@@ -14,20 +14,20 @@ struct Value246Fx {
     void reset() noexcept {state={};display={};position=1;ticks=0;modulation=0;active=pendingNote=false;}
     void noteOn() noexcept {pendingNote=true;}
     std::array<int16_t,4> next(bool enabled,bool route,bool free,int speed,int amount,int colour,uint32_t tempo,
-                               const std::array<int16_t,4>& base,const std::array<int16_t,8192>& sine) noexcept {
-        if(!enabled){if(active)reset();return base;}
+                               const std::array<int16_t,4>& base,const std::array<int16_t,8192>& sine,int fx=2) noexcept {
+        if(!enabled||fx<0||fx>=8){if(active)reset();return base;}
         active=true;colour=std::clamp(colour,0,3);
         std::array<int16_t,8> controls{{int16_t(std::clamp(speed,0,16384)),int16_t(std::clamp(amount,-32767,32767)),
             int16_t((route?8192:0)|(free?2048:0)),int16_t(colour*4096),0,0,0,0}};
         if(pendingNote){state.noteOn(controls);pendingNote=false;}
         if(position>=1){
             std::array<int16_t,8> targets{};std::copy(base.begin(),base.end(),targets.begin());
-            reference::value246FxStep(state,display,controls,tempo,2,2,targets,sine);
+            reference::value246FxStep(state,display,controls,tempo,2,fx,targets,sine);
             modulation=route?reference::saturate16(reference::signedPhase(display[6]<<16)/65536):0;
             position-=1;++ticks;
         }
         position+=step;
-        auto result=base;if(route)result[size_t(colour)]=reference::value246Adjust(base[size_t(colour)],modulation,reference::value246FxRanges[2][size_t(colour)]);
+        auto result=base;if(route)result[size_t(colour)]=reference::value246Adjust(base[size_t(colour)],modulation,reference::value246FxRanges[size_t(fx)][size_t(colour)]);
         return result;
     }
     float phase() const noexcept {return float(double(state.phase^0x80000000u)/4294967296.);}

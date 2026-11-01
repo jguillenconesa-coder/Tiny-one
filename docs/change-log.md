@@ -1,5 +1,17 @@
 # Historial de cambios
 
+## 0.20.0
+
+- Filter 246 mono contrastado con 262.144 muestras, estado/display y tablas generadas.
+- Bus de salida con Value FX, MIDI, automatización y guardado; latencia fija ~1,5 ms también en bypass.
+- 72 suites y 228 cargas de callback; bloqueo Nitro documentado. [Guía](filter246-native.md).
+
+## 0.19.0
+
+- Random 246 Instrument/ADSR reconstruido e integrado en los cuatro motores nativos.
+- 4.096 llamadas originales, estado/RNG/display/destinos y repetición independiente.
+- [Guía](random246-native.md).
+
 ## 0.18.0
 
 - Tremolo 246 reconstruido: pitch/amplitud, cinco formas, reset y tabla de envolvente.

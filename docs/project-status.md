@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 39 % del objetivo completo
+## Avance estimado: aproximadamente 40 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,28 +18,44 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 45 % | 9 puntos |
+| Efectos, envolventes y moduladores | 20 % | 50 % | 10 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
-| Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
+| Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **38,5 ≈ 39 %** |
+| Total | 100 % | | **40 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
-funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Tremolo/Random y partes
+funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Filter/Tremolo/Random y partes
 de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave y Cluster incorporan motores híbridos tocables con
 dependencias propias explícitas. El FM actual y
 varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
 fuente del estado por componente y prevalece sobre este resumen orientativo.
 
-Hay instalador Windows y builds multiplataforma en CI. Se añade empaquetado
-macOS universal; la validación nativa del paquete corresponde a su propio CI.
+Hay instalador Windows y builds multiplataforma en CI. El CI 0.19 pasó también macOS universal y su paquete; cada cambio nuevo necesita su propio CI.
 Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Random synth reconstruido e integrado (0.19.0)
+## Entrega agrupada actual: Filter reconstruido e integrado (0.20.0)
+
+Set 3 → FILTER 246 incorpora el núcleo mono al bus de salida. Coinciden 262.144
+muestras, 4.096 estados/displays y 194 coeficientes generados; repetición
+independiente idéntica. Value FX, MIDI, controles contextuales y guardado integrados.
+El núcleo necesita bloques completos de 64 muestras; se declara latencia fija
+incluso en bypass (~1,5 ms). Ruteo, conversión de tasas y guardias son propios.
+[Guía y límites](filter246-native.md), [validación](releases/v0.20.0-validation.json).
+
+72/72 suites Linux y 228 cargas de callback sin heap rastreado; sanitizadores
+aprobados. El CI de esta entrega comprobará Windows/macOS. El anterior 0.19
+([41349361128](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41349361128))
+pasó las tres plataformas, incluido el paquete macOS universal. Ableton real y
+comparación acústica siguen pendientes. Estimación ~40 % con la misma incertidumbre.
+Nitro tiene dependencias L1 protegidas identificadas; no se inventan coeficientes.
+Siguiente bloque: evaluar su adaptador híbrido y las rutas de efectos restantes.
+
+## Entrega anterior: Random synth reconstruido e integrado (0.19.0)
 
 Set 4 → RANDOM 246 añade modulación aleatoria de los cuatro controles o ADSR a
 Digital/Phase 246 y Dr. Wave/Cluster. Se reconstruyen RNG, suavizado, envolvente,
@@ -54,7 +70,7 @@ integrado, sin demostrar equivalencia acústica. Presets originales al final.
 aprobados. La evidencia y los resultados de CI se registran en
 [evidencia de 0.19](releases/v0.19.0-validation.json). La 0.18 pasó Windows/Linux;
 su job macOS se canceló antes de ejecutar pasos. Ableton real sigue pendiente.
-El siguiente bloque propuesto es identificar y contrastar Filter/Nitro.
+Filter se entrega en 0.20; Nitro conserva dependencias protegidas.
 
 ## Entrega anterior: Tremolo reconstruido e integrado (0.18.0)
 

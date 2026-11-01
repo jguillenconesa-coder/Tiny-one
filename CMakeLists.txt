@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.19.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.20.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -182,6 +182,14 @@ add_test(NAME voice246_tuning_index COMMAND voice246_tuning_index_tests "${CMAKE
 add_executable(voice246_tuning_table_tests Tests/Voice246TuningTableTests.cpp)
 target_include_directories(voice246_tuning_table_tests PRIVATE Source)
 add_test(NAME voice246_tuning_table COMMAND voice246_tuning_table_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+add_executable(filter246_effect_tests Tests/Filter246EffectTests.cpp)
+target_include_directories(filter246_effect_tests PRIVATE Source)
+add_test(NAME filter246_effect COMMAND filter246_effect_tests)
+
+add_executable(filter246_tests Tests/Filter246Tests.cpp)
+target_include_directories(filter246_tests PRIVATE Source)
+add_test(NAME filter246 COMMAND filter246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+
 add_executable(punch246_tests Tests/Punch246Tests.cpp)
 target_include_directories(punch246_tests PRIVATE Source)
 add_test(NAME punch246 COMMAND punch246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")

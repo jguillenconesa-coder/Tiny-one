@@ -759,3 +759,13 @@ records of 72 bytes: self44, uint32 RNG/meter, eight int16 destination words,
 uint32 return. All little endian; independent and retained synthetic streams.
 Instrument has eight signals applied in two passes to the first four destination
 words; ADSR uses four signals. [Contract and reproduction](../../docs/random246-native.md).
+
+## Filter 246
+
+`filter246-input.bin`: 4096 registros de 240 bytes: estado36, cuatro controles
+int16, 64 muestras int16 de entrada, display64 y acción uint32
+(0 conservar / 1 cargar estado/display). `filter246-output.bin`: prefijo de 776 bytes
+(65 coeficientes int32 de mezcla y 129 de frecuencia), seguido de 4096 registros
+de 228 bytes: 64 muestras int16 de salida, estado36, display64. Little endian;
+entradas sintéticas y resultados numéricos, sin instrucciones del firmware.
+[Contrato y reproducción](../../docs/filter246-native.md).

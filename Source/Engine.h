@@ -10,6 +10,7 @@
 #include "DrWave246Voice.h"
 #include "Cluster246Voice.h"
 #include "Punch246Effect.h"
+#include "Filter246Controls.h"
 #include "Value246Fx.h"
 #include "ValueVoice246Control.h"
 #include "Random246Control.h"
@@ -31,6 +32,7 @@ struct Parameters {
     bool digital246=false,digital246Envelope=false;std::array<int16_t,4> digital246Controls{{0,16384,0,0}},digital246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> drWave246Controls{{0,0,0,0}},drWave246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> cluster246Controls{{8192,0,12000,30}},cluster246Adsr{{64,8064,32767,8192}};
+    bool filter246=false;std::array<int16_t,4> filter246Controls{{8000,0,0,24576}};
     bool punch246=false;std::array<int16_t,4> punch246Controls{{6000,15000,20000,28000}};
     bool value246=false,value246Free=false,value246Destination=true;
     int value246Speed=1000,value246Amount=4000,value246Colour=0;uint32_t value246Tempo=199457888;
@@ -49,7 +51,7 @@ class Engine {
 public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;stringRetune=1-std::exp(-1/(sampleRate*.003));phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
-    void reset() { held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void reset() { held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode) noexcept {if(mode!=selectedEngine&&(isHybridEngine(mode)||isHybridEngine(selectedEngine))){voices={};held.clear();}selectedEngine=mode;}
     void configureHybridPerformance(int mode,float milliseconds) noexcept {
         mode=std::clamp(mode,0,2);
@@ -123,6 +125,7 @@ public:
         }
         return out;
     }
+    const std::array<int16_t,4>& filterControls() const noexcept {return filterModulated;}
     float next(const Parameters& target) {
         selectEngine(target.engine);
         configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs);
@@ -265,14 +268,12 @@ public:
         const float cleanDriven=p.drive<.000001f?cleanInput:std::tanh(cleanInput*(1+p.drive*12))/(1+p.drive*2);
         float driven=legacyDriven+(cleanDriven-legacyDriven)*cleanMix;
         valueActive=target.value246&&!nativeValueVoice&&!nativeTremolo&&!nativeRandom;
-        if(target.punch246||punchActive){
-            for(size_t i=0;i<4;++i){if(!punchActive)punchWords[i]=target.punch246Controls[i];else punchWords[i]+=smoothing*(target.punch246Controls[i]-punchWords[i]);punchRaw[i]=int16_t(std::lround(std::clamp(punchWords[i],0.f,32767.f)));}
-            punchActive=true;follow(punchMix,target.punch246?1.f:0.f);
-            const auto modulated=valueEffect.next(valueActive,target.value246Destination&&target.punch246,target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,punchRaw,phaseConfig.table);
-            const auto processed=punchEffect.next(driven,modulated,phaseConfig.table);driven+=punchMix*(processed-driven);
-            if(!target.punch246&&punchMix<.000001f){punchMix=0;punchActive=false;punchEffect.reset();}
-        }
-        else valueEffect.next(valueActive,false,target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,target.punch246Controls,phaseConfig.table);
+        const bool punchSelected=target.punch246&&!target.filter246;
+        if(punchSelected||punchActive){for(size_t i=0;i<4;++i){if(!punchActive)punchWords[i]=target.punch246Controls[i];else punchWords[i]+=smoothing*(target.punch246Controls[i]-punchWords[i]);punchRaw[i]=int16_t(std::lround(std::clamp(punchWords[i],0.f,32767.f)));}punchActive=true;follow(punchMix,punchSelected?1.f:0.f);}
+        if(target.filter246){for(size_t i=0;i<4;++i){if(!filterControlsInitialized)filterWords[i]=target.filter246Controls[i];else filterWords[i]+=smoothing*(target.filter246Controls[i]-filterWords[i]);filterRaw[i]=int16_t(std::lround(std::clamp(filterWords[i],float(filter246Min[i]),float(filter246Max[i]))));}filterControlsInitialized=true;}else filterControlsInitialized=false;
+        const auto modulated=valueEffect.next(valueActive,target.value246Destination&&(target.filter246||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,target.filter246?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.filter246?5:2);
+        filterModulated=target.filter246?modulated:target.filter246Controls;
+        if(punchActive){const auto processed=punchEffect.next(driven,target.filter246?punchRaw:modulated,phaseConfig.table);driven+=punchMix*(processed-driven);if(!punchSelected&&punchMix<.000001f){punchMix=0;punchActive=false;punchEffect.reset();}}
         const auto lag=std::clamp(size_t(sampleRate*p.delayTime),size_t(1),delay.size()-1);
         const float echo=lag<=delayValid?delay[(write+delay.size()-lag)%delay.size()]:0;
         delay[write]=std::tanh(driven+echo*std::clamp(p.feedback,0.f,.85f)); write=(write+1)%delay.size();if(delayValid<delay.size())++delayValid;
@@ -323,6 +324,7 @@ private:
     DrWave246Config drWaveConfig;bool nativeDrWaveActive=false,drWaveControlsInitialized=false;int selectedEngine=0;
     std::array<float,4> drWaveWords{};std::array<int16_t,4> drWaveRaw{};
     Phase246Config phaseConfig;bool phaseControlsInitialized=false,digitalControlsInitialized=false,nativeEnvelopeActive=false,nativeDigitalActive=false;
+    std::array<float,4> filterWords{};std::array<int16_t,4> filterRaw{},filterModulated{{8000,0,0,24576}};bool filterControlsInitialized=false;
     Punch246Effect punchEffect;float punchMix=0;bool punchActive=false;
     uint32_t randomRng=0x52414e44u;
     Value246Fx valueEffect;bool valueActive=false,valueVoiceActive=false;
