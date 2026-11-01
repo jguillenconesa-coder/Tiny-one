@@ -1,0 +1,53 @@
+{
+  "version": "0.14.0",
+  "date": "2026-11-01",
+  "scope": "Playable Dr. Wave hybrid, verified core unchanged; authored adapters documented",
+  "core_evidence": "Existing DrWave246 reader/wavebank/transform/spectral/kernel and lifecycle fixtures retained",
+  "linux_ctest": {
+    "passed": 63,
+    "total": 63
+  },
+  "integration": [
+    "Synth catalog and engine selection",
+    "Set 1 / set 2 proxies and GUI ranges",
+    "Current state, sound slot and clipboard roundtrip",
+    "Sample-position MIDI and identical output at host blocks 64 and 257",
+    "Release tail reporting"
+  ],
+  "engine": [
+    "A440 tuning and +2 semitone bend at 44100/48000/88200/96000 Hz",
+    "Sustain and release completion",
+    "Six voices, free voice allocation and stealing",
+    "Sixteen control corners and extreme MIDI notes",
+    "Each colour alters output",
+    "Panic and cross-engine voice retirement"
+  ],
+  "realtime": {
+    "workloads": 102,
+    "drwave_workloads": 6,
+    "sample_rates": [
+      48000,
+      96000
+    ],
+    "blocks": [
+      64,
+      128,
+      256
+    ],
+    "tracked_heap_calls": 0,
+    "drwave_first_note_heap_checked": true,
+    "timing": "Diagnostic on shared machine; does not certify realtime deadlines or no dropouts"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "leak": "disabled: LeakSanitizer unavailable under this environment's tracing"
+  },
+  "not_validated": [
+    "Original L1 scheduling and shared workspace",
+    "Hardware acoustic equivalence",
+    "Native Ableton scanning/playback on macOS/Windows",
+    "Historical project migration"
+  ],
+  "factory_presets": "Full original replication deferred; Dr. Wave Init is authored"
+}

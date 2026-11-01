@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.13.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.14.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -52,6 +52,10 @@ add_test(NAME cluster246_routing COMMAND cluster246_routing_tests "${CMAKE_CURRE
 add_executable(cluster246_activation_tests Tests/Cluster246ActivationTests.cpp)
 target_include_directories(cluster246_activation_tests PRIVATE Source)
 add_test(NAME cluster246_activation COMMAND cluster246_activation_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+add_executable(drwave246_hybrid_tests Tests/DrWave246HybridTests.cpp)
+target_include_directories(drwave246_hybrid_tests PRIVATE Source)
+add_test(NAME drwave246_hybrid COMMAND drwave246_hybrid_tests)
+
 add_executable(drwave246_tests Tests/DrWave246Tests.cpp)
 target_include_directories(drwave246_tests PRIVATE Source)
 add_test(NAME drwave246 COMMAND drwave246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")

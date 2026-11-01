@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 33 % del objetivo completo
+## Avance estimado: aproximadamente 35 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,18 +17,18 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 25 % | 7,5 puntos |
+| Motores originales y sus filtros | 30 % | 30 % | 9 puntos |
 | Efectos, envolventes y moduladores | 20 % | 30 % | 6 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **32,5 ≈ 33 %** |
+| Total | 100 % | | **34 ≈ 35 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
 funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch y partes
-de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave/Cluster conservan
+de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave incorpora un motor híbrido tocable; Cluster conserva
 núcleos y dependencias verificadas sin integración completa. El FM actual y
 varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
 fuente del estado por componente y prevalece sobre este resumen orientativo.
@@ -38,19 +38,22 @@ para usuario final y validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: controlador de eventos de instrumento
+## Entrega agrupada actual: Dr. Wave híbrido tocable (0.14.0)
 
-Se unifica el despacho de los selectores 0–4, lookup/pitch explícito, pools
-fríos/listos y cambios de selector con estado retenido. 3.072 eventos originales
-contrastados, 62 suites Linux, sanitizadores y reproducción independiente. Se
-eliminan las copias de despacho de las interfaces anteriores, conservando sus
-regresiones. [Contrato y límites](voice246-instrument-lifecycle.md).
+Se adopta la decisión del propietario: núcleos contrastados y adaptadores propios
+para las dependencias L1 pendientes, buscando máxima semejanza sin esperar una
+captura descifrada. No se prioriza compatibilidad con sesiones anteriores.
+[Guía, adaptadores y límites](drwave246-hybrid.md).
 
-Los buffers, consumidor L1, reloj y salida aún bloquean integrar Dr. Wave como
-motor completo. El porcentaje orientativo permanece alrededor del 33 %; este
-lote no justifica una precisión mayor ni mide equivalencia sonora. El CI del
-lote anterior `bdcda2b` pasó en Linux/macOS/Windows; el nuevo código tiene su
-propia ejecución de CI.
+Nuevo motor con seis voces, cuatro controles originales del núcleo, ADSR,
+bend/sustain, robo de voz, conversión a la tasa del host, interfaz, MIDI y estado.
+Un init propio permite empezar sin adelantar la réplica final de presets. Se
+amplían las pruebas de audio, integración y heap. La estimación sube de ~33 % a
+~35 % por la integración funcional; no cuantifica cuánto se parece acústicamente.
+
+El lote anterior unificó el despacho 0–4 y conservó 3.072 eventos contrastados;
+62 suites y CI Linux/macOS/Windows pasaron en `8612850`. Esa evidencia sigue
+siendo del controlador aislado; el adaptador híbrido no se rebautiza como L1.
 
 ## Entrega anterior: arranque diferido ADSR
 
@@ -78,16 +81,16 @@ más concreto y no se presenta como resuelto. La estimación global no cambia.
 
 ## Próximas entregas amplias
 
-1. **Voz Dr. Wave de principio a fin.** Resolver conjuntamente el productor de
-   pitch, relevo de pendientes ADSR y reloj; contrastar on/off, robo/reutilización,
-   cambios de control, mezcla y salida antes de exponer el motor en el plugin.
-   Los candidatos L1 protegidos requieren evidencia adicional; conservar los
-   bloqueos ya inventariados y no repetir microauditorías sin nueva información.
-   Si no se puede resolver ese tramo, completar un bloque DSP legible con salida
-   y dependencias bien definidas, documentando el cambio de orden.
-2. **Integración tocable y regresión.** Un solo bloque de integración por motor:
-   parámetros/estados existentes, MIDI, tasas, automatización, pánico y callback
-   sin heap. Una validación conjunta antes de generar binarios para usuario.
+1. **Calibración Dr. Wave y reconstrucción híbrida.** Mantener los oráculos del
+   núcleo. Contrastar el instrumento completo con capturas conocidas cuando estén
+   disponibles: pitch, espectro, ganancia, transitorios, controles y tiempos ADSR.
+   Sin capturas, continuar con los núcleos legibles de Cluster y documentar qué
+   coeficientes o rutas siguen siendo aproximaciones. La memoria descifrada ayuda,
+   pero deja de ser un requisito para construir una versión funcional.
+2. **Integración por bloques completos.** Cada motor incluye parámetros, interfaz,
+   MIDI, guardado, tasas, pánico y callback sin heap. Una validación conjunta por
+   lote antes de generar binarios. Mantener la persistencia actual sin dedicar
+   este tramo a migraciones históricas que el usuario no necesita.
 3. **macOS/Windows y Live.** Empaquetar artefactos nativos, completar instalación
    macOS y comprobar scanner, audio, estado, automatización y reapertura de un
    proyecto en Live en ambos sistemas. Solicitar pruebas externas solo para

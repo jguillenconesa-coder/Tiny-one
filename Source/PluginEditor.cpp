@@ -97,7 +97,7 @@ PocketEditor::PocketEditor(PocketProcessor& p) : AudioProcessorEditor(p),process
         b.onClick=[this,i]{if(mainMode==3&&i<4){const int pages[]={4,5,6,7};selectPage(pages[i]);}else if(mainMode==2&&i<4){setParameter("tapeTrack",float(i));selectPage(4);}else {const int pages[]={0,1,3,2,4};selectPage(pages[i]);}};
     }
     addAndMakeVisible(kitEditor);kitEditor.setVisible(false);addAndMakeVisible(kitEditKey);kitEditKey.onClick=[this]{kitOpen=!kitOpen;browserOpen=true;setSize(1200,790);kitEditor.refresh();timerCallback();};
-    addAndMakeVisible(browser);browser.onImportBank=[this]{chooseBank();};browser.onImportSamples=[this]{chooseSamples();};browser.onError=[this](const juce::String& error){showError(error);};browser.onLoaded=[this]{const bool drum=processor.state.getRawParameterValue("engine")->load()>=4;mainMode=drum?1:0;selectPage(0);lastSelectedSound=processor.selectedSound();repaint();};
+    addAndMakeVisible(browser);browser.onImportBank=[this]{chooseBank();};browser.onImportSamples=[this]{chooseSamples();};browser.onError=[this](const juce::String& error){showError(error);};browser.onLoaded=[this]{const bool drum=pocket::isDrumEngine(int(processor.state.getRawParameterValue("engine")->load()));mainMode=drum?1:0;selectPage(0);lastSelectedSound=processor.selectedSound();repaint();};
     addAndMakeVisible(browseKey);browseKey.onClick=[this]{kitOpen=false;kitEditor.setVisible(false);browserOpen=!browserOpen;browser.setVisible(browserOpen);setSize(1200,browserOpen?790:540);};
     for(auto* button:{&splitKey,&liftKey,&dropKey,&undoKey,&sequencerKey,&comKey,&micKey,&metroKey})addAndMakeVisible(*button);
     splitKey.onClick=[this]{doTapeEdit("split");};liftKey.onClick=[this]{doTapeEdit(mainMode>=2?"lift":"copySound");};dropKey.onClick=[this]{doTapeEdit(mainMode>=2?"drop":processor.clipboardKind.load()==2?"pasteSound":"sampler");};undoKey.onClick=[this]{doTapeEdit("undo");};
@@ -148,7 +148,7 @@ PocketEditor::PocketEditor(PocketProcessor& p) : AudioProcessorEditor(p),process
     addAndMakeVisible(tapeSpeed); tapeSpeed.setSliderStyle(juce::Slider::LinearHorizontal); tapeSpeed.setTextBoxStyle(juce::Slider::TextBoxRight,false,38,20);
     tapeSpeed.setTooltip("Tape playback speed: reverse, stop, half or double speed. Recording always runs at x1.");
     speedAttachment=std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(p.state,"tapeSpeed",tapeSpeed);
-    addAndMakeVisible(engine); engine.addItemList({"01 / FM","02 / PHASE","03 / STRING","04 / SAMPLER","05 / DRUM","06 / SAMPLE KIT"},1);
+    addAndMakeVisible(engine); engine.addItemList({"01 / FM","02 / PHASE","03 / STRING","04 / SAMPLER","05 / DRUM","06 / SAMPLE KIT","07 / DR. WAVE"},1);
     engine.setColour(juce::ComboBox::backgroundColourId,juce::Colour(0xff202b2e)); engine.setColour(juce::ComboBox::outlineColourId,juce::Colours::transparentBlack);
     engineAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(p.state,"engine",engine);
     for(auto* s : {&volume,&tempo}) { addAndMakeVisible(*s); s->setSliderStyle(juce::Slider::LinearHorizontal); s->setTextBoxStyle(juce::Slider::TextBoxRight,false,45,20); s->setColour(juce::Slider::textBoxTextColourId,juce::Colour(0xff343b3b)); s->setColour(juce::Slider::textBoxOutlineColourId,juce::Colours::transparentBlack); }
@@ -180,7 +180,7 @@ PocketEditor::PocketEditor(PocketProcessor& p) : AudioProcessorEditor(p),process
     for(auto& button:slotButtons)button.getProperties().set("hardware",true);
     for(auto& button:pageButtons)button.getProperties().set("hardware",true);
     for(auto* button:{&tapeRecord,&sequence,&panic,&octaveDown,&octaveUp,&shiftKey,&helpKey,&tapTempoKey,&splitKey,&liftKey,&dropKey,&sequencerKey,&comKey,&micKey})button->getProperties().set("hardware",true);
-    setOctave(processor.keyboardOctave.load());mainMode=processor.screenTapeMode()?2:processor.screenPage()>=4?3:processor.state.getRawParameterValue("engine")->load()>=4?1:0;selectPage(processor.screenPage()); startTimerHz(30);
+    setOctave(processor.keyboardOctave.load());mainMode=processor.screenTapeMode()?2:processor.screenPage()>=4?3:pocket::isDrumEngine(int(processor.state.getRawParameterValue("engine")->load()))?1:0;selectPage(processor.screenPage()); startTimerHz(30);
 }
 PocketEditor::~PocketEditor() { processor.tapeSpool.store(0);processor.tapeBreak.store(false);processor.tapeChop.store(false);stopTimer(); setLookAndFeel(nullptr); }
 void PocketEditor::resized() {
@@ -206,7 +206,7 @@ void PocketEditor::selectMode(int mode) {
     mainMode=mode;
     if(mode>=2) selectPage(4);
     else {const int engineIndex=int(processor.state.getRawParameterValue("engine")->load());
-        if((mode==1)!=(engineIndex>=4)){juce::String error;if(!processor.loadSound(processor.lastSound(mode==1),error))processor.applyPreset(mode==1?22:0);browser.syncSelection();}
+        if((mode==1)!=(pocket::isDrumEngine(engineIndex))){juce::String error;if(!processor.loadSound(processor.lastSound(mode==1),error))processor.applyPreset(mode==1?22:0);browser.syncSelection();}
         selectPage(0);
     }
 }
@@ -217,7 +217,7 @@ void PocketEditor::showError(const juce::String& message){status.setText(message
 void PocketEditor::showBrowser(int kind){kitOpen=false;kitEditor.setVisible(false);browserOpen=true;browser.setVisible(true);setSize(1200,790);browser.showKind(kind);browser.syncSelection();}
 void PocketEditor::applySoundSlot(int slot) {
     if(mainMode>=2){applyTapeTrick(slot);return;}
-    const bool drums=mainMode==1||processor.state.getRawParameterValue("engine")->load()>=4;
+    const bool drums=mainMode==1||pocket::isDrumEngine(int(processor.state.getRawParameterValue("engine")->load()));
     if(shifted()){if(processor.assignSoundSlot(drums,slot))status.setText("Stored edited sound in "+juce::String(drums?"drum":"synth")+" slot "+juce::String(slot+1),juce::dontSendNotification);else showError("Load a sound before assigning a slot.");shiftKey.setToggleState(false,juce::dontSendNotification);return;}
     juce::String error;if(!processor.recallSoundSlot(drums,slot,error))showError(error);browser.syncSelection();
 }
@@ -237,12 +237,12 @@ void PocketEditor::setOctave(int value) {
     keyboard.setAvailableRange(base,std::min(127,base+23)); keyboard.setLowestVisibleKey(base); keyboard.setKeyPressBaseOctave(base/12);
 }
 void PocketEditor::selectPage(int selected) {
-    page=selected;if(page<4&&mainMode>=2)mainMode=processor.state.getRawParameterValue("engine")->load()>=4?1:0;
+    page=selected;if(page<4&&mainMode>=2)mainMode=pocket::isDrumEngine(int(processor.state.getRawParameterValue("engine")->load()))?1:0;
     for(auto& attachment:attachments)attachment.reset();
     processor.setScreenPage(page,mainMode==2);
     const std::array<std::array<juce::String,4>,8> labels{{{"TONE","COLOR","ENVELOPE","ECHO"},{"ATTACK","DECAY","SUSTAIN","RELEASE"},{"RATE","DEPTH","DESTINATION","SHAPE"},{"DELAY TIME","FEEDBACK","ECHO MIX","DRIVE"},{"TRACK 1","TRACK 2","TRACK 3","TRACK 4"},{"LOW dB","MID dB","HIGH dB","EQ MIX"},{"DRIVE","ECHO MIX","DELAY TIME","FEEDBACK"},{"MASTER","INPUT","REC GAIN","CLICK"}}};
-    lastPhase246=processor.phase246Enabled();lastPhaseEnvelope=processor.phase246EnvelopeEnabled();lastDigital246=processor.digital246Enabled();lastDigitalEnvelope=processor.digital246EnvelopeEnabled();lastPunch246=processor.punch246Enabled();lastValue246=processor.value246Enabled();
-    knobLabels=labels[size_t(page)];if(page==0&&lastPhase246)knobLabels={"SHAPE","PRIMARY GAIN","CONTOUR","CYCLES"};if(page==0&&lastDigital246)knobLabels={"FEEDBACK","RATIO","DETUNE / SYNC","XOR"};if(page==3&&lastPunch246)knobLabels={"FREQUENCY","PUNCH","ROUNDS","POWER"};
+    lastDrWave246=processor.drWave246Enabled();lastPhase246=processor.phase246Enabled();lastPhaseEnvelope=processor.phase246EnvelopeEnabled();lastDigital246=processor.digital246Enabled();lastDigitalEnvelope=processor.digital246EnvelopeEnabled();lastPunch246=processor.punch246Enabled();lastValue246=processor.value246Enabled();
+    knobLabels=labels[size_t(page)];if(page==0&&lastDrWave246)knobLabels={"SHAPE","SPECTRUM","WARP","SPREAD"};if(page==0&&lastPhase246)knobLabels={"SHAPE","PRIMARY GAIN","CONTOUR","CYCLES"};if(page==0&&lastDigital246)knobLabels={"FEEDBACK","RATIO","DETUNE / SYNC","XOR"};if(page==3&&lastPunch246)knobLabels={"FREQUENCY","PUNCH","ROUNDS","POWER"};
     if(page==2&&lastValue246)knobLabels={"SPEED","AMOUNT","FX DESTINATION","TARGET COLOUR"};
     lastValueVoice246=processor.valueVoice246Enabled();if(page==2&&lastValueVoice246)knobLabels={"SPEED","AMOUNT","DESTINATION","TARGET COLOUR"};
     for(size_t i=0;i<4;++i){knobs[i].onValueChange=nullptr;knobs[i].onDragStart=nullptr;knobs[i].onDragEnd=nullptr;auto id=processor.screenParameterId(int(i));
@@ -259,7 +259,8 @@ void PocketEditor::selectPage(int selected) {
     timerCallback();
 }
 void PocketEditor::timerCallback() {
-    if(page!=processor.screenPage()||(page==4&&(mainMode==2)!=processor.screenTapeMode())){mainMode=processor.screenTapeMode()?2:processor.screenPage()>=4?3:processor.state.getRawParameterValue("engine")->load()>=4?1:0;selectPage(processor.screenPage());return;}
+    if(page!=processor.screenPage()||(page==4&&(mainMode==2)!=processor.screenTapeMode())){mainMode=processor.screenTapeMode()?2:processor.screenPage()>=4?3:pocket::isDrumEngine(int(processor.state.getRawParameterValue("engine")->load()))?1:0;selectPage(processor.screenPage());return;}
+    if(lastDrWave246!=processor.drWave246Enabled()){lastDrWave246=processor.drWave246Enabled();if(page<2){selectPage(page);return;}}
     if(lastPhase246!=processor.phase246Enabled()){lastPhase246=processor.phase246Enabled();if(page==0){selectPage(page);return;}}
     if(lastPhaseEnvelope!=processor.phase246EnvelopeEnabled()){lastPhaseEnvelope=processor.phase246EnvelopeEnabled();if(page==1){selectPage(page);return;}}
     if(lastDigital246!=processor.digital246Enabled()){lastDigital246=processor.digital246Enabled();if(page==0){selectPage(page);return;}}
@@ -278,8 +279,8 @@ void PocketEditor::timerCallback() {
     const char* legends[]={"IN","OUT","LOOP","BREAK","REV","CHOP","MEM1","MEM2"};for(int i=0;i<8;++i){slotButtons[size_t(i)].getProperties().set("legend",tapeMode?legends[i]:"");slotButtons[size_t(i)].setTooltip(tapeMode?juce::String(legends[i])+" / Shift: alternate action":"Sound slot "+juce::String(i+1)+". Shift-click stores the edited sound.");}
     loadSample.setVisible(mainMode<2&&e==3); loopSample.setVisible(mainMode<2&&e==3);
     if(page==4&&mainMode==2&&!knobs[0].isMouseButtonDown())knobs[0].setValue(processor.tapePosition.load(),juce::dontSendNotification);
-    if(page==0) {knobLabels[0]=lastDigital246?"FEEDBACK":lastPhase246?"SHAPE":e==3?"START":"TONE"; knobLabels[1]=lastDigital246?"RATIO":lastPhase246?"GAIN":e==3?"LENGTH":"COLOR";}
-    const int activeMode=mainMode>=2?mainMode:e>=4?1:0;
+    if(page==0) {knobLabels[0]=lastDrWave246?"SHAPE":lastDigital246?"FEEDBACK":lastPhase246?"SHAPE":e==3?"START":"TONE"; knobLabels[1]=lastDrWave246?"SPECTRUM":lastDigital246?"RATIO":lastPhase246?"GAIN":e==3?"LENGTH":"COLOR";}
+    const int activeMode=mainMode>=2?mainMode:pocket::isDrumEngine(e)?1:0;
     for(int i=0;i<4;++i) modeButtons[size_t(i)].setColour(juce::TextButton::buttonColourId,i==activeMode?juce::Colour(0xffbed0dc):juce::Colour(0xffdbe1e9));
     for(size_t i=0;i<16;++i) {
         stepButtons[i].setVisible(showSequence||shifted());
@@ -351,8 +352,9 @@ void PocketEditor::paint(juce::Graphics& g) {
     frame.tone=get("tone");frame.color=get("color");frame.attack=get("attack");frame.decay=get("decay");frame.sustain=get("sustain");frame.release=get("release");frame.lfoRate=get("lfoRate");frame.lfoShape=int(get("lfoShape"));frame.delay=get("delayTime");frame.feedback=get("delayFeedback");
     if(frame.value246){const auto speed=int(processor.phaseParameters().getRawParameterValue("value246Speed")->load());const auto tempo=pocket::reference::value246Tempo(processor.effectiveTempo.load());frame.lfoRate=float(pocket::reference::value246Increment(int16_t(speed),tempo)/4294967296.*44100/64);frame.lfoShape=0;frame.valueColour=int(processor.phaseParameters().getRawParameterValue("value246Colour")->load());frame.valueDestination=processor.phaseParameters().getRawParameterValue("value246Destination")->load()>.5f&&frame.punch246;}
     if(frame.valueVoice){const auto speed=int(processor.phaseParameters().getRawParameterValue("valueVoice246Speed")->load());frame.lfoRate=float(pocket::reference::value246Increment(int16_t(speed),pocket::reference::value246Tempo(processor.effectiveTempo.load()))/4294967296.*44100/64);frame.valueColour=int(processor.phaseParameters().getRawParameterValue("valueVoice246Colour")->load());frame.valueEnvelope=processor.phaseParameters().getRawParameterValue("valueVoice246Destination")->load()>.5f;frame.valueDestination=!frame.valueEnvelope||processor.phase246EnvelopeEnabled()||processor.digital246EnvelopeEnabled();}
+    frame.drWave246=processor.drWave246Enabled();if(frame.drWave246){frame.tone=processor.phaseParameters().getParameter(pocket::drWave246Ids[0])->getValue();frame.color=processor.phaseParameters().getParameter(pocket::drWave246Ids[1])->getValue();frame.phaseEnvelope=true;frame.attack=processor.phaseParameters().getParameter("drWave246Attack")->getValue();frame.decay=processor.phaseParameters().getParameter("drWave246Decay")->getValue();frame.sustain=processor.phaseParameters().getParameter("drWave246Sustain")->getValue();frame.release=1-processor.phaseParameters().getParameter("drWave246Release")->getValue();}
     frame.phase246=processor.phase246Enabled();if(frame.phase246){frame.tone=processor.phaseParameters().getParameter(pocket::phase246Ids[0])->getValue();frame.color=processor.phaseParameters().getParameter(pocket::phase246Ids[1])->getValue();}
-    frame.phaseEnvelope=processor.phase246EnvelopeEnabled();if(frame.phaseEnvelope){frame.attack=processor.phaseParameters().getParameter("phase246Attack")->getValue();frame.decay=processor.phaseParameters().getParameter("phase246Decay")->getValue();frame.sustain=processor.phaseParameters().getParameter("phase246Sustain")->getValue();frame.release=1-processor.phaseParameters().getParameter("phase246Release")->getValue();}
+    frame.phaseEnvelope=frame.drWave246||processor.phase246EnvelopeEnabled();if(processor.phase246EnvelopeEnabled()){frame.attack=processor.phaseParameters().getParameter("phase246Attack")->getValue();frame.decay=processor.phaseParameters().getParameter("phase246Decay")->getValue();frame.sustain=processor.phaseParameters().getParameter("phase246Sustain")->getValue();frame.release=1-processor.phaseParameters().getParameter("phase246Release")->getValue();}
     frame.digital246=processor.digital246Enabled();if(frame.digital246){frame.tone=processor.phaseParameters().getParameter(pocket::digital246Ids[0])->getValue();frame.color=processor.phaseParameters().getParameter(pocket::digital246Ids[1])->getValue();}
     if(processor.digital246EnvelopeEnabled()){frame.phaseEnvelope=true;frame.attack=processor.phaseParameters().getParameter("digital246Attack")->getValue();frame.decay=processor.phaseParameters().getParameter("digital246Decay")->getValue();frame.sustain=processor.phaseParameters().getParameter("digital246Sustain")->getValue();frame.release=1-processor.phaseParameters().getParameter("digital246Release")->getValue();}
     for(size_t i=0;i<128;++i)frame.sample[i]=processor.samplePreview[i].load(std::memory_order_relaxed);

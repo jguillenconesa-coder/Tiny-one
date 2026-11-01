@@ -1,4 +1,4 @@
-# Plan activo: reconstrucción del DSP del firmware
+# Plan activo: reconstrucción híbrida del instrumento
 
 **Prioridad acordada: motores, filtros, envolventes y moduladores originales.**
 Los presets, bancos, recetas del manual y la comparación con vídeos pasan a una
@@ -13,6 +13,16 @@ cambios automáticos de configuración del entorno. Se agrupan dependencias,
 composición y regresión en entregas amplias; no se pide intervención por cada
 oráculo. [Estado, estimación y próximos lotes](project-status.md). Las reservas
 históricas de otra cuenta deben contrastarse con trabajo remoto actual.
+
+## Decisión vigente: método híbrido
+
+El propietario autoriza una versión funcional lo más parecida posible al
+original sin esperar L1 descifrada. Usar núcleos contrastados donde existen y
+adaptadores propios explícitos en lo que falta. No se priorizan migraciones de
+sesiones históricas. La memoria protegida conserva sus bloqueos documentados,
+pero no bloquea la integración tocable. [Dr. Wave integrado](drwave246-hybrid.md).
+Esta decisión sustituye el requisito anterior de verificar todas las dependencias
+antes de integrar un motor; no reduce la exigencia de describir su procedencia.
 
 ## Un componente activo y criterios de cierre
 
@@ -30,10 +40,10 @@ concreta; no se rellena con constantes o algoritmos supuestamente originales.
 4. **Reconstrucción:** implementar el bloque C++ independiente y comprobar su
    coincidencia. Repetir el oráculo en otro directorio privado y ejecutar pruebas
    Linux/Windows y sanitizadores aplicables.
-5. **Integración:** introducir el bloque en el motor de audio cuando sus
-   dependencias estén verificadas. Comprobar asignación de voces, orden/cadencia,
+5. **Integración:** introducir el bloque en el motor de audio con sus
+   dependencias verificadas o adaptadores propios documentados. Comprobar asignación de voces, orden/cadencia,
    cambios de controles, tasas, note-off/pánico y ausencia de asignaciones en el
-   callback. Conservar IDs de automatización/MIDI y sesiones anteriores.
+   callback. Probar controles MIDI y persistencia de sesiones actuales.
 6. **Distribución:** generar instaladores cuando cambie el instrumento ejecutable.
    Una prueba de núcleo aislado no se presenta como un motor completo instalado.
 
