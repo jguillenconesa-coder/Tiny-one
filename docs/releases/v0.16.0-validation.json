@@ -77,7 +77,11 @@
     "undefined": "pass",
     "leak": "disabled because this traced environment does not support LeakSanitizer"
   },
-  "native_builds_and_macos_package": "This commit CI; Linux verification does not certify native packaging",
+  "native_builds_and_macos_package": {
+    "run": 41339832399,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41339832399",
+    "observed": "Linux passed; Windows in progress; macOS queued"
+  },
   "not_validated": [
     "Full original control clock and shared scheduling",
     "Hardware acoustic equivalence",
@@ -91,6 +95,10 @@
     "macos_build_and_tests": "passed; only package lipo argument order failed",
     "previous_binaries": "arm64/x86_64 Mach-O fat headers independently inspected",
     "fix": "lipo input before -verify_arch",
-    "repack": "Manual workflow reuses binaries and reads their real bundle version; native verification pending dispatch"
+    "repack": {
+      "run": 41339868716,
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41339868716",
+      "observed": "Dispatched; queued waiting for macOS runner, no native package result yet"
+    }
   }
 }

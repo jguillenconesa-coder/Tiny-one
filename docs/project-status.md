@@ -52,6 +52,11 @@ identidades MIDI con editor cerrado, sesiones, slots/clipboard y cola Release.
 65 suites Linux, 132 cargas de callback y sanitizadores. La estimación pasa a
 ~37 % por la ampliación funcional y numérica, no por parecido acústico medido.
 El CI propio valida binarios/paquetes nativos; Live real sigue pendiente.
+El CI 0.15 pasó compilación/suites en los tres sistemas y falló solo el paquete
+macOS por argumentos de `lipo`. Se corrige y se lanza el reempaquetado sin compilar
+(run 41339868716), aún en cola macOS. El CI 0.16 (41339832399) ya pasa Linux;
+Windows sigue ejecutándose y macOS espera runner. No se da el paquete por validado
+hasta tener su resultado nativo.
 
 ## Entrega anterior: Cluster híbrido y macOS universal (0.15.0)
 
