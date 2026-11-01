@@ -60,3 +60,6 @@ faltan, los modos mono/legato originales y la validación en Ableton real siguen
 pendientes. Un build universal no demuestra por sí solo que Live acepte o ejecute
 correctamente el VST3. Esta entrega no necesita una memoria descifrada para ser
 tocable, pero tampoco resuelve el cifrado.
+
+Desde 0.17, set 2 añade [Poly/Mono/Legato y Glide](hybrid-performance.md).
+Son políticas propias; no resuelven los modos originales L1.

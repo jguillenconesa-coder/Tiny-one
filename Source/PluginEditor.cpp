@@ -119,6 +119,13 @@ PocketEditor::PocketEditor(PocketProcessor& p) : AudioProcessorEditor(p),process
     addAndMakeVisible(digitalEnvelope);digitalEnvelope.setClickingTogglesState(true);digitalEnvelope.setColour(juce::TextButton::buttonOnColourId,juce::Colour(0xffb5dce8));digitalEnvelope.setColour(juce::TextButton::textColourOnId,juce::Colour(0xff263e53));digitalEnvelope.setTooltip("Reconstructed rev246 ADSR. Set 2 follows the four stored envelope words. FX/LFO/mixing remain our implementation.");digitalEnvelopeAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(p.phaseParameters(),"digital246Envelope",digitalEnvelope);
 
     addAndMakeVisible(cleanSample);cleanSample.setClickingTogglesState(true);cleanSample.setTooltip("Neutral sample/kit playback: bypass the implicit tone filter and dry saturation. Explicit effects remain active.");cleanAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(p.state,"sampleClean",cleanSample);
+    addAndMakeVisible(hybridVoiceMode);hybridVoiceMode.setComponentID("hybrid-voice-mode");hybridVoiceMode.addItemList({"POLY","MONO","LEGATO"},1);
+    hybridVoiceMode.setTooltip("Dr. Wave / Cluster voice mode. Mono retriggers; Legato preserves the envelope on overlapping notes. Last held note takes priority. Changing mode clears held voices.");
+    hybridModeAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(p.phaseParameters(),"hybridVoiceMode",hybridVoiceMode);
+    addAndMakeVisible(hybridGlide);hybridGlide.setComponentID("hybrid-glide");hybridGlide.setSliderStyle(juce::Slider::LinearHorizontal);hybridGlide.setTextBoxStyle(juce::Slider::TextBoxRight,false,57,26);hybridGlide.setTextValueSuffix(" ms");hybridGlide.setColour(juce::Slider::textBoxTextColourId,juce::Colour(0xff263e53));
+    hybridGlide.setTooltip("Glide time between overlapping notes in Mono / Legato, 0-2000 ms. Isolated notes start at their own pitch.");
+    hybridGlideAttachment=std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(p.phaseParameters(),"hybridGlideMs",hybridGlide);
+    addAndMakeVisible(hybridGlideLabel);hybridGlideLabel.setText("GLIDE",juce::dontSendNotification);hybridGlideLabel.setFont(juce::FontOptions(11));hybridGlideLabel.setColour(juce::Label::textColourId,juce::Colour(0xff536c80));
     addAndMakeVisible(status);status.setColour(juce::Label::textColourId,juce::Colour(0xff536c80));status.setFont(juce::FontOptions(11));
     for(auto pair:{std::pair{&loopSample,"sampleLoop"},{&tapePlay,"tapePlay"},{&tapeRecord,"tapeRecord"},{&overdub,"tapeOverdub"}}) {
         addAndMakeVisible(*pair.first); pair.first->setClickingTogglesState(true);
@@ -199,6 +206,7 @@ void PocketEditor::resized() {
     engine.setBounds(600,452,169,27);tempo.setBounds(785,452,178,27);loadSample.setBounds(980,452,77,27);loopSample.setBounds(1066,452,80,27);
     tapeTrack.setBounds(602,452,80,27);tapeLength.setBounds(686,452,75,27);tapeSpeed.setBounds(769,452,135,27);
     tapePlay.setBounds(912,452,45,27);overdub.setBounds(963,452,49,27);clear.setBounds(1018,452,55,27);exportTape.setBounds(1079,452,67,27);
+    hybridVoiceMode.setBounds(690,487,130,26);hybridGlideLabel.setBounds(823,487,45,26);hybridGlide.setBounds(868,487,122,26);
     rewind.setVisible(false);browser.setBounds(18,516,1164,262);status.setBounds(35,490,465,23);punch246.setBounds(520,487,150,26);value246.setBounds(520,487,150,26);valueFree.setBounds(860,487,130,26);valueVoice246.setBounds(690,487,160,26);valueVoiceFree.setBounds(860,487,130,26);cleanSample.setBounds(690,487,150,26);phase246.setBounds(690,487,160,26);phaseEnvelope.setBounds(860,487,130,26);digital246.setBounds(690,487,160,26);digitalEnvelope.setBounds(860,487,130,26);kitEditKey.setBounds(850,487,140,26);kitEditor.setBounds(18,516,1164,262);sequenceSettings.setBounds(1000,487,146,26);
 }
 void PocketEditor::selectMode(int mode) {
@@ -211,7 +219,7 @@ void PocketEditor::selectMode(int mode) {
     }
 }
 bool PocketEditor::shifted() const {return shiftKey.getToggleState()||juce::ModifierKeys::getCurrentModifiers().isShiftDown();}
-int PocketEditor::getControlParameterIndex(juce::Component& control){for(int i=0;i<4;++i)if(&control==&knobs[size_t(i)])return processor.screenKnob(i).getParameterIndex();return -1;}
+int PocketEditor::getControlParameterIndex(juce::Component& control){if(&control==&hybridVoiceMode)return processor.phaseParameters().getParameter("hybridVoiceMode")->getParameterIndex();if(&control==&hybridGlide)return processor.phaseParameters().getParameter("hybridGlideMs")->getParameterIndex();for(int i=0;i<4;++i)if(&control==&knobs[size_t(i)])return processor.screenKnob(i).getParameterIndex();return -1;}
 void PocketEditor::setParameter(const char* id,float value){auto* p=processor.state.getParameter(id);p->beginChangeGesture();p->setValueNotifyingHost(p->convertTo0to1(value));p->endChangeGesture();}
 void PocketEditor::showError(const juce::String& message){status.setText(message,juce::dontSendNotification);}
 void PocketEditor::showBrowser(int kind){kitOpen=false;kitEditor.setVisible(false);browserOpen=true;browser.setVisible(true);setSize(1200,790);browser.showKind(kind);browser.syncSelection();}
@@ -273,6 +281,9 @@ void PocketEditor::timerCallback() {
     processor.updateKeyboardDisplay();
     const int e=int(processor.state.getRawParameterValue("engine")->load());
     punch246.setVisible(mainMode<2&&page!=2);value246.setVisible(mainMode<2&&page==2);valueFree.setVisible(mainMode<2&&page==2&&processor.value246Enabled());valueVoice246.setVisible(mainMode<2&&page==2);valueVoice246.setEnabled(processor.valueVoice246Available());valueVoiceFree.setVisible(mainMode<2&&page==2&&processor.valueVoice246Enabled());cleanSample.setVisible(mainMode<2&&page!=2&&(e==3||e==5));phase246.setVisible(mainMode<2&&page!=2&&e==1);phaseEnvelope.setVisible(mainMode<2&&page!=2&&processor.phase246Enabled());digital246.setVisible(mainMode<2&&page!=2&&e==0);digitalEnvelope.setVisible(mainMode<2&&page!=2&&processor.digital246Enabled());
+    const bool showPerformance=mainMode<2&&page==1&&pocket::isHybridEngine(e);
+    hybridVoiceMode.setVisible(showPerformance);hybridGlide.setVisible(showPerformance);hybridGlideLabel.setVisible(showPerformance);
+    hybridGlide.setEnabled(processor.phaseParameters().getRawParameterValue("hybridVoiceMode")->load()>0);
     const bool showKit=kitOpen&&e==5&&mainMode<2;kitEditor.setVisible(showKit);if(showKit)kitEditor.refresh();browser.setVisible(browserOpen&&!showKit);kitEditKey.setVisible(e==5&&mainMode<2&&page!=2);
     micKey.setButtonText(processor.inputCapturing.load()?"REC":processor.state.getRawParameterValue("inputMonitor")->load()>.5f?"IN ON":"IN");
     const auto selected=processor.selectedSound();if(selected!=lastSelectedSound){lastSelectedSound=selected;browser.syncSelection();}

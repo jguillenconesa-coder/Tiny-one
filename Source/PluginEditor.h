@@ -68,6 +68,11 @@ private:
     juce::TextButton digital246{"DIGITAL 246 CORE"},digitalEnvelope{"246 ENVELOPE"};
     juce::TextButton cleanSample{"CLEAN SAMPLE"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> cleanAttachment;
+    juce::ComboBox hybridVoiceMode;
+    juce::Slider hybridGlide;
+    juce::Label hybridGlideLabel;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> hybridModeAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> hybridGlideAttachment;
     juce::Label status;
     juce::TextButton sequenceSettings{"SEQ SETTINGS"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> metroAttachment;

@@ -61,3 +61,6 @@ permite corregir adaptadores sin alterar un núcleo ya contrastado. Si no hay
 capturas, continuar con los bloques legibles de Cluster y sus límites explícitos;
 no certificar fidelidad acústica por inspección del código. La réplica completa
 de presets sigue reservada para la etapa final.
+
+Desde 0.17, set 2 añade [Poly/Mono/Legato y Glide](hybrid-performance.md).
+Son políticas propias; no resuelven los modos originales L1.

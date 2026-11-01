@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.17.0
+
+- Mono/Legato y glide de 0–2000 ms para Dr. Wave y Cluster, disponibles en set 2.
+- Prioridad de última nota y fallback, bend/sustain por canal y limpieza de notas.
+- Automatización, controles de interfaz y persistencia en sesión/slots/clipboard.
+- Adaptador propio; núcleos y oráculos sin cambios. [Guía](hybrid-performance.md).
+
 ## 0.13.0
 
 - Value 246 por voz para Phase/Digital y ADSR: 4.096 estados/display/buffers contrastados.

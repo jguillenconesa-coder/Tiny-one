@@ -1,8 +1,10 @@
-# Pocket One 0.16.0
+# Pocket One 0.17.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.17.0 adds **[Mono, Legato and Glide for Dr. Wave / Cluster](docs/hybrid-performance.md)**. On **set 2**, choose the voice mode and 0–2000 ms portamento. Last-note priority, per-channel sustain/bend, automation and session/slot/clipboard persistence. These are authored performance adapters; the verified DSP cores remain unchanged.
 
 Version 0.16.0 extends **[Value Voice to Dr. Wave and Cluster](docs/value-hybrid246-native.md)**: independent modulation of all four instrument controls or ADSR, verified routing/ranges, tempo/free rate and FREE phase. Enable **set 4 → VALUE 246 VOICE**.
 
@@ -12,7 +14,7 @@ Version 0.14.0 adds a playable six-voice **[Dr. Wave hybrid](docs/drwave246-hybr
 
 Version 0.13.0 adds **[Value 246 Voice](docs/value-voice246-native.md)**: independent per-voice modulation of Phase/Digital controls or common ADSR. Five additional studies reuse the set-4 MIDI knobs; old FX parameters, mappings and projects are preserved. Other engines/routes and hardware matching remain pending; [full coverage](docs/original-op1-coverage.md).
 
-**Active work: firmware DSP reconstruction.** [Dr. Wave's complete isolated render](docs/drwave246-kernel.md) connects controls, spectral mixing, wave updates and five oscillators, matching 61,568 original simulated samples. External scheduling, allocation/pitch/ADSR, output and integration remain pending. The [component workplan](docs/firmware-dsp-workplan.md) retains [Cluster's](docs/cluster246-kernel.md) normalization, tuning and L1 handoff blockers. Presets and sample banks remain deferred.
+**Active work: hybrid instrument reconstruction.** [Dr. Wave](docs/drwave246-hybrid.md) and [Cluster](docs/cluster246-hybrid.md) are playable six-voice engines with ADSR, Value and performance modes. Their verified cores retain documented authored adapters for scheduling, voice/output and unrecovered L1 dependencies. See the [component workplan](docs/firmware-dsp-workplan.md) and [current status](docs/project-status.md). Complete original presets remain deferred.
 
 **Dr. Wave voices:** [Core factory and events verified](docs/drwave246-core-routing.md) against another 61,568 samples and pre-render voice pools. [VoiceCtl activation](docs/drwave246-note-activation.md) adds pitch, velocity and activity with explicit tuning and another 61,568 samples. Engine release does not replace the pending common ADSR route.
 

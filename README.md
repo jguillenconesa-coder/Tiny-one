@@ -1,12 +1,14 @@
-# Pocket One 0.16.0
+# Pocket One 0.17.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.16.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.17.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
+
+**Nuevo en 0.17.0:** [Mono, Legato y Glide para Dr. Wave / Cluster](docs/hybrid-performance.md). En **set 2**, selecciona el modo de voz y el portamento de 0–2000 ms. Prioridad de última nota, sustain/bend por canal, automatización y guardado; adaptadores propios, con los núcleos contrastados intactos.
 
 **Nuevo en 0.16.0:** [Value por voz para Dr. Wave y Cluster](docs/value-hybrid246-native.md), sobre sus cuatro controles o ADSR, con rangos/ruteo contrastados. Actívalo en **set 4 → VALUE 246 VOICE**.
 
@@ -16,7 +18,7 @@
 
 **Nuevo en 0.13.0:** [Value 246 Voice](docs/value-voice246-native.md), modulación por voz de los cuatro controles Phase/Digital o de su ADSR. Cinco variantes adicionales, con los mismos mandos MIDI del set 4 y estados antiguos conservados. [Cobertura completa y pendientes](docs/original-op1-coverage.md).
 
-**Trabajo activo: DSP del firmware.** [Dr. Wave conecta su render aislado completo](docs/drwave246-kernel.md): controles, mezcla espectral, actualización de ondas y cinco osciladores coinciden con 61.568 muestras originales simuladas. Faltan cadencia externa, asignación/pitch/ADSR, salida e integración. [Plan por componentes](docs/firmware-dsp-workplan.md); [Cluster](docs/cluster246-kernel.md) conserva sus bloqueos de normalización, afinación y relevo L1. Presets y bancos de samples siguen aplazados.
+**Trabajo activo: reconstrucción híbrida del instrumento.** [Dr. Wave](docs/drwave246-hybrid.md) y [Cluster](docs/cluster246-hybrid.md) ya son tocables con seis voces, ADSR, Value y modos de interpretación. Se conservan sus núcleos contrastados; reloj, voz/salida y las dependencias L1 sin recuperar usan adaptadores propios documentados. [Plan por componentes](docs/firmware-dsp-workplan.md) y [estado actual](docs/project-status.md). Los presets originales completos siguen aplazados.
 
 **Voces de Dr. Wave:** [factoría y eventos Core contrastados](docs/drwave246-core-routing.md) con otras 61.568 muestras y pools previos al render. La [activación VoiceCtl](docs/drwave246-note-activation.md) añade pitch, velocidad y actividad con afinación explícita y otras 61.568 muestras. El release de motor no sustituye al ADSR común pendiente.
 

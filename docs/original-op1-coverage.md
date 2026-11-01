@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.16.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.17.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -99,7 +99,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Random / Tremolo | Pendientes los originales. Hay LFO propio seno/triángulo/cuadrado. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
-| Poly / mono / legato / unison / portamento | Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
+| Poly / mono / legato / unison / portamento | [Mono/Legato y glide propios para Dr. Wave/Cluster](hybrid-performance.md), con prioridad de última nota y sustain/bend por canal. No implementan los modos originales ni unison. Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
 | Octavas del teclado | Interfaz ampliada a −4…+4, guardada en sesión/slot/clipboard, limitada a notas MIDI 0–127. No altera MIDI externo ni implementa aún octave de todos los patches originales. |
 | Secuenciadores | Secuenciación/arpegios propios disponibles; Endless, Pattern, Finger, Tombola, Sketch y Crank originales requieren revisión individual. Tombola bloquea completar Singing Birds. |
 | Cinta y mezcla | Cuatro pistas y edición propias; no se afirma equivalencia completa de longitud, varispeed, tape tricks, pan y dinámica originales. |
@@ -130,9 +130,10 @@ presets originales supuestamente reproducidos en el navegador.
 
 ## Orden de trabajo verificable
 
-1. Verificar cadencia externa y contrato de integración de Dr. Wave. Cluster queda pendiente
-   de sus tres normalizaciones, afinación y relevo L1; integrar cada motor solo
-   cuando estén verificadas sus dependencias.
+1. Calibrar Dr. Wave y Cluster híbridos frente a capturas con ajustes conocidos,
+   cuando estén disponibles. Mantener explícitos reloj, normalizaciones, afinación
+   y relevo L1 pendientes; la decisión vigente permite adaptadores propios para
+   integrar sin esperar a descifrar esas dependencias.
 2. Continuar los motores y sus filtros/rutas internas por dependencias, con tablas,
    muestras y estado completo contrastados antes de cada integración.
 3. Completar envolventes auxiliares/específicas, moduladores y destinos pendientes,

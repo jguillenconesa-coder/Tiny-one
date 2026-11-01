@@ -81,6 +81,8 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     const char* clusterEnvelopeNames[]={"Cluster: Envelope Attack","Cluster: Envelope Decay","Cluster: Envelope Sustain","Cluster: Envelope Release"};
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::cluster246Ids[i],1},clusterNames[i],pocket::reference::cluster246ControlMin[i],pocket::reference::cluster246ControlMax[i],pocket::cluster246Defaults[i]));
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::cluster246EnvelopeIds[i],1},clusterEnvelopeNames[i],0,i==2?32767:16383,envelopeDefaults[i]));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"hybridVoiceMode",1},"Hybrid: Voice Mode",juce::StringArray{"Poly","Mono","Legato"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"hybridGlideMs",1},"Hybrid: Glide Time (ms)",juce::NormalisableRange<float>{0,2000,1,.4f},0));
     phaseState=std::make_unique<juce::AudioProcessorValueTreeState>(*this,nullptr,"Phase246",std::move(phaseLayout));
     phaseAudio[0]=phaseState->getRawParameterValue("phase246Enabled");for(size_t i=0;i<4;++i)phaseAudio[i+1]=phaseState->getRawParameterValue(pocket::phase246Ids[i]);
     phaseAudio[5]=phaseState->getRawParameterValue("phase246Envelope");for(size_t i=0;i<4;++i)phaseAudio[i+6]=phaseState->getRawParameterValue(pocket::phase246EnvelopeIds[i]);
@@ -91,6 +93,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     phaseAudio[31]=phaseState->getRawParameterValue("valueVoice246Enabled");for(size_t i=0;i<4;++i)phaseAudio[i+32]=phaseState->getRawParameterValue(pocket::valueVoice246Ids[i]);phaseAudio[36]=phaseState->getRawParameterValue("valueVoice246Free");
     for(size_t i=0;i<4;++i){phaseAudio[45+i]=phaseState->getRawParameterValue(pocket::cluster246Ids[i]);phaseAudio[49+i]=phaseState->getRawParameterValue(pocket::cluster246EnvelopeIds[i]);}
     for(size_t i=0;i<4;++i){phaseAudio[37+i]=phaseState->getRawParameterValue(pocket::drWave246Ids[i]);phaseAudio[41+i]=phaseState->getRawParameterValue(pocket::drWave246EnvelopeIds[i]);}
+    phaseAudio[53]=phaseState->getRawParameterValue("hybridVoiceMode");phaseAudio[54]=phaseState->getRawParameterValue("hybridGlideMs");
     setScreenPage(0);
     for(int pad=0;pad<pocket::kitCapacity;++pad){const char* ids[]={"start","end","gain","pitch","reverse","gated"};for(int i=0;i<6;++i)padParameters[size_t(pad)][size_t(i)]=state.getRawParameterValue(padParameterId(pad,ids[i]));}
     keyboard.addListener(this);
@@ -266,10 +269,13 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     if(previousSeqMode!=seqMode){engine.allNotesOff();seqNote=-1;sequenceNote.store(-1);lastHostStep=INT64_MIN;previousSeqMode=seqMode;}
     if(panicRequested.exchange(false)) {engine.reset();if(panicOutputRequested.exchange(false))resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);}
     engine.selectEngine(int(get(Param::engine)));
+    const int hybridMode=int(phaseAudio[53]->load(std::memory_order_relaxed));
+    const float hybridGlide=phaseAudio[54]->load(std::memory_order_relaxed);
+    engine.configureHybridPerformance(hybridMode,hybridGlide);
     pocket::NoteEvent key;
     if(keyboardOverflow.exchange(false)) {engine.allNotesOff();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);for(int i=0;i<1024&&uiToAudio.pop(key);++i) {}keyboardDisplayReset.store(true);}
     for(int i=0;i<1024&&uiToAudio.pop(key);++i) {heldNotes.set(key.channel,key.note,key.on);if(key.on){if(!arp)engine.noteOn(key.note,key.velocity,key.channel);lastNote.store(key.note);}else if(!arp)engine.noteOff(key.note,key.channel);}
-    pocket::Parameters p;
+    pocket::Parameters p;p.hybridVoiceMode=hybridMode;p.hybridGlideMs=hybridGlide;
     for(size_t i=0;i<4;++i){p.drWave246Controls[i]=int16_t(phaseAudio[37+i]->load(std::memory_order_relaxed));p.drWave246Adsr[i]=int16_t(phaseAudio[41+i]->load(std::memory_order_relaxed));}
     for(size_t i=0;i<4;++i){p.cluster246Controls[i]=int16_t(phaseAudio[45+i]->load(std::memory_order_relaxed));p.cluster246Adsr[i]=int16_t(phaseAudio[49+i]->load(std::memory_order_relaxed));}
     p.phase246=phaseAudio[0]->load(std::memory_order_relaxed)>.5f;for(size_t i=0;i<4;++i)p.phase246Controls[i]=int16_t(phaseAudio[i+1]->load(std::memory_order_relaxed));
@@ -437,6 +443,7 @@ void PocketProcessor::applyPreset(int index) {
     phaseState->getParameter("punch246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("value246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("valueVoice246Enabled")->setValueNotifyingHost(0);
+    for(const char* id:{"hybridVoiceMode","hybridGlideMs"})phaseState->getParameter(id)->setValueNotifyingHost(0);
     const auto& p=pocket::factoryPresets[size_t(index)];
     // Decode factory assets off the audio thread; only swap under the callback lock.
     if(p.sample>=0) {
@@ -540,7 +547,7 @@ void PocketProcessor::getStateInformation(juce::MemoryBlock& dest) {
 }
 juce::ValueTree PocketProcessor::normalizedPhaseState(juce::ValueTree tree) const {
     if(!tree.isValid())tree=juce::ValueTree("Phase246");
-    const char* ids[]={"phase246Enabled","phase246Blue","phase246Green","phase246White","phase246Orange","phase246Envelope","phase246Attack","phase246Decay","phase246Sustain","phase246Release","digital246Enabled","digital246Blue","digital246Green","digital246White","digital246Orange","digital246Envelope","digital246Attack","digital246Decay","digital246Sustain","digital246Release","punch246Enabled","punch246Blue","punch246Green","punch246White","punch246Orange","value246Enabled","value246Speed","value246Amount","value246Destination","value246Colour","value246Free","valueVoice246Enabled","valueVoice246Speed","valueVoice246Amount","valueVoice246Destination","valueVoice246Colour","valueVoice246Free","drWave246Blue","drWave246Green","drWave246White","drWave246Orange","drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release","cluster246Blue","cluster246Green","cluster246White","cluster246Orange","cluster246Attack","cluster246Decay","cluster246Sustain","cluster246Release"};
+    const char* ids[]={"phase246Enabled","phase246Blue","phase246Green","phase246White","phase246Orange","phase246Envelope","phase246Attack","phase246Decay","phase246Sustain","phase246Release","digital246Enabled","digital246Blue","digital246Green","digital246White","digital246Orange","digital246Envelope","digital246Attack","digital246Decay","digital246Sustain","digital246Release","punch246Enabled","punch246Blue","punch246Green","punch246White","punch246Orange","value246Enabled","value246Speed","value246Amount","value246Destination","value246Colour","value246Free","valueVoice246Enabled","valueVoice246Speed","valueVoice246Amount","valueVoice246Destination","valueVoice246Colour","valueVoice246Free","drWave246Blue","drWave246Green","drWave246White","drWave246Orange","drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release","cluster246Blue","cluster246Green","cluster246White","cluster246Orange","cluster246Attack","cluster246Decay","cluster246Sustain","cluster246Release","hybridVoiceMode","hybridGlideMs"};
     for(const char* id:ids)if(!tree.getChildWithProperty("id",id).isValid()){
         juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);
         child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);

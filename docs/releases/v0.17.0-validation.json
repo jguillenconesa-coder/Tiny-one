@@ -1,0 +1,77 @@
+{
+  "version": "0.17.0",
+  "date": "2026-11-01",
+  "linux_ctest": {
+    "passed": 66,
+    "total": 66
+  },
+  "scope": "Authored Mono / Legato / glide performance adapter for Dr. Wave and Cluster; verified DSP kernels unchanged",
+  "new_firmware_oracle": false,
+  "host_rates": [
+    8000,
+    44100,
+    48000,
+    88200,
+    96000,
+    192000
+  ],
+  "performance_audio_cases": 24,
+  "performance_checks": [
+    "Audible pitch at glide endpoint",
+    "Linear-semitone glide midpoint / exact target",
+    "Mono retrigger vs Legato envelope preservation",
+    "Last-note priority and fallback",
+    "Per-channel bend and sustain",
+    "Same pitch on independent channels including sequencer channel 17",
+    "All 2176 note/channel positions pressed and released",
+    "Zero-velocity note-on",
+    "All-notes-off per channel and global",
+    "Panic and mode/engine changes",
+    "Restored six-voice Poly"
+  ],
+  "integration": [
+    "GUI mode/glide edits and host Configure indices",
+    "Closed-editor automation",
+    "Session / sound-slot / clipboard roundtrip",
+    "Preserved previous parameter indices",
+    "Identical MIDI renders at host blocks 64 and 257",
+    "Timestamp / fallback / bend / pedal / panic"
+  ],
+  "realtime": {
+    "workloads": 156,
+    "new_performance_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "mode_changes_checked": true,
+    "timing": "Diagnostic only; shared Linux machine does not certify hardware audio deadlines"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "leak": "disabled in traced environment"
+  },
+  "builds": {
+    "linux": "VST3 and standalone passed",
+    "windows_macos": "CI for the implementation commit; do not infer from Linux"
+  },
+  "previous_ci": {
+    "v0.16.0": {
+      "run_id": 41339832399,
+      "linux": "success",
+      "windows": "success",
+      "macos_universal_package": "success"
+    },
+    "v0.15.0_mac_repack": {
+      "run_id": 41339868716,
+      "conclusion": "success"
+    }
+  },
+  "limitations": [
+    "Not the original protected L1 performance modes or scheduler",
+    "No original Unison reconstruction",
+    "Hybrid engines still latch pitch at 128-sample internal block boundaries",
+    "Native Ableton validation remains pending",
+    "No new acoustic fidelity measurement",
+    "Original presets remain deferred"
+  ]
+}

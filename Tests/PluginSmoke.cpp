@@ -51,6 +51,35 @@ int main(int argc,char** argv) {
    mapped->screenKnob(0).setValueNotifyingHost(.5f);juce::AudioBuffer<float> audio(2,256);juce::MidiBuffer events;mapped->processBlock(audio,events);
    check(std::abs(mapped->tapePosition.load()-4.f)<.01f,"Mapped tape position did not seek");
   }
+  // Performance parameters persist across host projects, sound slots and clipboard.
+  for(bool cluster:{false,true}){
+   auto synth=std::make_unique<PocketProcessor>();if(cluster)synth->applyCluster246Init();else synth->applyDrWave246Init();
+   auto set=[&](const char* id,float value){auto* parameter=synth->phaseParameters().getParameter(id);parameter->setValueNotifyingHost(parameter->convertTo0to1(value));};
+   set("hybridVoiceMode",2);set("hybridGlideMs",275);synth->setScreenPage(1);
+   check(synth->phaseParameters().getParameter("hybridVoiceMode")->getParameterIndex()==synth->phaseParameters().getParameter("cluster246Release")->getParameterIndex()+1,"Performance parameters shifted old identities");
+   juce::String error;check(synth->assignSoundSlot(false,3)&&synth->copySound(error),"Performance slot/copy failed");juce::MemoryBlock saved;synth->getStateInformation(saved);
+   auto verify=[&](PocketProcessor& instance){check(instance.phaseParameters().getRawParameterValue("hybridVoiceMode")->load()==2&&instance.phaseParameters().getRawParameterValue("hybridGlideMs")->load()==275,"Performance state not restored");};
+   synth->applyPreset(0);check(synth->recallSoundSlot(false,3,error),"Performance slot recall failed");verify(*synth);synth->applyPreset(0);check(synth->pasteSound(error),"Performance paste failed");verify(*synth);
+   auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));verify(*restored);
+   {std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());bool foundMode=false,foundGlide=false;
+    for(auto* child:ui->getChildren()){
+     if(child->getComponentID()=="hybrid-voice-mode")if(auto* combo=dynamic_cast<juce::ComboBox*>(child)){check(combo->isVisible()&&combo->getSelectedId()==3,"Performance mode UI did not restore");check(ui->getControlParameterIndex(*combo)==restored->phaseParameters().getParameter("hybridVoiceMode")->getParameterIndex(),"Mode host Configure failed");combo->setSelectedId(2,juce::sendNotificationSync);check(restored->phaseParameters().getRawParameterValue("hybridVoiceMode")->load()==1,"Mode GUI write failed");foundMode=true;}
+     if(child->getComponentID()=="hybrid-glide")if(auto* slider=dynamic_cast<juce::Slider*>(child)){check(slider->isVisible()&&std::abs(slider->getValue()-275)<.01,"Glide UI did not restore");check(ui->getControlParameterIndex(*slider)==restored->phaseParameters().getParameter("hybridGlideMs")->getParameterIndex(),"Glide host Configure failed");slider->setValue(400,juce::sendNotificationSync);check(restored->phaseParameters().getRawParameterValue("hybridGlideMs")->load()==400,"Glide GUI write failed");foundGlide=true;}
+    }check(foundMode&&foundGlide,"Performance controls missing");
+    if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile(cluster?"cluster-performance.png":"drwave-performance.png"));check(png.writeImageToStream(shot,stream),"Performance screenshot failed");}
+   }
+  }
+  // MIDI timestamps, fallback, pedal and pitch bends are invariant to host buffering.
+  for(bool cluster:{false,true})for(int policy:{1,2}){
+   auto render=[&](int block){auto synth=std::make_unique<PocketProcessor>();if(cluster)synth->applyCluster246Init();else synth->applyDrWave246Init();auto& raw=synth->phaseParameters();
+    raw.getParameter("hybridVoiceMode")->setValueNotifyingHost(float(policy)/2);auto* glide=raw.getParameter("hybridGlideMs");glide->setValueNotifyingHost(glide->convertTo0to1(80));
+    synth->prepareToPlay(48000,block);std::vector<float> samples;
+    const std::array<std::pair<int,juce::MidiMessage>,9> events{{{37,juce::MidiMessage::noteOn(1,57,.8f)},{2003,juce::MidiMessage::noteOn(2,69,.7f)},{4001,juce::MidiMessage::pitchWheel(2,11000)},{6001,juce::MidiMessage::noteOff(2,69)},{7003,juce::MidiMessage::controllerEvent(1,64,127)},{8007,juce::MidiMessage::noteOff(1,57)},{10009,juce::MidiMessage::controllerEvent(1,64,0)},{12013,juce::MidiMessage::allSoundOff(1)},{13003,juce::MidiMessage::noteOn(1,60,.5f)}}};
+    for(int start=0;start<16000;start+=block){const int size=std::min(block,16000-start);juce::AudioBuffer<float> audio(2,size);audio.clear();juce::MidiBuffer midi;for(const auto& event:events)if(event.first>=start&&event.first<start+size)midi.addEvent(event.second,event.first-start);synth->processBlock(audio,midi);check(synth->visualVoices.load()<=1,"Performance plugin exceeded one voice");for(int i=0;i<size;++i)samples.push_back(audio.getSample(0,i));}
+    return samples;
+   };
+   const auto a=render(64),b=render(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::isfinite(a[i])&&std::abs(a[i]-b[i])<1e-6,"Performance depends on host block size");if(i<37)check(a[i]==0,"Performance started before MIDI timestamp");energy+=a[i]*a[i];}check(energy>1,"Performance plugin silent");
+  }
   // The hybrid is a synth, and both pages work without an editor.
   {
    auto hybrid=std::make_unique<PocketProcessor>();juce::String error;

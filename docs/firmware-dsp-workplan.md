@@ -24,6 +24,10 @@ pero no bloquea la integración tocable. [Dr. Wave integrado](drwave246-hybrid.m
 Esta decisión sustituye el requisito anterior de verificar todas las dependencias
 antes de integrar un motor; no reduce la exigencia de describir su procedencia.
 
+Desde 0.17, Dr. Wave/Cluster disponen de [Mono/Legato y glide propios](hybrid-performance.md),
+con integración de controles, estado y MIDI. El scheduler y los selectores
+originales siguen pendientes; no se amplía por ello la evidencia del firmware.
+
 ## Un componente activo y criterios de cierre
 
 Se trabaja un bloque DSP cada vez. Un bloqueo se documenta con su dependencia

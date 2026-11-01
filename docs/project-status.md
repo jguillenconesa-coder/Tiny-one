@@ -39,7 +39,22 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Value por voz en los motores híbridos (0.16.0)
+## Entrega agrupada actual: Mono / Legato / Glide híbridos (0.17.0)
+
+Dr. Wave y Cluster añaden en set 2 modos Poly/Mono/Legato y portamento de
+0–2000 ms. Prioridad de última nota, fallback con velocidad/canal, sustain/bend
+por canal, pánico y cambios de modo completos; controles automatizables,
+sesiones/slots/clipboard y callback con almacenamiento fijo.
+[Comportamiento, procedencia y comprobaciones](hybrid-performance.md).
+66/66 suites Linux, 156 cargas de callback sin heap rastreado y sanitizadores
+aprobados. [Evidencia](releases/v0.17.0-validation.json). Binarios/paquetes
+Windows y macOS corresponden al CI de esta entrega; Live real sigue pendiente.
+
+Son adaptadores propios y no recuperan los modos originales L1. Los núcleos y
+sus oráculos se mantienen intactos. La estimación permanece ~37 %: mejora la
+interpretación funcional, sin nueva evidencia de fidelidad acústica.
+
+## Entrega anterior: Value por voz en los motores híbridos (0.16.0)
 
 Dr. Wave y Cluster reciben Value sobre sus cuatro controles o su ADSR. Se añaden
 4.096 llamadas contrastadas y repetidas, con rangos originales, wrap de Dr. Wave,
@@ -52,11 +67,11 @@ identidades MIDI con editor cerrado, sesiones, slots/clipboard y cola Release.
 65 suites Linux, 132 cargas de callback y sanitizadores. La estimación pasa a
 ~37 % por la ampliación funcional y numérica, no por parecido acústico medido.
 El CI propio valida binarios/paquetes nativos; Live real sigue pendiente.
-El CI 0.15 pasó compilación/suites en los tres sistemas y falló solo el paquete
-macOS por argumentos de `lipo`. Se corrige y se lanza el reempaquetado sin compilar
-(run 41339868716), aún en cola macOS. El CI 0.16 (41339832399) ya pasa Linux;
-Windows sigue ejecutándose y macOS espera runner. No se da el paquete por validado
-hasta tener su resultado nativo.
+El CI 0.16 (41339832399) ya terminó correctamente en Linux, Windows y macOS,
+incluido instalador Windows y paquete macOS universal. El reempaquetado 0.15
+sin compilar (41339868716) también terminó correctamente; el fallo previo de
+argumentos de `lipo` queda cerrado. Resultados consultados el 1 de noviembre;
+no se extrapolan a los binarios de la siguiente entrega.
 
 ## Entrega anterior: Cluster híbrido y macOS universal (0.15.0)
 

@@ -13,6 +13,7 @@
 #include "Value246Fx.h"
 #include "ValueVoice246Control.h"
 #include "StringVoice.h"
+#include "HybridPerformance.h"
 
 namespace pocket {
 constexpr double pi = 3.14159265358979323846;
@@ -22,6 +23,7 @@ inline constexpr bool isDrumEngine(int mode) noexcept {return mode==4||mode==5;}
 struct PadSettings {float start=0,end=1,gain=1,pitch=0;bool reverse=false,gated=false;};
 struct Parameters {
     int engine=0;
+    int hybridVoiceMode=0;float hybridGlideMs=0;
     bool phase246=false,phase246Envelope=false;std::array<int16_t,4> phase246Controls{{0,29491,0,0}},phase246Adsr{{64,8064,32767,8192}};
     bool digital246=false,digital246Envelope=false;std::array<int16_t,4> digital246Controls{{0,16384,0,0}},digital246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> drWave246Controls{{0,0,0,0}},drWave246Adsr{{64,8064,32767,8192}};
@@ -44,8 +46,13 @@ class Engine {
 public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;stringRetune=1-std::exp(-1/(sampleRate*.003));phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
-    void reset() { voices={}; delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
-    void selectEngine(int mode) noexcept {if(mode!=selectedEngine&&(isHybridEngine(mode)||isHybridEngine(selectedEngine)))voices={};selectedEngine=mode;}
+    void reset() { held.clear(); voices={}; delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void selectEngine(int mode) noexcept {if(mode!=selectedEngine&&(isHybridEngine(mode)||isHybridEngine(selectedEngine))){voices={};held.clear();}selectedEngine=mode;}
+    void configureHybridPerformance(int mode,float milliseconds) noexcept {
+        mode=std::clamp(mode,0,2);
+        if(mode!=hybridMode){if(isHybridEngine(selectedEngine)){voices={};held.clear();}hybridMode=mode;}
+        glideMs=std::isfinite(milliseconds)?std::clamp(milliseconds,0.f,2000.f):0.f;
+    }
     void setSample(Sample data) { sample=std::move(data); voices={}; }
     void swapSample(Sample& data) {std::swap(sample,data);voices={};}
     void swapKit(Kit& data,int count=8) {kit.swap(data);kitCount=count==24?24:8;voices={};}
@@ -60,11 +67,20 @@ public:
     }
     void pitchBend(int channel,float semitones) { bends[channelIndex(channel)]=std::exp2(std::clamp(semitones,-2.f,2.f)/12.f); }
     void sustainPedal(int channel,bool down) {
+        if(channel<1||channel>17)return;
         pedals[channelIndex(channel)]=down;
+        if(monophonic()&&!down){held.releasePedal(channel);updateHeldVoice();return;}
         if(!down) for(auto& v:voices) if(v.channel==channel&&!v.keyDown) v.released=true;
     }
     void noteOn(int note,float velocity,int channel=1) {
+        if(note<0||note>127||channel<1||channel>17)return;
+        if(velocity<=0){noteOff(note,channel);return;}
         valueEffect.noteOn();
+        if(monophonic()){
+            const bool overlap=held.latest()>=0;
+            held.press(note,channel,std::clamp(velocity,0.f,1.f));
+            playHeldVoice(overlap);return;
+        }
         Voice* v=nullptr;
         for(size_t i=0;i<(isHybridEngine(selectedEngine)?6u:voices.size());++i) if(auto& candidate=voices[i];!candidate.active) { v=&candidate; break; }
         if(!v) v=&*std::min_element(voices.begin(),voices.begin()+(isHybridEngine(selectedEngine)?6:polyphony),[](auto& a,auto& b){return a.age<b.age;});
@@ -75,18 +91,26 @@ public:
 
     }
     void noteOff(int note,int channel=1) {
+        if(note<0||note>127||channel<1||channel>17)return;
+        if(monophonic()){held.release(note,channel,pedals[channelIndex(channel)]);updateHeldVoice();return;}
         for(auto& v:voices) if(v.active&&v.note==note&&v.channel==channel) { v.keyDown=false; if(!pedals[channelIndex(channel)]) v.released=true; }
     }
     void allNotesOff(int channel=0) {
+        if(channel<0||channel>17)return;
+        if(monophonic()){
+            if(channel==0){held.clear();voices[0].keyDown=false;voices[0].released=true;pedals.fill(false);}
+            else {held.removeChannel(channel);pedals[channelIndex(channel)]=false;updateHeldVoice();}
+            return;
+        }
         for(auto& v:voices) if(channel==0||v.channel==channel) { v.keyDown=false; v.released=true; }
         if(channel==0) pedals.fill(false); else pedals[channelIndex(channel)]=false;
     }
-    struct VisualState {float envelope=0,progress=0,lfo=0;int active=0,stage=0;uint64_t trigger=0;};
+    struct VisualState {float envelope=0,progress=0,lfo=0;int active=0,stage=0,note=-1,channel=0;double frequency=0;uint64_t trigger=0;};
     VisualState visualState(int mode) const noexcept {
         VisualState out;out.trigger=age;out.lfo=valueActive?valueEffect.phase():float(lfoPhase);uint64_t latest=0;
         for(const auto& v:voices) if(v.active) {
             ++out.active;out.envelope=std::max(out.envelope,v.level);
-            if(v.age>=latest) {latest=v.age;out.stage=nativeEnvelopeActive?(nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
+            if(v.age>=latest) {latest=v.age;out.note=v.note;out.channel=v.channel;out.frequency=(monophonic()?v.glide.value:v.frequency)*bends[channelIndex(v.channel)];out.stage=nativeEnvelopeActive?(nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
                 if(valueVoiceActive)out.lfo=v.valueVoice.phase();
                 const size_t length=mode==5?kit[size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
                 if(length) out.progress=std::clamp(float(v.samplePosition/double(length))+(mode==3?current.tone*.9f:0.f),0.f,1.f);
@@ -96,6 +120,7 @@ public:
     }
     float next(const Parameters& target) {
         selectEngine(target.engine);
+        configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs);
         const bool nativeCluster=target.engine==7;
         const bool nativeDrWave=target.engine==6;
         const bool nativePhase=target.engine==1&&target.phase246;
@@ -139,7 +164,7 @@ public:
             else v.level=target.sustain+(v.level-target.sustain)*decayFactor;
             if(!nativeEnvelopeActive&&target.engine!=4&&target.engine!=5&&v.released&&v.level<.0001f) { v.active=false; continue; }
             const double bend=bends[channelIndex(v.channel)]*pitchFactor;
-            const double frequency=v.frequency*bend;
+            const double frequency=(monophonic()?v.glide.next():v.frequency)*bend;
             v.phase+=frequency/sampleRate; v.phase-=std::floor(v.phase);
             v.modPhase+=frequency*(1+std::round(p.color*7))/sampleRate; v.modPhase-=std::floor(v.modPhase);
             float s=0, amplitude=v.level;
@@ -253,8 +278,33 @@ private:
         float lastOutput=0,stealTail=0;unsigned stealRemaining=0;
         ValueVoice246Control valueVoice;
         uint64_t age=0; float velocity=0,level=0,lastNoise=0;
+        HybridGlide glide;
         double phase=0,modPhase=0,frequency=440,samplePosition=0,time=0,drumPhase=0;
     };
+    bool monophonic() const noexcept {return isHybridEngine(selectedEngine)&&hybridMode!=0;}
+    void playHeldVoice(bool overlap) noexcept {
+        auto& v=voices[0];const int id=held.current;
+        const auto& n=held.notes[size_t(id)];
+        const bool continuing=overlap&&v.active&&!v.released;
+        const double from=v.glide.value;
+        if(hybridMode==1||!continuing){
+            const auto tail=v.active?v.lastOutput:0.f;const auto valueState=v.valueVoice;
+            v={};v.valueVoice=valueState;v.valueVoice.noteOn();v.age=++age;
+            v.cluster246.context.random=uint32_t(v.age)*2654435761u;
+            v.stealTail=tail;v.stealRemaining=tail!=0?unsigned(sampleRate*.003):0;
+        }
+        v.active=true;v.released=false;v.keyDown=n.down;v.note=id%128;v.channel=id/128+1;v.velocity=n.velocity;
+        v.frequency=440.*std::exp2((v.note-69)/12.);
+        v.glide.start(continuing?from:v.frequency,v.frequency,continuing?glideMs:0,sampleRate);
+    }
+    void updateHeldVoice() noexcept {
+        const int latest=held.latest();
+        if(latest<0){held.current=-1;voices[0].keyDown=false;voices[0].released=true;return;}
+        if(latest!=held.current){held.current=latest;playHeldVoice(true);}
+        else voices[0].keyDown=held.notes[size_t(latest)].down;
+    }
+    HybridHeldNotes held;
+    int hybridMode=0;float glideMs=0;
     Cluster246Config clusterConfig;bool nativeClusterActive=false,clusterControlsInitialized=false;
     std::array<float,4> clusterWords{};std::array<int16_t,4> clusterRaw{};
     DrWave246Config drWaveConfig;bool nativeDrWaveActive=false,drWaveControlsInitialized=false;int selectedEngine=0;
