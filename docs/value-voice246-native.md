@@ -80,3 +80,10 @@ retorno y tempo.
 [Funciones y hashes](firmware/value-voice246-validation.json) ·
 [Controles de presets](../research/blackfin/value-voice-controls.json) ·
 [Cobertura pendiente](original-op1-coverage.md) · [Rendimiento](realtime-audio.md).
+
+## Ampliación en 0.16.0
+
+[Value Voice en Dr. Wave y Cluster](value-hybrid246-native.md) añade otras 4.096
+llamadas contrastadas, sus rangos y el wrap de Dr. Wave, integración de ambos
+motores híbridos y ADSR. El alcance Digital/Phase descrito arriba corresponde
+a la entrega inicial 0.13. La limitación a esos dos motores deja de aplicarse.

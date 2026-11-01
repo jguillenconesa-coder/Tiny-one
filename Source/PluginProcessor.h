@@ -51,7 +51,8 @@ public:
     bool drWave246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==6;}
     bool punch246Enabled() const {return phaseAudio[20]->load()>.5f;}
     bool value246Enabled() const {return phaseAudio[25]->load()>.5f&&!valueVoice246Enabled();}
-    bool valueVoice246Enabled() const {return phaseAudio[31]->load()>.5f&&(phase246Enabled()||digital246Enabled());}
+    bool valueVoice246Available() const {return phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
+    bool valueVoice246Enabled() const {return phaseAudio[31]->load()>.5f&&valueVoice246Available();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}

@@ -28,3 +28,17 @@ La inspección del paquete no sustituye una instalación y prueba de scanner,
 audio, automatización y reapertura en Ableton Live real de Apple Silicon e Intel.
 No se afirma haber hecho esas comprobaciones desde Linux ni ejecutado x86_64 por
 haber compilado ambas arquitecturas.
+
+## Reempaquetar sin otra compilación
+
+El workflow manual **Repackage existing macOS binaries** recibe el ID de una
+compilación con artefacto `Pocket-One-macOS`. Descarga esos bundles y ejecuta las
+mismas comprobaciones y empaquetado, sin volver a compilar. El nombre del paquete
+usa la versión real de ambos bundles; no se etiqueta un binario antiguo con la
+versión del checkout actual. El ZIP de Actions pierde permisos ejecutables: el
+workflow los restituye antes de firmar y empaquetar.
+
+El primer CI universal de 0.15 pasó compilación y suites macOS, pero falló en el
+orden de argumentos de `lipo` al empaquetar. En 0.16 se corrige a
+`lipo "$binary" -verify_arch arm64 x86_64` y se verifica sobre los artefactos ya
+construidos, además del CI normal de la nueva versión.

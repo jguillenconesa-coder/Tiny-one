@@ -1,0 +1,52 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+  "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+  "note_reset": "0x019cfd5a",
+  "range_helper": "0x01a1dfec / 0x019f69b0",
+  "range_initializer": "0x01a1e914",
+  "instrument_types": [
+    2,
+    4
+  ],
+  "drwave_ranges": "0x01de5910",
+  "cluster_ranges": "0x01de5990",
+  "envelope_ranges": "0x01de5710",
+  "tempo_float_multiply": "0x01aa55a0",
+  "tempo_float_to_integer": "0x01aa4dbc",
+  "tempo_constant_float32": 1662149.125,
+  "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+  "independent_cases": 2048,
+  "stream_cases": 2048,
+  "cases": 4096,
+  "full_self_bytes": 12,
+  "full_display_bytes": 32,
+  "target_words": 8,
+  "artifacts": {
+    "value-hybrid246-input.bin": {
+      "bytes": 393216,
+      "sha256": "3250f5b3be8070329da4c60b1f71245f6a4702a0d356babd5aa8d324c9193d1d",
+      "matches_committed_fixture": true
+    },
+    "value-hybrid246-output.bin": {
+      "bytes": 278680,
+      "sha256": "e4cfa2973bf03f69fba5eca0a3f0059e068d6b2ea956e001ee4b8aad80898450",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+  "limitations": [
+    "Only Dr. Wave (2) and Cluster (4), instrument and first-four ENV routes. Other instrument families, auxiliary controls, play modes and drum routes remain outside this new oracle.",
+    "Host control clock, voice allocation, DSP/rate adapters and complete acoustic equivalence remain unverified against hardware."
+  ],
+  "independent_repeat": {
+    "directory": "private second run outside repository",
+    "inputs_identical": true,
+    "output_identical": true
+  }
+}

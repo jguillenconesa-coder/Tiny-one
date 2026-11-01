@@ -101,7 +101,7 @@ public:
         const bool nativePhase=target.engine==1&&target.phase246;
         const bool nativeDigital=target.engine==0&&target.digital246;
         const bool nativeCore=nativePhase||nativeDigital||nativeDrWave||nativeCluster;
-        const bool nativeValueVoice=target.valueVoice246&&(nativePhase||nativeDigital);
+        const bool nativeValueVoice=target.valueVoice246&&nativeCore;
         valueVoiceActive=nativeValueVoice;
         nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeEnvelopeActive=nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
         if(nativePhase){for(size_t i=0;i<4;++i){if(!phaseControlsInitialized)phaseWords[i]=target.phase246Controls[i];else phaseWords[i]+=smoothing*(target.phase246Controls[i]-phaseWords[i]);phaseRaw[i]=int16_t(std::clamp(phaseWords[i],0.f,32767.f)+.5f);}phaseControlsInitialized=true;}
@@ -145,15 +145,15 @@ public:
             float s=0, amplitude=v.level;
             std::array<int16_t,4> modulated{};
             if(nativeValueVoice){
-                const auto& base=target.valueVoice246Envelope?(nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeDigital?digitalRaw:phaseRaw);
-                modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
+                const auto& base=target.valueVoice246Envelope?(nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeCluster?clusterRaw:nativeDrWave?drWaveRaw:nativeDigital?digitalRaw:phaseRaw);
+                modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
             }else if(v.valueVoice.active)v.valueVoice.reset();
             if(nativeCluster){
-                s=v.cluster246.next(frequency,clusterRaw,target.cluster246Adsr,clusterConfig,phaseConfig,v.released);
+                s=v.cluster246.next(frequency,nativeValueVoice&&!target.valueVoice246Envelope?modulated:clusterRaw,nativeValueVoice&&target.valueVoice246Envelope?modulated:target.cluster246Adsr,clusterConfig,phaseConfig,v.released);
                 amplitude=1;v.level=v.cluster246.output.envelopeLevel();if(v.cluster246.output.envelopeDone())v.active=false;
             }
             else if(nativeDrWave){
-                s=v.drWave246.next(frequency,drWaveRaw,target.drWave246Adsr,drWaveConfig,phaseConfig,v.released);
+                s=v.drWave246.next(frequency,nativeValueVoice&&!target.valueVoice246Envelope?modulated:drWaveRaw,nativeValueVoice&&target.valueVoice246Envelope?modulated:target.drWave246Adsr,drWaveConfig,phaseConfig,v.released);
                 amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone())v.active=false;
             }
             else if(nativeDigital){

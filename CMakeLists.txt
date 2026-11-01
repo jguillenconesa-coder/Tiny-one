@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.15.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.16.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -173,6 +173,10 @@ add_test(NAME punch246 COMMAND punch246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests
 add_executable(value246_tests Tests/Value246Tests.cpp)
 target_include_directories(value246_tests PRIVATE Source)
 add_test(NAME value246 COMMAND value246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+add_executable(value_hybrid246_tests Tests/ValueHybrid246Tests.cpp)
+target_include_directories(value_hybrid246_tests PRIVATE Source)
+add_test(NAME value_hybrid246 COMMAND value_hybrid246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+
 add_executable(value_voice246_tests Tests/ValueVoice246Tests.cpp)
 target_include_directories(value_voice246_tests PRIVATE Source)
 add_test(NAME value_voice246 COMMAND value_voice246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")

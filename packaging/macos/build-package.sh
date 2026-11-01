@@ -5,14 +5,16 @@ set -euo pipefail
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 build_dir=${1:-"$repo_root/build"}
 output_dir=${2:-"$repo_root/dist"}
-version=$(awk -F= '/^CMAKE_PROJECT_VERSION:STATIC=/{print $2}' "$build_dir/CMakeCache.txt")
-[[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Missing CMake version.' >&2; exit 1; }
 app="$build_dir/PocketOne_artefacts/Release/Standalone/Pocket One.app"
 vst="$build_dir/PocketOne_artefacts/Release/VST3/Pocket One.vst3"
 [[ -x "$app/Contents/MacOS/Pocket One" && -f "$vst/Contents/MacOS/Pocket One" ]] || { echo 'Build standalone and VST3 first.' >&2; exit 1; }
+# The bundle version is authoritative when repacking an older CI artifact.
+version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist")
+vst_version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$vst/Contents/Info.plist")
+[[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ && $version == "$vst_version" ]] || { echo 'Bundle versions are missing or inconsistent.' >&2; exit 1; }
 # Fail if either deliverable is missing a promised universal architecture.
 for binary in "$app/Contents/MacOS/Pocket One" "$vst/Contents/MacOS/Pocket One"; do
-    lipo -verify_arch arm64 x86_64 "$binary"
+    lipo "$binary" -verify_arch arm64 x86_64
 done
 stage_dir=$(mktemp -d "${TMPDIR:-/tmp}/pocket-one-package.XXXXXX")
 trap 'rm -rf "$stage_dir"' EXIT

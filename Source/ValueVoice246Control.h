@@ -15,7 +15,8 @@ struct ValueVoice246Control {
     std::array<int16_t,4> next(bool enabled,bool envelope,bool free,int speed,int amount,int colour,int type,
                                uint32_t tempo,double clockStep,const std::array<int16_t,4>& base,
                                const std::array<int16_t,8192>& sine) noexcept {
-        if(!enabled){if(active)reset();return base;}
+        const auto index=reference::valueVoice246RangeIndex(type);
+        if(!enabled||index<0){if(active)reset();return base;}
         active=true;colour=std::clamp(colour,0,3);
         const std::array<int16_t,8> controls{{int16_t(std::clamp(speed,0,16384)),int16_t(std::clamp(amount,-32767,32767)),
             int16_t((envelope?4096:0)|(free?2048:0)),int16_t(colour*4096),0,0,0,0}};
@@ -28,9 +29,8 @@ struct ValueVoice246Control {
         }
         position+=clockStep;
         auto result=base;
-        const auto& r=reference::valueVoice246Ranges[type==1?0:1][size_t(colour)];
-        const auto range=envelope?reference::valueVoice246EnvelopeRanges[size_t(colour)]:std::array<int16_t,3>{{r[0],r[1],r[2]}};
-        result[size_t(colour)]=reference::value246Adjust(base[size_t(colour)],modulation,range);
+        const auto& r=reference::valueVoice246Ranges[size_t(index)][size_t(colour)];
+        result[size_t(colour)]=envelope?reference::value246Adjust(base[size_t(colour)],modulation,reference::valueVoice246EnvelopeRanges[size_t(colour)]):reference::valueVoice246Adjust(base[size_t(colour)],modulation,r);
         return result;
     }
     float phase() const noexcept {return float(double(state.phase^0x80000000u)/4294967296.);}

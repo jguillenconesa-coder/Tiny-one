@@ -1,0 +1,96 @@
+{
+  "version": "0.16.0",
+  "date": "2026-11-01",
+  "linux_ctest": {
+    "passed": 65,
+    "total": 65
+  },
+  "new_oracle": {
+    "cases": 4096,
+    "types": [
+      2,
+      4
+    ],
+    "destinations": [
+      "Instrument colours 0..3",
+      "ADSR colours 0..3"
+    ],
+    "comparison": [
+      "Full Value state",
+      "Full display",
+      "Eight target words",
+      "Return code",
+      "Tempo"
+    ],
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/value-hybrid246-validation.json"
+  },
+  "regression": "Previous 4096 Digital/Phase Value oracle and all prior DSP fixtures pass",
+  "host_rates": [
+    8000,
+    22050,
+    44100,
+    48000,
+    88200,
+    96000,
+    192000
+  ],
+  "new_audio_target_renders": 48,
+  "drwave_host_ranges": [
+    [
+      0,
+      24575
+    ],
+    [
+      0,
+      16383
+    ],
+    [
+      0,
+      16383
+    ],
+    [
+      0,
+      32767
+    ]
+  ],
+  "integration": [
+    "Both destinations and all colours",
+    "Positive/negative/zero amount",
+    "FREE/retrigger clocks",
+    "Closed-editor proxies and GUI availability",
+    "Session/slot/clipboard",
+    "Conservative modulated release tail",
+    "Identical renders at host blocks 64 and 257",
+    "Base parameters not overwritten",
+    "Panic/voice stealing"
+  ],
+  "realtime": {
+    "workloads": 132,
+    "new_modulated_hybrid_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "timing": "Diagnostic on shared machine; not a no-dropout guarantee"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "leak": "disabled because this traced environment does not support LeakSanitizer"
+  },
+  "native_builds_and_macos_package": "This commit CI; Linux verification does not certify native packaging",
+  "not_validated": [
+    "Full original control clock and shared scheduling",
+    "Hardware acoustic equivalence",
+    "Native Ableton scanning/playback/automation/state",
+    "Other LFO types/drum/auxiliary ADSR controls",
+    "Historical session migration"
+  ],
+  "factory_presets": "No new presets; full original replication deferred",
+  "macos_package_repair": {
+    "previous_run": 41338610362,
+    "macos_build_and_tests": "passed; only package lipo argument order failed",
+    "previous_binaries": "arm64/x86_64 Mach-O fat headers independently inspected",
+    "fix": "lipo input before -verify_arch",
+    "repack": "Manual workflow reuses binaries and reads their real bundle version; native verification pending dispatch"
+  }
+}

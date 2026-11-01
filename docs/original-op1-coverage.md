@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.15.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.16.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -18,7 +18,7 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-36 % del objetivo completo, con incertidumbre explícita; no es una medición
+37 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
@@ -95,11 +95,11 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Arranque del pool ADSR | [Accessor e inicialización diferida](adsr246-lazy-pool.md): seis estados, ready de palabra completa, 1.024 accesos y 1.536 eventos compuestos; no completa allocator ni scheduler. |
 | Cuatro campos ADSR adicionales y ruteo | [Entrada de cuatro fuentes a ADSR 0–3](drwave246-envelope-control-input.md), seguida del render: 131.072 muestras / 1.024 estados adicionales. [Selector auxiliar 4 en contexto Dr. Wave](drwave246-envelope-mode-control.md): otras 131.072 muestras, seis estados y scratch dither compartido. Demás campos auxiliares, relevo por voz y salida siguen pendientes. |
 | Envolventes D-synth / D-box / drum dinámica | Pendientes. No quedan completadas por portar el ADSR común. |
-| Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 4.096 llamadas instrument/primeros cuatro ADSR para Digital/Phase; estado independiente por voz. Otros motores, drum y auxiliares pendientes; reloj/allocator propios. |
+| Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 8.192 llamadas instrument/primeros cuatro ADSR para Digital/Phase/Dr. Wave/Cluster; estado independiente por voz y wrap/clamp contrastados. [Integración híbrida](value-hybrid246-native.md). Otras familias, drum y auxiliares pendientes; reloj/allocator propios. |
 | Random / Tremolo | Pendientes los originales. Hay LFO propio seno/triángulo/cuadrado. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
-| Poly / mono / legato / unison / portamento | Polifonía propia de ocho voces en el plugin. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
+| Poly / mono / legato / unison / portamento | Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
 | Octavas del teclado | Interfaz ampliada a −4…+4, guardada en sesión/slot/clipboard, limitada a notas MIDI 0–127. No altera MIDI externo ni implementa aún octave de todos los patches originales. |
 | Secuenciadores | Secuenciación/arpegios propios disponibles; Endless, Pattern, Finger, Tombola, Sketch y Crank originales requieren revisión individual. Tombola bloquea completar Singing Birds. |
 | Cinta y mezcla | Cuatro pistas y edición propias; no se afirma equivalencia completa de longitud, varispeed, tape tricks, pan y dinámica originales. |

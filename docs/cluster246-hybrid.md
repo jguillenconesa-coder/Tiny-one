@@ -11,6 +11,9 @@ polifónicas. Set 2 expone la ADSR reconstruida. Los rangos raw siguen los cuatr
 rangos observados del firmware: 3072–17408, 0–32767, 512–24064 y 3–1638.
 Release raw alto acorta la cola, como en los otros motores 246.
 
+Desde 0.16, set 4 permite [Value por voz sobre Instrument o ADSR](value-hybrid246-native.md),
+con sus rangos contrastados. No modifica las aproximaciones descritas debajo.
+
 ## Frontera entre evidencia y aproximación
 
 `Cluster246.h` permanece sin cambios: fase, feedback, ocho osciladores, pesos,

@@ -1,0 +1,35 @@
+name: Repackage existing macOS binaries
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Build run containing the Pocket-One-macOS artifact
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  package:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download existing native binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: Pocket-One-macOS
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: imported
+      - name: Restore executable permissions lost by artifact ZIP
+        run: |
+          chmod +x 'imported/build/PocketOne_artefacts/Release/Standalone/Pocket One.app/Contents/MacOS/Pocket One'
+          chmod +x 'imported/build/PocketOne_artefacts/Release/VST3/Pocket One.vst3/Contents/MacOS/Pocket One'
+      - name: Verify and package without rebuilding
+        run: bash packaging/macos/build-package.sh imported/build dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Pocket-One-macOS-packaged-${{ inputs.source_run_id }}
+          path: |
+            dist/*-macOS-universal.pkg
+            dist/*-macOS-universal-portable.zip

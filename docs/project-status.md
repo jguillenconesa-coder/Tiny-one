@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 36 % del objetivo completo
+## Avance estimado: aproximadamente 37 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 30 % | 6 puntos |
+| Efectos, envolventes y moduladores | 20 % | 35 % | 7 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **35,5 ≈ 36 %** |
+| Total | 100 % | | **36,5 ≈ 37 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,21 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Cluster híbrido y macOS universal (0.15.0)
+## Entrega agrupada actual: Value por voz en los motores híbridos (0.16.0)
+
+Dr. Wave y Cluster reciben Value sobre sus cuatro controles o su ADSR. Se añaden
+4.096 llamadas contrastadas y repetidas, con rangos originales, wrap de Dr. Wave,
+clamp de Cluster y sus estados/display completos. Se conservan los 4.096 casos
+Digital/Phase. Los máximos verde/blanco de Dr. Wave se corrigen a 16383.
+[Guía y evidencia](value-hybrid246-native.md).
+
+Sin nuevos presets ni parámetros, la integración conserva bases y usa las mismas
+identidades MIDI con editor cerrado, sesiones, slots/clipboard y cola Release.
+65 suites Linux, 132 cargas de callback y sanitizadores. La estimación pasa a
+~37 % por la ampliación funcional y numérica, no por parecido acústico medido.
+El CI propio valida binarios/paquetes nativos; Live real sigue pendiente.
+
+## Entrega anterior: Cluster híbrido y macOS universal (0.15.0)
 
 Cluster usa el núcleo contrastado con cinco normalizaciones observadas y tres
 aproximaciones documentadas. Integra seis voces, controles, ADSR, MIDI, guardado,

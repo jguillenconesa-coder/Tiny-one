@@ -5,7 +5,7 @@
 namespace pocket {
 inline constexpr std::array<const char*,4> drWave246Ids{{"drWave246Blue","drWave246Green","drWave246White","drWave246Orange"}};
 inline constexpr std::array<const char*,4> drWave246EnvelopeIds{{"drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release"}};
-inline constexpr std::array<int,4> drWave246Max{{24575,32767,32767,32767}};
+inline constexpr std::array<int,4> drWave246Max{{24575,16383,16383,32767}};
 // Shared generated tables: prepared once off the audio thread, never per note.
 struct DrWave246Config {
     reference::DrWave246WaveBank bank;

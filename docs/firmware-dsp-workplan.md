@@ -50,7 +50,9 @@ concreta; no se rellena con constantes o algoritmos supuestamente originales.
 ## Integraciones híbridas entregadas y siguiente bloque
 
 Dr. Wave y [Cluster](cluster246-hybrid.md) ya disponen de adaptadores tocables.
-El siguiente bloque debe priorizar un motor/FX legible o la calibración acústica
+En 0.16 se integra [Value por voz y ADSR](value-hybrid246-native.md) en ambos,
+con otros 4.096 casos y rangos contrastados. El siguiente bloque debe priorizar
+un motor/FX legible o la calibración acústica
 con capturas conocidas; no repetir el bloqueo L1 sin evidencia nueva. El CI añade
 [paquetes macOS universales](macos-packaging.md).
 
@@ -85,7 +87,7 @@ inventar coeficientes ni ejecutar instrucciones cifradas.
 | Destinos instrumento/volumen/pitch intercalados | Las 256 combinaciones en una llamada tipo 2, 512 registros, suavizado/estado compartidos y otras 61.568 muestras contrastados. El ensayo se limita a kind 0; imágenes, contador y selección explícitos. |
 | Dispatch tipo 2 con ENV y kind 0/1 | Las 625 combinaciones por kind, 1.506 llamadas: 91.648 muestras activas Dr. Wave y 95.104 posiciones ADSR (86.656 escritas). Pools completos, RNG/dither y guardas contrastados; imagen de trabajo, renderer, contador y selección explícitos. No recupera el llamador original. |
 | Inicializador Core de workspaces y límite del llamador | Rutina completa `0x01968774`: 82 bytes a cero en imagen de 228, 4.096 casos + 256 llamadas continuas y preservación de pitch/ADSR/RNG. Cadena de 1.506 llamadas: 91.648 muestras Dr. Wave / 95.104 posiciones ADSR (85.120 escritas). La recarga por llamada continúa sin recuperar, con candidatos L1 protegidos inventariados; no se sustituye por ceros. |
-| Cadencia externa, voz completa e integración | Referencia candidata al contador en L1 junto a franjas cifradas; proveedor/cadencia aún sin verificar. Faltan también asignación/pitch/ADSR y salida antes de integrar el núcleo. Solo se usa desde pruebas; no cambia el instalador. |
+| Cadencia externa, voz completa e integración | Referencia candidata al contador en L1 junto a franjas cifradas; proveedor/cadencia aún sin verificar. Asignación/pitch/ADSR y salida originales siguen pendientes. El núcleo ya se integra mediante los adaptadores híbridos propios documentados desde 0.14; estos oráculos no validan el planificador L1. |
 
 [Lectura y mezcla de Dr. Wave](drwave246-reader.md) ·
 [Generación de los seis bancos base](drwave246-wavebank.md) ·

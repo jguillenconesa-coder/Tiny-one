@@ -5,13 +5,15 @@ captura de L1 descifrada. BROWSE → **Dr. Wave 246 Hybrid → Init / Dr. Wave**
 un punto de partida propio, sin efectos. No es una réplica de un preset original.
 
 Set 1 ofrece **Shape, Spectrum, Warp y Spread**, respectivamente azul, verde,
-blanco y naranja. Azul recorre tres secciones y tiene rango 0–24575; los demás
-usan 0–32767. Son los cuatro controles del render contrastado, no macros que
+blanco y naranja. Azul recorre tres secciones y tiene rango 0–24575; verde y
+blanco usan 0–16383 y naranja 0–32767 (rangos corregidos en 0.16). Son los cuatro
+controles del render contrastado, no macros que
 seleccionan otros sintetizadores. Set 2 controla Attack, Decay, Sustain y Release
 con la ADSR reconstruida. Release tiene la orientación raw del firmware: valores
 altos acortan la cola. Los cuatro mandos MIDI siguen la página con el editor
-abierto o cerrado. Set 3 conserva los efectos disponibles y set 4 el LFO propio;
-Value Voice sigue limitado a Phase/Digital en esta entrega.
+abierto o cerrado. Set 3 conserva los efectos disponibles; desde 0.16, set 4
+permite [Value por voz sobre Instrument/ADSR](value-hybrid246-native.md), además
+del LFO propio disponible al apagarlo.
 
 ## Qué se conserva y qué se reconstruye por aproximación
 
