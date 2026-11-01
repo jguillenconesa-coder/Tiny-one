@@ -33,7 +33,11 @@ inline bool filter246Block(Filter246State& state,const std::array<int16_t,4>& c,
         auto x=punch246Curve(saturate32(int64_t(driven)-returned),sine);
         auto total=multiplyQ31(x,mix[0]);
         for(size_t i=0;i<4;++i){
-            const auto coefficient=std::clamp(saturate32(int64_t(frequency[size_t(c[0]/128)])+floorDivide(x,16)),int32_t(0x00400000),int32_t(0x73ffffff));
+            // Spell the Blackfin arithmetic shift as unsigned bits, including
+            // sign extension. Avoid MSVC's optimized division/remainder path
+            // here: native oracle diagnostics exposed low-bit stage drift.
+            const auto offset=signedPhase((uint32_t(x)>>4)|(x<0?0xf0000000u:0u));
+            const auto coefficient=std::clamp(saturate32(int64_t(frequency[size_t(c[0]/128)])+offset),int32_t(0x00400000),int32_t(0x73ffffff));
             const auto negative=saturate32(-int64_t(state.stages[i]));
             x=saturate32(int64_t(saturate32(int64_t(state.stages[i])+multiplyQ31(x,coefficient)))+multiplyQ31(negative,coefficient));
             state.stages[i]=x;total=saturate32(int64_t(total)+multiplyQ31(x,mix[i+1]));
