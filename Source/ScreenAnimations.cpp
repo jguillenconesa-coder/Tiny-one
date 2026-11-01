@@ -10,7 +10,7 @@ void dot(juce::Graphics& g,float x,float y,float radius) {g.fillEllipse(x-radius
 }
 void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     g.fillAll(juce::Colour(0xff070b10));
-    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM / REACTOR",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE"}[std::clamp(f.engine,0,6)];
+    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM / REACTOR",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
     label(g,title,{10,4,172,14},10,colors[2]);label(g,juce::String(f.voices)+" VOICES",{183,5,63,12},8,colors[0]);
     const float activity=std::clamp(f.level*6,0.f,1.f),phase=f.time*.7f;
     juce::Path curve;
@@ -65,6 +65,10 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         else for(int i=0;i<8;++i){const float x=15.f+i*28;const bool hit=i==pad&&f.voices>0;g.setColour(colors[size_t(i%4)].withAlpha(hit?.5f+activity*.5f:.23f));g.drawRoundedRectangle(x,33,23,43,4,1);if(hit){g.fillRoundedRectangle(x+2,57-activity*20,19,17+activity*20,2);g.drawEllipse(x+4-activity*2,39-activity*2,15+activity*4,15+activity*4,1);}label(g,juce::String(i+1),{int(x+8),79,16,12},8,colors[size_t(i%4)]);}
     } else if(f.engine==2) {
         for(int string=0;string<4;++string){juce::Path wire;const float y=35.f+string*13;for(int i=0;i<180;++i){const float u=float(i)/179;const float x=25+u*200,v=y+std::sin(u*float(pi)*(1+string))*std::sin(phase*12+u*14)*activity*(3+f.color*5);if(i==0)wire.startNewSubPath(x,v);else wire.lineTo(x,v);}g.setColour(colors[size_t(string)]);g.strokePath(wire,juce::PathStrokeType(1));dot(g,25,y,2);dot(g,225,y,2);}
+    } else if(f.cluster246) {
+        const int count=std::clamp(int(f.values[0])/2048,1,8);
+        for(int voice=0;voice<count;++voice){juce::Path wave;for(int i=0;i<225;++i){const float y=56+float(std::sin(2*pi*i/224+voice*.17+phase*.3))*(8+activity*14)+float(voice-count/2)*3;if(i==0)wave.startNewSubPath(13,y);else wave.lineTo(13+i,y);}g.setColour(colors[size_t(voice%4)].withAlpha(.6f));g.strokePath(wave,juce::PathStrokeType(1));}
+        label(g,juce::String(count)+" OSC / VOICE",{15,83,160,10},8,colors[2]);
     } else if(f.drWave246) {
         for(int i=0;i<225;++i){const double p=double(i)/224;const float y=57-float(std::sin(2*pi*p)+.25*std::sin(2*pi*p*(2+std::floor(f.tone*3))))*(18+activity*6);if(i==0)curve.startNewSubPath(13,y);else curve.lineTo(13+i,y);}
         g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.5f));
@@ -84,6 +88,6 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(int i=0;i<126;++i){const double p=double(i)/125;const float x=109.f+i,y=57-float(std::sin(2*pi*p+f.tone*7*std::sin(2*pi*p*(1+std::round(f.color*7))+phase)))*(12+activity*8);if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.2f));
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&i>=2)||(f.page==0&&(f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&f.punch246)?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&i>=2)||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&f.punch246)?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
 }
 }

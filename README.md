@@ -1,12 +1,14 @@
-# Pocket One 0.14.0
+# Pocket One 0.15.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.14.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.15.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
+
+**Nuevo en 0.15.0:** [Cluster híbrido](docs/cluster246-hybrid.md), seis voces y hasta ocho osciladores por voz, con sus cuatro controles y ADSR. **08 / CLUSTER** o **Cluster 246 Hybrid → Init / Cluster**. El CI añade un [instalador macOS universal y ZIP portable](docs/macos-packaging.md).
 
 **Nuevo en 0.14.0:** [Dr. Wave híbrido](docs/drwave246-hybrid.md), motor tocable de seis voces con cuatro controles y ADSR. Selecciona **07 / DR. WAVE** o carga **Dr. Wave 246 Hybrid → Init / Dr. Wave**. Núcleo contrastado y adaptadores propios para las dependencias pendientes. Los paquetes de descarga publicados debajo siguen siendo 0.13.0.
 

@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 35 % del objetivo completo
+## Avance estimado: aproximadamente 36 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,28 +17,43 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 30 % | 9 puntos |
+| Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
 | Efectos, envolventes y moduladores | 20 % | 30 % | 6 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **34 ≈ 35 %** |
+| Total | 100 % | | **35,5 ≈ 36 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
 funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch y partes
-de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave incorpora un motor híbrido tocable; Cluster conserva
-núcleos y dependencias verificadas sin integración completa. El FM actual y
+de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave y Cluster incorporan motores híbridos tocables con
+dependencias propias explícitas. El FM actual y
 varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
 fuente del estado por componente y prevalece sobre este resumen orientativo.
 
-Hay instalador Windows y builds multiplataforma en CI. Faltan un paquete macOS
-para usuario final y validación actual en Ableton real de ambos sistemas; el
+Hay instalador Windows y builds multiplataforma en CI. Se añade empaquetado
+macOS universal; la validación nativa del paquete corresponde a su propio CI.
+Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Dr. Wave híbrido tocable (0.14.0)
+## Entrega agrupada actual: Cluster híbrido y macOS universal (0.15.0)
+
+Cluster usa el núcleo contrastado con cinco normalizaciones observadas y tres
+aproximaciones documentadas. Integra seis voces, controles, ADSR, MIDI, guardado,
+slots/clipboard e interfaz. Se verifica el relevo entre los dos motores híbridos.
+[Guía](cluster246-hybrid.md). La estimación pasa a ~36 % por esta integración;
+no mide fidelidad acústica ni da por resueltos los coeficientes originales.
+
+El CI añade un `.pkg` y ZIP portable universales para macOS con inspección de
+arquitecturas, firmas locales y payload. No son builds notarizados y queda
+pendiente probarlos en Live real. [Empaquetado](macos-packaging.md). Se amplía la
+regresión a 64 suites Linux y 108 cargas de callback. El estado de los runners
+nativos pertenece a cada ejecución; no se extrapola del resultado Linux.
+
+## Entrega anterior: Dr. Wave híbrido tocable (0.14.0)
 
 Se adopta la decisión del propietario: núcleos contrastados y adaptadores propios
 para las dependencias L1 pendientes, buscando máxima semejanza sin esperar una
@@ -84,7 +99,7 @@ más concreto y no se presenta como resuelto. La estimación global no cambia.
 1. **Calibración Dr. Wave y reconstrucción híbrida.** Mantener los oráculos del
    núcleo. Contrastar el instrumento completo con capturas conocidas cuando estén
    disponibles: pitch, espectro, ganancia, transitorios, controles y tiempos ADSR.
-   Sin capturas, continuar con los núcleos legibles de Cluster y documentar qué
+   Sin capturas, continuar con otros bloques legibles y documentar qué
    coeficientes o rutas siguen siendo aproximaciones. La memoria descifrada ayuda,
    pero deja de ser un requisito para construir una versión funcional.
 2. **Integración por bloques completos.** Cada motor incluye parámetros, interfaz,

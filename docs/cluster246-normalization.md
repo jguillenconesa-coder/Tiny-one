@@ -84,3 +84,10 @@ python3 scripts/verify-cluster246-init.py \
 El directorio debe ser nuevo y privado, fuera del checkout. El test CMake es
 `cluster246_init`. Las tres entradas cifradas y la integración completa continúan
 pendientes en el [plan DSP](firmware-dsp-workplan.md); no se añaden presets.
+
+## Integración híbrida posterior (0.15.0)
+
+La referencia y sus oráculos anteriores siguen sin extrapolar las tres entradas.
+El nuevo [adaptador tocable](cluster246-hybrid.md) sí usa una aproximación propia
+para 2, 3 y 8 osciladores, fuera de la API de referencia y sin afirmar que sean
+los valores originales. Esta decisión aplica el método híbrido autorizado.

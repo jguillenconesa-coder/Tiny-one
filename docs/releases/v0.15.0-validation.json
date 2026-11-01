@@ -1,0 +1,87 @@
+{
+  "version": "0.15.0",
+  "date": "2026-11-01",
+  "linux_ctest": {
+    "passed": 64,
+    "total": 64
+  },
+  "cluster_core": "Cluster246.h unchanged; all previous instruction-oracle fixtures retained",
+  "adapter_identity": {
+    "blocks": 24,
+    "counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "comparisons": [
+      "128 samples per block",
+      "complete kernel state",
+      "complete context including RNG/display",
+      "release transition"
+    ]
+  },
+  "normalization": {
+    "observed_counts": [
+      1,
+      4,
+      5,
+      6,
+      7
+    ],
+    "authored_fallbacks": {
+      "2": 8192,
+      "3": 5461,
+      "8": 2048
+    },
+    "original_missing_entries_recovered": false
+  },
+  "engine_tests": [
+    "Four host rates: 44100/48000/88200/96000 Hz",
+    "A440/bend at minimum drift",
+    "Sustain and release",
+    "Six voices/free allocation/stealing",
+    "Sixteen colour corners and extreme MIDI notes",
+    "Independent audible colour controls",
+    "Panic and cross-hybrid voice retirement"
+  ],
+  "integration": [
+    "Closed-editor set 1/set 2 proxies",
+    "GUI range and screen",
+    "Current session, slot and clipboard roundtrip",
+    "Reported release tail",
+    "Identical MIDI render at blocks 64 and 257"
+  ],
+  "realtime": {
+    "workloads": 108,
+    "cluster_workloads": 6,
+    "tracked_heap_calls": 0,
+    "first_note_heap_checked": true,
+    "timing": "Diagnostic on shared host; no no-dropout certification"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "leaks": "disabled: tracing environment prevents LeakSanitizer"
+  },
+  "macos_packaging": {
+    "local_checks": [
+      "bash -n",
+      "Workflow YAML parses"
+    ],
+    "native_checks": "Pending this commit CI: universal arm64/x86_64 binaries, ad-hoc signatures, package payload",
+    "developer_id_signed": false,
+    "notarized": false
+  },
+  "not_validated": [
+    "Hardware acoustic equivalence",
+    "Original L1 pitch/scheduler/global RNG",
+    "Native Ableton Live scanning/playback/state",
+    "Historical session migration"
+  ],
+  "factory_presets": "Original replication deferred; Init is authored"
+}

@@ -47,7 +47,14 @@ concreta; no se rellena con constantes o algoritmos supuestamente originales.
 6. **Distribución:** generar instaladores cuando cambie el instrumento ejecutable.
    Una prueba de núcleo aislado no se presenta como un motor completo instalado.
 
-## Bloque activo: Dr. Wave rev246
+## Integraciones híbridas entregadas y siguiente bloque
+
+Dr. Wave y [Cluster](cluster246-hybrid.md) ya disponen de adaptadores tocables.
+El siguiente bloque debe priorizar un motor/FX legible o la calibración acústica
+con capturas conocidas; no repetir el bloqueo L1 sin evidencia nueva. El CI añade
+[paquetes macOS universales](macos-packaging.md).
+
+## Evidencia acumulada: Dr. Wave rev246
 
 Se avanza con Dr. Wave por el bloqueo concreto de las dependencias restantes de
 Cluster. Su ruta de lectura es SDRAM legible y permite contrastar otro núcleo sin

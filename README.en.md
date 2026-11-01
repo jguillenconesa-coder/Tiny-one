@@ -1,8 +1,10 @@
-# Pocket One 0.14.0
+# Pocket One 0.15.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.15.0 adds a playable **[Cluster hybrid](docs/cluster246-hybrid.md)**: six voices, up to eight oscillators per voice, four controls, ADSR, MIDI and state persistence. Choose **08 / CLUSTER** or **Cluster 246 Hybrid → Init / Cluster**. CI also produces a [universal macOS installer and portable ZIP](docs/macos-packaging.md); native package checks belong to that CI run.
 
 Version 0.14.0 adds a playable six-voice **[Dr. Wave hybrid](docs/drwave246-hybrid.md)** with four controls, ADSR, MIDI and state persistence. Choose **07 / DR. WAVE** or **Dr. Wave 246 Hybrid → Init / Dr. Wave**. The verified core uses authored adapters for missing L1 dependencies; full hardware sound matching remains pending. Previously published downloads below remain 0.13.0.
 

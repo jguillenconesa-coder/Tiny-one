@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.14.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.15.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -37,6 +37,10 @@ add_test(NAME envelope246_transition COMMAND envelope246_transition_tests "${CMA
 add_executable(digital246_tests Tests/Digital246Tests.cpp)
 target_include_directories(digital246_tests PRIVATE Source)
 add_test(NAME digital246 COMMAND digital246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")
+add_executable(cluster246_hybrid_tests Tests/Cluster246HybridTests.cpp)
+target_include_directories(cluster246_hybrid_tests PRIVATE Source)
+add_test(NAME cluster246_hybrid COMMAND cluster246_hybrid_tests)
+
 add_executable(cluster246_tests Tests/Cluster246Tests.cpp)
 target_include_directories(cluster246_tests PRIVATE Source)
 add_test(NAME cluster246 COMMAND cluster246_tests "${CMAKE_CURRENT_SOURCE_DIR}/Tests/ReferenceVectors")

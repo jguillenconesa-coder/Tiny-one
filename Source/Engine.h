@@ -8,6 +8,7 @@
 #include "Phase246.h"
 #include "Digital246Voice.h"
 #include "DrWave246Voice.h"
+#include "Cluster246Voice.h"
 #include "Punch246Effect.h"
 #include "Value246Fx.h"
 #include "ValueVoice246Control.h"
@@ -16,6 +17,7 @@
 namespace pocket {
 constexpr double pi = 3.14159265358979323846;
 constexpr int kitCapacity=24;
+inline constexpr bool isHybridEngine(int mode) noexcept {return mode==6||mode==7;}
 inline constexpr bool isDrumEngine(int mode) noexcept {return mode==4||mode==5;}
 struct PadSettings {float start=0,end=1,gain=1,pitch=0;bool reverse=false,gated=false;};
 struct Parameters {
@@ -23,6 +25,7 @@ struct Parameters {
     bool phase246=false,phase246Envelope=false;std::array<int16_t,4> phase246Controls{{0,29491,0,0}},phase246Adsr{{64,8064,32767,8192}};
     bool digital246=false,digital246Envelope=false;std::array<int16_t,4> digital246Controls{{0,16384,0,0}},digital246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> drWave246Controls{{0,0,0,0}},drWave246Adsr{{64,8064,32767,8192}};
+    std::array<int16_t,4> cluster246Controls{{8192,0,12000,30}},cluster246Adsr{{64,8064,32767,8192}};
     bool punch246=false;std::array<int16_t,4> punch246Controls{{6000,15000,20000,28000}};
     bool value246=false,value246Free=false,value246Destination=true;
     int value246Speed=1000,value246Amount=4000,value246Colour=0;uint32_t value246Tempo=199457888;
@@ -41,8 +44,8 @@ class Engine {
 public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;stringRetune=1-std::exp(-1/(sampleRate*.003));phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
-    void reset() { voices={}; delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;drWaveControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
-    void selectEngine(int mode) noexcept {if((mode==6)!=(selectedEngine==6))voices={};selectedEngine=mode;}
+    void reset() { voices={}; delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void selectEngine(int mode) noexcept {if(mode!=selectedEngine&&(isHybridEngine(mode)||isHybridEngine(selectedEngine)))voices={};selectedEngine=mode;}
     void setSample(Sample data) { sample=std::move(data); voices={}; }
     void swapSample(Sample& data) {std::swap(sample,data);voices={};}
     void swapKit(Kit& data,int count=8) {kit.swap(data);kitCount=count==24?24:8;voices={};}
@@ -63,11 +66,11 @@ public:
     void noteOn(int note,float velocity,int channel=1) {
         valueEffect.noteOn();
         Voice* v=nullptr;
-        for(size_t i=0;i<(selectedEngine==6?6u:voices.size());++i) if(auto& candidate=voices[i];!candidate.active) { v=&candidate; break; }
-        if(!v) v=&*std::min_element(voices.begin(),voices.begin()+(selectedEngine==6?6:polyphony),[](auto& a,auto& b){return a.age<b.age;});
-        const auto stolen=selectedEngine==6&&v->active?v->lastOutput:0.f;
+        for(size_t i=0;i<(isHybridEngine(selectedEngine)?6u:voices.size());++i) if(auto& candidate=voices[i];!candidate.active) { v=&candidate; break; }
+        if(!v) v=&*std::min_element(voices.begin(),voices.begin()+(isHybridEngine(selectedEngine)?6:polyphony),[](auto& a,auto& b){return a.age<b.age;});
+        const auto stolen=isHybridEngine(selectedEngine)&&v->active?v->lastOutput:0.f;
         const auto valueState=v->valueVoice;*v={};v->stealTail=stolen;v->stealRemaining=stolen!=0?unsigned(sampleRate*.003):0;v->valueVoice=valueState;v->valueVoice.noteOn();v->active=true; v->keyDown=true; v->note=note; v->channel=channel;
-        v->velocity=std::clamp(velocity,0.f,1.f); v->age=++age;
+        v->velocity=std::clamp(velocity,0.f,1.f); v->age=++age;v->cluster246.context.random=uint32_t(v->age)*2654435761u;
         v->frequency=440.0*std::pow(2.0,(note-69)/12.0);
 
     }
@@ -83,7 +86,7 @@ public:
         VisualState out;out.trigger=age;out.lfo=valueActive?valueEffect.phase():float(lfoPhase);uint64_t latest=0;
         for(const auto& v:voices) if(v.active) {
             ++out.active;out.envelope=std::max(out.envelope,v.level);
-            if(v.age>=latest) {latest=v.age;out.stage=nativeEnvelopeActive?(nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
+            if(v.age>=latest) {latest=v.age;out.stage=nativeEnvelopeActive?(nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
                 if(valueVoiceActive)out.lfo=v.valueVoice.phase();
                 const size_t length=mode==5?kit[size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
                 if(length) out.progress=std::clamp(float(v.samplePosition/double(length))+(mode==3?current.tone*.9f:0.f),0.f,1.f);
@@ -93,18 +96,20 @@ public:
     }
     float next(const Parameters& target) {
         selectEngine(target.engine);
+        const bool nativeCluster=target.engine==7;
         const bool nativeDrWave=target.engine==6;
         const bool nativePhase=target.engine==1&&target.phase246;
         const bool nativeDigital=target.engine==0&&target.digital246;
-        const bool nativeCore=nativePhase||nativeDigital||nativeDrWave;
+        const bool nativeCore=nativePhase||nativeDigital||nativeDrWave||nativeCluster;
         const bool nativeValueVoice=target.valueVoice246&&(nativePhase||nativeDigital);
         valueVoiceActive=nativeValueVoice;
-        nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeEnvelopeActive=nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
+        nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeEnvelopeActive=nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
         if(nativePhase){for(size_t i=0;i<4;++i){if(!phaseControlsInitialized)phaseWords[i]=target.phase246Controls[i];else phaseWords[i]+=smoothing*(target.phase246Controls[i]-phaseWords[i]);phaseRaw[i]=int16_t(std::clamp(phaseWords[i],0.f,32767.f)+.5f);}phaseControlsInitialized=true;}
         else phaseControlsInitialized=false;
         if(nativeDigital){for(size_t i=0;i<4;++i){if(!digitalControlsInitialized)digitalWords[i]=target.digital246Controls[i];else digitalWords[i]+=smoothing*(target.digital246Controls[i]-digitalWords[i]);digitalRaw[i]=int16_t(std::lround(std::clamp(digitalWords[i],i==2?-32768.f:0.f,32767.f)));}digitalControlsInitialized=true;}
         else digitalControlsInitialized=false;
         if(nativeDrWave){for(size_t i=0;i<4;++i){if(!drWaveControlsInitialized)drWaveWords[i]=target.drWave246Controls[i];else drWaveWords[i]+=smoothing*(target.drWave246Controls[i]-drWaveWords[i]);drWaveRaw[i]=int16_t(std::lround(std::clamp(drWaveWords[i],0.f,float(drWave246Max[i]))));}drWaveControlsInitialized=true;}else drWaveControlsInitialized=false;
+        if(nativeCluster){for(size_t i=0;i<4;++i){if(!clusterControlsInitialized)clusterWords[i]=target.cluster246Controls[i];else clusterWords[i]+=smoothing*(target.cluster246Controls[i]-clusterWords[i]);clusterRaw[i]=int16_t(std::lround(std::clamp(clusterWords[i],float(reference::cluster246ControlMin[i]),float(reference::cluster246ControlMax[i]))));}clusterControlsInitialized=true;}else clusterControlsInitialized=false;
         const reference::PdCoefficients phaseCoefficients(phaseRaw);
         const reference::Digital246Coefficients digitalCoefficients(digitalRaw);
         if(!cleanInitialized){const bool clean=(target.sampleClean&&(target.engine==3||target.engine==5))||nativeCore;cleanMix=clean?1.f:0.f;if(clean)current=target;cleanInitialized=true;}
@@ -143,7 +148,11 @@ public:
                 const auto& base=target.valueVoice246Envelope?(nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeDigital?digitalRaw:phaseRaw);
                 modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
             }else if(v.valueVoice.active)v.valueVoice.reset();
-            if(nativeDrWave){
+            if(nativeCluster){
+                s=v.cluster246.next(frequency,clusterRaw,target.cluster246Adsr,clusterConfig,phaseConfig,v.released);
+                amplitude=1;v.level=v.cluster246.output.envelopeLevel();if(v.cluster246.output.envelopeDone())v.active=false;
+            }
+            else if(nativeDrWave){
                 s=v.drWave246.next(frequency,drWaveRaw,target.drWave246Adsr,drWaveConfig,phaseConfig,v.released);
                 amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone())v.active=false;
             }
@@ -202,7 +211,7 @@ public:
             }
             v.time+=1/sampleRate;
             float contribution=s*amplitude*v.velocity*.16f;
-            if(nativeDrWave&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
+            if((nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
             v.lastOutput=contribution;sum+=contribution;
         }
         const double cutoff=(900+p.tone*14500)*(target.lfoDestination==1&&lfo!=0?std::exp2(lfo*3):1);
@@ -240,11 +249,14 @@ private:
         Phase246Voice phase246;
         Digital246Voice digital246;
         DrWave246Voice drWave246;
+        Cluster246Voice cluster246;
         float lastOutput=0,stealTail=0;unsigned stealRemaining=0;
         ValueVoice246Control valueVoice;
         uint64_t age=0; float velocity=0,level=0,lastNoise=0;
         double phase=0,modPhase=0,frequency=440,samplePosition=0,time=0,drumPhase=0;
     };
+    Cluster246Config clusterConfig;bool nativeClusterActive=false,clusterControlsInitialized=false;
+    std::array<float,4> clusterWords{};std::array<int16_t,4> clusterRaw{};
     DrWave246Config drWaveConfig;bool nativeDrWaveActive=false,drWaveControlsInitialized=false;int selectedEngine=0;
     std::array<float,4> drWaveWords{};std::array<int16_t,4> drWaveRaw{};
     Phase246Config phaseConfig;bool phaseControlsInitialized=false,digitalControlsInitialized=false,nativeEnvelopeActive=false,nativeDigitalActive=false;

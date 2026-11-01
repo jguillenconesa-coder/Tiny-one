@@ -34,9 +34,12 @@ jobs:
       - name: Configure Windows x64
         if: runner.os == 'Windows'
         run: cmake -S . -B build -A x64
-      - name: Configure Linux and macOS
-        if: runner.os != 'Windows'
+      - name: Configure Linux
+        if: runner.os == 'Linux'
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Configure macOS universal
+        if: runner.os == 'macOS'
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release '-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64'
       - run: cmake --build build --config Release --parallel 2
       - name: Linux tests
         if: runner.os == 'Linux'
@@ -80,6 +83,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: ./packaging/windows/test-installer.ps1 -BuildDir build
+      - name: Package and inspect macOS universal installer
+        if: runner.os == 'macOS'
+        run: bash packaging/macos/build-package.sh build dist
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -88,4 +94,6 @@ jobs:
             build/PocketOne_artefacts/Release/VST3/
             build/PocketOne_artefacts/Release/Standalone/
             dist/*-Setup.exe
+            dist/*-macOS-universal.pkg
+            dist/*-macOS-universal-portable.zip
             build/realtime-metrics.json

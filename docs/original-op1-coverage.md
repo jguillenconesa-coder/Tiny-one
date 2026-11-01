@@ -1,14 +1,14 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.14.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.15.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
 **Prioridad activa: reconstrucción híbrida del instrumento.** Presets, bancos y vídeo
 quedan aplazados. El [plan de trabajo por componentes](firmware-dsp-workplan.md)
-mantiene un único bloque activo: Dr. Wave. Cluster conserva sus resultados y sus
-bloqueos concretos de normalización, afinación y relevo L1.
+registra las integraciones tocables de Dr. Wave y Cluster con adaptadores propios.
+Ambos conservan sus bloqueos originales de L1; los presets completos quedan al final.
 
 Fuentes: manual v2.2 suministrado por el usuario, 56 páginas, y firmware rev246
 inventariado. Las páginas 53–54 del PDF muestran motores y efectos; 47–50, LFO;
@@ -18,13 +18,13 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-35 % del objetivo completo, con incertidumbre explícita; no es una medición
+36 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
 
 Los IDs son observaciones/referencias del perfil rev246, no el orden del selector
-del plugin. El plugin añade Dr. Wave como séptima opción; no se prioriza compatibilidad histórica.
+del plugin. El plugin añade Dr. Wave y Cluster como séptima y octava opciones; no se prioriza compatibilidad histórica.
 
 | ID | Motor objetivo | Estado actual |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ del plugin. El plugin añade Dr. Wave como séptima opción; no se prioriza comp
 | 1 | Digital | Núcleo reconstruido, 262.144 muestras / 2.048 estados; integración, mezcla y voz propias. 16 presets CORE. |
 | 2 | Dr. Wave | **Motor híbrido tocable de seis voces**, con núcleo contrastado, controles y ADSR; pitch/reloj/allocator/salida propios ([guía](drwave246-hybrid.md)). Render aislado completo: 983.680 muestras en quince oráculos, con actualización, controles y cinco osciladores; [eventos Core de seis voces](drwave246-core-routing.md), [activación VoiceCtl con afinación explícita](drwave246-note-activation.md), [actualización selectiva/broadcast de pitch](drwave246-pitch-update.md), [índice de afinación](drwave246-tuning-index.md), [tabla de afinación generada](drwave246-tuning-table.md), [refresh con ADSR/RNG](drwave246-pitch-refresh.md), [modificación del buffer por cuatro entradas](drwave246-pitch-buffer-modifier.md), [volumen/pitch en serie y suavizado compartido](drwave246-volume-buffer-modifier.md), [decodificación hacia sus cuatro fuentes](drwave246-control-source-input.md), [destino instrumento y wrap/clamp de controles](drwave246-instrument-control-routing.md), [256 combinaciones de destinos en una llamada](drwave246-mixed-control-routing.md), [dispatch con ENV/kind 0–1 y ambos renderers](drwave246-control-env-dispatch.md), [inicializador de la imagen común y bloqueo del llamador](drwave246-control-workspace-init.md), [retirada polifónica VoiceCtl con release ADSR](drwave246-voicectl-poly-release.md), [selectores 1–4 con recuperación de pitch/RNG](drwave246-release-selectors.md), [constructor de argumentos](voice246-note-argument.md), [composición constructor/eventos/ADSR con orden explícito](drwave246-note-event-chain.md), [setter de ajustes](voice246-note-adjustment.md), [suministro por setters antes de eventos/ADSR](drwave246-adjusted-note-chain.md), [llamador polifónico con primera voz libre e inserción original](drwave246-poly-first-free.md), [voces ocupadas y productor de reinicio ADSR](drwave246-poly-steal.md), [consulta de última voz válida](voice246-last-voice-query.md), [dispatcher de retirada con mapa vacío](voice246-release-dispatch.md), [selectores 1–3 con lista vacía, actividad explícita y reinicio pendiente](drwave246-note-modes.md), [selectores con notas retenidas](drwave246-held-note-modes.md), [secuencias on/off con lista y estado conservados](drwave246-note-lifecycle.md), [pitch explícito con lista vacía en selectores 1–3](drwave246-empty-explicit-pitch.md), [despacho exterior de activación con metadata cero](voice246-note-dispatch.md), [pitch explícito polifónico](drwave246-poly-explicit-pitch.md), [eventos con metadata original y salida cero](voice246-quiet-note-lifecycle.md) y consumidor de contador de 16 bits contrastado exhaustivamente ([detalle](drwave246-counter.md)); seis mezcladores / 196.608 palabras contrastados aparte. Se conservan los oráculos de lector, 320 tablas y tres transformaciones. Llenado inicial del buffer de pitch explícito del harness; cadencia externa, asignación, demás rutas de pitch/ADSR, salida originales pendientes; integración híbrida disponible; [núcleo completo](drwave246-kernel.md). |
 | 3 | String | Modelo Karplus–Strong propio afinado; pendiente el waveguide original y todos sus controles. |
-| 4 | Cluster | Núcleo aislado: 262.144 muestras con coeficientes de prueba y 81.920 con cinco normalizaciones legibles convertidas por el helper original. 24 coeficientes de amortiguación y 60 casos de factoría/reset de seis slots contrastados. Faltan tres normalizaciones y la integración completa; [avance](cluster246-normalization.md). |
+| 4 | Cluster | **Motor híbrido tocable de seis voces**, ocho osciladores por voz y tres normalizaciones aproximadas explícitamente; [guía](cluster246-hybrid.md). Núcleo aislado: 262.144 muestras con coeficientes de prueba y 81.920 con cinco normalizaciones legibles convertidas por el helper original. 24 coeficientes de amortiguación y 60 casos de factoría/reset de seis slots contrastados. Faltan tres normalizaciones originales y la ruta completa del hardware; [avance](cluster246-normalization.md). |
 | 5 | Pulse | Render localizado en L1 cifrada (`0xffa04b88`), sin imagen descifrada validada. Port pendiente; [bloqueo](firmware/pulse246-l1-blocker.json). |
 | 6 | Synth sampler | Reproductor propio con CLEAN, raíz/loop/trim; banco de audio importable. No es el render original completo con sus cuatro controles secundarios. |
 | 7 | Phase | Núcleo Pd y ADSR contrastados; NCO, salida, mezcla y asignación propios. 16 presets CORE. |

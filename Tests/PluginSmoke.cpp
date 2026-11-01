@@ -68,6 +68,23 @@ int main(int argc,char** argv) {
    auto render=[](int block){auto synth=std::make_unique<PocketProcessor>();synth->applyDrWave246Init();synth->prepareToPlay(48000,block);std::vector<float> samples;const int total=12000;for(int start=0;start<total;start+=block){int n=std::min(block,total-start);juce::AudioBuffer<float> audio(2,n);audio.clear();juce::MidiBuffer midi;for(auto event:{std::pair{37,0},std::pair{2003,1},std::pair{6001,2}})if(event.first>=start&&event.first<start+n){auto message=event.second==0?juce::MidiMessage::noteOn(1,69,.8f):event.second==1?juce::MidiMessage::pitchWheel(1,10000):juce::MidiMessage::noteOff(1,69);midi.addEvent(message,event.first-start);}synth->processBlock(audio,midi);for(int i=0;i<n;++i)samples.push_back(audio.getSample(0,i));}return samples;};
    const auto a=render(64),b=render(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::abs(a[i]-b[i])<1e-6,"Dr. Wave depends on host block size");if(i<37)check(a[i]==0,"Dr. Wave note started before MIDI timestamp");energy+=a[i]*a[i];}check(energy>1,"Dr. Wave plugin is silent");
   }
+  // The hybrid is a synth, and both pages work without an editor.
+  {
+   auto hybrid=std::make_unique<PocketProcessor>();juce::String error;
+   check(hybrid->loadSound("cluster246:0",error)&&hybrid->cluster246Enabled(),"Cluster init failed");
+   check(hybrid->lastSound(false)=="cluster246:0","Cluster classified as drums");
+   for(int page=0;page<2;++page){hybrid->setScreenPage(page);for(size_t k=0;k<4;++k){auto* parameter=hybrid->phaseParameters().getParameter(page?pocket::cluster246EnvelopeIds[k]:pocket::cluster246Ids[k]);check(hybrid->screenKnob(int(k)).followedParameter()==parameter,"Cluster proxy target failed");hybrid->screenKnob(int(k)).setValueNotifyingHost(.25f+float(k)*.1f);check(std::abs(parameter->getValue()-hybrid->screenKnob(int(k)).getValue())<.0001,"Cluster proxy write failed");}}
+   check(hybrid->assignSoundSlot(false,1)&&hybrid->copySound(error),"Cluster slot/copy failed");
+   juce::MemoryBlock saved;hybrid->getStateInformation(saved);hybrid->applyPreset(22);
+   check(hybrid->recallSoundSlot(false,1,error)&&hybrid->cluster246Enabled(),"Cluster slot recall failed");hybrid->applyPreset(0);check(hybrid->pasteSound(error)&&hybrid->cluster246Enabled(),"Cluster clipboard failed");
+   auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));check(restored->cluster246Enabled()&&restored->screenPage()==1&&restored->selectedSound()=="cluster246:0","Cluster state roundtrip failed");
+   check(restored->phaseParameters().getRawParameterValue("cluster246Blue")->load()==hybrid->phaseParameters().getRawParameterValue("cluster246Blue")->load(),"Cluster state lost raw controls");
+   restored->phaseParameters().getParameter("cluster246Release")->setValueNotifyingHost(0);check(restored->getTailLengthSeconds()>60,"Cluster release tail truncated");
+   restored->setScreenPage(0);{std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());bool found=false;for(auto* child:ui->getChildren())if(child->getComponentID()=="screen-knob-1")if(auto* slider=dynamic_cast<juce::Slider*>(child)){check(slider->getMinimum()==3072&&slider->getMaximum()==17408,"Cluster blue range failed");found=true;}check(found,"Cluster knob missing");if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("cluster246-hybrid.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"Cluster screenshot failed");}}
+   // Identical event timestamps rendered with unrelated host buffer sizes.
+   auto render=[](int block){auto synth=std::make_unique<PocketProcessor>();synth->applyCluster246Init();synth->prepareToPlay(48000,block);std::vector<float> samples;const int total=12000;for(int start=0;start<total;start+=block){int n=std::min(block,total-start);juce::AudioBuffer<float> audio(2,n);audio.clear();juce::MidiBuffer midi;for(auto event:{std::pair{37,0},std::pair{2003,1},std::pair{6001,2}})if(event.first>=start&&event.first<start+n){auto message=event.second==0?juce::MidiMessage::noteOn(1,69,.8f):event.second==1?juce::MidiMessage::pitchWheel(1,10000):juce::MidiMessage::noteOff(1,69);midi.addEvent(message,event.first-start);}synth->processBlock(audio,midi);for(int i=0;i<n;++i)samples.push_back(audio.getSample(0,i));}return samples;};
+   const auto a=render(64),b=render(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::abs(a[i]-b[i])<1e-6,"Cluster depends on host block size");if(i<37)check(a[i]==0,"Cluster note started before MIDI timestamp");energy+=a[i]*a[i];}check(energy>1,"Cluster plugin is silent");
+  }
   // Digital is appended after 0.9.0, with signed raw controls and the same proxies.
   {
    auto native=std::make_unique<PocketProcessor>();juce::String error;auto& raw=native->phaseParameters();
@@ -388,7 +405,7 @@ int main(int argc,char** argv) {
    check(installed.findChildFiles(juce::File::findFilesAndDirectories,true).isEmpty(),"Purge left bank files on disk");
    check(bankProcessor->userPresetNames().isEmpty()&&!bankProcessor->isFavorite(purgedId)&&bankProcessor->selectedSound().isEmpty(),"Purge left stale browser entries");
    check(bankProcessor->soundSlot(false,0)=="factory:0"&&bankProcessor->clipboardKind.load()==0&&bankProcessor->sampleFrames.load()==0,"Purge retained loaded audio or sound references");
-   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==69,"Purge deleted source files or factory sounds");
+   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==70,"Purge deleted source files or factory sounds");
    bankProcessor->getStateInformation(saved);auto purgedTree=juce::ValueTree::fromXml(*juce::AudioProcessor::getXmlFromBinary(saved.getData(),int(saved.getSize())));
    check(!purgedTree.hasProperty("sampleAudio")&&!purgedTree.hasProperty("kitAudio0"),"Purged audio still embedded in a new project snapshot");
    check(bankProcessor->importUserBank(valid,error)&&bankProcessor->importUserBank(valid,error),"Import after purge failed");
@@ -399,7 +416,7 @@ int main(int argc,char** argv) {
   }
   // Browser metadata and independent edited sound slots survive project state.
   auto libraryProcessor=std::make_unique<PocketProcessor>(library.getChildFile("Catalog"));
-  check(libraryProcessor->soundCatalog().size()==69,"Factory catalog incomplete");
+  check(libraryProcessor->soundCatalog().size()==70,"Factory catalog incomplete");
   libraryProcessor->applyPreset(0);libraryProcessor->state.getParameter("tone")->setValueNotifyingHost(.83f);
   libraryProcessor->state.getParameter("seqMode")->setValueNotifyingHost(1);
   libraryProcessor->toggleFavorite("factory:0");check(libraryProcessor->assignSoundSlot(false,0),"Could not store edited synth slot");
