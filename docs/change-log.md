@@ -4,7 +4,7 @@
 
 - Grid 246 mono: X/Y Size, Feedback y Mix, dos planos y reset contrastados en 262.144 muestras y ocho memorias completas.
 - Selector común de efectos, Value FX, automatización y guardado. [Guía](grid246-native.md).
-- Extracción explícita del word alto de Delay para contrastar la deriva detectada en MSVC.
+- Extracción explícita del word alto de Delay; comparaciones exactas verificadas en MSVC.
 
 ## 0.22.0
 

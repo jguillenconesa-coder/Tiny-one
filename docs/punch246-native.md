@@ -1,5 +1,7 @@
 # Punch 246 — Pocket One 0.11.0
 
+Desde 0.23, elige Punch en el **selector FX de set 3**; sustituye su botón anterior.
+
 **PUNCH 246** activa una reconstrucción independiente del efecto mono de rev246.
 El set 3 sigue sus cuatro controles y reutiliza las asignaciones MIDI existentes.
 Al apagarlo, ese set vuelve a Echo/Drive. Puede aplicarse a cualquiera de los

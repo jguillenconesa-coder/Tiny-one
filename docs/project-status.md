@@ -49,9 +49,10 @@ y ocho memorias completas coinciden; repetición independiente idéntica.
 El selector conserva los interruptores automatizables existentes. El bus y su
 PDC no añaden otro retardo. Pasan 78/78 suites Linux y 300 cargas de callback
 sin heap rastreado. Se comprueban siete tasas, cursor seguro al reducir ejes, respuesta húmeda, proxies,
-estados y bloques independientes. El CI propio debe confirmar Windows/macOS.
-Delay 0.22 pasó Linux/macOS; Windows detectó muestras con una unidad de deriva,
-que se aborda mediante extracción explícita del word alto en esta entrega.
+estados y bloques independientes. El CI [41363363963](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963)
+ya pasa los oráculos exactos de Grid/Delay/Filter/Nitro en Windows; los builds y
+paquetes completos siguen en curso. Delay 0.22 pasó Linux/macOS; la extracción
+explícita del word alto corrige ahora su deriva de una unidad en MSVC.
 Ableton real sigue pendiente. Estimación ~43 % (±10 puntos), sin equivalencia
 acústica completa ni OTP/L1 recuperada.
 

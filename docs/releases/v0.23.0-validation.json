@@ -67,8 +67,22 @@
     "macos": "success including universal pkg",
     "windows": "failure: one-unit sample drift in Delay oracle"
   },
-  "delay_portability_fix": "Explicit signed high-word extraction; Linux oracle passes, native check pending",
-  "native_ci": "pending implementation commit",
+  "delay_portability_fix": {
+    "commit": "215479a",
+    "change": "Explicit signed high-word extraction replaces optimized signed division/remainder at both read and output sites",
+    "validation": "Exact GNU and native MSVC Delay oracle passed; tolerances unchanged"
+  },
+  "native_ci": {
+    "run_id": 41363363963,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963",
+    "status": "Windows exact Grid/Delay/Filter/Nitro core checks passed; full builds/tests/packages in progress",
+    "windows_exact_cores": {
+      "grid246": "pass, complete states/displays and eight two-plane snapshots",
+      "delay246": "pass after explicit high-word extraction",
+      "filter246": "pass",
+      "nitro246_hybrid": "pass under explicit substitutions"
+    }
+  },
   "limitations": [
     "Valid bounded scan coordinates and fixed workspace slot 2 only.",
     "Abrupt incompatible resize resets scan state in authored adapter; hardware transition not verified.",

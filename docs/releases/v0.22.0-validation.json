@@ -67,7 +67,8 @@
     "run_id": 41361837115,
     "linux": "success",
     "macos": "success including universal app/VST3 and pkg",
-    "windows": "failure: one-unit Delay sample drift; addressed by explicit high-word extraction in 0.23, native validation pending"
+    "windows": "failure: one-unit Delay sample drift; addressed by explicit high-word extraction in 0.23, native validation pending",
+    "followup_0_23": "Explicit high-word extraction in 215479a; exact Delay/Grid/Filter/Nitro core checks passed in Windows run 41363363963. Full 0.23 packages require that run completion."
   },
   "limitations": [
     "External allocation/workspace and full routing/clock authored.",
