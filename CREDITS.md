@@ -375,3 +375,10 @@ con el SDK OP-1 de referencia ya acreditado (revisión
 `ae1945a9c61468f0e0d7cfdd5dd60c2cf9731ff1`). No se copió su DSP. Se reutiliza la
 curva numérica contrastada de Punch; el bus, resampling, DC y mezcla son propios.
 [Pruebas y límites](docs/filter246-native.md). Firmware y decompilaciones no incluidos.
+
+Nitro Hybrid: reconstrucción independiente de la ruta mono legible y pruebas GNU
+Blackfin con sustituciones explícitas. Las posiciones y etiquetas se contrastaron
+con el SDK de referencia ya acreditado y fijado a la misma revisión. Se reutilizan
+el seno y frecuencia contrastados; la mezcla simétrica de reemplazo, sus punteros
+y el adaptador de salida son propios. [Contrato](docs/nitro246-hybrid.md). No se
+atribuyen a firmware descifrado ni se incorpora código del SDK.

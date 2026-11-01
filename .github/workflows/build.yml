@@ -40,6 +40,11 @@ jobs:
       - name: Configure macOS universal
         if: runner.os == 'macOS'
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release '-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64'
+      - name: Validate Windows integer DSP before plugin build
+        if: runner.os == 'Windows'
+        run: |
+          cmake --build build --config Release --target filter246_tests nitro246_tests --parallel 2
+          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid)$' --output-on-failure
       - run: cmake --build build --config Release --parallel 2
       - name: Linux tests
         if: runner.os == 'Linux'

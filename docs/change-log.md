@@ -1,5 +1,11 @@
 # Historial de cambios
 
+## 0.21.0
+
+- Nitro Hybrid: dos frecuencias, Follow bipolar y Resonance, con ruta mono legible y sustituciones propias explícitas para datos L1 protegidos.
+- Oráculo condicionado: 262.144 muestras y estado/display completos, repetición independiente.
+- Bus compartido con Filter, Value FX, controles, guardado y automatización. [Guía](nitro246-hybrid.md).
+
 ## 0.20.0
 
 - Filter 246 mono contrastado con 262.144 muestras, estado/display y tablas generadas.

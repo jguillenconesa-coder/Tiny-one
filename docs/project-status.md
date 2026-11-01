@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 40 % del objetivo completo
+## Avance estimado: aproximadamente 41 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 50 % | 10 puntos |
+| Efectos, envolventes y moduladores | 20 % | 55 % | 11 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **40 %** |
+| Total | 100 % | | **41 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,27 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Filter reconstruido e integrado (0.20.0)
+## Entrega agrupada actual: Nitro híbrido (0.21.0)
+
+Set 3 → NITRO HYBRID añade dos frecuencias, Follow bipolar y Resonance, con
+Value FX, MIDI contextual del host, automatización y guardado. Conserva la ruta
+mono legible, reemplazando explícitamente dos coeficientes y dos punteros protegidos
+mediante un modelo propio. Coinciden 262.144 muestras y estados/displays completos
+bajo esas sustituciones; no equivalen a memoria descifrada ni a fidelidad acústica.
+[Guía](nitro246-hybrid.md), [evidencia](releases/v0.21.0-validation.json).
+
+Comparte el bus y PDC de Filter sin sumar retardo. Se comprueban siete tasas,
+proxies, proyectos/slots/clipboard, pánico, buffer independiente y extremos de
+control; 74/74 suites Linux y 252 cargas de tiempo real pasan, sin heap rastreado. El CI nativo de esta
+entrega debe confirmar Windows/macOS. El CI Filter 41358939922 pasó Linux y detectó
+una discrepancia de estado en el oráculo de Windows; seguimiento explícito en la
+validación de la nueva entrega. Ableton real sigue pendiente.
+
+Estimación ~41 % (±10 puntos), por integración híbrida adicional; no se declara
+resuelto OTP/L1. Siguiente bloque: restantes efectos legibles y calibración del
+modelo con referencias de audio antes de los presets originales.
+
+## Entrega anterior: Filter reconstruido e integrado (0.20.0)
 
 Set 3 → FILTER 246 incorpora el núcleo mono al bus de salida. Coinciden 262.144
 muestras, 4.096 estados/displays y 194 coeficientes generados; repetición

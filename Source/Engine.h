@@ -11,6 +11,7 @@
 #include "Cluster246Voice.h"
 #include "Punch246Effect.h"
 #include "Filter246Controls.h"
+#include "Nitro246Controls.h"
 #include "Value246Fx.h"
 #include "ValueVoice246Control.h"
 #include "Random246Control.h"
@@ -32,6 +33,7 @@ struct Parameters {
     bool digital246=false,digital246Envelope=false;std::array<int16_t,4> digital246Controls{{0,16384,0,0}},digital246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> drWave246Controls{{0,0,0,0}},drWave246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> cluster246Controls{{8192,0,12000,30}},cluster246Adsr{{64,8064,32767,8192}};
+    bool nitro246=false;std::array<int16_t,4> nitro246Controls{{512,0,8000,14000}};
     bool filter246=false;std::array<int16_t,4> filter246Controls{{8000,0,0,24576}};
     bool punch246=false;std::array<int16_t,4> punch246Controls{{6000,15000,20000,28000}};
     bool value246=false,value246Free=false,value246Destination=true;
@@ -268,12 +270,13 @@ public:
         const float cleanDriven=p.drive<.000001f?cleanInput:std::tanh(cleanInput*(1+p.drive*12))/(1+p.drive*2);
         float driven=legacyDriven+(cleanDriven-legacyDriven)*cleanMix;
         valueActive=target.value246&&!nativeValueVoice&&!nativeTremolo&&!nativeRandom;
-        const bool punchSelected=target.punch246&&!target.filter246;
+        const bool outputFx=target.filter246||target.nitro246;const auto& outputControls=target.nitro246?target.nitro246Controls:target.filter246Controls;const auto& outputMin=target.nitro246?nitro246Min:filter246Min;const auto& outputMax=target.nitro246?nitro246Max:filter246Max;
+        const bool punchSelected=target.punch246&&!outputFx;
         if(punchSelected||punchActive){for(size_t i=0;i<4;++i){if(!punchActive)punchWords[i]=target.punch246Controls[i];else punchWords[i]+=smoothing*(target.punch246Controls[i]-punchWords[i]);punchRaw[i]=int16_t(std::lround(std::clamp(punchWords[i],0.f,32767.f)));}punchActive=true;follow(punchMix,punchSelected?1.f:0.f);}
-        if(target.filter246){for(size_t i=0;i<4;++i){if(!filterControlsInitialized)filterWords[i]=target.filter246Controls[i];else filterWords[i]+=smoothing*(target.filter246Controls[i]-filterWords[i]);filterRaw[i]=int16_t(std::lround(std::clamp(filterWords[i],float(filter246Min[i]),float(filter246Max[i]))));}filterControlsInitialized=true;}else filterControlsInitialized=false;
-        const auto modulated=valueEffect.next(valueActive,target.value246Destination&&(target.filter246||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,target.filter246?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.filter246?5:2);
-        filterModulated=target.filter246?modulated:target.filter246Controls;
-        if(punchActive){const auto processed=punchEffect.next(driven,target.filter246?punchRaw:modulated,phaseConfig.table);driven+=punchMix*(processed-driven);if(!punchSelected&&punchMix<.000001f){punchMix=0;punchActive=false;punchEffect.reset();}}
+        if(outputFx){for(size_t i=0;i<4;++i){if(!filterControlsInitialized)filterWords[i]=outputControls[i];else filterWords[i]+=smoothing*(outputControls[i]-filterWords[i]);filterRaw[i]=int16_t(std::lround(std::clamp(filterWords[i],float(outputMin[i]),float(outputMax[i]))));}filterControlsInitialized=true;}else filterControlsInitialized=false;
+        const auto modulated=valueEffect.next(valueActive,target.value246Destination&&(outputFx||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,outputFx?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.nitro246?6:target.filter246?5:2);
+        filterModulated=outputFx?modulated:outputControls;
+        if(punchActive){const auto processed=punchEffect.next(driven,outputFx?punchRaw:modulated,phaseConfig.table);driven+=punchMix*(processed-driven);if(!punchSelected&&punchMix<.000001f){punchMix=0;punchActive=false;punchEffect.reset();}}
         const auto lag=std::clamp(size_t(sampleRate*p.delayTime),size_t(1),delay.size()-1);
         const float echo=lag<=delayValid?delay[(write+delay.size()-lag)%delay.size()]:0;
         delay[write]=std::tanh(driven+echo*std::clamp(p.feedback,0.f,.85f)); write=(write+1)%delay.size();if(delayValid<delay.size())++delayValid;

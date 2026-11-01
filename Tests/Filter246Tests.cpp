@@ -17,7 +17,7 @@ int main(int argc,char** argv){try{
  for(size_t i=0;i<4096;++i){const auto* p=in.data()+i*240;const auto* expected=out.data()+776+i*228;uint32_t action;std::memcpy(&action,p+236,4);if(action){std::memcpy(&state,p,36);std::memcpy(meters.data(),p+172,64);}std::array<int16_t,4> controls;std::array<int16_t,64> audio;std::memcpy(controls.data(),p+36,8);std::memcpy(audio.data(),p+44,128);check(filter246Block(state,controls,mix,frequency,sine,audio,meters),"Valid Filter input rejected");
  for(size_t j=0;j<64;++j){int16_t e;std::memcpy(&e,expected+j*2,2);if(audio[j]!=e&&failures++<12)std::cerr<<"case "<<i<<" sample "<<j<<" got "<<audio[j]<<" expected "<<e<<'\n';}
 
- if(std::memcmp(&state,expected+128,36)!=0&&failures++<12)std::cerr<<"case "<<i<<" state mismatch\n";
+ if(std::memcmp(&state,expected+128,36)!=0&&failures++<12){std::cerr<<"case "<<i<<" state mismatch";for(size_t word=0;word<9;++word){uint32_t got,want;std::memcpy(&got,reinterpret_cast<const uint8_t*>(&state)+word*4,4);std::memcpy(&want,expected+128+word*4,4);if(got!=want)std::cerr<<" word "<<word<<" got "<<got<<" expected "<<want;}std::cerr<<'\n';}
  if(std::memcmp(meters.data(),expected+164,64)!=0&&failures++<12)std::cerr<<"case "<<i<<" meter mismatch\n";
  if(failures>100)break;
  }

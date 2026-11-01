@@ -52,6 +52,7 @@
       "protected": false
     }
   ],
-  "additional_dependency": "Render directly reads 0xff907030, at payload offset 288 (mod24=0), also protected under this model",
-  "status": "No invented table values and no Nitro integration; Filter chosen because its initializer/conversion inputs are legible"
+  "additional_dependency": "Render reads four pointers at 0xff907030..0xff90703c. First two (payload offsets 288/292, mod24=0/4) are protected; last two remain readable and point to 0x01d07c24/0x01d07c28.",
+  "status": "Original coefficients/pointers remain protected. Version 0.21 integrates an explicitly authored hybrid substitution; it does not decrypt or recover L1.",
+  "hybrid_evidence": "nitro-hybrid246-validation.json"
 }

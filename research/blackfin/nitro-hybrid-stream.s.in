@@ -1,0 +1,127 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+// Explicit authored substitution, not a decrypted image or original initializer.
+P1.H = replacements;
+P1.L = replacements;
+imm32 P2, 0x01d07c18
+P0 = 5;
+LSETUP(mix_start,mix_end) LC0 = P0;
+mix_start: R0 = [P1++];
+mix_end: [P2++] = R0;
+imm32 P1, 0xff907030
+imm32 R0, 0x01d07c1c
+[P1++] = R0;
+imm32 R0, 0x01d07c20
+[P1++] = R0;
+imm32 R0, 0x01d07c24
+[P1++] = R0;
+imm32 R0, 0x01d07c28
+[P1++] = R0;
+imm32 P4, 0x018be744
+imm32 P5, 0xff801f50
+P3 = 129;
+LSETUP(freq_start,freq_end) LC0 = P3;
+freq_start:
+R0 = [P4++];
+imm32 P0, 0x01aa6fd0
+CALL (P0);
+freq_end: [P5++] = R0;
+imm32 P0, 0x018b6688
+imm32 P1, 0x0101e5e8
+P2 = 8192;
+LSETUP(sine_start,sine_end) LC0 = P2;
+sine_start: R0 = [P0++];
+sine_end: W[P1++] = R0;
+R0.H = mix_args;
+R0.L = mix_args;
+P0 = 5;
+EXCPT 0;
+R0.H = freq_args;
+R0.L = freq_args;
+P0 = 5;
+EXCPT 0;
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+P0 = 260;
+P1 = P4 + P0;
+R0 = [P1];
+CC = R0 == 0;
+IF CC JUMP copy_audio;
+P1 = P4;
+P2.H = state;
+P2.L = state;
+P0 = 15;
+LSETUP(state_start,state_end) LC0 = P0;
+state_start: R0 = [P1++];
+state_end: [P2++] = R0;
+P0 = 196;
+P1 = P4 + P0;
+imm32 P2, 0xff801774
+P0 = 16;
+LSETUP(meter_start,meter_end) LC0 = P0;
+meter_start: R0 = [P1++];
+meter_end: [P2++] = R0;
+copy_audio:
+P1 = P4;
+P0 = 68;
+P1 = P1 + P0;
+P2.H = audio;
+P2.L = audio;
+P0 = 32;
+LSETUP(audio_start,audio_end) LC0 = P0;
+audio_start: R0 = [P1++];
+audio_end: [P2++] = R0;
+R0.H = state;
+R0.L = state;
+R1.H = audio;
+R1.L = audio;
+R2 = P4;
+R2 += 60;
+imm32 P0, 0x019a62a4
+CALL (P0);
+P1.H = audio;
+P1.L = audio;
+P0 = 32;
+LSETUP(save_audio,save_audio_end) LC0 = P0;
+save_audio: R0 = [P1++];
+save_audio_end: [P5++] = R0;
+P1.H = state;
+P1.L = state;
+P0 = 15;
+LSETUP(save_state,save_state_end) LC0 = P0;
+save_state: R0 = [P1++];
+save_state_end: [P5++] = R0;
+imm32 P1, 0xff801774
+P0 = 16;
+LSETUP(save_meter,save_meter_end) LC0 = P0;
+save_meter: R0 = [P1++];
+save_meter_end: [P5++] = R0;
+P0 = 264;
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+mix_args: .long 1,0x01d07c18,20
+freq_args: .long 1,0xff801f50,516
+output_args: .long 1,results,@BYTES@
+replacements: .long 357913952,-1431655808,2147483647,-1431655808,357913952
+state: .space 60
+audio: .space 128
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

@@ -769,3 +769,13 @@ int16, 64 muestras int16 de entrada, display64 y acción uint32
 de 228 bytes: 64 muestras int16 de salida, estado36, display64. Little endian;
 entradas sintéticas y resultados numéricos, sin instrucciones del firmware.
 [Contrato y reproducción](../../docs/filter246-native.md).
+
+## Nitro Hybrid 246 — oráculo condicionado
+
+`nitro-hybrid246-input.bin`: 4096 registros de 264 bytes: estado60, cuatro controles
+int16, 64 muestras int16, display64 y acción uint32 (0 conservar / 1 cargar).
+`nitro-hybrid246-output.bin`: prefijo de 536 bytes (cinco coeficientes int32 de
+mezcla propia y 129 de frecuencia compartida), seguido de 4096 registros de 252
+bytes: audio128, estado60 y display64. Little endian. Se sustituyen coeficientes y
+punteros protegidos explícitamente; estas cifras NO son una captura descifrada.
+[Modelo y reproducción](../../docs/nitro246-hybrid.md).

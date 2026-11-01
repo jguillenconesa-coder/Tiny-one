@@ -1,0 +1,52 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "kernel": "0x019a62a4",
+  "cases": 4096,
+  "samples": 262144,
+  "state_bytes": 60,
+  "display_bytes": 64,
+  "conditional_model": "Authored mix [1/6,-2/3,1,-2/3,1/6] and four explicit coefficient pointers substituted; NOT original decrypted tables",
+  "frequency": "Same legible conversion fragment as Filter",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "nitro-hybrid246-input.bin": {
+      "bytes": 1081344,
+      "sha256": "4d7001745d3ff358f11ab92819c9422d4fb0c59bbb096ccac4f1b1e5cff553f0",
+      "matches_committed_fixture": true
+    },
+    "nitro-hybrid246-output.bin": {
+      "bytes": 1032728,
+      "sha256": "b3bcd429998ed22db9c5b61d27c6aadd80a9e1cf5868b0e82e2dde2aaa1b6457",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Conditional instruction-path equivalence only; protected coefficients and pointers remain unknown.",
+    "Original stereo routing, clock and host output adaptation unverified."
+  ],
+  "independent_repeat": {
+    "input_identical": true,
+    "output_identical": true
+  },
+  "substituted_coefficients_q31": [
+    357913952,
+    -1431655808,
+    2147483647,
+    -1431655808,
+    357913952
+  ],
+  "substituted_pointer_addresses": {
+    "0xff907030": "0x01d07c1c",
+    "0xff907034": "0x01d07c20",
+    "0xff907038": "0x01d07c24",
+    "0xff90703c": "0x01d07c28"
+  },
+  "patches": {
+    "gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3"
+  }
+}

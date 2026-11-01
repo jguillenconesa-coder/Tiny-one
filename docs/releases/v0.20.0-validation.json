@@ -62,7 +62,12 @@
     "windows": "success",
     "macos": "success, universal app/VST3 and pkg"
   },
-  "native_ci": "Pending workflow triggered by implementation commit",
+  "native_ci": {
+    "run_id": 41358939922,
+    "linux": "success",
+    "macos": "success, universal app/VST3 and pkg",
+    "windows": "failure: exact Filter state oracle mismatch; compilation, adapter and plugin tests passed; diagnosed in 0.21"
+  },
   "limitations": [
     "Mono core verified; original stereo wrapper and full instrument routing not reconstructed.",
     "Resampling, output DC/silence guard, mix and host scheduling authored.",

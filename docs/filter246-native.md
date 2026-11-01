@@ -78,6 +78,8 @@ Nitro tiene callback legible, pero el inicializador convierte cinco palabras
 procedentes de L1 y dos caen en las franjas protegidas. Además el render consume
 otra zona protegida. Se registra el [bloqueo y offsets](firmware/nitro246-table-blocker.json)
 sin rellenarlos con ceros ni convertirlos en coeficientes supuestamente originales.
+La entrega 0.21 añade un [Nitro híbrido](nitro246-hybrid.md) con sustituciones
+propias explícitas; las tablas originales continúan protegidas.
 Esta entrega retoma Filter desde main, como se autorizó al recuperar el chat.
 
 ## Reproducir

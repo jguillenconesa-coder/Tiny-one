@@ -59,10 +59,10 @@ private:
     std::array<juce::TextButton,4> modeButtons;
     std::array<juce::TextButton,8> slotButtons;
     juce::TextButton browseKey{"BROWSE"},splitKey{"SPLIT"},liftKey{"LIFT"},dropKey{"DROP"},undoKey{"UNDO"},sequencerKey{"SEQ"},comKey{"COM"},micKey{"IN"},metroKey{"CLICK"};
-    juce::TextButton phase246{"PHASE 246 CORE"};bool lastCluster246=false,lastDrWave246=false,lastPhase246=false,lastPhaseEnvelope=false,lastDigital246=false,lastDigitalEnvelope=false,lastFilter246=false,lastPunch246=false,lastValue246=false,lastValueVoice246=false;
+    juce::TextButton phase246{"PHASE 246 CORE"};bool lastCluster246=false,lastDrWave246=false,lastPhase246=false,lastPhaseEnvelope=false,lastDigital246=false,lastDigitalEnvelope=false,lastNitro246=false,lastFilter246=false,lastPunch246=false,lastValue246=false,lastValueVoice246=false;
     juce::TextButton phaseEnvelope{"246 ENVELOPE"};
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> phaseAttachment,envelopeAttachment,digitalAttachment,digitalEnvelopeAttachment,filterAttachment,punchAttachment,valueAttachment,valueFreeAttachment,valueVoiceAttachment,valueVoiceFreeAttachment;
-    juce::TextButton filter246{"FILTER 246"};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> phaseAttachment,envelopeAttachment,digitalAttachment,digitalEnvelopeAttachment,nitroAttachment,filterAttachment,punchAttachment,valueAttachment,valueFreeAttachment,valueVoiceAttachment,valueVoiceFreeAttachment;
+    juce::TextButton nitro246{"NITRO HYBRID"};juce::TextButton filter246{"FILTER 246"};
     juce::TextButton punch246{"PUNCH 246"};
     juce::TextButton value246{"VALUE 246 FX"},valueFree{"FREE PHASE"};
     bool lastRandom246=false;juce::TextButton random246{"RANDOM 246"};

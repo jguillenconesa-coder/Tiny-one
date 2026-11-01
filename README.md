@@ -1,14 +1,14 @@
-# Pocket One 0.20.0
+# Pocket One 0.21.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.20.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.21.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
 
-**Nuevo en 0.20.0:** [Filter 246](docs/filter246-native.md), núcleo mono contrastado e integrado en el bus de salida. **Set 3 → FILTER 246**: Cutoff, Resonance/Follow, Mode y Drive, con Value FX, MIDI, automatización y guardado. Latencia fija declarada de unos 1,5 ms, también en bypass. Presets originales completos aplazados.
+**Nuevo en 0.21.0:** [Nitro Hybrid](docs/nitro246-hybrid.md) en **Set 3 → NITRO HYBRID**: dos frecuencias, Follow bipolar y Resonance, con Value FX, automatización y guardado. Conserva la ruta mono legible con coeficientes protegidos sustituidos explícitamente; no se afirma igualdad sonora con el original. Comparte la latencia fija de Filter (~1,5 ms).
 
 **Nuevo en 0.17.0:** [Mono, Legato y Glide para Dr. Wave / Cluster](docs/hybrid-performance.md). En **set 2**, selecciona el modo de voz y el portamento de 0–2000 ms. Prioridad de última nota, sustain/bend por canal, automatización y guardado; adaptadores propios, con los núcleos contrastados intactos.
 

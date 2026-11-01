@@ -302,3 +302,11 @@ Nitro consume palabras protegidas de L1; [registro de offsets](firmware/nitro246
 El siguiente bloque debe evaluar el adaptador híbrido sin atribuirle coeficientes
 originales y continuar las rutas restantes. Sin claves OTP ni captura descifrada,
 la fidelidad de esas dependencias sigue pendiente. No se añaden presets.
+
+## Entrega 0.21.0: Nitro híbrido condicionado
+
+[Nitro Hybrid](nitro246-hybrid.md) conserva la aritmética mono y usa una mezcla
+simétrica propia para dos coeficientes protegidos, con punteros explícitos.
+4.096 bloques y estados/displays coinciden bajo esas sustituciones. Se integra
+con Value FX, controles y guardado en el bus existente; no se recupera L1.
+Siguiente bloque: otros efectos y calibración independiente del modelo híbrido.
