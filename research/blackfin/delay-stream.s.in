@@ -1,0 +1,146 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+imm32 P4, 0x018bebcc
+imm32 I0, 0x0106a730
+P3 = 225;
+LSETUP(table_start,table_end) LC0 = P3;
+table_start: R0 = [P4++];
+imm32 P0, 0x01aa7014
+CALL (P0);
+table_end: W[I0++] = R0.L;
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+imm32 P0, 0x01ab8ba0
+imm32 R0, 0x02400000
+[P0] = R0;
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+P0 = 220;
+P1 = P4 + P0;
+R0 = [P1];
+CC = R0 == 0;
+IF CC JUMP copy_audio;
+P1 = P4;
+P2.H = state;
+P2.L = state;
+// Deterministic external delay workspace; allocator/slot 0 binding is authored.
+imm32 P2, 0x02400000
+P0 = 11025;
+R0 = 0;
+LSETUP(clear_start,clear_end) LC0 = P0;
+clear_start: [P2++] = R0;
+[P2++] = R0;
+[P2++] = R0;
+clear_end: [P2++] = R0;
+P2.H = state;
+P2.L = state;
+P0 = 5;
+LSETUP(state_start,state_end) LC0 = P0;
+state_start: R0 = [P1++];
+state_end: [P2++] = R0;
+P0 = 156;
+P1 = P4 + P0;
+imm32 P2, 0xff801774
+P0 = 16;
+LSETUP(meter_start,meter_end) LC0 = P0;
+meter_start: R0 = [P1++];
+meter_end: [P2++] = R0;
+// Optional original reset (only cursor words change).
+P0 = 220;
+P0 = P4 + P0;
+R0 = [P0];
+R1 = 2;
+CC = R0 == R1;
+IF !CC JUMP copy_audio;
+R0.H = state;
+R0.L = state;
+imm32 P0, 0x0197d7d0
+CALL (P0);
+copy_audio:
+P1 = P4;
+P0 = 28;
+P1 = P1 + P0;
+P2.H = audio;
+P2.L = audio;
+P0 = 32;
+LSETUP(audio_start,audio_end) LC0 = P0;
+audio_start: R0 = [P1++];
+audio_end: [P2++] = R0;
+R0.H = state;
+R0.L = state;
+R1.H = audio;
+R1.L = audio;
+R2 = P4;
+R2 += 20;
+imm32 P0, 0x0197d8c4
+CALL (P0);
+P1.H = audio;
+P1.L = audio;
+P0 = 32;
+LSETUP(save_audio,save_audio_end) LC0 = P0;
+save_audio: R0 = [P1++];
+save_audio_end: [P5++] = R0;
+P1.H = state;
+P1.L = state;
+P0 = 5;
+LSETUP(save_state,save_state_end) LC0 = P0;
+save_state: R0 = [P1++];
+save_state_end: [P5++] = R0;
+imm32 P1, 0xff801774
+P0 = 16;
+LSETUP(save_meter,save_meter_end) LC0 = P0;
+save_meter: R0 = [P1++];
+save_meter_end: [P5++] = R0;
+// Save a complete ring at every 512-block stream boundary.
+R0.H = calls;
+R0.L = calls;
+P0 = R0;
+R0 = [P0];
+R0 += 1;
+[P0] = R0;
+R1 = 511;
+R1 = R0 & R1;
+CC = R1 == 0;
+IF !CC JUMP no_ring;
+imm32 P1, 0x02400000
+P0 = 11025;
+LSETUP(ring_start,ring_end) LC0 = P0;
+ring_start: R0 = [P1++];
+[P5++] = R0;
+R0 = [P1++];
+[P5++] = R0;
+R0 = [P1++];
+[P5++] = R0;
+R0 = [P1++];
+ring_end: [P5++] = R0;
+no_ring:
+P0 = 224;
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+table_args: .long 1,0x0106a730,450
+output_args: .long 1,results,@BYTES@
+calls: .long 0
+state: .space 20
+audio: .space 128
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

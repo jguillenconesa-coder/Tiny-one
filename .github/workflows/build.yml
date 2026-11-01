@@ -43,8 +43,8 @@ jobs:
       - name: Validate Windows integer DSP before plugin build
         if: runner.os == 'Windows'
         run: |
-          cmake --build build --config Release --target filter246_tests nitro246_tests --parallel 2
-          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid)$' --output-on-failure
+          cmake --build build --config Release --target filter246_tests nitro246_tests delay246_tests --parallel 2
+          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid|delay246)$' --output-on-failure
       - run: cmake --build build --config Release --parallel 2
       - name: Linux tests
         if: runner.os == 'Linux'

@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 41 % del objetivo completo
+## Avance estimado: aproximadamente 42 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 55 % | 11 puntos |
+| Efectos, envolventes y moduladores | 20 % | 60 % | 12 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **41 %** |
+| Total | 100 % | | **42 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,25 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Nitro híbrido (0.21.0)
+## Entrega agrupada actual: Delay 246 (0.22.0)
+
+Set 3 → DELAY 246 añade Size, Speed, Feedback y Mix/Send, con Value FX,
+controles contextuales, automatización y guardado. Se reconstruye el callback
+mono, la tabla legible de 225 coeficientes y el reset de cursores. 262.144 muestras,
+4.096 estados/displays y ocho memorias circulares completas coinciden con el
+oráculo; repetición independiente idéntica. Workspace, clock y ruteo son propios.
+[Guía](delay246-native.md), [validación](releases/v0.22.0-validation.json).
+
+Comparte la latencia fija de Filter/Nitro, sin otro retardo. Se comprueban siete
+tasas, retorno de impulso, Mix cero en el núcleo, pánico, guardado y bloques
+64/257. Pasan 76/76 suites Linux y 276 cargas de callback sin heap rastreado. El CI propio de 0.22 debe
+confirmar Windows/macOS. El CI 0.21 ya pasó Windows, Linux y macOS, incluidos sus instaladores.
+Ableton real sigue pendiente. Estimación ~42 % (±10 puntos), sin declarar
+resuelto OTP/L1 ni réplica acústica del instrumento completo.
+
+Siguiente bloque: Phone/Grid y sus buffers/controles; presets originales al final.
+
+## Entrega anterior: Nitro híbrido (0.21.0)
 
 Set 3 → NITRO HYBRID añade dos frecuencias, Follow bipolar y Resonance, con
 Value FX, MIDI contextual del host, automatización y guardado. Conserva la ruta

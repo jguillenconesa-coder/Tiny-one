@@ -1,8 +1,10 @@
-# Pocket One 0.21.0
+# Pocket One 0.22.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.22.0 adds **[Delay 246](docs/delay246-native.md)** on **set 3 → DELAY 246**: Size, Speed, Feedback and Mix/Send. The mono core, 225 generated coefficients and circular memory match the legible instruction oracle. Value FX, automation and persistence are integrated on the existing fixed-latency output bus. Full original routing and hardware sound matching remain pending.
 
 Version 0.21.0 adds **[Nitro Hybrid](docs/nitro246-hybrid.md)** on **set 3 → NITRO HYBRID**: two frequencies, bipolar Follow and Resonance, with Value FX, automation and saved state. Readable arithmetic is retained with explicit authored substitutions for protected coefficients/pointers. Conditional oracle matching does not establish original Nitro sound equivalence. It shares Filter’s existing output latency.
 

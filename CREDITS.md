@@ -382,3 +382,9 @@ con el SDK de referencia ya acreditado y fijado a la misma revisión. Se reutili
 el seno y frecuencia contrastados; la mezcla simétrica de reemplazo, sus punteros
 y el adaptador de salida son propios. [Contrato](docs/nitro246-hybrid.md). No se
 atribuyen a firmware descifrado ni se incorpora código del SDK.
+
+Delay 246: reconstrucción independiente del callback mono, reset y tabla Q15
+mediante GNU Blackfin y análisis privado Ghidra; localización candidata a partir
+del SDK fijado ya acreditado. Se publican resultados numéricos y harness propio,
+sin código/ELF/decompilaciones del firmware. Workspace, conversión de tasa y bus
+son adaptadores propios. [Contrato y reproducción](docs/delay246-native.md).

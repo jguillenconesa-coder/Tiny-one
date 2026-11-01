@@ -1,0 +1,74 @@
+{
+  "version": "0.22.0",
+  "date": "2026-11-02",
+  "timezone": "Europe/Madrid",
+  "linux_ctest": {
+    "passed": 76,
+    "total": 76,
+    "seconds": 92.62
+  },
+  "linux_build": "standalone and VST3 passed",
+  "oracle": {
+    "blocks": 4096,
+    "samples": 262144,
+    "state_bytes": 20,
+    "display_bytes": 64,
+    "coefficients": 225,
+    "complete_ring_snapshots": 8,
+    "ring_cells": 44100,
+    "reset_address": "0x0197d7d0",
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/delay246-validation.json",
+    "scope": "Legible mono callback/conversion/reset under explicit workspace binding, not full instrument or allocator"
+  },
+  "integration": {
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "placement": "shared authored mono output bus",
+    "priority": "Delay > Nitro > Filter > Punch",
+    "latency": "unchanged shared fixed PDC; no extra delay",
+    "checks": [
+      "Exact delayed bypass, no underruns, startup and panic at seven rates",
+      "8192 native samples versus direct core",
+      "Causal returning impulse and cleared-ring zero-send identity",
+      "Append-only parameters and contextual proxies",
+      "Project/slot/clipboard and GUI raw range",
+      "Identical 64/257-buffer renders and CC120 clears buffered output"
+    ]
+  },
+  "realtime": {
+    "workloads": 276,
+    "new_delay_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "controls_and_enable_automated": true,
+    "timing": "Diagnostic on shared host; not physical deadline certification"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "scope": "Delay core and adapter tests",
+    "leak": "disabled in traced environment"
+  },
+  "previous_nitro_ci": {
+    "run_id": 41360293914,
+    "windows": "success including installer/startup/install/uninstall",
+    "linux": "success",
+    "macos": "success including universal app/VST3 and pkg"
+  },
+  "native_ci": "pending this implementation commit",
+  "limitations": [
+    "External allocation/workspace and full routing/clock authored.",
+    "Shared resampling/DC/silence guard color active dry path; disabled bypass is exact delayed float.",
+    "Original stereo path and real Ableton/hardware acoustic comparison pending.",
+    "Original presets deferred."
+  ],
+  "estimated_progress": "42% +/-10 points; planning estimate, not acoustic equivalence"
+}

@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.21.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.22.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -76,7 +76,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 
 | Objetivo | Estado |
 | --- | --- |
-| Delay | Delay propio; pendientes taps/interpolación/feedback/controles originales. |
+| Delay | Callback mono, siete taps/interpolación, 225 coeficientes y reset contrastados: 262.144 muestras, estado/display y ocho memorias completas. Integrado en bus con Value FX; workspace/tasa/ruteo propios. [Guía](delay246-native.md). |
 | Grid | Pendiente la placa de feedback original. |
 | Punch | Núcleo mono contrastado con 131.072 muestras, 2.048 estados y display. Integración opcional con conversión de tasa/DC propios. Cola potencialmente sostenida. |
 | Phone | Pendientes procesamiento telefónico, buffer y estados originales. |

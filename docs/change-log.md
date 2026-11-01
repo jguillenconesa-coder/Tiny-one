@@ -1,5 +1,11 @@
 # Historial de cambios
 
+## 0.22.0
+
+- Delay 246 mono: Size/Speed/Feedback/Mix, siete taps y memoria circular contrastados.
+- 262.144 muestras, 4.096 estados/displays, 225 coeficientes, reset original y ocho memorias completas.
+- Value FX, controles contextuales, automatización y guardado; PDC compartido sin retardo adicional. [Guía](delay246-native.md).
+
 ## 0.21.0
 
 - Nitro Hybrid: dos frecuencias, Follow bipolar y Resonance, con ruta mono legible y sustituciones propias explícitas para datos L1 protegidos.

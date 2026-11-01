@@ -779,3 +779,14 @@ mezcla propia y 129 de frecuencia compartida), seguido de 4096 registros de 252
 bytes: audio128, estado60 y display64. Little endian. Se sustituyen coeficientes y
 punteros protegidos explícitamente; estas cifras NO son una captura descifrada.
 [Modelo y reproducción](../../docs/nitro246-hybrid.md).
+
+## Delay 246
+
+`delay246-input.bin`: 4096 registros de 224 bytes: estado20, cuatro controles
+int16, audio128, display64 y acción uint32 (0 conservar; 1 cargar estado/display
+y limpiar workspace; 2 además ejecutar el reset de cursores original).
+`delay246-output.bin`: prefijo de 450 bytes (225 int16 convertidos), seguido de
+registros de 212 bytes (audio128 + estado20 + display64). Cada 512 registros se
+intercala una instantánea de 176400 bytes (44100 int32) de la memoria circular.
+Ocho instantáneas en total; todo little endian. Entradas sintéticas, workspace
+externo explícito; no captura descifrada. [Contrato](../../docs/delay246-native.md).

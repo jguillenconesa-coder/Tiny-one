@@ -310,3 +310,12 @@ simétrica propia para dos coeficientes protegidos, con punteros explícitos.
 4.096 bloques y estados/displays coinciden bajo esas sustituciones. Se integra
 con Value FX, controles y guardado en el bus existente; no se recupera L1.
 Siguiente bloque: otros efectos y calibración independiente del modelo híbrido.
+
+## Entrega 0.22.0: Delay mono
+
+[Delay 246](delay246-native.md) conserva los siete taps, acumulaciones Q15/Q31,
+tres cursores y suma seca/envío. Se reproducen la tabla legible de 225 valores y
+el reset de cursores. El núcleo coincide en 4096 bloques, estados/displays y ocho
+memorias circulares completas bajo una vinculación explícita del workspace externo.
+Se integra con Value FX, controles y guardado en el bus compartido. No se reconstruyen
+el allocator original, ruta estéreo ni reloj completo. Siguiente bloque: Phone/Grid.

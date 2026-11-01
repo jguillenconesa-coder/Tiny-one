@@ -62,10 +62,15 @@
   "native_ci": {
     "run_id": 41360293914,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41360293914",
-    "status": "Windows exact Filter/Nitro core preflight passed; full builds/tests/packages in progress",
+    "status": "All three native jobs passed, including Windows installer/startup/install/uninstall and macOS universal pkg",
     "windows_cores": {
       "filter246": "pass, 262144 samples and complete states/displays",
       "nitro246_hybrid": "pass, 262144 samples and complete states/displays under explicit substitutions"
+    },
+    "platforms": {
+      "linux": "success",
+      "windows": "success",
+      "macos": "success"
     }
   },
   "limitations": [
