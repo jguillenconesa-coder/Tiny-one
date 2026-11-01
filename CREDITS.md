@@ -359,3 +359,12 @@ and buffer adapters reproduce the same callback results. Firmware, original
 instructions, disassembly and ELF stay private. No original presets or new tool
 binaries are packaged. The instrument clock, display ownership and voice/output
 routing remain explicit adapters. [Scope and reproduction](docs/tremolo246-native.md).
+
+## Random synth 246
+
+Independent reconstruction of the readable rev246 synth Random callback and
+gate-only note reset. 4096 original BF524 simulator calls compare all state, RNG,
+meter, eight target words and return, independently repeated. Instrument uses
+eight signals in two passes on four controls; ADSR uses four. Host cadence,
+shared dedicated RNG scheduling and seed are authored adapters. Firmware and
+original instructions are not distributed. See [scope and reproduction](docs/random246-native.md).

@@ -271,7 +271,7 @@ el motivo y el siguiente bloque activo, manteniendo un solo frente.
 | Motores | Completar Dr. Wave; retomar Cluster cuando se resuelvan sus dependencias; después FM y demás motores. Resolver las tablas L1 necesarias; no sustituir un motor por otra síntesis con el mismo nombre. |
 | Filtros | Filtros internos de cada motor, ruta Filter/Nitro y etapas de salida/decimación. Cada ruta requiere coeficientes, estado e impulsos/barridos contrastados. |
 | Envolventes | Completar cuatro campos ADSR auxiliares, ruteo y modos de ejecución; envolventes específicas de D-synth/D-box/drum. El ADSR común ya contrastado no las completa. |
-| Moduladores | Extender Value a rutas pendientes; reconstruir Random y después Element/MIDI/Bend/Crank, con sus destinos, reinicios y fase libre originales. |
+| Moduladores | Extender Value a rutas pendientes; ampliar Random synth (ya contrastado e integrado en cuatro motores) a FX/drum; después Element/MIDI/Bend/Crank, con sus destinos, reinicios y fase libre originales. |
 | Integración de voz | Preparación de pitch, poly/mono/legato/unison/portamento, asignación y reloj originales, además de mezcla/salida. |
 
 ## Aplazado
@@ -282,3 +282,11 @@ necesaria. No se añaden presets para presentar avances de esta etapa.
 
 La coincidencia con el modelo GNU documentado prueba los casos aislados bajo ese
 modelo. No certifica por sí sola la máquina completa ni temporización/ASIO reales.
+
+## Entrega 0.19.0: Random synth
+
+[Random 246](random246-native.md) queda contrastado con 4096 llamadas e integrado
+en las cuatro familias nativas, con las dos pasadas Instrument y ADSR. El próximo
+bloque propuesto es Filter/Nitro: identificar el callback legible y contrastar
+coeficientes, estado e impulsos antes de integrarlo. El bloqueo OTP/L1 persiste;
+no se declara resuelto por avanzar en este modulador.

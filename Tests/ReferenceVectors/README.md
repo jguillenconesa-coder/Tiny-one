@@ -748,3 +748,14 @@ self/display, 2 additionally executes the original note reset.
 return. Little endian. All inputs synthetic. The verified streaming adapter and
 buffer-first adapter must preserve the complete original result.
 [Reproduction and limits](../../docs/tremolo246-native.md).
+
+## Random synth 246
+
+`random-voice246-input.bin`: 4096 records of 88 bytes: self44, uint32 RNG/meter,
+eight int16 controls, eight int16 destination words and uint32 metadata.
+Metadata low byte is action (0 retain, 1 load, 2 load + note reset), next byte
+is kind, upper16 is instrument type (1/7/2/4). `random-voice246-output.bin`: 4096
+records of 72 bytes: self44, uint32 RNG/meter, eight int16 destination words,
+uint32 return. All little endian; independent and retained synthetic streams.
+Instrument has eight signals applied in two passes to the first four destination
+words; ADSR uses four signals. [Contract and reproduction](../../docs/random246-native.md).

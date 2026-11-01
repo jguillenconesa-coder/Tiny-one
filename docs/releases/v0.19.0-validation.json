@@ -1,0 +1,86 @@
+{
+  "version": "0.19.0",
+  "date": "2026-11-01",
+  "linux_ctest": {
+    "passed": 70,
+    "total": 70
+  },
+  "oracle": {
+    "calls": 4096,
+    "accepted": 3799,
+    "rejected": 297,
+    "state_bytes": 44,
+    "rng_bytes": 4,
+    "meter_bytes": 4,
+    "destination_words": 8,
+    "independent_cases": 2048,
+    "retained_stream_cases": 2048,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/random-voice246-validation.json"
+  },
+  "integration": {
+    "native_engines": [
+      "Digital",
+      "Phase",
+      "Dr. Wave",
+      "Cluster"
+    ],
+    "destinations": [
+      "Instrument (two passes)",
+      "ADSR"
+    ],
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "checks": [
+      "Kernel versus host adapter replay",
+      "Host control cadence across sample rates",
+      "Shared RNG consumed by separate voices",
+      "Zero-amount bit-identical audio on valid bases",
+      "Random priority over Tremolo/Value/authored LFO",
+      "Sustain/release and panic",
+      "Append-only parameter identities",
+      "Closed-editor contextual MIDI controls",
+      "Session/slot/clipboard roundtrip",
+      "GUI switch and Configure parameter lookup",
+      "MIDI renders identical at 64/257 host buffers"
+    ]
+  },
+  "realtime": {
+    "workloads": 204,
+    "new_random_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "all_random_controls_and_both_destinations_automated": true,
+    "timing": "Diagnostic on shared machine; not physical deadline certification",
+    "metrics": "v0.19.0-linux-realtime.json"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "kernel": "all 4096 original cases",
+    "integration": "48/96 kHz, four engines, both destinations, neutral identity and priority, sustain/release/panic; adapter replay and all seven cadence rates",
+    "leak": "disabled in traced environment"
+  },
+  "linux_build": "standalone and VST3 passed",
+  "native_ci": "Pending workflow triggered by this implementation commit; Linux tests do not validate Windows/macOS packages",
+  "previous_ci_0_18": {
+    "run_id": 41346393007,
+    "linux": "success",
+    "windows": "success",
+    "macos": "cancelled before any steps"
+  },
+  "limitations": [
+    "Original OTP key and protected L1 remain unavailable.",
+    "Host clock, RNG seed/order, allocation and scheduling remain authored adapters.",
+    "No Random FX/drum integration or new original presets.",
+    "Current acceptance in real Ableton and acoustic/hardware validation remain pending."
+  ],
+  "estimated_progress": "39% +/-10 points; planning estimate, not acoustic equivalence"
+}

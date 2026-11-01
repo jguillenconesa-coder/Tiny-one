@@ -64,6 +64,8 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> phaseAttachment,envelopeAttachment,digitalAttachment,digitalEnvelopeAttachment,punchAttachment,valueAttachment,valueFreeAttachment,valueVoiceAttachment,valueVoiceFreeAttachment;
     juce::TextButton punch246{"PUNCH 246"};
     juce::TextButton value246{"VALUE 246 FX"},valueFree{"FREE PHASE"};
+    bool lastRandom246=false;juce::TextButton random246{"RANDOM 246"};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> randomAttachment;
     bool lastTremolo246=false;
     juce::TextButton tremolo246{"TREMOLO 246"};juce::ComboBox tremoloShape;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tremoloAttachment;

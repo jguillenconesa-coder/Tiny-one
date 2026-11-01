@@ -10,6 +10,7 @@ public:
     ScreenKnobParameter(const juce::String& id,const juce::String& name)
         : RangedAudioParameter(juce::ParameterID{id,1},name,juce::AudioProcessorParameterWithIDAttributes{}) {}
     void disconnect() {
+        if(auto* p=randomAlternative.exchange(nullptr))p->removeListener(this);
         if(auto* p=tremoloAlternative.exchange(nullptr))p->removeListener(this);
         if(auto* p=clusterAlternative.exchange(nullptr))p->removeListener(this);
         if(auto* p=drWaveAlternative.exchange(nullptr))p->removeListener(this);
@@ -20,7 +21,7 @@ public:
         if(auto* p=target.exchange(nullptr))p->removeListener(this);
     }
     void follow(juce::RangedAudioParameter* next) {
-        if(!trackMode.load()&&!alternative.load()&&!digitalAlternative.load()&&!drWaveAlternative.load()&&!clusterAlternative.load()&&!tremoloAlternative.load()&&currentTarget()==next)return;
+        if(!trackMode.load()&&!alternative.load()&&!digitalAlternative.load()&&!drWaveAlternative.load()&&!clusterAlternative.load()&&!tremoloAlternative.load()&&!randomAlternative.load()&&currentTarget()==next)return;
         disconnect();target.store(next);
         if(next){next->addListener(this);sendValueChangedMessageToListeners(next->getValue());}
     }
@@ -51,6 +52,9 @@ public:
     void followTremolo(juce::RangedAudioParameter* parameter,std::atomic<float>& enabled,std::atomic<float>& engine,std::atomic<float>& phase,std::atomic<float>& digital){
         tremoloSelection=&enabled;tremoloEngine=&engine;tremoloPhase=&phase;tremoloDigital=&digital;tremoloAlternative=parameter;parameter->addListener(this);sendValueChangedMessageToListeners(getValue());
     }
+    void followRandom(juce::RangedAudioParameter* parameter,std::atomic<float>& enabled,std::atomic<float>& engine,std::atomic<float>& phase,std::atomic<float>& digital){
+        randomSelection=&enabled;randomEngine=&engine;randomPhase=&phase;randomDigital=&digital;randomAlternative=parameter;parameter->addListener(this);sendValueChangedMessageToListeners(getValue());
+    }
     void enableTapeTracks(const std::array<juce::RangedAudioParameter*,4>& parameters,std::atomic<float>& selection) {tracks=parameters;trackSelection=&selection;}
     void followTapeTrack() {
         disconnect();trackMode.store(true);for(auto* p:tracks)p->addListener(this);
@@ -72,6 +76,8 @@ private:
         if(auto* p=currentTarget())if(p->getParameterIndex()==index)sendValueChangedMessageToListeners(value);
     }
     void parameterGestureChanged(int,bool) override {}
+    std::atomic<juce::RangedAudioParameter*> randomAlternative{nullptr};
+    std::atomic<std::atomic<float>*> randomSelection{nullptr},randomEngine{nullptr},randomPhase{nullptr},randomDigital{nullptr};
     std::atomic<juce::RangedAudioParameter*> tremoloAlternative{nullptr};
     std::atomic<std::atomic<float>*> tremoloSelection{nullptr},tremoloEngine{nullptr},tremoloPhase{nullptr},tremoloDigital{nullptr};
     std::atomic<juce::RangedAudioParameter*> clusterAlternative{nullptr};std::atomic<std::atomic<float>*> clusterEngine{nullptr};
@@ -86,7 +92,7 @@ private:
     std::array<juce::RangedAudioParameter*,4> tracks{};
     std::atomic<float>* trackSelection=nullptr;
     std::atomic<bool> trackMode{false};
-    juce::RangedAudioParameter* currentTarget() const {if(auto* p=tremoloAlternative.load())if(tremoloSelection.load()->load()>.5f){const auto e=int(tremoloEngine.load()->load());if(e==6||e==7||(e==1&&tremoloPhase.load()->load()>.5f)||(e==0&&tremoloDigital.load()->load()>.5f))return p;}if(auto* p=clusterAlternative.load())if(int(clusterEngine.load()->load())==7)return p;if(auto* p=drWaveAlternative.load())if(int(drWaveEngine.load()->load())==6)return p;if(trackMode.load())return tracks[size_t(std::clamp(int(trackSelection->load()),0,3))];
+    juce::RangedAudioParameter* currentTarget() const {if(auto* p=randomAlternative.load())if(randomSelection.load()->load()>.5f){const auto e=int(randomEngine.load()->load());if(e==6||e==7||(e==1&&randomPhase.load()->load()>.5f)||(e==0&&randomDigital.load()->load()>.5f))return p;}if(auto* p=tremoloAlternative.load())if(tremoloSelection.load()->load()>.5f){const auto e=int(tremoloEngine.load()->load());if(e==6||e==7||(e==1&&tremoloPhase.load()->load()>.5f)||(e==0&&tremoloDigital.load()->load()>.5f))return p;}if(auto* p=clusterAlternative.load())if(int(clusterEngine.load()->load())==7)return p;if(auto* p=drWaveAlternative.load())if(int(drWaveEngine.load()->load())==6)return p;if(trackMode.load())return tracks[size_t(std::clamp(int(trackSelection->load()),0,3))];
         if(auto* p=voiceAlternative.load())if(voiceSelection.load()->load()>.5f){const auto e=int(voiceEngine.load()->load());if(e==6||e==7||(e==1&&voicePhase.load()->load()>.5f)||(e==0&&voiceDigital.load()->load()>.5f))return p;}
         if(auto* p=digitalAlternative.load())if(digitalSelection.load()->load()>.5f&&int(engineSelection.load()->load())==0){auto* condition=digitalPrerequisite.load();if(!condition||condition->load()>.5f)return p;}
         if(auto* p=alternative.load())if(selection.load()->load()>.5f){auto* engine=engineSelection.load();if(!engine||int(engine->load())==1){auto* condition=guard.load();if(!condition||condition->load()>.5f)return p;}}

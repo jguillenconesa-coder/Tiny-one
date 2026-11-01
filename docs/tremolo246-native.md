@@ -20,7 +20,7 @@ editor cerrado. Los parámetros nuevos se añaden después de los anteriores.
 | Blanco | Amplitude | 0–32767; profundidad de amplitud. La zona alta también modifica la forma. Cero conserva el volumen previo. |
 | Naranja | LFO Envelope | 0–32767; evolución de la profundidad desde el disparo. Por debajo de 14745 comienza desde cero y crece; de 14745 a 16383 comienza plena; desde 16384 decae usando la tabla reconstruida. |
 
-Tremolo tiene prioridad sobre Value Voice, Value FX y el LFO propio cuando sus
+[Random 246](random246-native.md) tiene prioridad sobre Tremolo. Tremolo tiene prioridad sobre Value Voice, Value FX y el LFO propio cuando sus
 flags se activan simultáneamente mediante automatización. Los botones permiten
 cambiar de LFO; al apagar Tremolo se recupera el mapeo de la ruta que quede activa.
 Este lote no amplía Tremolo al FM/String propios, al sampler ni a drum.

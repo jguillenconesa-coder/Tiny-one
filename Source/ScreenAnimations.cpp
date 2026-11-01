@@ -35,6 +35,10 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(auto point:{juce::Point<float>{a,top},{d,sustain},{s,sustain}})dot(g,point.x,point.y,2);
         float x=f.stage==1?12+f.envelope*(a-12):f.stage==2?a+(1-f.envelope)/std::max(.001f,1-f.sustain)*(d-a):f.stage==4?s+(1-f.envelope/std::max(.001f,f.sustain))*(end-s):s;
         g.setColour(colors[3]);if(f.voices>0)dot(g,std::clamp(x,12.f,end),y-f.envelope*56,3.2f);
+    } else if(f.page==2&&f.random246) {
+        label(g,juce::String("RANDOM 246 / ")+(f.randomEnvelope?"ADSR":"INSTRUMENT"),{15,25,220,12},9,colors[0]);
+        for(size_t i=0;i<4;++i){const float x=29.f+float(i)*56.f,y=61.f-std::clamp(f.random[i],-1.f,1.f)*20.f;g.setColour(colors[i]);g.drawLine(x,61.f,x,y,12.f);g.drawHorizontalLine(61,int(x-10),int(x+10));}
+        label(g,juce::String(f.lfoRate,2)+" targets/s",{15,86,220,12},8,colors[2]);
     } else if(f.page==2&&f.tremolo246) {
         for(int i=0;i<225;++i){const double w=double(i)/224;const float v=float(f.lfoShape==1?2*w-1:f.lfoShape==2?2*w*w*w-1:f.lfoShape==3?(w<=.5?1:-1):f.lfoShape==4?(w<=.0625?1:-1):std::sin(2*pi*w));const float x=13.f+i,y=59-v*20;if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}
         g.setColour(colors[1]);g.strokePath(curve,juce::PathStrokeType(1.4f));g.setColour(colors[3]);g.drawVerticalLine(int(13+std::clamp(f.lfoPhase,0.f,1.f)*224),38,81);
@@ -93,6 +97,6 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(int i=0;i<126;++i){const double p=double(i)/125;const float x=109.f+i,y=57-float(std::sin(2*pi*p+f.tone*7*std::sin(2*pi*p*(1+std::round(f.color*7))+phase)))*(12+activity*8);if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.2f));
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246))||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&f.punch246)?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&f.punch246)?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
 }
 }

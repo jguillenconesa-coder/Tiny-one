@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.18.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.19.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -97,7 +97,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Envolventes D-synth / D-box / drum dinámica | Pendientes. No quedan completadas por portar el ADSR común. |
 | Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 8.192 llamadas instrument/primeros cuatro ADSR para Digital/Phase/Dr. Wave/Cluster; estado independiente por voz y wrap/clamp contrastados. [Integración híbrida](value-hybrid246-native.md). Otras familias, drum y auxiliares pendientes; reloj/allocator propios. |
 | Tremolo | [Callback completo contrastado e integrado en Phase/Digital/Dr. Wave/Cluster](tremolo246-native.md): 2048 llamadas, 262144 muestras de amplitud y palabras de pitch, 28 bytes de estado / 32 de display, cinco formas, reset y 24 coeficientes. Clock, display por voz y ruteo propios; resto de motores y comparación con hardware pendientes. |
-| Random | Original pendiente; el LFO propio anterior sigue disponible. |
+| Random | [Callback synth reconstruido e integrado](random246-native.md) en Digital/Phase/Dr. Wave/Cluster: 4096 llamadas, self44/RNG/display/destinos completos, Instrument en dos pasadas y ADSR. Reloj, seed y scheduling propios; FX/drum y comparación con hardware pendientes. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
 | Poly / mono / legato / unison / portamento | [Mono/Legato y glide propios para Dr. Wave/Cluster](hybrid-performance.md), con prioridad de última nota y sustain/bend por canal. No implementan los modos originales ni unison. Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |

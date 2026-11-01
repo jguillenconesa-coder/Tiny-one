@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 38 % del objetivo completo
+## Avance estimado: aproximadamente 39 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,16 +18,16 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 40 % | 8 puntos |
+| Efectos, envolventes y moduladores | 20 % | 45 % | 9 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **37,5 ≈ 38 %** |
+| Total | 100 % | | **38,5 ≈ 39 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
-funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Tremolo y partes
+funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Tremolo/Random y partes
 de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave y Cluster incorporan motores híbridos tocables con
 dependencias propias explícitas. El FM actual y
 varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
@@ -39,7 +39,24 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Tremolo reconstruido e integrado (0.18.0)
+## Entrega agrupada actual: Random synth reconstruido e integrado (0.19.0)
+
+Set 4 → RANDOM 246 añade modulación aleatoria de los cuatro controles o ADSR a
+Digital/Phase 246 y Dr. Wave/Cluster. Se reconstruyen RNG, suavizado, envolvente,
+reset que conserva la secuencia y las dos pasadas de Instrument. 4096 llamadas
+originales (3799 activas) coinciden en self44/RNG/display/buffer8/retorno; repetición
+independiente idéntica. [Guía y límites](random246-native.md).
+
+El reloj, seed y orden entre voces del host siguen siendo adaptadores; el bloqueo
+OTP/L1 persiste. La estimación pasa a ~39 % por otro modulador contrastado e
+integrado, sin demostrar equivalencia acústica. Presets originales al final.
+70/70 suites Linux, 204 cargas de callback sin heap rastreado y sanitizadores
+aprobados. La evidencia y los resultados de CI se registran en
+[evidencia de 0.19](releases/v0.19.0-validation.json). La 0.18 pasó Windows/Linux;
+su job macOS se canceló antes de ejecutar pasos. Ableton real sigue pendiente.
+El siguiente bloque propuesto es identificar y contrastar Filter/Nitro.
+
+## Entrega anterior: Tremolo reconstruido e integrado (0.18.0)
 
 Tremolo 246 añade en set 4 pitch, amplitud, envolvente del LFO y cinco formas a
 Phase/Digital 246 y Dr. Wave/Cluster. 2048 llamadas originales con 262144 palabras
@@ -53,8 +70,8 @@ no por una comparación acústica con hardware. La política de voz, reloj,
 mezcla/salida y relevo L1 pendientes siguen documentados como adaptadores.
 Los presets originales completos continúan aplazados.
 68/68 suites Linux, 180 cargas de callback sin heap rastreado y sanitizadores
-aprobados. [Validación](releases/v0.18.0-validation.json). El CI de este commit
-valida los binarios/paquetes de Windows y macOS; Live real sigue pendiente.
+aprobados. [Validación](releases/v0.18.0-validation.json). El CI 41346393007 pasó Windows y
+Linux; macOS se canceló antes de ejecutar pasos. Live real sigue pendiente.
 
 ## Entrega anterior: Mono / Legato / Glide híbridos (0.17.0)
 

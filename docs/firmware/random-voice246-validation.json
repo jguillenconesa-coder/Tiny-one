@@ -1,0 +1,52 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "process": "0x019cea70",
+  "note_reset": "0x019ced74",
+  "factory": "0x019cf340",
+  "rng_address": "0xff802bc8",
+  "lcg_multiplier": 1664525,
+  "lcg_increment": 1013904223,
+  "range_initializer": "0x01a1e914",
+  "instrument_helper": "0x01a1dfec",
+  "envelope_helper": "0x019f69b0",
+  "cases": 4096,
+  "state_bytes": 44,
+  "target_words": 8,
+  "instrument_types": [
+    1,
+    7,
+    2,
+    4
+  ],
+  "destinations": [
+    "Instrument eight signals / two passes over four controls",
+    "ADSR first four signals"
+  ],
+  "independent_cases": 2048,
+  "retained_stream_cases": 2048,
+  "artifacts": {
+    "random-voice246-input.bin": {
+      "bytes": 360448,
+      "sha256": "4a0a0465918d2132bb1807fa2261a6c37084ddce312339de8978a784b55b0056",
+      "matches_committed_fixture": true
+    },
+    "random-voice246-output.bin": {
+      "bytes": 294912,
+      "sha256": "08c79763b9a97b61d4f93e0f7e02d3602105357520f4bdc069d2d6941e38caa5",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "/workspace/blackfin-note-argument-validated/bin/run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+  },
+  "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+  "limitations": [
+    "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+    "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+  ],
+  "accepted_calls": 3799,
+  "rejected_calls": 297,
+  "independent_repeat_matches": true
+}
