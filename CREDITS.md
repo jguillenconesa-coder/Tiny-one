@@ -388,3 +388,9 @@ mediante GNU Blackfin y análisis privado Ghidra; localización candidata a part
 del SDK fijado ya acreditado. Se publican resultados numéricos y harness propio,
 sin código/ELF/decompilaciones del firmware. Workspace, conversión de tasa y bus
 son adaptadores propios. [Contrato y reproducción](docs/delay246-native.md).
+
+Grid 246: reconstrucción independiente del callback mono, reset y escaneo de dos
+planos, con oráculo GNU Blackfin y decompilación privada Ghidra. Candidatos del SDK
+ya acreditado y fijado a la misma revisión; sin copiar su DSP. Se reutiliza el seno
+contrastado. Workspace acotado, resize, bus y selector son adaptadores propios.
+[Contrato](docs/grid246-native.md). Firmware y pseudocódigo no se distribuyen.

@@ -1,14 +1,14 @@
-# Pocket One 0.22.0
+# Pocket One 0.23.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.22.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.23.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
 
-**Nuevo en 0.22.0:** [Delay 246](docs/delay246-native.md) en **Set 3 → DELAY 246**: Size, Speed, Feedback y Mix, con Value FX, automatización y guardado. Núcleo mono, 225 coeficientes y memoria circular contrastados con las instrucciones legibles. Comparte el bus y su latencia fija (~1,5 ms).
+**Nuevo en 0.23.0:** [Grid 246](docs/grid246-native.md) en **Set 3 → selector FX → Grid 246**: X Size, Y Size, Feedback y Mix, con Value FX, automatización y guardado. Núcleo mono y dos planos de memoria contrastados. Selector común para todos los efectos, con la misma latencia fija del bus (~1,5 ms).
 
 **Nuevo en 0.17.0:** [Mono, Legato y Glide para Dr. Wave / Cluster](docs/hybrid-performance.md). En **set 2**, selecciona el modo de voz y el portamento de 0–2000 ms. Prioridad de última nota, sustain/bend por canal, automatización y guardado; adaptadores propios, con los núcleos contrastados intactos.
 

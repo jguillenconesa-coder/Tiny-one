@@ -10,7 +10,7 @@ void dot(juce::Graphics& g,float x,float y,float radius) {g.fillEllipse(x-radius
 }
 void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     g.fillAll(juce::Colour(0xff070b10));
-    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM / REACTOR",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
+    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM / REACTOR",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
     label(g,title,{10,4,172,14},10,colors[2]);label(g,juce::String(f.voices)+" VOICES",{183,5,63,12},8,colors[0]);
     const float activity=std::clamp(f.level*6,0.f,1.f),phase=f.time*.7f;
     juce::Path curve;
@@ -49,18 +49,20 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(int i=0;i<225;++i){const float x=13.f+i,y=56-float(std::sin(2*pi*(double(i)/224-f.lfoPhase)))*23;if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}
         g.setColour(colour.withAlpha(f.valueDestination?1.f:.3f));g.strokePath(curve,juce::PathStrokeType(1.4f));
         g.fillEllipse(123,52-float(std::sin(2*pi*f.lfoPhase))*23,8,8);
-        label(g,"VALUE 246 > "+juce::String(!f.valueDestination?"OFF":f.valueVoice?(f.valueEnvelope?"ADSR":"INSTRUMENT"):(f.delay246?"DELAY":f.nitro246?"NITRO":f.filter246?"FILTER":"PUNCH")),{15,25,220,12},9,colour);
+        label(g,"VALUE 246 > "+juce::String(!f.valueDestination?"OFF":f.valueVoice?(f.valueEnvelope?"ADSR":"INSTRUMENT"):(f.grid246?"GRID":f.delay246?"DELAY":f.nitro246?"NITRO":f.filter246?"FILTER":"PUNCH")),{15,25,220,12},9,colour);
         label(g,juce::String(f.lfoRate,2)+" Hz  /  "+juce::StringArray{"BLUE","GREEN","WHITE","ORANGE"}[std::clamp(f.valueColour,0,3)],{15,86,220,12},8,colors[2]);
     } else if(f.page==2) {
         for(int i=0;i<225;++i){const double p=double(i)/224*2,w=p-std::floor(p);const float v=float(f.lfoShape==1?1-4*std::abs(w-.5):f.lfoShape==2?(w<.5?1:-1):std::sin(2*pi*p));const float x=13.f+i,y=56-v*25;if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}
         g.setColour(colors[1]);g.strokePath(curve,juce::PathStrokeType(1.4f));g.setColour(colors[3]);g.drawVerticalLine(int(13+f.lfoPhase*224),26,85);label(g,juce::String(f.lfoRate,2)+" Hz",{15,86,100,12},8,colors[2]);
+    } else if(f.page==3&&f.grid246) {
+        for(int y=0;y<5;++y)for(int x=0;x<10;++x){g.setColour(colors[size_t((x+y)%4)].withAlpha(.25f+activity*.65f));dot(g,20.f+x*23,33.f+y*10,1.5f+activity*std::abs(std::sin(float(x+y)+phase))*2);}label(g,"RESONANT PLATE / OUTPUT",{15,83,220,11},8,colors[2]);
     } else if(f.page==3&&f.delay246) {
         for(int i=0;i<7;++i){const float x=22.f+i*32;const float h=24*std::pow(.75f,float(i));g.setColour(colors[size_t(i%4)]);g.drawLine(x,63-h,x,63+h,2);if(i<6){g.setColour(colors[2].withAlpha(.4f));g.drawArrow({x+4,63,x+27,63},1,4,4);}}label(g,"SIZE / SPEED / FEEDBACK / SEND",{15,83,225,11},8,colors[2]);
     } else if(f.page==3&&f.nitro246) {
         for(int i=0;i<225;++i){const float u=float(i)/224,x=13.f+i;const float high=1/(1+std::exp(-(u-f.tone)*18)),low=1/(1+std::exp((u-f.color)*18));const float y=76-40*high*low;if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[3]);g.strokePath(curve,juce::PathStrokeType(1.4f));label(g,"DUAL FILTER / OUTPUT BUS",{15,83,220,11},8,colors[2]);
     } else if(f.page==3&&f.filter246) {
         for(int i=0;i<225;++i){const float x=13.f+i,u=float(i)/224;const float cutoff=.1f+f.tone*.8f;const float y=36+35/(1+std::exp(-(u-cutoff)*16))-f.color*13*std::exp(-100*(u-cutoff)*(u-cutoff));if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.4f));label(g,"FILTER / OUTPUT BUS",{15,83,210,11},8,colors[2]);
-    } else if(f.page==3&&(f.delay246||f.nitro246||f.filter246||f.punch246)) {
+    } else if(f.page==3&&(f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246)) {
         const int stages=std::clamp(int(f.values[2])/1024,1,24);
         for(int i=0;i<24;++i){const auto x=15.f+i*9.2f;g.setColour(colors[size_t(i%4)].withAlpha(i<stages?.4f+activity*.6f:.12f));const auto h=8+activity*(10+10*std::sin(phase+i*.4f));g.fillRoundedRectangle(x,56-h,6,2*h,2);}
         label(g,juce::String(stages)+" STAGES",{15,83,100,10},8,colors[2]);
@@ -103,6 +105,6 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(int i=0;i<126;++i){const double p=double(i)/125;const float x=109.f+i,y=57-float(std::sin(2*pi*p+f.tone*7*std::sin(2*pi*p*(1+std::round(f.color*7))+phase)))*(12+activity*8);if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.2f));
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
 }
 }

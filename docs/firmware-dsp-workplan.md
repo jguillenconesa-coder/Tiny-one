@@ -319,3 +319,12 @@ el reset de cursores. El núcleo coincide en 4096 bloques, estados/displays y oc
 memorias circulares completas bajo una vinculación explícita del workspace externo.
 Se integra con Value FX, controles y guardado en el bus compartido. No se reconstruyen
 el allocator original, ruta estéreo ni reloj completo. Siguiente bloque: Phone/Grid.
+
+## Entrega 0.23.0: Grid mono y selector
+
+[Grid 246](grid246-native.md) contrasta 4096 bloques, estados/displays, reset sobre
+memoria retenida y ocho snapshots de dos planos 260×260. El dominio acotado usa
+slot 2 y cursores válidos; el adaptador normaliza los cursores al reducir ejes de
+forma incompatible. Esa política de resize y el ruteo siguen siendo propios.
+Selector común, Value FX, automatización y persistencia integrados. Phone tiene
+callback legible 0x01a1bb74; siguiente paso: buffers segmentados y filtros compartidos.

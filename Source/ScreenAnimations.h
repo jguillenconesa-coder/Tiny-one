@@ -5,7 +5,7 @@
 namespace pocket {
 // Immutable, bounded UI snapshot. No audio buffers or processor locks are accessed by drawing.
 struct ScreenFrame {
-    bool cluster246=false,drWave246=false,phase246=false,phaseEnvelope=false,digital246=false,delay246=false,nitro246=false,filter246=false,punch246=false,value246=false,valueDestination=false;
+    bool cluster246=false,drWave246=false,phase246=false,phaseEnvelope=false,digital246=false,grid246=false,delay246=false,nitro246=false,filter246=false,punch246=false,value246=false,valueDestination=false;
     int valueColour=0;
     bool random246=false,randomEnvelope=false;std::array<float,4> random{};
     bool valueVoice=false,valueEnvelope=false,tremolo246=false;

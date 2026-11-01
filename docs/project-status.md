@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 42 % del objetivo completo
+## Avance estimado: aproximadamente 43 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 60 % | 12 puntos |
+| Efectos, envolventes y moduladores | 20 % | 65 % | 13 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **42 %** |
+| Total | 100 % | | **43 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,27 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Delay 246 (0.22.0)
+## Entrega agrupada actual: Grid 246 y selector de efectos (0.23.0)
+
+Set 3 → selector FX → Grid 246 añade X/Y Size, Feedback y Mix, con Value FX,
+controles contextuales, automatización y guardado. Se contrasta el callback mono,
+reset y dos planos de 260×260 celdas: 262.144 muestras, todos los estados/displays
+y ocho memorias completas coinciden; repetición independiente idéntica.
+[Guía y política de resize](grid246-native.md), [validación](releases/v0.23.0-validation.json).
+
+El selector conserva los interruptores automatizables existentes. El bus y su
+PDC no añaden otro retardo. Pasan 78/78 suites Linux y 300 cargas de callback
+sin heap rastreado. Se comprueban siete tasas, cursor seguro al reducir ejes, respuesta húmeda, proxies,
+estados y bloques independientes. El CI propio debe confirmar Windows/macOS.
+Delay 0.22 pasó Linux/macOS; Windows detectó muestras con una unidad de deriva,
+que se aborda mediante extracción explícita del word alto en esta entrega.
+Ableton real sigue pendiente. Estimación ~43 % (±10 puntos), sin equivalencia
+acústica completa ni OTP/L1 recuperada.
+
+Siguiente bloque: Phone y sus buffers segmentados, después Spring/CWO; presets
+originales completos al final.
+
+## Entrega anterior: Delay 246 (0.22.0)
 
 Set 3 → DELAY 246 añade Size, Speed, Feedback y Mix/Send, con Value FX,
 controles contextuales, automatización y guardado. Se reconstruye el callback

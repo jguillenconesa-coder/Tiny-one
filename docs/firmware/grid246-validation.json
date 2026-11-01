@@ -1,0 +1,42 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "kernel": "0x019af338",
+  "reset": "0x019af27e, explicit slot 2 workspace",
+  "cases": 4096,
+  "samples": 262144,
+  "state_bytes": 44,
+  "display_bytes": 64,
+  "workspace": "Two 260x260 int16 planes, 135200 cells; complete snapshot after each 512-block segment",
+  "sine": "8192 low halfwords from legible 0x018b6688; already verified sine fixture",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "grid246-input.bin": {
+      "bytes": 1015808,
+      "sha256": "9b1211d3e141706b06b66c08e812bb1878745470937f9695c1cc4c247d384ec7",
+      "matches_committed_fixture": true
+    },
+    "grid246-output.bin": {
+      "bytes": 3129856,
+      "sha256": "087ee0bd32467993121b6b844e1c6fd3948ab6c01363d9da19cefce0fd6332ff",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Mono callback, valid bounded scan coordinates, explicit workspace slot 2.",
+    "Original allocator/routing/clock and abrupt invalid resize states are not established."
+  ],
+  "independent_repeat": {
+    "input_identical": true,
+    "output_identical": true
+  },
+  "patches": {
+    "gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3"
+  },
+  "reset_segments": 4,
+  "reset_verification": "Original reset executes over retained nonzero workspace, without prior harness clearing"
+}

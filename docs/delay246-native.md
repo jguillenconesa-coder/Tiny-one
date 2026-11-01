@@ -1,5 +1,7 @@
 # Delay 246 — memoria circular y siete taps
 
+Desde 0.23, elige este efecto en el **selector FX de set 3**; sustituye los botones anteriores.
+
 En **set 3**, activa **DELAY 246**. Los mandos son **Size, Speed, Feedback y Mix**.
 Size selecciona seis tamaños; Speed cambia la velocidad de recorrido y el tono de
 las repeticiones. Mix controla el envío al eco: el callback conserva la señal seca

@@ -63,7 +63,12 @@
     "linux": "success",
     "macos": "success including universal app/VST3 and pkg"
   },
-  "native_ci": "pending this implementation commit",
+  "native_ci": {
+    "run_id": 41361837115,
+    "linux": "success",
+    "macos": "success including universal app/VST3 and pkg",
+    "windows": "failure: one-unit Delay sample drift; addressed by explicit high-word extraction in 0.23, native validation pending"
+  },
   "limitations": [
     "External allocation/workspace and full routing/clock authored.",
     "Shared resampling/DC/silence guard color active dry path; disabled bypass is exact delayed float.",

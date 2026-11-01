@@ -1,5 +1,7 @@
 # Filter 246 — núcleo contrastado y bus de salida
 
+Desde 0.23, elige este efecto en el **selector FX de set 3**; sustituye los botones anteriores.
+
 En **set 3**, activa **FILTER 246**. Los mandos existentes controlan **Cutoff,
 Resonance/Follow, Mode y Drive**. Los cinco parámetros nuevos —activación y cuatro
 controles— son automatizables y se guardan con el proyecto, slots y LIFT/DROP.

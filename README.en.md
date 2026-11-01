@@ -1,8 +1,10 @@
-# Pocket One 0.22.0
+# Pocket One 0.23.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.23.0 adds **[Grid 246](docs/grid246-native.md)** on **set 3 → FX selector → Grid 246**: X Size, Y Size, Feedback and Mix, with Value FX, automation and saved state. Its mono kernel and two memory planes match the bounded instruction oracle. A shared effect selector replaces the separate buttons; output latency is unchanged. Abrupt-resize normalization remains an authored adapter.
 
 Version 0.22.0 adds **[Delay 246](docs/delay246-native.md)** on **set 3 → DELAY 246**: Size, Speed, Feedback and Mix/Send. The mono core, 225 generated coefficients and circular memory match the legible instruction oracle. Value FX, automation and persistence are integrated on the existing fixed-latency output bus. Full original routing and hardware sound matching remain pending.
 

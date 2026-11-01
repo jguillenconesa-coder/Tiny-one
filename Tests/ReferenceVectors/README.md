@@ -790,3 +790,14 @@ registros de 212 bytes (audio128 + estado20 + display64). Cada 512 registros se
 intercala una instantánea de 176400 bytes (44100 int32) de la memoria circular.
 Ocho instantáneas en total; todo little endian. Entradas sintéticas, workspace
 externo explícito; no captura descifrada. [Contrato](../../docs/delay246-native.md).
+
+## Grid 246
+
+`grid246-input.bin`: 4096 registros de 248 bytes: estado44, cuatro controles int16,
+audio128, display64 y acción uint32 (0 conservar; 1 cargar y limpiar workspace;
+2 cargar y ejecutar el reset original sobre memoria retenida). El slot es 2.
+`grid246-output.bin`: registros de 236 bytes (audio128 + estado44 + display64),
+con una instantánea de 270400 bytes (135200 int16 de ambos planos) cada 512
+registros; ocho en total. No hay prefijo. Little endian. Seno contrastado compartido;
+workspace y cursores sintéticos acotados, no memoria descifrada.
+[Contrato](../../docs/grid246-native.md).

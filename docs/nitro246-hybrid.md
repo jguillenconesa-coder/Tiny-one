@@ -1,5 +1,7 @@
 # Nitro Hybrid — dos filtros y seguimiento bipolar
 
+Desde 0.23, elige este efecto en el **selector FX de set 3**; sustituye los botones anteriores.
+
 Activa **set 3 → NITRO HYBRID**. Los mandos controlan **Frequency 1, Follow,
 Resonance y Frequency 2**. Follow admite valores negativos: la entrada desplaza
 ambas frecuencias hacia arriba o abajo según su signo. **Value 246 FX**, en set 4,
