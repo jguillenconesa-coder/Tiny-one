@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
 #include "DrWave246Activation.h"
-#include "Envelope246Transition.h"
+#include "Adsr246Pool.h"
 #include "Voice246NoteArgument.h"
 #include "Voice246PolyRelease.h"
 namespace pocket::reference {
@@ -11,14 +11,15 @@ struct DrWave246EmptyExplicitPitchResult {
     unsigned started=0,restarted=0,blocked=0;
 };
 // Original complete caller 0x01a84604, EMPTY list, selectors 1..3, nonzero
-// explicit pitch. Six ADSR ready, outer mode zero and auxiliary modules absent.
+// explicit pitch. Outer mode zero and auxiliary modules absent. Ready pool by
+// default; an optional ready word enables the original lazy accessor.
 // No constructor, lifecycle, renderer, pending-field consumer or scheduler.
 // Guards/results are adapter policy, not original asserts/semantic R0 returns.
 inline DrWave246EmptyExplicitPitchResult drWave246EmptyExplicitPitch(
         DrWave246Pool& waves,Voice246Registers& registers,
         std::array<Adsr246State,6>& envelopes,Voice246ReleaseList& list,
         const Voice246NoteArgument& argument,uint8_t gate,int loaded,int selected,
-        int16_t selectorWord,int32_t tuning,uint32_t& random) noexcept {
+        int16_t selectorWord,int32_t tuning,uint32_t& random,uint32_t* ready=nullptr) noexcept {
     using S=DrWave246EmptyExplicitPitchStatus;
     const auto word=[](const uint8_t* p){return uint32_t(p[0])|(uint32_t(p[1])<<8)|
         (uint32_t(p[2])<<16)|(uint32_t(p[3])<<24);};
@@ -35,7 +36,7 @@ inline DrWave246EmptyExplicitPitchResult drWave246EmptyExplicitPitch(
     DrWave246EmptyExplicitPitchResult result{S::appended,0,0,0};
     const unsigned voices=selector==3?6u:1u;
     for(unsigned v=0;v<voices;++v){
-        auto& env=envelopes[v];const bool active=registers.active[v]!=0;
+        auto& env=adsr246Access(envelopes,v,ready);const bool active=registers.active[v]!=0;
         if(!active){
             env.noteOn();env.gain=(env.gain&0xffff0000u)|gain;
             if(!drWave246CoreNoteOn(waves,loaded,selected,int(v))){++result.blocked;continue;}

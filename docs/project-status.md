@@ -38,7 +38,21 @@ para usuario final y validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual
+## Entrega agrupada actual: controlador de eventos de instrumento
+
+Se unifica el despacho de los selectores 0–4, lookup/pitch explícito, pools
+fríos/listos y cambios de selector con estado retenido. 3.072 eventos originales
+contrastados, 62 suites Linux, sanitizadores y reproducción independiente. Se
+eliminan las copias de despacho de las interfaces anteriores, conservando sus
+regresiones. [Contrato y límites](voice246-instrument-lifecycle.md).
+
+Los buffers, consumidor L1, reloj y salida aún bloquean integrar Dr. Wave como
+motor completo. El porcentaje orientativo permanece alrededor del 33 %; este
+lote no justifica una precisión mayor ni mide equivalencia sonora. El CI del
+lote anterior `bdcda2b` pasó en Linux/macOS/Windows; el nuevo código tiene su
+propia ejecución de CI.
+
+## Entrega anterior: arranque diferido ADSR
 
 - Recuperación/reproducción del avance de notificación `ec1c182`, pendiente de
   main: constructor, metadata original, on/off, mapa y ADSR con salida cero.

@@ -178,6 +178,11 @@ no se presenta como configuración de fábrica.
 El [accessor e inicialización diferida del pool ADSR](adsr246-lazy-pool.md),
 `0x0191264c..0x019126d8`, ya está contrastado: 1.024 accesos y una cadena
 de 1.536 eventos con ready retenido, pool frío/listo y gates sin inicialización.
+El [controlador compartido de eventos de instrumento](voice246-instrument-lifecycle.md)
+ya compone selectores 0–4, lookup/pitch explícito, pools fríos/listos y cambios
+de selector entre eventos: 3.072 eventos contrastados, sin reponer actividad ni
+inventar el commit de pendientes. Se centraliza el despacho de las interfaces
+anteriores y se conservan sus regresiones.
 Siguen pendientes buffers iniciales, consumidor de pendientes, reloj, mezcla y salida.
 
 ## Cluster rev246: conservado con dependencias bloqueadas

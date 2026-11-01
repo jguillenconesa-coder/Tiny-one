@@ -325,3 +325,13 @@ writeback patches provides numeric observations; REA 6.8.0 / GNU objdump
 provides bounded static Evidence. Firmware/PDF, original instructions, ELF and
 disassembly remain private; none are linked or packaged in the instrument.
 [Contract and limitations](docs/adsr246-lazy-pool.md).
+
+## Shared instrument-event dispatcher
+
+Independent composition of verified rev246 note/voice helpers into a shared
+instrument dispatcher, preserving the older bounded interfaces. 3,072 original
+events cover selectors 0–4, constructor/raw pitch, cold/warm pools and retained
+selector changes. GNU BF524 provides numerical observations; REA 6.8.0 / GNU
+objdump provides bounded static inspection. No original instructions, firmware,
+ELF, disassembly or presets are packaged.
+[Scope and limitations](docs/voice246-instrument-lifecycle.md).

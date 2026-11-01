@@ -99,7 +99,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Random / Tremolo | Pendientes los originales. Hay LFO propio seno/triángulo/cuadrado. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
-| Poly / mono / legato / unison / portamento | Polifonía propia de ocho voces. Modos y asignación originales pendientes. |
+| Poly / mono / legato / unison / portamento | Polifonía propia de ocho voces en el plugin. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
 | Octavas del teclado | Interfaz ampliada a −4…+4, guardada en sesión/slot/clipboard, limitada a notas MIDI 0–127. No altera MIDI externo ni implementa aún octave de todos los patches originales. |
 | Secuenciadores | Secuenciación/arpegios propios disponibles; Endless, Pattern, Finger, Tombola, Sketch y Crank originales requieren revisión individual. Tombola bloquea completar Singing Birds. |
 | Cinta y mezcla | Cuatro pistas y edición propias; no se afirma equivalencia completa de longitud, varispeed, tape tricks, pan y dinámica originales. |

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
-#include "Envelope246.h"
+#include "Adsr246Pool.h"
 namespace pocket::reference {
-// Mode-zero branch of 0x01a85058 with an initialized Dr. Wave/ADSR pool.
+// Mode-zero branch of 0x01a85058 with a Dr. Wave/ADSR pool. The optional ready
+// word enables lazy initialization only when a matched valid voice is accessed.
 // Bytes 9..11 of each 20-byte list entry are padding and survive compaction.
 struct Voice246ReleaseList { std::array<uint8_t,2560> bytes{}; uint32_t count=0; };
 enum class Voice246ReleaseResult { rejected, absent, removed };
 inline Voice246ReleaseResult voice246PolyRelease(Voice246ReleaseList& list,
-        uint32_t note,std::array<Adsr246State,6>& envelopes,int16_t sustain) noexcept {
+        uint32_t note,std::array<Adsr246State,6>& envelopes,int16_t sustain,uint32_t* ready=nullptr) noexcept {
     const auto word=[&](size_t p){return uint32_t(list.bytes[p])|(uint32_t(list.bytes[p+1])<<8)|
         (uint32_t(list.bytes[p+2])<<16)|(uint32_t(list.bytes[p+3])<<24);};
     // Adapter guards, not the original assertion/error paths.
@@ -18,7 +19,7 @@ inline Voice246ReleaseResult voice246PolyRelease(Voice246ReleaseList& list,
     if(index==list.count)return Voice246ReleaseResult::absent;
     const auto voice=signedPhase(word(index*20+16));
     // Core's Dr. Wave release callback preserves its complete 36-byte object.
-    if(voice>=0)envelopes[size_t(voice)].noteOff(sustain);
+    if(voice>=0)adsr246Access(envelopes,size_t(voice),ready).noteOff(sustain);
     for(size_t i=index;i+1<list.count;++i)
         for(size_t j=0;j<20;++j)if(j<9||j>=12)list.bytes[i*20+j]=list.bytes[(i+1)*20+j];
     --list.count; // The old final slot is not cleared.

@@ -30,6 +30,10 @@ Version 0.7.0 added four stable **Screen: Knob 1 Blue / 2 Green / 3 White / 4 Or
 The [lazy ADSR pool and cold-start event chain](docs/adsr246-lazy-pool.md) are now
 verified; full Dr. Wave integration remains pending.
 
+The [shared voice-event dispatcher](docs/voice246-instrument-lifecycle.md) now
+checks 3,072 events across selectors 0–4, cold starts and selector changes.
+Dr. Wave pitch/ADSR handoff and complete audio integration remain pending.
+
 ## Instruments and controls
 
 [Additional Phase 246 core study bank](docs/phase-core-studies.md): 16 sample

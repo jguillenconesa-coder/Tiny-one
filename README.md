@@ -32,6 +32,10 @@ La [preparación de nota desde VoiceCtl](docs/cluster246-note-activation.md) con
 El arranque diferido ADSR y su cadena de eventos ya están
 [contrastados](docs/adsr246-lazy-pool.md); la integración completa de Dr. Wave sigue pendiente.
 
+El [controlador común de eventos de voz](docs/voice246-instrument-lifecycle.md)
+ya contrasta 3.072 eventos entre selectores 0–4, con arranque frío y cambios de
+modo; todavía no completa el relevo de pitch/ADSR ni el audio de Dr. Wave.
+
 ## Descargar
 
 | Paquete | Descarga |

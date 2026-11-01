@@ -724,3 +724,14 @@ three gated streams stay cold; six keep their original nonzero ready word.
 Full callback/render regions, argument/padding/guard bytes and samples compared.
 The original ready-pool fixtures remain unchanged.
 [Contract/reproduction](../../docs/adsr246-lazy-pool.md).
+
+## Unified instrument-event lifecycle
+
+`voice246-instrument-lifecycle-{input,output}.bin`: 3,072 records in the existing
+quiet/cold lifecycle format, 5,072 input / 9,900 output bytes. Output has the
+512-byte note table before and after all records. Header +12 bit 0 chooses
+off/on, bit 1 chooses raw/constructor input. Twenty fixed-selector streams
+and four mixed-selector streams retain activity, list, pool and ready state.
+Selectors 0–4, zero/nonzero pitch, metadata 0/1/128/255, cold/warm readiness,
+free/busy voices, gate, duplicates and note release all compared.
+[Contract, counters and reproduction](../../docs/voice246-instrument-lifecycle.md).
