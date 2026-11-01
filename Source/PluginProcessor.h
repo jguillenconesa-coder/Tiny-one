@@ -50,9 +50,10 @@ public:
     void applyValueVoice246Preset(int index);
     bool drWave246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==6;}
     bool punch246Enabled() const {return phaseAudio[20]->load()>.5f;}
-    bool value246Enabled() const {return phaseAudio[25]->load()>.5f&&!valueVoice246Enabled();}
+    bool tremolo246Enabled() const {return phaseAudio[55]->load()>.5f&&valueVoice246Available();}
+    bool value246Enabled() const {return phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
     bool valueVoice246Available() const {return phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
-    bool valueVoice246Enabled() const {return phaseAudio[31]->load()>.5f&&valueVoice246Available();}
+    bool valueVoice246Enabled() const {return phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
@@ -114,7 +115,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
-    std::array<std::atomic<float>*,55> phaseAudio{};
+    std::array<std::atomic<float>*,61> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;
     enum class Param {engine,tone,color,envelope,effect,attack,decay,sustain,release,lfoRate,lfoDepth,lfoDestination,lfoShape,delayTime,delayFeedback,drive,sampleLoop,sampleRoot,volume,sequencer,tempo,track1,track2,track3,track4,tapePlay,tapeRecord,tapeOverdub,tapeTrack,tapeSpeed,tapeLength,tapeLoop,tapeLoopIn,tapeLoopOut,metronome,inputMonitor,inputGain,tapeRecordGain,eqLow,eqMid,eqHigh,eqMix,masterDrive,masterEcho,masterDelayTime,masterFeedback,clickVolume,seqMode,seqLength,seqRate,seqGate,seqSwing,arpOctaves,seqVelocity,seqEuclidean,seqPulses,seqRotation,sampleClean,Count};
     std::array<std::atomic<float>*,size_t(Param::Count)> audioParameters{};

@@ -347,3 +347,15 @@ are contrasted using synthetic keys. U-Boot v2014.10 Boot ROM definitions identi
 the OTP calls. No tool binaries, original pseudocode/firmware, OTP values or keys
 are packaged or linked with Pocket One. The existing unlicensed decryptor
 reference remains a format reference only; its source is not copied.
+
+## Tremolo 246 (Dual LFO)
+
+Independent reconstruction of the rev246 voice Tremolo callback and note reset,
+with five waveforms, pitch/amplitude routing and 24 float32-to-Q31 coefficient
+conversions. GNU BF524 with the previously credited D-register/halfword patches
+provides numerical observations: 2,048 calls, 262,144 compared positions per
+buffer (212,992 active), full self/display bytes and retained streams. Own sample
+and buffer adapters reproduce the same callback results. Firmware, original
+instructions, disassembly and ELF stay private. No original presets or new tool
+binaries are packaged. The instrument clock, display ownership and voice/output
+routing remain explicit adapters. [Scope and reproduction](docs/tremolo246-native.md).

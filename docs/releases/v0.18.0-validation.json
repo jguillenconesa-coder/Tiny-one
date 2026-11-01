@@ -1,0 +1,87 @@
+{
+  "version": "0.18.0",
+  "date": "2026-11-01",
+  "linux_ctest": {
+    "passed": 68,
+    "total": 68,
+    "plugin_smoke": "Successful targeted rerun, including final GUI snapshot, after full suite"
+  },
+  "oracle": {
+    "calls": 2048,
+    "active_calls": 1664,
+    "rejected_calls": 384,
+    "compared_pitch_words": 262144,
+    "compared_amplitude_samples": 262144,
+    "active_positions_per_buffer": 212992,
+    "self_bytes": 28,
+    "shared_display_bytes": 32,
+    "waveforms": 5,
+    "decay_coefficient_conversions": 24,
+    "independent_repeat": "byte-identical",
+    "streaming_and_buffer_adapters": "match original callback including full state/display",
+    "evidence": "../firmware/tremolo246-validation.json"
+  },
+  "integration": {
+    "native_engines": [
+      "Digital",
+      "Phase",
+      "Dr. Wave",
+      "Cluster"
+    ],
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "pitch_and_amplitude_shape_renders": 280,
+    "zero_depth": "bit-identical audio",
+    "extreme_control_configurations": 320,
+    "checks": [
+      "Sustain and release",
+      "Panic silence",
+      "Extreme MIDI notes and full polyphony",
+      "Activation during an internal block",
+      "Editor-independent contextual MIDI proxies",
+      "Host parameter identity preservation",
+      "LFO priority and explicit GUI switching",
+      "GUI shape/phase/rate snapshot",
+      "Session / sound-slot / clipboard roundtrip",
+      "Identical MIDI renders with 64/257 host buffers"
+    ]
+  },
+  "realtime": {
+    "workloads": 180,
+    "new_tremolo_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "controls_and_shapes_automated": true,
+    "timing": "Diagnostic on shared machine; not a physical deadline guarantee"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "kernel": "all 2048 cases and both adapter orders",
+    "integration": "48/96 kHz, four engines, both routes / five shapes plus control corners",
+    "leak": "disabled in traced environment"
+  },
+  "linux_build": "standalone and VST3 passed",
+  "native_ci": "Windows/macOS packages belong to this implementation commit CI, not the Linux result",
+  "previous_ci_0_17": {
+    "run_id": 41343540488,
+    "linux": "success",
+    "windows": "success",
+    "macos": "cancelled before steps; not verified for 0.17"
+  },
+  "limitations": [
+    "Own internal 88.2kHz integration clock; original L1 scheduler not recovered",
+    "Four native engines only; original drum/FM and other destinations not integrated",
+    "Global original display replaced by per-voice display",
+    "High-depth Ramp/Curve may start near silence by design",
+    "No full OP-1 acoustic matching or current Ableton real-machine validation",
+    "No new original presets / public release / environment publication"
+  ]
+}

@@ -28,6 +28,10 @@ Desde 0.17, Dr. Wave/Cluster disponen de [Mono/Legato y glide propios](hybrid-pe
 con integración de controles, estado y MIDI. El scheduler y los selectores
 originales siguen pendientes; no se amplía por ello la evidencia del firmware.
 
+Desde 0.18 se integra [Tremolo reconstruido](tremolo246-native.md) en los cuatro
+motores nativos. Callback completo, reset, cinco formas y tabla contrastados;
+clock, buffers iniciales y ruteo del instrumento mantienen sus límites explícitos.
+
 ## Un componente activo y criterios de cierre
 
 Se trabaja un bloque DSP cada vez. Un bloqueo se documenta con su dependencia
@@ -267,7 +271,7 @@ el motivo y el siguiente bloque activo, manteniendo un solo frente.
 | Motores | Completar Dr. Wave; retomar Cluster cuando se resuelvan sus dependencias; después FM y demás motores. Resolver las tablas L1 necesarias; no sustituir un motor por otra síntesis con el mismo nombre. |
 | Filtros | Filtros internos de cada motor, ruta Filter/Nitro y etapas de salida/decimación. Cada ruta requiere coeficientes, estado e impulsos/barridos contrastados. |
 | Envolventes | Completar cuatro campos ADSR auxiliares, ruteo y modos de ejecución; envolventes específicas de D-synth/D-box/drum. El ADSR común ya contrastado no las completa. |
-| Moduladores | Extender Value a rutas pendientes; reconstruir Random/Tremolo y después Element/MIDI/Bend/Crank, con sus destinos, reinicios y fase libre originales. |
+| Moduladores | Extender Value a rutas pendientes; reconstruir Random y después Element/MIDI/Bend/Crank, con sus destinos, reinicios y fase libre originales. |
 | Integración de voz | Preparación de pitch, poly/mono/legato/unison/portamento, asignación y reloj originales, además de mezcla/salida. |
 
 ## Aplazado

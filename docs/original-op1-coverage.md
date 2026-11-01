@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.17.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.18.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -18,7 +18,7 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-37 % del objetivo completo, con incertidumbre explícita; no es una medición
+38 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
@@ -96,7 +96,8 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Cuatro campos ADSR adicionales y ruteo | [Entrada de cuatro fuentes a ADSR 0–3](drwave246-envelope-control-input.md), seguida del render: 131.072 muestras / 1.024 estados adicionales. [Selector auxiliar 4 en contexto Dr. Wave](drwave246-envelope-mode-control.md): otras 131.072 muestras, seis estados y scratch dither compartido. Demás campos auxiliares, relevo por voz y salida siguen pendientes. |
 | Envolventes D-synth / D-box / drum dinámica | Pendientes. No quedan completadas por portar el ADSR común. |
 | Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 8.192 llamadas instrument/primeros cuatro ADSR para Digital/Phase/Dr. Wave/Cluster; estado independiente por voz y wrap/clamp contrastados. [Integración híbrida](value-hybrid246-native.md). Otras familias, drum y auxiliares pendientes; reloj/allocator propios. |
-| Random / Tremolo | Pendientes los originales. Hay LFO propio seno/triángulo/cuadrado. |
+| Tremolo | [Callback completo contrastado e integrado en Phase/Digital/Dr. Wave/Cluster](tremolo246-native.md): 2048 llamadas, 262144 muestras de amplitud y palabras de pitch, 28 bytes de estado / 32 de display, cinco formas, reset y 24 coeficientes. Clock, display por voz y ruteo propios; resto de motores y comparación con hardware pendientes. |
+| Random | Original pendiente; el LFO propio anterior sigue disponible. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
 | Poly / mono / legato / unison / portamento | [Mono/Legato y glide propios para Dr. Wave/Cluster](hybrid-performance.md), con prioridad de última nota y sustain/bend por canal. No implementan los modos originales ni unison. Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
@@ -120,7 +121,7 @@ esa distinción en [manual-sound-targets.json](../research/blackfin/manual-sound
 | Receta | Dependencias completadas | Pendiente para darla por recreada |
 | --- | --- | --- |
 | Helicopter, §16.3, PDF 51–52 | Digital, ADSR común, Punch y Value → azul; teclado +4. Preset de estudio adicional. | Calibración display/raw, cadencia/alineación original, ruteo/salida y comparación acústica. |
-| Singing birds, §16.4, PDF 52 | Infraestructura MIDI/ADSR | FM original, Spring, Tremolo, mono/portamento, Tombola y calibración. |
+| Singing birds, §16.4, PDF 52 | Infraestructura MIDI/ADSR | FM original, Spring, ruteo de Tremolo a FM, mono/portamento, Tombola y calibración. |
 
 Actualmente se ofrecen 25 sonidos Factory propios, 16 Phase CORE, 16 Digital CORE
 y 3 variantes **246 CORE + Punch**, más 3 **246 Value FX Studies** y 5 **246 Value Voice Studies**. Los bancos importados son adicionales. Las

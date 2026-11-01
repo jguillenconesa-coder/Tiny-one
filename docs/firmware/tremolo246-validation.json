@@ -1,0 +1,63 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "process": "0x019cbe48",
+  "note_reset": "0x019cbdca",
+  "synth_factory": "0x019cc664",
+  "factory_slot": "0 at 0x018e1358",
+  "cases": 2048,
+  "pitch_words": 262144,
+  "audio_samples": 262144,
+  "full_state_bytes": 28,
+  "full_shared_display_bytes": 32,
+  "shapes": 5,
+  "valid_kinds": [
+    0,
+    3
+  ],
+  "independent_cases": 1024,
+  "stream_cases": 1024,
+  "coefficient_words": 24,
+  "coefficient_source": "0x018bef50",
+  "coefficient_runtime": "0x0106a8f4",
+  "float_to_q31": "0x01aa6fd0",
+  "coefficient_setup": "0x01a53c4a..0x01a53c66",
+  "model": "GNU 13.1 BF524 with documented D-register and halfword writeback patches; not hardware",
+  "artifacts": {
+    "tremolo246-input.bin": {
+      "bytes": 1753088,
+      "sha256": "817b3879df19f502e8f93cc1d21ce6917738dcc371d8b99e88bc17b8f5d50fb8",
+      "matches_committed_fixture": true
+    },
+    "tremolo246-output.bin": {
+      "bytes": 1704032,
+      "sha256": "2939c0920125a31b3e9d768cc761459da165c9f59f8d5f0561e9967e86a48aa4",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "/workspace/blackfin-note-argument-validated/bin/run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+  },
+  "limitations": [
+    "Caller-supplied initial pitch and audio buffers; not original L1 scheduler or mixer.",
+    "Display is globally shared in original; call order explicit in this isolated harness.",
+    "No physical codec rate or acoustic matching established."
+  ],
+  "independent_repeat": "byte-identical to recorded fixtures",
+  "source_sha256": {
+    "scripts/verify-tremolo246.py": "ef369b54ef58d9fe7e954638ebb1d532ea79405d60362d957551188779ecff27",
+    "research/blackfin/tremolo-stream.s.in": "aa8fdc2506ad925cc53c69529a9fd270ea84b6282e55fdee25f5190e3bb99a82",
+    "Source/Tremolo246.h": "e1bc287b0cae36edbd0a77910c0521a57e89914bda03820e4fa7e648f8d49791",
+    "Source/Tremolo246Tables.h": "d780d09fb0f4db6bd9c29cd0b4261b88b5a97a77395b317e8c71b3d1133c45c1",
+    "Source/Tremolo246Voice.h": "6570a29e1ab2a5f9ae1332039c49368a5ecd61252a5ee8af41a1a4fe492eca55"
+  },
+  "patch_sha256": {
+    "research/blackfin/gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "research/blackfin/gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3"
+  },
+  "active_calls": 1664,
+  "rejected_calls": 384,
+  "active_pitch_words": 212992,
+  "active_audio_samples": 212992
+}

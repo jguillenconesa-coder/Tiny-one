@@ -1,0 +1,164 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+@SETUP@
+imm32 P0, 0x018b6688
+imm32 P1, 0x0101e5e8
+P2 = 8192;
+LSETUP(copy_sine,copy_sine_end) LC0 = P2;
+copy_sine:
+R0 = [P0++];
+copy_sine_end: W[P1++] = R0;
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = result_ptr;
+P1.L = result_ptr;
+[P1] = P0;
+probe_loop:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+P4 = 84;
+P4 = P1 + P4;
+R0 = [P4];
+CC = R0 == 0;
+IF CC JUMP copy_buffers;
+P2.H = state;
+P2.L = state;
+P3 = 7;
+LSETUP(copy_state,copy_state_end) LC0 = P3;
+copy_state:
+R0 = [P1++];
+copy_state_end: [P2++] = R0;
+imm32 P2, 0x01dd5a88
+P3 = 8;
+LSETUP(copy_display,copy_display_end) LC0 = P3;
+copy_display:
+R0 = [P1++];
+copy_display_end: [P2++] = R0;
+copy_buffers:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+P4 = 88;
+P1 = P1 + P4;
+imm32 P2, 0xff801950
+P3 = 128;
+LSETUP(copy_pitch,copy_pitch_end) LC0 = P3;
+copy_pitch:
+R0 = [P1++];
+copy_pitch_end: [P2++] = R0;
+imm32 P2, 0xff801d50
+P3 = 64;
+LSETUP(copy_audio,copy_audio_end) LC0 = P3;
+copy_audio:
+R0 = [P1++];
+copy_audio_end: [P2++] = R0;
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+P4 = 76;
+P1 = P1 + P4;
+R0 = [P1];
+imm32 P2, 0x01aadad4
+[P2] = R0;
+P4 = 8;
+P1 = P1 + P4;
+R2 = [P1];
+CC = R2 == 2;
+IF !CC JUMP process;
+R0.H = state;
+R0.L = state;
+R1.H = controls;
+R1.L = controls;
+// R1 must point at this record's controls, including envelope and shape.
+P0.H = input_ptr;
+P0.L = input_ptr;
+R1 = [P0];
+R1 += 60;
+imm32 P0, 0x019cbdca
+CALL (P0);
+process:
+R0.H = state;
+R0.L = state;
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+R1 = P1;
+R1 += 60;
+P4 = 80;
+P1 = P1 + P4;
+R2 = [P1];
+imm32 P0, 0x019cbe48
+CALL (P0);
+P0.H = result_ptr;
+P0.L = result_ptr;
+P2 = [P0];
+P4 = 828;
+P4 = P2 + P4;
+[P4] = R0;
+P1.H = state;
+P1.L = state;
+P3 = 7;
+LSETUP(save_state,save_state_end) LC0 = P3;
+save_state:
+R0 = [P1++];
+save_state_end: [P2++] = R0;
+imm32 P1, 0x01dd5a88
+P3 = 8;
+LSETUP(save_display,save_display_end) LC0 = P3;
+save_display:
+R0 = [P1++];
+save_display_end: [P2++] = R0;
+imm32 P1, 0xff801950
+P3 = 128;
+LSETUP(save_pitch,save_pitch_end) LC0 = P3;
+save_pitch:
+R0 = [P1++];
+save_pitch_end: [P2++] = R0;
+imm32 P1, 0xff801d50
+P3 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P3;
+save_audio:
+R0 = [P1++];
+save_audio_end: [P2++] = R0;
+P2 += 4;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+imm32 R1, 856
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP probe_loop;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+table_args: .long 1,0x0106a8f4,96
+io_args: .long 1,results,@BYTES@
+input_ptr: .long 0
+result_ptr: .long 0
+state: .space 28
+controls: .space 16
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

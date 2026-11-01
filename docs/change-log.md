@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.18.0
+
+- Tremolo 246 reconstruido: pitch/amplitud, cinco formas, reset y tabla de envolvente.
+- 2048 llamadas originales, 262144 palabras de pitch y muestras de amplitud; estado/display completos y repetición independiente.
+- Integrado en los cuatro motores nativos con MIDI contextual, pantalla y guardado.
+- Clock/ruteo propios explícitos; sin presets nuevos. [Guía](tremolo246-native.md).
+
 ## 0.17.0
 
 - Mono/Legato y glide de 0–2000 ms para Dr. Wave y Cluster, disponibles en set 2.

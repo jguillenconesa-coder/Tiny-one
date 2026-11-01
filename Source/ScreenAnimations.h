@@ -7,7 +7,7 @@ namespace pocket {
 struct ScreenFrame {
     bool cluster246=false,drWave246=false,phase246=false,phaseEnvelope=false,digital246=false,punch246=false,value246=false,valueDestination=false;
     int valueColour=0;
-    bool valueVoice=false,valueEnvelope=false;
+    bool valueVoice=false,valueEnvelope=false,tremolo246=false;
     int kitPads=8;
     int page=0,engine=0,note=60,voices=0,stage=0,step=-1,mode=0,track=0;
     float time=0,level=0,envelope=0,samplePosition=0,lfoPhase=0,tapePosition=0,tapeLength=8;

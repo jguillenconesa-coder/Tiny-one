@@ -1,12 +1,14 @@
-# Pocket One 0.17.0
+# Pocket One 0.18.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.17.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.18.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
+
+**Nuevo en 0.18.0:** [Tremolo 246](docs/tremolo246-native.md): pitch, amplitud y envolvente del LFO, con cinco formas reconstruidas. Actívalo en **set 4 → TREMOLO 246** para Phase/Digital 246 y Dr. Wave/Cluster. MIDI, automatización y guardado integrados; presets originales completos aplazados.
 
 **Nuevo en 0.17.0:** [Mono, Legato y Glide para Dr. Wave / Cluster](docs/hybrid-performance.md). En **set 2**, selecciona el modo de voz y el portamento de 0–2000 ms. Prioridad de última nota, sustain/bend por canal, automatización y guardado; adaptadores propios, con los núcleos contrastados intactos.
 

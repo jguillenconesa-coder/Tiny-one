@@ -735,3 +735,16 @@ and four mixed-selector streams retain activity, list, pool and ready state.
 Selectors 0–4, zero/nonzero pitch, metadata 0/1/128/255, cold/warm readiness,
 free/busy voices, gate, duplicates and note release all compared.
 [Contract, counters and reproduction](../../docs/voice246-instrument-lifecycle.md).
+
+## Tremolo 246
+
+`tremolo246-input.bin`: 2048 records of 856 bytes. Each stores 28 bytes of self,
+32 of display, eight int16 controls, uint32 tempo/kind/action, 128 uint32 pitch
+words and 128 int16 amplitude inputs. Action 0 retains state/display, 1 loads
+self/display, 2 additionally executes the original note reset.
+
+`tremolo246-output.bin`: 24 converted int32 decay coefficients (96 bytes), then
+2048 records of 832 bytes: 28 self, 32 display, 512 pitch, 256 amplitude, uint32
+return. Little endian. All inputs synthetic. The verified streaming adapter and
+buffer-first adapter must preserve the complete original result.
+[Reproduction and limits](../../docs/tremolo246-native.md).

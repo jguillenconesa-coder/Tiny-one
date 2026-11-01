@@ -64,6 +64,10 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> phaseAttachment,envelopeAttachment,digitalAttachment,digitalEnvelopeAttachment,punchAttachment,valueAttachment,valueFreeAttachment,valueVoiceAttachment,valueVoiceFreeAttachment;
     juce::TextButton punch246{"PUNCH 246"};
     juce::TextButton value246{"VALUE 246 FX"},valueFree{"FREE PHASE"};
+    bool lastTremolo246=false;
+    juce::TextButton tremolo246{"TREMOLO 246"};juce::ComboBox tremoloShape;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tremoloAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> tremoloShapeAttachment;
     juce::TextButton valueVoice246{"VALUE 246 VOICE"},valueVoiceFree{"FREE PHASE"};
     juce::TextButton digital246{"DIGITAL 246 CORE"},digitalEnvelope{"246 ENVELOPE"};
     juce::TextButton cleanSample{"CLEAN SAMPLE"};

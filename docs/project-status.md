@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 37 % del objetivo completo
+## Avance estimado: aproximadamente 38 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,16 +18,16 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 35 % | 7 puntos |
+| Efectos, envolventes y moduladores | 20 % | 40 % | 8 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 55 % | 5,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **36,5 ≈ 37 %** |
+| Total | 100 % | | **37,5 ≈ 38 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
-funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch y partes
+funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Tremolo y partes
 de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave y Cluster incorporan motores híbridos tocables con
 dependencias propias explícitas. El FM actual y
 varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
@@ -39,7 +39,24 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Mono / Legato / Glide híbridos (0.17.0)
+## Entrega agrupada actual: Tremolo reconstruido e integrado (0.18.0)
+
+Tremolo 246 añade en set 4 pitch, amplitud, envolvente del LFO y cinco formas a
+Phase/Digital 246 y Dr. Wave/Cluster. 2048 llamadas originales con 262144 palabras
+de pitch y otras tantas muestras de amplitud, estado/display completos, reset
+y tabla de 24 coeficientes. Repetición independiente idéntica. Los adaptadores
+por muestra y buffer conservan esa coincidencia.
+[Guía, ruteo y límites](tremolo246-native.md).
+
+La estimación sube a ~38 % por un modulador adicional contrastado e integrado,
+no por una comparación acústica con hardware. La política de voz, reloj,
+mezcla/salida y relevo L1 pendientes siguen documentados como adaptadores.
+Los presets originales completos continúan aplazados.
+68/68 suites Linux, 180 cargas de callback sin heap rastreado y sanitizadores
+aprobados. [Validación](releases/v0.18.0-validation.json). El CI de este commit
+valida los binarios/paquetes de Windows y macOS; Live real sigue pendiente.
+
+## Entrega anterior: Mono / Legato / Glide híbridos (0.17.0)
 
 Dr. Wave y Cluster añaden en set 2 modos Poly/Mono/Legato y portamento de
 0–2000 ms. Prioridad de última nota, fallback con velocidad/canal, sustain/bend
@@ -47,8 +64,9 @@ por canal, pánico y cambios de modo completos; controles automatizables,
 sesiones/slots/clipboard y callback con almacenamiento fijo.
 [Comportamiento, procedencia y comprobaciones](hybrid-performance.md).
 66/66 suites Linux, 156 cargas de callback sin heap rastreado y sanitizadores
-aprobados. [Evidencia](releases/v0.17.0-validation.json). Binarios/paquetes
-Windows y macOS corresponden al CI de esta entrega; Live real sigue pendiente.
+aprobados. [Evidencia](releases/v0.17.0-validation.json). El CI 41343540488 pasó
+Windows y Linux. Su job macOS quedó cancelado sin pasos ejecutados; no se da por
+validada esa plataforma para 0.17. Live real sigue pendiente.
 
 Son adaptadores propios y no recuperan los modos originales L1. Los núcleos y
 sus oráculos se mantienen intactos. La estimación permanece ~37 %: mejora la
