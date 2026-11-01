@@ -1,0 +1,99 @@
+{
+  "firmware_sha256": "c5315218f825f143b415ca554516541898abee843d3a236df0b54c04e1fb13a9",
+  "boot_sha256": "f6233b974bdb6c92f39e73401f206721924ef3ce52abd66b642a5350cebcad93",
+  "decompiled_entries": {
+    "init": [
+      "ffa00000",
+      "ffa00514",
+      "ffa10000",
+      "ffa1007e"
+    ],
+    "runtime": [
+      "ffa0bee6",
+      "1da"
+    ]
+  },
+  "original_xtea_calls": 2048,
+  "synthetic_inputs": 1024,
+  "ghidra_host_comparisons": 2048,
+  "rounds": [
+    0,
+    1,
+    2,
+    16,
+    32,
+    64
+  ],
+  "input_sha256": "39b90ea3abc1d252b7f29e8a8f181c4061ee37986c299d770ec657a3bd0d6da4",
+  "output_sha256": "d334dc1cb5b272cc52721e8fbd59993cbb159ab50d8239a1fd901b60d8f4a914",
+  "source_sha256": {
+    "scripts/inspect-op1-boot-decompiler.py": "41102fe2ba83f235cc92f4c4776c4ed40ece5eeb21c15a7de4dd01890fcda370",
+    "research/blackfin/DecompileBoot246.java": "2b16704e3352416cc96c6ab3c5eaa2e6898e73618c4da3dc340473f781472978",
+    "research/blackfin/boot-xtea.s.in": "c6bcf29cd7f33a74b83351b0cc9797d25dddbe2d14a722e76b823dd9edd27fe8"
+  },
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "limits": [
+    "Synthetic keys only; no OTP or MMIO was executed and no application key or decrypted L1 was recovered.",
+    "Annotated observed indirect-return epilogues in analysis metadata only. ELF executable bytes unchanged.",
+    "Decompiler arithmetic host adaptation widens its key pointer and defines signed wrap; not copied into product code.",
+    "GNU BF524 and Blackfin p-code are analysis models, not hardware/boot validation. Original pseudocode, ELF and outputs stay private."
+  ],
+  "toolchain": {
+    "ghidra": "12.2 PUBLIC 20261016",
+    "blackfin_extension": "geepot/ghidra-blackfin v1.2.0",
+    "language": "Blackfin:LE:32:default",
+    "jdk": "Temurin 25.0.5+8",
+    "downloads": [
+      {
+        "name": "ghidra.zip",
+        "url": "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.2_build/ghidra_12.2_PUBLIC_20261016.zip",
+        "sha256": "2c2cd776db3c1f6a097ba418922378ac3649cadd5e844a6f5f088ae628a7be67"
+      },
+      {
+        "name": "blackfin.zip",
+        "url": "https://github.com/geepot/ghidra-blackfin/releases/download/v1.2.0/ghidra_12.2_PUBLIC_Blackfin.zip",
+        "sha256": "28fffb3f7f2c34ba09794865e58f832af546954cfacd1ee801a36443ef1be98a"
+      },
+      {
+        "name": "jdk.tar.gz",
+        "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz",
+        "sha256": "68982529869257d0ee6b824ec5aa270ff8b118bb438670da0b97ebdab178d7fb"
+      }
+    ]
+  },
+  "key_provenance": {
+    "init_entry": "0xffa00000",
+    "reader": "0xffa00514",
+    "observed_index": "0xd0",
+    "rom_command": "0xef000018",
+    "rom_read": "0xef00001a",
+    "source_kind": "device OTP via ROM, not an observed file constant",
+    "output_bytes": 16,
+    "word_permutation": [
+      1,
+      0,
+      3,
+      2
+    ],
+    "callback": "0xffa1007e",
+    "context_pointer_slot": "0xff804004",
+    "context_key_offset": "0x10",
+    "key_recovered": false,
+    "application_l1_decrypted": false,
+    "hardware_otp_executed": false,
+    "reference": "https://github.com/u-boot/u-boot/blob/v2014.10/arch/blackfin/include/asm/mach-common/bits/bootrom.h",
+    "reference_file_sha256": "edd028673e6ff041a7e03d86d61d15fb32a29765563fde4718c8cdf38b6370f6"
+  },
+  "rea_attempt": {
+    "version": "6.8.0",
+    "operation": "decompile",
+    "result": "target_unavailable / unsupported_target",
+    "reason": "unsupported ELF architecture",
+    "fallback": "Direct Ghidra headless with verified Blackfin extension; no ELF architecture spoofing"
+  },
+  "private_artifact_policy": "Original ELF, firmware, pseudocode and simulator outputs remain outside the checkout; published report contains hashes/counts/addresses only."
+}

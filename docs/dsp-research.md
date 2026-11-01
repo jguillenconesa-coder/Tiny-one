@@ -215,6 +215,10 @@ La referencia pública **sualk/op1-decryptor**, revisión
 los primeros ocho bytes de cada grupo de 24 en los bloques CALLBACK. Se consultó
 como referencia, sin copiar su código, que carece de licencia declarada.
 No se dispone aquí de la clave ni de una imagen L1 descifrada validada.
+La [investigación posterior con Ghidra Blackfin](boot246-decompiler.md) ya
+localiza el callback de carga y la lectura OTP de la clave: 2.048 llamadas
+XTEA originales y 2.048 comparaciones del pseudocódigo aritmético coinciden.
+Esto no recupera los valores OTP ni descifra L1.
 
 También se inspeccionó `te-boot.ldr`: contiene una rutina XTEA, pero su llamada
 observada pertenece a una ruta de datos de licencia/clave. No se ha probado que

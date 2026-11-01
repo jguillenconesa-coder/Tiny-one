@@ -224,6 +224,15 @@ la cola `0x01a85454`: la tabla común ya se genera, sin completar el setup previ
 ni una nueva validación de su consumo por Cluster. Las tres normalizaciones y
 el relevo L1 cifrado siguen pendientes; Dr. Wave se mantiene como bloque activo.
 
+## Herramienta para investigar L1
+
+La [descompilación con Ghidra Blackfin](boot246-decompiler.md) localiza el
+callback del bootloader y la lectura ROM/OTP de la clave en índice 0xd0.
+Se contrastan ambas primitivas XTEA y su pseudocódigo con claves sintéticas,
+pero no se recuperan los 16 bytes OTP ni se descifra L1. No se repiten las
+auditorías de referencias como sustituto de ese dato. La integración de
+Dr. Wave conserva los bloqueos de productor de pitch/relevo/clock.
+
 ## Cola de componentes
 
 La [matriz completa](original-op1-coverage.md) conserva el estado individual. El

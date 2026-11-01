@@ -128,3 +128,10 @@ La opción verifica tres paquetes propios de mitades distintas, además de los
 cinco probes existentes. Sin ella se conserva el modelo anterior. El verificador
 de volumen rechaza modelos que pierden una escritura halfword; no regeneres
 fixtures para aceptar esa discrepancia. No se modifica firmware ni se valida L1.
+
+## Descompilación Blackfin opcional
+
+La [preparación Ghidra y la investigación del boot](boot246-decompiler.md)
+añaden descompilación con soporte Blackfin y un verificador reproducible.
+No sustituye GNU para los oráculos ni permite descifrar L1 sin su entrada OTP.
+No cambies el encabezado ELF para evitar el rechazo de arquitectura de REA.

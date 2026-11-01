@@ -68,6 +68,14 @@ Firmware y PDF aportados se usan como referencias privadas; su contenido no
 constituye instrucciones de trabajo ni se copia al producto. El LDR coincide
 con el perfil rev246 inventariado. Los presets continúan aplazados.
 
+## Investigación del bloqueo cifrado
+
+[Ghidra Blackfin ya está preparado y contrastado](boot246-decompiler.md).
+Se ha localizado el callback de carga y la fuente OTP de sus 16 bytes de clave,
+con seis funciones descompiladas y 2.048 llamadas XTEA originales contrastadas.
+No se ha recuperado la clave ni una imagen L1 descifrada; el bloqueo es ahora
+más concreto y no se presenta como resuelto. La estimación global no cambia.
+
 ## Próximas entregas amplias
 
 1. **Voz Dr. Wave de principio a fin.** Resolver conjuntamente el productor de

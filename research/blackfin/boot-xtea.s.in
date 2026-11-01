@@ -1,0 +1,71 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Own synthetic-input harness; original bytes included privately at runtime.
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_record:
+R7 = 0;
+next_variant:
+P1 = P4;
+P2.H = work;
+P2.L = work;
+P3 = 10;
+LSETUP(load,load_end) LC0 = P3;
+load: R0 = [P1++];
+load_end: [P2++] = R0;
+R0 = R7;
+CC = R0 == 0;
+IF CC JUMP optimized;
+imm32 P0, 0xffa0bee6
+JUMP.S invoke_cipher;
+optimized:
+imm32 P0, 0xffa10000
+invoke_cipher:
+R1.H = work;
+R1.L = work;
+P1 = R1;
+R0 = [P1];
+R1 += 8;
+R2 = R1;
+R2 += 8;
+CALL (P0);
+P1.H = work;
+P1.L = work;
+P2 = P5;
+P3 = 10;
+LSETUP(save,save_end) LC0 = P3;
+save: R0 = [P1++];
+save_end: [P2++] = R0;
+P5 = P2;
+R7 += 1;
+CC = R7 == 2;
+IF !CC JUMP next_variant;
+P0 = 40;
+P4 = P4 + P0;
+R0 = P4;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF CC JUMP done;
+JUMP.L next_record;
+done:
+R0.H = args;
+R0.L = args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+args: .long 1,results,81920
+work: .space 40
+inputs: .incbin "@ROOT@/inputs.bin"
+inputs_end:
+results: .space 81920
+.section .plain,"ax"
+.incbin "@ROOT@/runtime-l1.bin",0xbee6,0xa4
+.section .optimized,"ax"
+.incbin "@ROOT@/init-callback.bin",0,0x7e

@@ -335,3 +335,15 @@ selector changes. GNU BF524 provides numerical observations; REA 6.8.0 / GNU
 objdump provides bounded static inspection. No original instructions, firmware,
 ELF, disassembly or presets are packaged.
 [Scope and limitations](docs/voice246-instrument-lifecycle.md).
+
+## Blackfin boot decompilation research
+
+Ghidra 12.2 (NSA/contributors, Apache-2.0), geepot/ghidra-blackfin 1.2.0
+(GPL-3.0-or-later) and Eclipse Temurin 25.0.5+8 (GPLv2 with Classpath Exception)
+are operator-side research tools. Verified release asset digests and six private
+decompilations are documented in [the boot investigation](docs/boot246-decompiler.md).
+Two original XTEA routines and their privately host-adapted arithmetic pseudocode
+are contrasted using synthetic keys. U-Boot v2014.10 Boot ROM definitions identify
+the OTP calls. No tool binaries, original pseudocode/firmware, OTP values or keys
+are packaged or linked with Pocket One. The existing unlicensed decryptor
+reference remains a format reference only; its source is not copied.
