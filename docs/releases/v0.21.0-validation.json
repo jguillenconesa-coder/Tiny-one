@@ -5,7 +5,8 @@
   "linux_ctest": {
     "passed": 74,
     "total": 74,
-    "seconds": 97.3
+    "seconds": 91.64,
+    "scope": "Full run after explicit Filter arithmetic-shift change"
   },
   "linux_build": "standalone and VST3 passed",
   "oracle": {
@@ -58,11 +59,31 @@
     "windows": "failure: Filter oracle state mismatch; audio/adapter/plugin tests passed",
     "macos": "success, universal app/VST3 and pkg"
   },
-  "native_ci": "pending this implementation commit",
+  "native_ci": {
+    "run_id": 41360293914,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41360293914",
+    "status": "Windows exact Filter/Nitro core preflight passed; full builds/tests/packages in progress",
+    "windows_cores": {
+      "filter246": "pass, 262144 samples and complete states/displays",
+      "nitro246_hybrid": "pass, 262144 samples and complete states/displays under explicit substitutions"
+    }
+  },
   "limitations": [
     "Original protected coefficients and pointers remain unknown.",
     "Host resampling, routing, silence/DC guard and scheduling authored.",
     "Ableton acceptance, hardware sound comparison and original presets pending."
   ],
-  "estimated_progress": "41% +/-10 points; planning estimate, not acoustic equivalence"
+  "estimated_progress": "41% +/-10 points; planning estimate, not acoustic equivalence",
+  "previous_nitro_diagnostic": {
+    "run_id": 41359961465,
+    "windows_nitro_core": "pass",
+    "windows_filter_core": "low-bit state drift; explicit arithmetic shift added in 6fede24",
+    "other_jobs": "cancelled to avoid obsolete builds"
+  },
+  "filter_portability_fix": {
+    "commit": "6fede24",
+    "change": "Explicit unsigned-bit sign extension for original arithmetic right shift by four in per-stage frequency modulation",
+    "verification": "Full 74-suite Linux run and exact native MSVC Filter/Nitro oracles passed",
+    "audio_state_tolerance": "Exact comparisons retained"
+  }
 }

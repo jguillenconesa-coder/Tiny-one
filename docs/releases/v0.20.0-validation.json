@@ -66,7 +66,8 @@
     "run_id": 41358939922,
     "linux": "success",
     "macos": "success, universal app/VST3 and pkg",
-    "windows": "failure: exact Filter state oracle mismatch; compilation, adapter and plugin tests passed; diagnosed in 0.21"
+    "windows": "failure: exact Filter state oracle mismatch; compilation, adapter and plugin tests passed; diagnosed in 0.21",
+    "followup_0_21": "Explicit Filter arithmetic shift in 6fede24; exact MSVC Filter/Nitro cores passed in run 41360293914. Full 0.21 packages require their own run completion."
   },
   "limitations": [
     "Mono core verified; original stereo wrapper and full instrument routing not reconstructed.",

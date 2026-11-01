@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 1 de noviembre de 2026
+# Estado y entregas del proyecto — 2 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -49,10 +49,12 @@ bajo esas sustituciones; no equivalen a memoria descifrada ni a fidelidad acúst
 
 Comparte el bus y PDC de Filter sin sumar retardo. Se comprueban siete tasas,
 proxies, proyectos/slots/clipboard, pánico, buffer independiente y extremos de
-control; 74/74 suites Linux y 252 cargas de tiempo real pasan, sin heap rastreado. El CI nativo de esta
-entrega debe confirmar Windows/macOS. El CI Filter 41358939922 pasó Linux y detectó
-una discrepancia de estado en el oráculo de Windows; seguimiento explícito en la
-validación de la nueva entrega. Ableton real sigue pendiente.
+control; 74/74 suites Linux y 252 cargas de tiempo real pasan, sin heap rastreado.
+El CI [41360293914](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41360293914)
+ya pasa los oráculos exactos de Filter/Nitro en Windows. El desplazamiento aritmético
+explícito corrige la deriva de bits de Filter detectada por MSVC en 0.20; el CI
+0.20 sí pasó Linux/macOS. Las compilaciones y paquetes completos de 0.21 siguen
+en curso. Ableton real sigue pendiente.
 
 Estimación ~41 % (±10 puntos), por integración híbrida adicional; no se declara
 resuelto OTP/L1. Siguiente bloque: restantes efectos legibles y calibración del
