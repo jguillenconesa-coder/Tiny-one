@@ -18,7 +18,25 @@
     "undefined": "passed",
     "scope": "String full oracle, both modulation oracles and seven-rate Engine integration"
   },
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "independent_string": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886181",
+      "conclusion": "success",
+      "linux": "success",
+      "windows_msvc": "success",
+      "macos_intel": "success",
+      "scope": "Original lifecycle/render/full memory and String Value/Random callbacks"
+    },
+    "independent_fm_regression": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886071",
+      "conclusion": "success; Linux/Windows/MSVC/macOS Intel"
+    },
+    "full_plugins_and_installers": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468885989",
+      "status": "in_progress at evidence capture; configure/checkout on native platforms"
+    },
+    "macos_runtime_limit": "Independent checks run on Intel; universal package build pending at capture"
+  },
   "evidence": "../firmware/string246-validation.json",
   "model_substitutions": 0,
   "scope": "Complete mono render/lifecycle with explicit slot 0 and caller-supplied RNG; host clock/pitch/cursor/voice/output adapters authored",
@@ -33,5 +51,6 @@
   "catalog_refresh_smoke": {
     "passed": 1,
     "seconds": 27.85
-  }
+  },
+  "implementation_commit": "dff26a1a637d44878e7f6b853ea0a602723e9987"
 }

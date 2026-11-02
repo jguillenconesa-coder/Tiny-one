@@ -52,7 +52,10 @@ Random y Tremolo, proxies, proyectos/slots/clipboard integrados. Reloj de 88.2 k
 pitch/cursor, scheduler, asignación y salida propios. Random comparte el RNG de la
 excitación: profundidad cero no implica identidad al activar ese LFO.
 Linux Release: **95/95 suites**, **420 cargas sin heap rastreado**, ASan/UBSan y
-revisión visual pasan; CI nativo pendiente. [Evidencia](releases/v0.29.0-validation.json).
+revisión visual pasan. El [verificador de String](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886181) y la
+[regresión FM](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886071) pasan en Linux, Windows/MSVC y macOS Intel.
+Los [plugins e instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468885989) siguen en curso.
+[Evidencia](releases/v0.29.0-validation.json).
 
 Estimación **54 % ±10 puntos** por otro núcleo tocable contrastado; no mide
 fidelidad sonora. Quedan motores restantes, ruteo/voz originales, comparación
