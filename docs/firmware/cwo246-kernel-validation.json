@@ -1,0 +1,48 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "kernel": "0x0194480c mono callback",
+  "cases": 4096,
+  "samples": 262144,
+  "state_bytes": 252,
+  "display_bytes": 64,
+  "workspace_bytes": 131072,
+  "complete_workspace_snapshots": 8,
+  "explicit_slot": 0,
+  "model_sha256": "e3d038f165d8b4e03aae8fd4ac7f46a9dcf81edb61709f135605b7ba5e034dcc",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "cwo246-kernel-input.bin": {
+      "bytes": 1884160,
+      "sha256": "c8e7a94d1421710d5469d3da55e0c87cc52e8288a3666642813cbb4baf413275",
+      "matches_committed_fixture": true
+    },
+    "cwo246-kernel-output.bin": {
+      "bytes": 2889884,
+      "sha256": "b286aa31d0e14691bf7fe32573a5b7a9090f4d97930b4240b93a6c2e06518c3e",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Four phase coefficients explicitly substituted by the declared model.",
+    "Synthetic states and explicit slot 0 workspace, not original allocator or complete startup.",
+    "Original stereo and host routing not established."
+  ],
+  "date": "2026-11-02",
+  "independent_repeat": "byte-identical to committed fixtures in a second fresh private directory",
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "leak": "disabled in traced environment"
+  },
+  "owned_sources": {
+    "Source/Cwo246Kernel.h": "986f028d284af9c8f4a6613fa1ceb57f9d1a5a9c408f271e83815d3a12ccd32e",
+    "research/cwo-foundation/Cwo246KernelTests.cpp": "2649447fba7486f8ffdaeaaadd3e345f1de8c1ae36789420e526f4bab23c0378",
+    "scripts/verify-cwo246-kernel.py": "a705cce94e7175693f199abf78027ee40152ce43549436c86972165f63ef1fb9",
+    "research/blackfin/cwo-stream.s.in": "f7419d21b48795c2924e69a1093a01debfdb394377daf6063fd01cd83e9d0dbb",
+    "research/blackfin/TypeCwo246.java": "ad9ddeb400ad8ce33da06576b7ba5dadf86c9bd71e42220b81a077519e0c3b65"
+  }
+}

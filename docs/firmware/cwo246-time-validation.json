@@ -1,0 +1,50 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "routines": [
+    "0x01943744 variable delay",
+    "0x01944480 phase lookup",
+    "0x019446e0 64-sample oscillator"
+  ],
+  "cases": 8192,
+  "table_prefix_bytes": 22684,
+  "delay_state_bytes": 12,
+  "workspace_bytes": 131072,
+  "complete_workspace_snapshots": 16,
+  "explicit_slot": 0,
+  "model_sha256": "e3d038f165d8b4e03aae8fd4ac7f46a9dcf81edb61709f135605b7ba5e034dcc",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "cwo246-time-input.bin": {
+      "bytes": 360448,
+      "sha256": "829d09f250e9969a6e425679f7026a26359f0c059add051fe60b76915a1d4eae",
+      "matches_committed_fixture": true
+    },
+    "cwo246-time-output.bin": {
+      "bytes": 4348060,
+      "sha256": "1f9006919cf535cea0e606e2be5460ba0695ed441243046f5719b8712899c154",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Same explicit phase-model initializer; delay and oscillator do not consume Hilbert coefficients.",
+    "Valid cursor and delay 1..0x7ffffff, explicit pointer binding to slot 0 workspace.",
+    "Phase and increment in [-2^30,2^30), explicit signed16 amplitude; original allocator/root callback not established."
+  ],
+  "date": "2026-11-02",
+  "independent_repeat": "byte-identical to committed fixtures in a second fresh private directory",
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "leak": "disabled in traced environment"
+  },
+  "owned_sources": {
+    "Source/Cwo246Time.h": "16de63c2a51fc53e681e019e0c86956d59c7f3dcb7379ddf647ce7ef509ad24d",
+    "research/cwo-foundation/Cwo246TimeTests.cpp": "fface6d58976d674c83258adc0a8fe5b0fa715a0d02f26ed0edb2a32d5cf73c4",
+    "scripts/verify-cwo246-time.py": "38c2a6eebd2b3a60c256fcbfa0e4ba02d8e17de80dc0ddb3b1d34efcfe315ba7",
+    "research/blackfin/cwo-time.s.in": "ca0f25cbc4f8c266f7613c8431db4aaa811586cbbfa63c2ff20d33c786b7f7e3"
+  }
+}

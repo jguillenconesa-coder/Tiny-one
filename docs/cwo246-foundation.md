@@ -1,7 +1,8 @@
 # CWO 246: base matemática contrastada
 
 Se preparan los componentes de CWO para cerrar después su callback completo.
-**Este bloque aún no añade CWO al selector ni cambia el instrumento 0.25.0.**
+Desde 0.26, la [composición completa e integración](cwo246-hybrid.md) tienen
+evidencia propia. Este documento conserva el alcance de los auxiliares iniciales.
 La validación tiene un proyecto CMake independiente de JUCE para comprobar Linux,
 Windows y macOS con rapidez, sin recompilar los instaladores del instrumento.
 
@@ -84,8 +85,7 @@ con firmware aportado por el operador, herramientas GNU Blackfin y un directorio
 privado nuevo. Firmware, ELF y pseudocódigo permanecen fuera del repositorio.
 El script valida el SHA de rev246 y la identidad de las cuatro palabras legibles.
 
-Quedan por contrastar el retardo variable y sus buffers, el generador de fases
-por bloque y la composición del callback `0x0194480c`. Después se integrarán los
-cuatro controles, Value FX, persistencia y el adaptador del host. No se sustituye
-la composición restante por una fórmula supuestamente original. Presets completos
-al final. La estimación global permanece en **46 % ±10 puntos**.
+Retardo, oscilador por bloque y callback completo quedan contrastados en 0.26
+con [evidencia propia e integración](cwo246-hybrid.md). La coincidencia sigue
+condicionada a los cuatro coeficientes del modelo; no se amplía por ello esta
+evidencia inicial a allocator, arranque, ruteo estéreo o calibración acústica.

@@ -10,6 +10,11 @@ on:
       - 'scripts/verify-cwo246-foundation.py'
       - 'scripts/design-cwo246-phase.py'
       - 'Source/ReferenceDsp.h'
+      - 'Source/Cwo246*.h'
+      - 'scripts/verify-cwo246-time.py'
+      - 'scripts/verify-cwo246-kernel.py'
+      - 'research/blackfin/cwo-time.s.in'
+      - 'research/blackfin/cwo-stream.s.in'
       - '.github/workflows/cwo-foundation.yml'
   workflow_dispatch:
 jobs:

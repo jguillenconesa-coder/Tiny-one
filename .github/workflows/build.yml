@@ -44,8 +44,8 @@ jobs:
       - name: Validate Windows integer DSP before plugin build
         if: runner.os == 'Windows'
         run: |
-          cmake --build build --config Release --target filter246_tests nitro246_tests delay246_tests grid246_tests phone246_tests spring246_lifecycle_tests spring246_tests --parallel 2
-          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid|delay246|grid246|phone246|spring246_lifecycle|spring246)$' --output-on-failure
+          cmake --build build --config Release --target filter246_tests nitro246_tests delay246_tests grid246_tests phone246_tests spring246_lifecycle_tests spring246_tests cwo246_kernel_tests cwo246_time_tests cwo246_foundation_tests --parallel 2
+          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid|delay246|grid246|phone246|spring246_lifecycle|spring246|cwo246_kernel|cwo246_time|cwo246_foundation)$' --output-on-failure
       - run: cmake --build build --config Release --parallel 2
       - name: Linux tests
         if: runner.os == 'Linux'

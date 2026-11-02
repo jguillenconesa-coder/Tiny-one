@@ -1,0 +1,72 @@
+{
+  "version": "0.26.0",
+  "date": "2026-11-02",
+  "linux_build": "passed: standalone and VST3 Release",
+  "linux_ctest": {
+    "passed": 88,
+    "failed": 0,
+    "seconds": 141.89
+  },
+  "kernel_oracle": {
+    "blocks": 4096,
+    "samples": 262144,
+    "state_bytes": 252,
+    "display_bytes": 64,
+    "complete_workspace_snapshots": 8,
+    "workspace_bytes": 131072,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/cwo246-kernel-validation.json",
+    "scope": "Complete mono callback conditioned on four explicit phase-coefficient substitutions, valid state/cursors and slot 0; not allocator/full startup"
+  },
+  "time_oracle": {
+    "delay_calls": 8192,
+    "oscillator_blocks": 8192,
+    "oscillator_samples_per_output": 524288,
+    "complete_workspace_snapshots": 16,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/cwo246-time-validation.json"
+  },
+  "integration": {
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "checks": [
+      "Exact delayed bypass and no underruns",
+      "8192 native samples versus direct core",
+      "Processed response and extreme controls/enable automation",
+      "Nine selector options, Configure and proxies",
+      "Project/slot/clipboard",
+      "64/257 renders and CC120 clearing",
+      "Post-bus master volume scales retained effect output"
+    ],
+    "latency": "Shared fixed PDC unchanged; musical variable delay not added to PDC",
+    "reset": "Authored full state/memory reset and deterministic meter RNG seed, not original constructor"
+  },
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "scope": "Delay/oscillator oracle, complete conditioned mono kernel and host adapter extremes",
+    "leak": "disabled in traced environment"
+  },
+  "realtime": {
+    "workloads": 372,
+    "tracked_callback_heap_calls": 0,
+    "timing": "diagnostic on shared cloud host; not a DAW dropout guarantee"
+  },
+  "native_ci": "pending implementation commit",
+  "previous_spring_ci": {
+    "run_id": 41430846718,
+    "linux": "success",
+    "windows": "success including installer/startup/install/uninstall",
+    "macos": "success universal app/VST3/pkg; runtime x86_64"
+  },
+  "phase_model": "Four authored substitutions; four locked legible words; analytic linear quadrature budget 4.3 degrees, not physical/acoustic equivalence",
+  "estimated_progress": "48% +/-10 planning points",
+  "visual": "passed: CWO screen, four controls and nine-option selector reviewed"
+}

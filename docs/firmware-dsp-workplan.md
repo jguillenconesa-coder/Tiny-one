@@ -367,3 +367,15 @@ red de fase queda condicionado a esas sustituciones. Verificación independiente
 de JUCE y de los instaladores. Quedan retardo y buffers, fases por bloque y
 composición original; después integración/Value/controles/persistencia. El diseño
 de cuadratura no sustituye una comparación acústica ni recupera L1.
+
+## Entrega 0.26.0: CWO Hybrid completo e integrado
+
+[Composición mono](cwo246-hybrid.md) contrastada en 4096 bloques con todos los
+estados/RNG/display y ocho buffers; repetición independiente idéntica. Retardo
+y oscilador se contrastan además en 8192 casos y dieciséis memorias completas.
+Se conservan los cuatro coeficientes de fase legibles y se sustituyen los otros
+cuatro por el modelo propio ya documentado. PDC, volumen posterior y reset propio
+del host diferenciados del original. Selector/Value/persistencia integrados.
+Los ocho FX tienen opción mono tocable; siguiente prioridad: voz/ruteo y motores
+restantes, empezando por las dependencias del FM de cuatro operadores. No dar por
+resuelta la calibración acústica ni adelantar la réplica completa de presets.

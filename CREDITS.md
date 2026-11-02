@@ -416,3 +416,9 @@ con datos explícitos. Cuatro coeficientes protegidos usan un diseño de cuadrat
 propio con NumPy/SciPy; no se presentan como firmware descifrado. Reconstrucciones
 C++, harness, fixtures sintéticas y validación propios; no se distribuyen código
 original, ELF ni pseudocódigo de Ghidra. La composición completa no se integra aún.
+
+CWO Hybrid 0.26 añade la reconstrucción propia de retardo/oscilador y composición
+del callback mono, contrastados con estados y workspaces explícitos. La coincidencia
+depende de los cuatro coeficientes propios declarados; no se distribuyen código
+original ni pseudocódigo. Adaptador, reset inicial, semilla del medidor y ruteo del
+host son propios; no representan el allocator/arranque ni la cadena estéreo originales.

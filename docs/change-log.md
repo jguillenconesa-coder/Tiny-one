@@ -1,5 +1,16 @@
 # Historial de cambios
 
+## 0.26.0 — CWO Hybrid
+
+- Callback mono completo contrastado en 4096 bloques, estados/RNG/display y ocho
+  buffers, condicionado a cuatro coeficientes propios de fase.
+- Retardo/oscilador: 8192 casos y dieciséis memorias completas; ABI y dos rutas
+  de interpolación contrastadas, con repetición independiente.
+- Cuatro controles, selector de nueve opciones, Value FX, proxies y guardado;
+  volumen tras el bus y PDC fijo mantenidos. Reset completo propio del host.
+- 372 cargas de callback y regresión de volumen en nueve selecciones.
+
+
 ## Fundamentos de CWO — instrumento 0.25.0
 
 - Productores de tablas y ocho auxiliares contrastados en 65.536 casos, estados

@@ -7,7 +7,7 @@
 #include <vector>
 static void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 static void set(PocketProcessor& p,const char* id,float value){auto* parameter=p.state.getParameter(id);check(parameter!=nullptr,"Missing output parameter");parameter->setValueNotifyingHost(parameter->convertTo0to1(value));}
-static const char* modes[]={nullptr,"punch246Enabled","filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled"};
+static const char* modes[]={nullptr,"punch246Enabled","filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled","cwo246Enabled"};
 static std::vector<float> render(int mode,double rate,int block,float volume,bool automate){
  auto p=std::make_unique<PocketProcessor>();p->applyDrWave246Init();
  if(modes[mode])p->phaseParameters().getParameter(modes[mode])->setValueNotifyingHost(1);
@@ -27,7 +27,7 @@ static std::vector<float> render(int mode,double rate,int block,float volume,boo
 }
 int main(){try{
  juce::ScopedJuceInitialiser_GUI init;
- for(double rate:{44100.,48000.,96000.})for(int mode=0;mode<8;++mode){
+ for(double rate:{44100.,48000.,96000.})for(int mode=0;mode<9;++mode){
   const auto unity=render(mode,rate,257,1,false),quarter=render(mode,rate,257,.25f,false),automated=render(mode,rate,257,.25f,true),partition=render(mode,rate,64,.25f,true);
   double energy=0,tail=0;
   for(size_t i=0;i<unity.size();++i){
@@ -39,5 +39,5 @@ int main(){try{
   }
   if(energy<.001||tail<1.e-12){std::cerr<<"mode="<<mode<<" rate="<<rate<<" energy="<<energy<<" tail="<<tail<<'\n';throw std::runtime_error("Output regression did not exercise signal and retained tails");}
  }
- std::cout<<"PASS: master gain scales complete output across eight FX selections and three rates; exact settled mute, retained tails, stereo and 64/257 automation\n";
+ std::cout<<"PASS: master gain scales complete output across nine FX selections and three rates; exact settled mute, retained tails, stereo and 64/257 automation\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

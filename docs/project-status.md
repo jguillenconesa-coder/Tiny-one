@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 46 % del objetivo completo
+## Avance estimado: aproximadamente 48 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 80 % | 16 puntos |
+| Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **46 %** |
+| Total | 100 % | | **48 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Bloque actual: fundamentos de CWO, instrumento 0.25.0
+## Entrega agrupada actual: CWO Hybrid 246 (0.26.0)
+
+Frequency/Delay/Feedback/Sideband, Value FX, automatización, proxies y guardado
+conectados. [Guía y alcance](cwo246-hybrid.md). Callback mono completo contrastado
+en 4096 bloques, estados/RNG/display y ocho memorias completas. Cuatro
+coeficientes de fase siguen siendo un modelo propio explícito; la coincidencia
+está condicionada a ellos. Retardo/oscilador tienen además 8192 casos y dieciséis
+memorias completas contrastados, con repetición independiente idéntica.
+
+Linux Release: **88/88 suites** y **372 cargas sin heap rastreado**; sanitizadores
+y revisión visual pasan. CI nativo pendiente. PDC y volumen tras el bus mantenidos; reset y
+ruteo del host propios. Los ocho FX del perfil tienen una opción tocable mono,
+con límites individuales; quedan voz/ruteo y motores restantes, empezando por
+las dependencias del FM de cuatro operadores. Presets originales al final.
+Avance global de planificación: **48 % ±10 puntos**, no equivalencia acústica.
+
+## Fundamentos anteriores de CWO, instrumento 0.25.0
 
 CWO ya tiene productores de tablas y ocho auxiliares contrastados en 65.536
 casos, con mapas exhaustivos, clipper, allpass, filtro, suavizado y estados

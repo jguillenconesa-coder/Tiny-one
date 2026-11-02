@@ -1,0 +1,137 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP,0x03f00000
+SP += -24;
+P1.H = phase_floats;
+P1.L = phase_floats;
+imm32 P2,0xff9004b0
+P0 = 8;
+LSETUP(copy_coeff,copy_coeff_end) LC0 = P0;
+copy_coeff: R0 = [P1++];
+copy_coeff_end: [P2++] = R0;
+// Original initializer with four explicit substitutions, not decrypted bytes.
+imm32 P0,0x01946228
+CALL (P0);
+imm32 P0,0x019463b0
+CALL (P0);
+// Independent table producer, consuming legible SDRAM constants.
+imm32 P0,0x01945da8
+CALL (P0);
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+P0 = 452;
+P0 = P4 + P0;
+R0 = [P0];
+CC = R0 == 0;
+IF CC JUMP copy_audio;
+P1 = P4;
+P2.H = state;
+P2.L = state;
+P0 = 63;
+LSETUP(load_state,load_state_end) LC0 = P0;
+load_state: R0 = [P1++];
+load_state_end: [P2++] = R0;
+P1 = 388;
+P1 = P4 + P1;
+imm32 P2,0xff801774
+P0 = 16;
+LSETUP(load_display,load_display_end) LC0 = P0;
+load_display: R0 = [P1++];
+load_display_end: [P2++] = R0;
+P1 = 456;
+P1 = P4 + P1;
+R0 = [P1];
+imm32 R1,1664525
+imm32 R2,1013904223
+imm32 P1,0x03600000
+imm32 P0,32768
+LSETUP(seed,seed_end) LC0 = P0;
+seed: R0 *= R1;
+R0 = R0 + R2;
+seed_end: [P1++] = R0;
+copy_audio:
+imm32 P1,0x01ab8b94
+imm32 R0,0x03600000
+[P1] = R0;
+P0 = 260;
+P1 = P4 + P0;
+P2.H = audio;
+P2.L = audio;
+P0 = 32;
+LSETUP(load_audio,load_audio_end) LC0 = P0;
+load_audio: R0 = [P1++];
+load_audio_end: [P2++] = R0;
+R0.H = state;
+R0.L = state;
+R1.H = audio;
+R1.L = audio;
+R2 = P4;
+R3 = 252;
+R2 = R2 + R3;
+imm32 P0,0x0194480c
+CALL (P0);
+P1.H = audio;
+P1.L = audio;
+P0 = 32;
+LSETUP(save_audio,save_audio_end) LC0 = P0;
+save_audio: R0 = [P1++];
+save_audio_end: [P5++] = R0;
+P1.H = state;
+P1.L = state;
+P0 = 63;
+LSETUP(save_state,save_state_end) LC0 = P0;
+save_state: R0 = [P1++];
+save_state_end: [P5++] = R0;
+imm32 P1,0xff801774
+P0 = 16;
+LSETUP(save_display,save_display_end) LC0 = P0;
+save_display: R0 = [P1++];
+save_display_end: [P5++] = R0;
+P0.H = calls;
+P0.L = calls;
+R0 = [P0];
+R0 += 1;
+[P0] = R0;
+R1 = 511;
+R1 = R0 & R1;
+CC = R1 == 0;
+IF !CC JUMP no_snapshot;
+imm32 P1,0x03600000
+imm32 P0,32768
+LSETUP(save_memory,save_memory_end) LC0 = P0;
+save_memory: R0 = [P1++];
+save_memory_end: [P5++] = R0;
+no_snapshot:
+P0 = 460;
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+table_args: .long 1,0x01ba4e14,22684
+output_args: .long 1,results,@BYTES@
+calls: .long 0
+state: .space 252
+audio: .space 128
+phase_floats: .incbin "@WORK@/phase-floats.bin"
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

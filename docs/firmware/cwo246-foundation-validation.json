@@ -146,15 +146,17 @@
     "scope": "Independent C++17 CWO building blocks; no instrument build or CWO host integration"
   },
   "owned_sources": {
-    "research/cwo-foundation/Cwo246Foundation.h": "99ba90c1f73c4ef8c8934053a282169acb97b082544974d4d79dba3fa06b645c",
-    "research/cwo-foundation/Cwo246Tables.h": "1b25ea5a6aa885296843b12f4e77920da03fe0863019b74dd37452be7c61961d",
     "research/cwo-foundation/Cwo246FoundationTests.cpp": "d5fe884d811e0aa3afc6c650e3ff98fb21e55029b5b962909056501f26a6f052",
-    "research/cwo-foundation/CMakeLists.txt": "4fe807d50c4c7b1e1bf4a46d62dbbfdcd573677a098df083c018497278225722",
+    "research/cwo-foundation/CMakeLists.txt": "bfc08ac8ee943453b8b2b22438f528ea60302738e89508fde82186ca388be31b",
     "research/blackfin/cwo-foundation.s.in": "20f427b177b5234306d7df31691eeea92559fdf6f43e4159da2a4055d6126331",
     "research/blackfin/cwo-foundation.ld": "9903975f95e70f98bd62bea7baa5d3386d17e60160374b6dbe38fc8a0e7c233f",
     "research/blackfin/cwo246-phase-model.json": "e3d038f165d8b4e03aae8fd4ac7f46a9dcf81edb61709f135605b7ba5e034dcc",
     "scripts/verify-cwo246-foundation.py": "f3139d6198f1bc22814eb320369a99420e070fb83f5375ee1e6bfccfa2a92c08",
     "scripts/design-cwo246-phase.py": "1b56885a3ea62c9278a9209a692f2f1733afe03e811f9682b14cd34875182c1e",
-    "Source/ReferenceDsp.h": "6f237e97236494636a71ae47582b4b9b0f75357176bdf102a45c87d230808acd"
-  }
+    "Source/ReferenceDsp.h": "6f237e97236494636a71ae47582b4b9b0f75357176bdf102a45c87d230808acd",
+    "Source/Cwo246Foundation.h": "99ba90c1f73c4ef8c8934053a282169acb97b082544974d4d79dba3fa06b645c",
+    "Source/Cwo246Tables.h": "1b25ea5a6aa885296843b12f4e77920da03fe0863019b74dd37452be7c61961d"
+  },
+  "header_relocation": "0.26 promotes unchanged foundation/tables headers into Source; independent project also tests time/kernel",
+  "original_standalone_cmake_sha256": "4fe807d50c4c7b1e1bf4a46d62dbbfdcd573677a098df083c018497278225722"
 }
