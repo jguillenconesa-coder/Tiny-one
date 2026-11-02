@@ -18,7 +18,7 @@ int main(int argc,char** argv) {
    for(int i=0;i<int(sr*8);++i) e->next(p);
    check(std::abs(e->next(p))<.00001,"Released voice stuck");
   }
-  e->prepare(48000); p.engine=0; p.tone=0; p.color=0; p.envelope=0; e->noteOn(69,1);
+  e->prepare(48000); p.engine=0;p.fm246Controls[0]=0; p.tone=0; p.color=0; p.envelope=0; e->noteOn(69,1);
   int crossings=0; float last=0;
   for(int i=0;i<48000;++i) { auto s=e->next(p); if(i>=4800 && s>0&&last<=0) ++crossings; last=s; }
   check(std::abs(crossings/0.9-440)<2,"A4 pitch is incorrect");
@@ -44,7 +44,7 @@ int main(int argc,char** argv) {
   double pedalEnergy=0; for(int i=0;i<4800;++i) {const auto v=e->next(p);pedalEnergy+=v*v;}
   check(pedalEnergy>1,"Sustain pedal did not hold note"); e->sustainPedal(1,false);
   for(int i=0;i<480000;++i) e->next(p); check(std::abs(e->next(p))<.0001,"Sustain release stuck");
-  e->prepare(48000); p={}; p.tone=0;p.color=0;p.effect=0; e->pitchBend(1,2);e->noteOn(69,1);
+  e->prepare(48000); p={};p.fm246Controls[0]=0; p.tone=0;p.color=0;p.effect=0; e->pitchBend(1,2);e->noteOn(69,1);
   int bentCrossings=0;float previous=0;for(int i=0;i<48000;++i){const auto v=e->next(p);if(i>=4800&&v>0&&previous<=0)++bentCrossings;previous=v;}
   check(std::abs(bentCrossings/.9-493.883)<3,"Pitch bend did not shift by two semitones");
   // Twenty-four independent kit voices use trim, reverse, gain and pitch.

@@ -1,5 +1,7 @@
 # FM 246: tablas, ciclo de voz y seis envolventes internas
 
+**Actualización 0.27.0:** el [render de cuatro operadores](fm246-hybrid.md) ya está integrado como FM Hybrid. El alcance y los resultados históricos de este bloque se conservan a continuación.
+
 Este bloque reconstruye dependencias del FM original. **El instrumento sigue en
 0.26.0 y la opción FM disponible sigue siendo el motor propio de dos osciladores.**
 No se añade un motor tocable ni se presenta esta base como render FM completo.

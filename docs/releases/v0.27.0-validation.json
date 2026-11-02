@@ -1,0 +1,66 @@
+{
+  "version": "0.27.0",
+  "date": "2026-11-02",
+  "linux_build": "passed: standalone and VST3 Release",
+  "linux_ctest": {
+    "passed": 91,
+    "failed": 0,
+    "seconds": 72.47
+  },
+  "kernel_oracle": {
+    "blocks": 4096,
+    "samples": 524288,
+    "state_bytes": 60,
+    "table_words": 30,
+    "scratch_bytes": 512,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/fm246-render-validation.json",
+    "scope": "Complete mono render under ten explicit authored substitutions, twenty legible coefficients preserved; not original scheduler or acoustic validation"
+  },
+  "sanitizers": {
+    "address": "passed (detect_leaks=0)",
+    "undefined": "passed",
+    "scope": "FM render oracle comparison and three-rate host Engine integration"
+  },
+  "realtime": {
+    "workloads": 372,
+    "tracked_callback_heap_calls": 0,
+    "fm_coverage": "raw control automation and eight output FX in existing FM workload"
+  },
+  "integration": {
+    "host_rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "voices": 6,
+    "routing_algorithms": 9,
+    "envelope": "existing reconstructed ADSR",
+    "checks": [
+      "six-voice stealing",
+      "routing changes",
+      "sustain/release and panic",
+      "Mono/Legato/glide",
+      "closed-editor parameter proxies",
+      "FM/Digital switching",
+      "eight raw parameter state roundtrip",
+      "actual plugin 64/257 host-buffer comparison",
+      "stereo identity",
+      "output-bus regression"
+    ],
+    "limits": [
+      "88.2 kHz clock, scheduling, output filter and voice policies are authored.",
+      "Pitch resolution 88200/65536 Hz, pitch/control update at 128-sample core boundaries.",
+      "Random/Tremolo/Value Instrument/ENV for FM not yet integrated."
+    ]
+  },
+  "visual_review": "passed: actual JUCE screenshot with four-operator topology and contextual raw controls",
+  "native_ci": {
+    "full_plugins_and_installers": "pending",
+    "independent_fm": "pending"
+  },
+  "ableton_live": "pending actual macOS/Windows validation",
+  "acoustic_comparison": "pending OP-1 hardware reference",
+  "original_presets": "deferred; current FM recipes are authored adaptations",
+  "release_published": false
+}

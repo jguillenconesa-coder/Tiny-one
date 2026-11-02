@@ -10,7 +10,7 @@ void dot(juce::Graphics& g,float x,float y,float radius) {g.fillEllipse(x-radius
 }
 void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     g.fillAll(juce::Colour(0xff070b10));
-    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM / REACTOR",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
+    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM HYBRID / 4 OP",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
     label(g,title,{10,4,172,14},10,colors[2]);label(g,juce::String(f.voices)+" VOICES",{183,5,63,12},8,colors[0]);
     const float activity=std::clamp(f.level*6,0.f,1.f),phase=f.time*.7f;
     juce::Path curve;
@@ -105,13 +105,25 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(int column=0;column<24;++column){const auto bits=unsigned(int(32767*std::sin(column*.3f+phase*(.2f+f.color))))^unsigned(f.tone*32767);
             for(int bit=0;bit<8;++bit){g.setColour(colors[size_t(bit%4)].withAlpha(bits&(1u<<bit)?.35f+activity*.6f:.08f));g.fillRect(17+column*9,29+bit*7,7,5);}}
     } else {
-        // Nuke-inspired scientific dial language, redrawn with original geometry.
-        const float cx=61,cy=56;
-        for(int orbit=0;orbit<3;++orbit){g.setColour(colors[size_t(orbit)].withAlpha(.75f));juce::Path ring;ring.addEllipse(-32,-12-orbit*3,64,24+orbit*6);g.strokePath(ring,juce::PathStrokeType(1),juce::AffineTransform::rotation(phase*.3f+orbit*float(pi)/3+f.tone).translated(cx,cy));const float angle=phase*(1+f.color*4)+orbit*2.1f;dot(g,cx+std::cos(angle)*30,cy+std::sin(angle)*21,2+activity*2);}
-        g.setColour(colors[3]);dot(g,cx,cy,3+activity*6);
-        for(int i=0;i<126;++i){const double p=double(i)/125;const float x=109.f+i,y=57-float(std::sin(2*pi*p+f.tone*7*std::sin(2*pi*p*(1+std::round(f.color*7))+phase)))*(12+activity*8);if(i==0)curve.startNewSubPath(x,y);else curve.lineTo(x,y);}g.setColour(colors[0]);g.strokePath(curve,juce::PathStrokeType(1.2f));
+        // Own topology diagram, showing actual four-operator connections.
+        const int algorithm=std::clamp(f.fmAlgorithm,0,8);
+        const auto x=[](int op){return 203.f-55.f*op;};
+        auto connect=[&](int from,int to){const float start=x(from),end=x(to);juce::Path path;path.startNewSubPath(start,44);path.cubicTo(start,20,end,20,end,44);g.setColour(colors[size_t(from)].withAlpha(.7f));g.strokePath(path,juce::PathStrokeType(1));g.drawLine(end-2,40,end,44,1);g.drawLine(end+2,40,end,44,1);};
+        switch(algorithm){
+            case 0:connect(3,2);connect(2,1);connect(1,0);break;
+            case 1:connect(3,1);connect(2,1);connect(1,0);break;
+            case 2:connect(3,2);connect(2,0);connect(1,0);break;
+            case 3:connect(3,2);connect(3,1);connect(2,0);connect(1,0);break;
+            case 4:connect(3,2);connect(2,1);connect(2,0);break;
+            case 5:connect(3,0);connect(2,0);connect(1,0);break;
+            case 6:connect(3,1);connect(2,0);break;
+            case 7:connect(3,2);connect(3,1);connect(3,0);break;
+            case 8:break;
+        }
+        for(int op=0;op<4;++op){g.setColour(colors[size_t(op)]);g.drawRoundedRectangle(x(op)-12,44,24,23,3,1);label(g,juce::String::charToString(juce::juce_wchar('A'+op)),{int(x(op)-3),48,16,13},10,colors[size_t(op)]);if(op==0||((algorithm==4||algorithm==6)&&op==1)||(algorithm==7&&op<3)||algorithm==8){g.drawVerticalLine(int(x(op)),68,76);label(g,"OUT",{int(x(op)-9),77,23,10},7,colors[size_t(op)]);}}
+        label(g,"ROUTE "+juce::String(algorithm+1)+" / 9",{91,89,125,10},8,colors[2]);
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.engine==0||f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
 }
 }

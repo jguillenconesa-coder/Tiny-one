@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 48 % del objetivo completo
+## Avance estimado: aproximadamente 51 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,20 +17,21 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
+| Motores originales y sus filtros | 30 % | 45 % | 13,5 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **48 %** |
+| Total | 100 % | | **51 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
 funcionan. Ese porcentaje no se suma al anterior. Phase/Digital/Punch/Filter/Tremolo/Random y partes
 de Value/ADSR tienen reconstrucciones contrastadas; Dr. Wave y Cluster incorporan motores híbridos tocables con
-dependencias propias explícitas. El FM actual y
-varios efectos son propios. La [matriz técnica](original-op1-coverage.md) es la
+dependencias propias explícitas. FM Hybrid incorpora cuatro operadores y nueve
+rutas contrastadas bajo diez sustituciones; siguen pendientes la calibración
+acústica y partes del ruteo/arranque original. La [matriz técnica](original-op1-coverage.md) es la
 fuente del estado por componente y prevalece sobre este resumen orientativo.
 
 Hay instalador Windows y builds multiplataforma en CI. El CI 0.19 pasó también macOS universal y su paquete; cada cambio nuevo necesita su propio CI.
@@ -38,31 +39,27 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Trabajo activo: dependencias internas del FM
+## Entrega actual: FM Hybrid 246 (0.27.0)
 
-[Estudio del FM propio](fm-authored-study.md): arquitectura, controles y ruta
-implícita contrastados con el código; 45 diagnósticos estacionarios y doce renders
-del Engine real. Se documentan aliasing y dependencia de tasa sin usarlos como
-medida de fidelidad al OP-1. No modifica audio ni sustituye el siguiente bloque
-de reconstrucción de los nueve destinos originales.
+[FM de cuatro operadores](fm246-hybrid.md) sustituye el render propio de dos
+osciladores: nueve rutas, feedback Q15 y seis evoluciones internas. 4096 bloques /
+524288 muestras contrastados con estados/tablas/scratch completos y repetición
+idéntica. Conserva veinte constantes legibles y diez sustituciones explícitas.
 
-[Base FM 246](fm246-foundation.md): 30 conversiones/copia de tabla, constructor,
-reset, seis pools completos de factoría y 8192 actualizaciones de seis envolventes
-contrastados con instrucciones originales. Repetición idéntica y sanitizadores;
-[verificación independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41445071992)
-aprobada en Linux, Windows/MSVC y macOS Intel.
-Se conservan 20 palabras fuente legibles y se sustituyen explícitamente 10
-protegidas; esa conversión de arranque es condicionada, no memoria recuperada.
-El ensayo por registro usa tablas sintéticas explícitas y compara self/table/guardas.
+Se integra con seis voces, ADSR reconstruida, ocho parámetros crudos automatizables,
+proxies con editor cerrado, guardado, Mono/Legato/glide y grafo de operadores.
+Pitch, reloj de 88.2 kHz, scheduler, filtro y política de voces son propios;
+la resolución de pitch y demás límites se documentan. Los presets propios cambian
+su sonido. No se afirma reconstrucción de presets originales ni equivalencia acústica.
 
-El instrumento sigue en **0.26.0** y su FM sigue siendo propio de dos osciladores:
-esta base no se conecta al audio antes de reconstruir los nueve destinos legibles
-del callback y su composición completa. Los tests nativos de esta base se compilan
-independientemente de JUCE/instaladores para evitar regenerar binarios sin cambios.
-La estimación se mantiene en **48 % ±10 puntos**: progreso de dependencias, sin
-nuevo motor tocable ni evidencia acústica. Presets originales al final.
+[Evidencia de validación](releases/v0.27.0-validation.json). Se mantienen volumen
+maestro tras el bus y PDC. Falta cerrar moduladores Instrument/ENV para FM, los
+coeficientes protegidos, ruteo original y comparación con hardware/Live.
+La estimación pasa a **51 % ±10 puntos** por el nuevo núcleo tocable; no mide
+fidelidad sonora. La [base previa](fm246-foundation.md) y el [estudio del FM anterior](fm-authored-study.md)
+quedan como historial y evidencia de procedencia.
 
-## Entrega agrupada actual: CWO Hybrid 246 (0.26.0)
+## Entrega anterior: CWO Hybrid 246 (0.26.0)
 
 Frequency/Delay/Feedback/Sideband, Value FX, automatización, proxies y guardado
 conectados. [Guía y alcance](cwo246-hybrid.md). Callback mono completo contrastado

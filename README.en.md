@@ -1,8 +1,10 @@
-# Pocket One 0.26.0
+# Pocket One 0.27.0
 
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)
+
+Version 0.27.0 replaces the authored two-oscillator FM with **[four-operator FM Hybrid](docs/fm246-hybrid.md)**: nine verified routings, six voices, reconstructed ADSR, raw controls, automation/state and Mono/Legato/glide. Its 524,288-sample comparison is conditioned on ten explicit authored table constants, retaining twenty legible words. Pitch/clock/output adapters remain authored; no acoustic equivalence or original preset replication is claimed.
 
 Version 0.26.0 adds **[CWO Hybrid](docs/cwo246-hybrid.md)**: Frequency, Delay, Feedback and Sideband, with Value FX, automation and saved state. Complete mono callback verified under four explicit authored phase coefficients; the four legible coefficients are preserved.
 

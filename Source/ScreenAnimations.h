@@ -9,7 +9,7 @@ struct ScreenFrame {
     int valueColour=0;
     bool random246=false,randomEnvelope=false;std::array<float,4> random{};
     bool valueVoice=false,valueEnvelope=false,tremolo246=false;
-    int kitPads=8;
+    int kitPads=8,fmAlgorithm=0;
     int page=0,engine=0,note=60,voices=0,stage=0,step=-1,mode=0,track=0;
     float time=0,level=0,envelope=0,samplePosition=0,lfoPhase=0,tapePosition=0,tapeLength=8;
     float tone=.5f,color=.5f,attack=.02f,decay=.2f,sustain=.8f,release=.3f,lfoRate=1;

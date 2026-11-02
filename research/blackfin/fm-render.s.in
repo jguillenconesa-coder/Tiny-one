@@ -1,0 +1,148 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Own call harness; original instructions reside only in private SDRAM image.
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+imm32 P0, 0xff906f6c
+imm32 R0, 0xffb00168
+[P0] = R0;
+P0.H = table;
+P0.L = table;
+imm32 P1, 0xffb00168
+P2 = 15;
+LSETUP(table_copy,table_copy_end) LC0 = P2;
+table_copy:
+R0 = [P0++];
+table_copy_end: [P1++] = R0;
+imm32 P0, 0x018b6688
+imm32 P1, 0x0101e5e8
+P2 = 8192;
+LSETUP(sine_copy,sine_copy_end) LC0 = P2;
+sine_copy:
+R0 = [P0++];
+sine_copy_end: W[P1++] = R0;
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = result_ptr;
+P1.L = result_ptr;
+[P1] = P0;
+probe_loop:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+R0 = [P1 + 72];
+CC = R0 == 0;
+IF CC JUMP load_pitch;
+P2.H = state;
+P2.L = state;
+P3 = 15;
+LSETUP(state_copy,state_copy_end) LC0 = P3;
+state_copy:
+R0 = [P1++];
+state_copy_end: [P2++] = R0;
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+P2 = 76;
+P1 = P1 + P2;
+imm32 P2, 0xffb001a4
+P3 = 128;
+LSETUP(work_copy,work_copy_end) LC0 = P3;
+work_copy:
+R0 = [P1++];
+work_copy_end: [P2++] = R0;
+load_pitch:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+R0 = [P1 + 68];
+imm32 P2, 0xff801950
+[P2] = R0;
+P2 = 588;
+P1 = P1 + P2;
+P2.H = audio;
+P2.L = audio;
+P3 = 64;
+LSETUP(audio_copy,audio_copy_end) LC0 = P3;
+audio_copy:
+R0 = [P1++];
+audio_copy_end: [P2++] = R0;
+imm32 P0, 0xffb00164
+imm32 R0, 0x13579bdf
+[P0] = R0;
+imm32 P0, 0xffb003a4
+imm32 R0, 0x2468ace0
+[P0] = R0;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R2 = [P0];
+R2 += 60;
+R0.H = state;
+R0.L = state;
+R1.H = audio;
+R1.L = audio;
+imm32 P0, 0x019a23d4
+CALL (P0);
+P0.H = result_ptr;
+P0.L = result_ptr;
+P2 = [P0];
+P1.H = state;
+P1.L = state;
+P3 = 15;
+LSETUP(save_state,save_state_end) LC0 = P3;
+save_state:
+R0 = [P1++];
+save_state_end: [P2++] = R0;
+imm32 P1, 0xffb00168
+P3 = 143;
+LSETUP(save_work,save_work_end) LC0 = P3;
+save_work:
+R0 = [P1++];
+save_work_end: [P2++] = R0;
+P1.H = audio;
+P1.L = audio;
+P3 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P3;
+save_audio:
+R0 = [P1++];
+save_audio_end: [P2++] = R0;
+imm32 P1, 0xffb00164
+R0 = [P1];
+[P2++] = R0;
+imm32 P1, 0xffb003a4
+R0 = [P1];
+[P2++] = R0;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+R1 = 844;
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP probe_loop;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+input_ptr: .long 0
+result_ptr: .long 0
+state: .space 60
+audio: .space 256
+table: .incbin "@WORK@/table.bin"
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/foundation/sdram.bin"

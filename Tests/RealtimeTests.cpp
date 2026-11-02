@@ -51,6 +51,7 @@ int main(int argc,char** argv) {
     if(preset<=-21&&preset>=-24&&iteration%64==0){auto& raw=p->phaseParameters();for(size_t knob=0;knob<4;++knob)raw.getParameter(pocket::tremolo246Ids[knob])->setValueNotifyingHost(float((iteration/64+int(knob)+1)%8)/7.f);raw.getParameter("tremolo246Shape")->setValueNotifyingHost(float(iteration/64%5)/4.f);}
     if(preset<=-17&&iteration%128==0)p->phaseParameters().getParameter("hybridVoiceMode")->setValueNotifyingHost(iteration%256==0?.5f:1.f);
     if(preset<=-17&&iteration%64==32){midi.addEvent(juce::MidiMessage::controllerEvent(1,64,iteration%128==32?127:0),0);for(int note:{48,52,55,59,60,68,76,83})midi.addEvent(juce::MidiMessage::noteOff(1,note),0);}
+    if(preset==0&&iteration%64==0){for(size_t k=0;k<4;++k)p->phaseParameters().getParameter(pocket::fm246Ids[k])->setValueNotifyingHost(float((iteration/64+int(k))%9)/8.f);const char* effects[]={"punch246Enabled","filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled","cwo246Enabled"};for(int fx=0;fx<8;++fx)p->phaseParameters().getParameter(effects[fx])->setValueNotifyingHost((iteration/64)%9==fx+1?1.f:0.f);}
     if(iteration%64==0)p->state.getParameter("volume")->setValueNotifyingHost(iteration%192==0?0.f:iteration%192==64?.25f:1.f);
     if(iteration%128==0){const std::array<uint8_t,128> sysex{};midi.addEvent(juce::MidiMessage::createSysExMessage(sysex.data(),int(sysex.size())),0);}
     if(iteration%100==0)p->keyboard.noteOn(2,65,.6f);

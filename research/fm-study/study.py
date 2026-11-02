@@ -55,6 +55,11 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--renderer", type=Path)
     args = parser.parse_args()
+    if args.renderer:
+        baseline = json.loads(Path(__file__).with_name("results.json").read_text())
+        current_hash = hashlib.sha256((Path(__file__).resolve().parents[2] / "Source/Engine.h").read_bytes()).hexdigest()
+        if current_hash != baseline["source_engine_sha256"]:
+            parser.error("Historical authored FM capture requires checkout 48db07e; current Engine is a different model")
     args.output.mkdir(parents=True, exist_ok=True)
     cases = [(0., 1), (.45, 3), (1., 8)]
     rows = [stationary(rate, note, tone, ratio)

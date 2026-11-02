@@ -1,10 +1,14 @@
-name: Validate FM building blocks
+name: Validate FM foundation and four-operator render
 permissions:
   contents: read
 on:
   push:
     paths:
       - 'research/fm-foundation/**'
+      - 'research/fm-render/**'
+      - 'research/blackfin/fm-render.s.in'
+      - 'scripts/verify-fm246-render.py'
+      - 'Source/Fm246*.h'
       - 'research/blackfin/fm-foundation.s.in'
       - 'research/blackfin/fm246-table-model.json'
       - 'scripts/verify-fm246-foundation.py'
@@ -27,3 +31,9 @@ jobs:
         run: cmake --build build-fm --config Release --parallel 2
       - name: Compare original instruction results
         run: ctest --test-dir build-fm -C Release --output-on-failure
+      - name: Configure four-operator render verification
+        run: cmake -S research/fm-render -B build-fm-render -DCMAKE_BUILD_TYPE=Release
+      - name: Build four-operator render verification
+        run: cmake --build build-fm-render --config Release --parallel 2
+      - name: Compare original FM render and complete memories
+        run: ctest --test-dir build-fm-render -C Release --output-on-failure

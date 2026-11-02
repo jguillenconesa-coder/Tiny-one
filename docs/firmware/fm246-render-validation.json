@@ -1,0 +1,78 @@
+{
+  "cases": 4096,
+  "samples": 524288,
+  "callback": "0x019a23d4",
+  "source_block_samples": 128,
+  "state_bytes": 60,
+  "scratch_bytes": 512,
+  "table_words": 30,
+  "artifacts": {
+    "fm246-render-input.bin": {
+      "bytes": 3457024,
+      "sha256": "ef74307e3d041ea1df7cee87fb115b21a9d1a075886dc4fcce84163e927e8608"
+    },
+    "fm246-render-output.bin": {
+      "bytes": 3670016,
+      "sha256": "04d2802bfac939567fbf2473e81ce67673ff19f76fae9b354c6f7f621b183c61"
+    }
+  },
+  "model": "GNU BF524 with both verified writeback patches; ten authored coefficients",
+  "limits": [
+    "Not hardware/acoustic validation.",
+    "Pitch, scheduler and output routing supplied explicitly."
+  ],
+  "foundation_ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "independent_repeat": "byte-identical",
+  "address_sanitizer": "passed with detect_leaks=0",
+  "undefined_sanitizer": "passed",
+  "leak_sanitizer": "disabled: managed execution uses ptrace; separate tracked-heap callback test passed",
+  "selector_coverage": {
+    "0": 448,
+    "1": 448,
+    "2": 448,
+    "3": 448,
+    "4": 448,
+    "5": 448,
+    "6": 448,
+    "7": 448,
+    "8": 448,
+    "invalid": 64
+  },
+  "ratio_bank_indices": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  ],
+  "source_sha256": {
+    "Source/Fm246.h": "42aba4297598d37a4659d0e002017054a31d19eff5670351db5082621f54623b",
+    "Source/Fm246Foundation.h": "5f46892397faed3802eae5b216a92ef7817c3e21193ad8d72c582e539a3187af",
+    "Source/Fm246Model.h": "5dc4d08a2107b17fbc132a1c6d7c4984de571b23bf3aea58ac0701ced66b3d1e"
+  }
+}

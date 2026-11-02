@@ -29,7 +29,7 @@ int main(int argc,char**){try{
  for(double rate:{8000.,22050.,44100.,48000.,88200.,96000.,192000.})for(int type:{0,1,6,7})for(bool envelope:{false,true}){
   if(argc>1&&rate!=48000&&rate!=96000)continue;
   auto run=[&](bool enabled,int amount,bool lowerPriority){auto e=std::make_unique<pocket::Engine>();pocket::Parameters p;p.engine=type;p.phase246=p.digital246=true;p.phase246Envelope=p.digital246Envelope=true;p.effect=0;p.volume=1;p.cluster246Controls={8192,0,12000,30};p.random246=enabled;p.random246Controls={int16_t(amount),32767,int16_t(envelope?2048:0),24000};p.tremolo246=p.valueVoice246=p.value246=lowerPriority;p.lfoDepth=lowerPriority?1:0;
-   e->prepare(rate);e->selectEngine(type);e->noteOn(57,.8f);std::vector<float> samples;
+   e->prepare(rate);e->selectEngine(type,p.digital246);e->noteOn(57,.8f);std::vector<float> samples;
    for(int i=0;i<int(rate*.35);++i){const auto s=e->next(p);check(std::isfinite(s)&&std::abs(s)<3,"Unstable Random render");samples.push_back(s);}
    // Stop release modulation before checking finite release timing.
    p.random246=false;p.drWave246Adsr[3]=p.cluster246Adsr[3]=p.phase246Adsr[3]=p.digital246Adsr[3]=16383;e->sustainPedal(1,true);e->noteOff(57);for(int i=0;i<128;++i)e->next(p);check(e->visualState(type).active==1,"Random changed sustain behavior");e->sustainPedal(1,false);for(int i=0;i<int(rate*2);++i)e->next(p);check(e->visualState(type).active==0,"Random left hanging release");e->reset();for(int i=0;i<128;++i)check(e->next(p)==0,"Random generated sound after panic");return samples;};

@@ -14,10 +14,33 @@ int main(int argc,char** argv) {
   juce::StringArray parameterNames;
   for(auto* parameter:p->getParameters()){const auto name=parameter->getName(100);check(!name.isEmpty()&&name.contains(":"),"Host parameter lacks a descriptive category");check(!parameterNames.contains(name),"Ambiguous duplicate MIDI mapping names");parameterNames.add(name);}
   check(p->state.getParameter("volume")->getName(100)=="Output: Volume"&&p->state.getParameter("pad24_pitch")->getName(100)=="Pad 24: Pitch","MIDI mapping parameter names regressed");
+  {
+   auto fm=std::make_unique<PocketProcessor>();fm->applyPreset(0);
+   check(fm->fm246Enabled(),"FM Hybrid is not selected");auto& raw=fm->phaseParameters();
+   for(int page=0;page<2;++page){fm->setScreenPage(page);for(size_t i=0;i<4;++i){
+    auto* target=raw.getParameter(page?pocket::fm246EnvelopeIds[i]:pocket::fm246Ids[i]);
+    check(fm->screenKnob(int(i)).followedParameter()==target,"FM closed-editor proxy target failed");
+    fm->screenKnob(int(i)).setValueNotifyingHost(.2f+float(i)*.15f);
+    check(std::abs(target->getValue()-fm->screenKnob(int(i)).getValue())<.0001,"FM proxy write failed");
+   }}
+   fm->setScreenPage(0);juce::MemoryBlock saved;fm->getStateInformation(saved);
+   auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));
+   check(restored->fm246Enabled()&&restored->screenKnob(0).followedParameter()==restored->phaseParameters().getParameter("fm246Blue"),"FM restore lost proxy target");
+   for(size_t i=0;i<4;++i)for(const auto* id:{pocket::fm246Ids[i],pocket::fm246EnvelopeIds[i]})check(restored->phaseParameters().getRawParameterValue(id)->load()==raw.getRawParameterValue(id)->load(),"FM restore lost raw control");
+   auto renderFm=[&](int block){auto synth=std::make_unique<PocketProcessor>();synth->setStateInformation(saved.getData(),int(saved.getSize()));synth->state.getParameter("sequencer")->setValueNotifyingHost(0);synth->state.getParameter("effect")->setValueNotifyingHost(0);synth->prepareToPlay(48000,block);std::vector<float> audio;
+    for(int offset=0;offset<8192;offset+=block){const int count=std::min(block,8192-offset);juce::AudioBuffer<float> buffer(2,count);buffer.clear();juce::MidiBuffer events;if(offset==0)events.addEvent(juce::MidiMessage::noteOn(1,69,.8f),0);if(offset<=4096&&offset+count>4096)events.addEvent(juce::MidiMessage::noteOff(1,69),4096-offset);synth->processBlock(buffer,events);for(int i=0;i<count;++i){check(std::isfinite(buffer.getSample(0,i)),"FM plugin nonfinite output");check(buffer.getSample(0,i)==buffer.getSample(1,i),"FM stereo output mismatch");audio.push_back(buffer.getSample(0,i));}}return audio;};
+   const auto shortBlocks=renderFm(64),oddBlocks=renderFm(257);double energy=0;for(size_t i=0;i<shortBlocks.size();++i){check(std::abs(shortBlocks[i]-oddBlocks[i])<1e-6,"FM depends on host buffer boundaries");energy+=double(shortBlocks[i])*shortBlocks[i];}check(energy>.001,"FM plugin render is silent");
+   raw.getParameter("digital246Enabled")->setValueNotifyingHost(1);
+   check(fm->screenKnob(0).followedParameter()==raw.getParameter("digital246Blue"),"FM to Digital proxy switch failed");
+   raw.getParameter("digital246Enabled")->setValueNotifyingHost(0);
+   check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"Digital to FM proxy switch failed");
+   {std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("fm-hybrid.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"FM screenshot failed");}}
+  }
   // The four host identities follow the visible page, including GUI touches,
   // host automation, discrete controls, editor closure and project restoration.
   {
    auto mapped=std::make_unique<PocketProcessor>();
+   mapped->state.getParameter("engine")->setValueNotifyingHost(mapped->state.getParameter("engine")->convertTo0to1(2));
    check(mapped->screenKnob(0).getParameterIndex()==mapped->state.getParameter("sampleClean")->getParameterIndex()+1,"Screen knobs reordered existing parameters");
    std::unique_ptr<juce::AudioProcessorEditor> editor(mapped->createEditor());
    const char* ids[4][4]={{"tone","color","envelope","effect"},{"attack","decay","sustain","release"},{"delayTime","delayFeedback","effect","drive"},{"lfoRate","lfoDepth","lfoDestination","lfoShape"}};
@@ -317,7 +340,7 @@ int main(int argc,char** argv) {
    roundtrip->setScreenPage(0);check(roundtrip->screenKnob(0).followedParameter()==roundtrip->state.getParameter("tone"),"Old session did not restore legacy mapping");
    // Toggle via automation with no editor: proxies follow mode and engine atomically.
    roundtrip->phaseParameters().getParameter("phase246Enabled")->setValueNotifyingHost(1);check(roundtrip->screenKnob(0).followedParameter()==roundtrip->phaseParameters().getParameter("phase246Blue"),"Mode automation did not reroute the proxy");
-   roundtrip->state.getParameter("engine")->setValueNotifyingHost(0);check(roundtrip->screenKnob(0).followedParameter()==roundtrip->state.getParameter("tone"),"Engine automation left the proxy on Phase");
+   roundtrip->state.getParameter("engine")->setValueNotifyingHost(0);check(roundtrip->screenKnob(0).followedParameter()==roundtrip->phaseParameters().getParameter("fm246Blue"),"Engine automation did not restore FM Hybrid");
   }
   // Original envelope integration preserves 0.8.0 automation and project/slot defaults.
   {

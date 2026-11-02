@@ -440,3 +440,24 @@ substitutions, not decrypted data or acoustically calibrated values. Only own
 source/harness, scalar observations and synthetic numeric vectors are published.
 No original FM audio renderer or host integration is claimed by this component.
 [Scope, source provenance and reproduction](docs/fm246-foundation.md).
+
+## FM Hybrid 0.27.0
+
+`Source/Fm246.h` independently reconstructs the complete mono four-operator FM
+callback: nine routings, fixed-point feedback, phase updates, operator weighting
+and six internal gain/angle channels. 4096 blocks / 524288 samples, complete
+60-byte states, thirty-word table and 512-byte scratch/guards match private
+execution of unmodified rev246 SDRAM instructions under the published ten-word
+authored table model. Twenty legible source coefficients remain locked.
+`Source/Fm246Foundation.h` and `Fm246Model.h` are shared with the earlier independent
+verification through forwarding headers. No proprietary code, decompiled
+pseudocode, firmware tables containing instructions or original patches are
+redistributed; numeric fixtures contain synthetic inputs and observations.
+
+Pitch word rounding, 88.2 kHz clock, per-voice scratch, allocation/steal/glide,
+causal filtering/resampling and control smoothing are authored adapters. The
+existing reconstructed ADSR is composed with the voice; full original scheduling,
+protected constants, acoustic equivalence and actual Live acceptance remain
+unverified. The six authored FM recipes are adapted, not original OP-1 presets.
+Own implementation, harness and diagnostic/test source are AGPL-3.0-only.
+[Scope and reproduction](docs/fm246-hybrid.md).

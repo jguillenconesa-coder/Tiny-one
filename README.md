@@ -1,12 +1,14 @@
-# Pocket One 0.26.0
+# Pocket One 0.27.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.26.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.27.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
+
+**Nuevo en 0.27.0:** [FM Hybrid de cuatro operadores](docs/fm246-hybrid.md), nueve rutas, seis voces y ADSR reconstruida, controles independientes, Mono/Legato/glide y guardado. Render contrastado en 524.288 muestras bajo diez constantes propias explícitas; no se afirma equivalencia acústica.
 
 **Nuevo en 0.26.0:** [CWO Hybrid](docs/cwo246-hybrid.md), con Frequency, Delay, Feedback y Sideband, Value FX, automatización y guardado. Callback mono completo contrastado bajo cuatro coeficientes de fase propios explícitos; los cuatro legibles se conservan.
 
@@ -26,9 +28,9 @@
 
 **Nuevo en 0.13.0:** [Value 246 Voice](docs/value-voice246-native.md), modulación por voz de los cuatro controles Phase/Digital o de su ADSR. Cinco variantes adicionales, con los mismos mandos MIDI del set 4 y estados antiguos conservados. [Cobertura completa y pendientes](docs/original-op1-coverage.md).
 
-**Investigación FM:** [base interna contrastada](docs/fm246-foundation.md), con tablas, seis envolventes y ciclo de voces. El FM original todavía no está integrado; la opción actual sigue usando el motor propio.
+**Investigación FM:** [base interna contrastada](docs/fm246-foundation.md) y [render híbrido integrado](docs/fm246-hybrid.md). Veinte constantes legibles se conservan; diez siguen siendo sustituciones propias. Pitch/reloj/ruteo completos y comparación acústica pendientes.
 
-[Estudio del FM propio](docs/fm-authored-study.md): diferencias de arquitectura y controles, mediciones de aliasing y prioridades para reconstruir el original.
+[Estudio histórico del FM propio de dos operadores](docs/fm-authored-study.md), retirado de la ruta tocable en 0.27.0.
 
 **Trabajo activo: reconstrucción híbrida del instrumento.** [Dr. Wave](docs/drwave246-hybrid.md) y [Cluster](docs/cluster246-hybrid.md) ya son tocables con seis voces, ADSR, Value y modos de interpretación. Se conservan sus núcleos contrastados; reloj, voz/salida y las dependencias L1 sin recuperar usan adaptadores propios documentados. [Plan por componentes](docs/firmware-dsp-workplan.md) y [estado actual](docs/project-status.md). Los presets originales completos siguen aplazados.
 
@@ -83,7 +85,7 @@ La versión portable se extrae sin instalador; copia el paquete `.vst3` completo
 
 ## Qué incluye
 
-- **Seis modos y ocho voces:** FM, distorsión de fase, cuerda pulsada, sampler WAV/AIFF, batería sintética y kits de 24 muestras con edición por pad.
+- **Motores con hasta ocho voces:** FM Hybrid de seis voces/cuatro operadores, Phase, String, sampler WAV/AIFF, batería sintética, kits de 24 pads, Dr. Wave y Cluster híbridos de seis voces.
 - **Controles hardware:** modos SYNTH/DRUM/TAPE/MIX; T1 motor, T2 ADSR, T3 FX y T4 LFO; accesos independientes SYNTH/DRUM; cinta con SPLIT/JOIN, LIFT/DROP, loop y tape tricks. MIX añade EQ y efectos de master.
 - **MIDI y automatización:** velocidad, sustain CC64, pitch bend en motores compatibles y sonidos iniciales.
 - **Secuenciadores:** patrón de 1–16 pasos con dirección normal, inversa, péndulo o aleatoria; arpegiador UP/DOWN/UP-DOWN con 1–3 octavas, gate, swing y máscara euclídea. Sincronización con tempo, posición y saltos del host. [Uso](docs/sequencers.md).

@@ -392,3 +392,12 @@ Siguiente cierre del mismo frente: reconstruir los nueve destinos de render de
 `0x019a23d4` y contrastar audio, estados y scratch con la tabla definida; después
 integrar voz/ADSR/reloj propios y validar el host en un único lote. No reinterpretar
 el FM propio de dos osciladores como ese render ni añadir presets para aparentarlo.
+
+## FM Hybrid 0.27.0
+
+Se cierra el render mono `0x019a23d4` de cuatro operadores y nueve rutas, contrastado
+en 4096 bloques con estado completo, tablas y scratch. [Integración y límites](fm246-hybrid.md).
+Se mantienen las veinte constantes legibles y diez sustituciones explícitas.
+La voz tocable usa ADSR reconstruida y adaptadores propios de pitch/reloj/salida.
+Quedan los moduladores Instrument/ENV del FM, dependencias protegidas, scheduler
+original y comparación acústica/Live; presets completos al final.

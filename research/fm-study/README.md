@@ -5,6 +5,8 @@ reconstruction or acoustic reference for the original four-operator engine.
 Own code: AGPL-3.0-only. No firmware, disassembly, presets or manual pages are
 included. See [findings and limits](../../docs/fm-authored-study.md).
 
+**Historical renderer:** use checkout `48db07e` for actual Engine captures. From 0.27.0 Engine uses four-operator FM Hybrid; those captures are a different model. The mathematical-only diagnostic remains applicable to the old formula.
+
 Run from the repository root with C++17, Python, NumPy and SciPy:
 
 ```sh

@@ -1,5 +1,7 @@
 # Estudio del FM propio frente a la reconstrucción FM 246
 
+**Histórico:** en 0.27.0 este motor se sustituye por [FM Hybrid de cuatro operadores](fm246-hybrid.md). Los resultados siguientes describen el render anterior, no el nuevo.
+
 Estudio sobre `b225b1f` (instrumento 0.26.0). No cambia el sonido del plugin.
 El FM actual es un diseño propio de dos osciladores; las dependencias originales
 ya contrastadas no están conectadas a él. Cambiar ratios o añadir operadores sin
