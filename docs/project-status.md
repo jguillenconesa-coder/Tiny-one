@@ -54,6 +54,8 @@ asignación, composición ADSR y salida son adaptaciones; la semejanza acústica
 sin medirse. [Evidencia de entrega](releases/v0.31.0-validation.json).
 Linux Release: **101 suites aprobadas** (smoke repetido tras ajustar el catálogo
 a 72 sonidos), **468 cargas sin heap rastreado**, ASan/UBSan y revisión visual.
+Núcleo/modulación CI aprobados en Linux y Windows/MSVC; macOS Intel en cola.
+CI completo de plugins/instaladores en curso, con enlaces y estados en la evidencia.
 Estimación **≈58 % ±10 puntos** de planificación. Sigue D-synth según dependencias,
 además de calibración, validación Live y presets originales completos al final.
 

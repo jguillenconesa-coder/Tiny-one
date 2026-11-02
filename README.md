@@ -160,7 +160,7 @@ Código original: **AGPL-3.0-only**, con [licencia completa](LICENSE). La distri
 
 ## Audio y latencia
 
-El plugin declara 0 muestras de latencia añadida. Las pruebas incluyen ocho voces, cinta/FX y buffers de 64/128/256 a 48/96 kHz, además de comprobación de heap en el callback. Consulta [medidas, configuración y límites](docs/realtime-audio.md): la prueba sintética no certifica ausencia de dropouts en Ableton. Usa ASIO en Live y comienza con 128 muestras a 48 kHz. Carga/guarda audio con el transporte parado.
+El plugin declara al host la latencia fija del bus de salida: `ceil(64 × frecuencia / 44100) + 1` muestras (aproximadamente 1,5 ms), también en bypass. Las pruebas incluyen ocho voces, cinta/FX y buffers de 64/128/256 a 48/96 kHz, además de comprobación de heap en el callback. Consulta [medidas, configuración y límites](docs/realtime-audio.md): la prueba sintética no certifica ausencia de dropouts en Ableton. Usa ASIO en Live y comienza con 128 muestras a 48 kHz. Carga/guarda audio con el transporte parado.
 
 [Correspondencia completa de botones, combinaciones Shift y límites](docs/buttons-and-browser.md).
 

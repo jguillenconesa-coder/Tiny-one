@@ -453,3 +453,10 @@ política de voz, composición ADSR y salida propios: no equivalencia acústica.
 
 Próximo bloque: estudiar D-synth y sus envolventes/dependencias antes de delimitar
 la integración. Pulse sigue condicionado por L1, y los presets completos al final.
+
+
+Prelectura del siguiente bloque: el hook del op1-sdk ya acreditado identifica
+D-synth en `0x0197e1d8`; la palabra de render de la vtable `0x0190fbbc + 0x14`
+coincide con esa dirección en el LDR disponible. Esto confirma la referencia,
+**no valida su implementación ni sus dependencias**. Revisar el grafo de llamadas,
+ocho controles y envolventes específicas antes de delimitar el próximo oráculo.

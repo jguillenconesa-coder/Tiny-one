@@ -502,6 +502,10 @@ private media, disassembly, firmware or decompiler output are redistributed.
 
 ### Voltage 246
 
+The candidate callback address came from the previously credited pinned
+op1-sdk engine_plus hooks and was verified independently against supplied
+rev246 bytes and isolated GNU BF524 execution.
+
 Voltage246.h is an independent reconstruction of the rev246 mono callback,
 four-oscillator/XOR/feedback/filter arithmetic and six-slot lifecycle, checked
 against isolated BF524 execution. Sine conversion and 129 legible filter

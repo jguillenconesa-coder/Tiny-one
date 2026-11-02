@@ -164,7 +164,7 @@ Pocket One's original source is distributed under **AGPL-3.0-only**; see [LICENS
 
 The [hardware-style editor and OLED animations](docs/hardware-interface.md) use original JUCE geometry inspired by the supplied OP-1 reference and OTTO-1. [Animated preview](docs/screen-animation.gif).
 
-The processor reports **0 added latency samples**. The realtime test checks tracked heap activity and reports timing across 36 workloads. [Measurements and practical limits](docs/realtime-audio.md). A successful synthetic benchmark does not guarantee dropout-free operation on a particular driver/DAW; load/save/import audio with transport stopped.
+The processor reports a fixed output-bus latency of `ceil(64 × sample rate / 44100) + 1` samples (about 1.5 ms), including bypass. The realtime test checks tracked heap activity and reports timing across 468 workloads. [Measurements and practical limits](docs/realtime-audio.md). A successful synthetic benchmark does not guarantee dropout-free operation on a particular driver/DAW; load/save/import audio with transport stopped.
 
 See the [complete button/browser guide](docs/buttons-and-browser.md): contextual tape tricks, master EQ/FX pages, input capture, shortcuts and differences from the original firmware.
 

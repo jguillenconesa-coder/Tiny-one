@@ -9,10 +9,50 @@
   "modulation_oracle": "4096 Value + 4096 Random type13 callbacks, independent repeat byte-identical",
   "evidence": "../firmware/voltage246-validation.json",
   "native_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913015",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (macos-15-intel)",
+        "status": "queued",
+        "conclusion": ""
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "status_details": "Linux and Windows/MSVC passed; macOS Intel queued"
   },
   "plugin_package_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913030",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "build (windows-2022)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (ubuntu-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (macos-latest)",
+        "status": "queued",
+        "conclusion": ""
+      }
+    ],
+    "status_details": "Linux and Windows building; macOS universal queued"
   },
   "authored_dependencies": [
     "88.2 kHz clock, note/pitch/cursor/event scheduler",
@@ -33,5 +73,75 @@
   "visual_smoke": {
     "status": "passed and visually reviewed: tenth engine, four traces, integer controls, Voltage init and 72-sound catalogue",
     "sha256": "8a64f3a0f53405163c1c58b38112d1a3a7c5d9cbb1c38a51594c03a03073dad3"
-  }
+  },
+  "implementation_commit": "a6f576dc418e9675d5b94715b7c0a0349ac2d8b8",
+  "regression_ci": {
+    "fm": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912931",
+      "status": "queued",
+      "conclusion": "",
+      "jobs": [
+        {
+          "name": "validate (macos-15-intel)",
+          "status": "queued",
+          "conclusion": ""
+        },
+        {
+          "name": "validate (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "validate (windows-2022)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "string": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913202",
+      "status": "queued",
+      "conclusion": "",
+      "jobs": [
+        {
+          "name": "validate (macos-15-intel)",
+          "status": "queued",
+          "conclusion": ""
+        },
+        {
+          "name": "validate (windows-2022)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "validate (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "dna": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912925",
+      "status": "in_progress",
+      "conclusion": "",
+      "jobs": [
+        {
+          "name": "validate (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "validate (macos-15-intel)",
+          "status": "in_progress",
+          "conclusion": ""
+        },
+        {
+          "name": "validate (windows-2022)",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  },
+  "ci_observed_at": "2026-11-02T17:43:38+00:00"
 }
