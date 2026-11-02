@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.22)
+project(Cwo246Foundation LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(CTest)
+add_executable(cwo246_foundation Cwo246FoundationTests.cpp)
+target_include_directories(cwo246_foundation PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../Source")
+add_test(NAME cwo246_foundation COMMAND cwo246_foundation "${CMAKE_CURRENT_SOURCE_DIR}/vectors")

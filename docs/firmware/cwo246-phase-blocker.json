@@ -1,0 +1,86 @@
+{
+  "component": "CWO dual phase network",
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "initializer": "0x01946228",
+  "consumer": "0x01943e0a",
+  "source_start": "0xff9004b0",
+  "destinations": [
+    "0x01ba668c",
+    "0x01ba669c"
+  ],
+  "ldr_block": {
+    "address": "0xff9003f0",
+    "bytes": 656,
+    "flags": "0xad812406",
+    "file_offset": 2091120
+  },
+  "partial_protection_model": "First 8 of every complete 24-byte CALLBACK/INDIRECT payload group; classification only, not decryption",
+  "words": [
+    {
+      "index": 0,
+      "address": "0xff9004b0",
+      "payload_offset": 192,
+      "offset_mod24": 0,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 1,
+      "address": "0xff9004b4",
+      "payload_offset": 196,
+      "offset_mod24": 4,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 2,
+      "address": "0xff9004b8",
+      "payload_offset": 200,
+      "offset_mod24": 8,
+      "protected_under_partial_model": false,
+      "float32_word": "0x3f2a1e8a",
+      "float32_value": 0.664528489112854
+    },
+    {
+      "index": 3,
+      "address": "0xff9004bc",
+      "payload_offset": 204,
+      "offset_mod24": 12,
+      "protected_under_partial_model": false,
+      "float32_word": "0x3e072af1",
+      "float32_value": 0.13199974596500397
+    },
+    {
+      "index": 4,
+      "address": "0xff9004c0",
+      "payload_offset": 208,
+      "offset_mod24": 16,
+      "protected_under_partial_model": false,
+      "float32_word": "0x3f7ec5ef",
+      "float32_value": 0.9952077269554138
+    },
+    {
+      "index": 5,
+      "address": "0xff9004c4",
+      "payload_offset": 212,
+      "offset_mod24": 20,
+      "protected_under_partial_model": false,
+      "float32_word": "0x3f75d655",
+      "float32_value": 0.9603016972541809
+    },
+    {
+      "index": 6,
+      "address": "0xff9004c8",
+      "payload_offset": 216,
+      "offset_mod24": 0,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 7,
+      "address": "0xff9004cc",
+      "payload_offset": 220,
+      "offset_mod24": 4,
+      "protected_under_partial_model": true
+    }
+  ],
+  "substitutions": "Indices 0,1,6,7 use the explicitly authored quadrature model; legible words must match input firmware exactly",
+  "model": "../../research/blackfin/cwo246-phase-model.json"
+}

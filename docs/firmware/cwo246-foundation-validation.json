@@ -1,0 +1,152 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "routines": [
+    "0x01946228 static init with explicit substitutions",
+    "0x019463b0 interpolation producer",
+    "0x01945da8 control table producer",
+    "0x01944528 frequency mapping",
+    "0x019445a8 feedback mapping",
+    "0x01944660 delay mapping",
+    "0x0194444e cubic clipper",
+    "0x01943b2e allpass stage",
+    "0x01943e0a dual phase network",
+    "0x01943bea conditioning filter",
+    "0x0194435c control smoother"
+  ],
+  "cases": 65536,
+  "table_prefix_bytes": 22684,
+  "phase_state_bytes": 136,
+  "phase_state_reloads": 16,
+  "phase_source_words": [
+    {
+      "index": 0,
+      "address": "0xff9004b0",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 192,
+      "offset_mod24": 0,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 1,
+      "address": "0xff9004b4",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 196,
+      "offset_mod24": 4,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 2,
+      "address": "0xff9004b8",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 200,
+      "offset_mod24": 8,
+      "protected_under_partial_model": false
+    },
+    {
+      "index": 3,
+      "address": "0xff9004bc",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 204,
+      "offset_mod24": 12,
+      "protected_under_partial_model": false
+    },
+    {
+      "index": 4,
+      "address": "0xff9004c0",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 208,
+      "offset_mod24": 16,
+      "protected_under_partial_model": false
+    },
+    {
+      "index": 5,
+      "address": "0xff9004c4",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 212,
+      "offset_mod24": 20,
+      "protected_under_partial_model": false
+    },
+    {
+      "index": 6,
+      "address": "0xff9004c8",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 216,
+      "offset_mod24": 0,
+      "protected_under_partial_model": true
+    },
+    {
+      "index": 7,
+      "address": "0xff9004cc",
+      "ldr_block": "0xff9003f0",
+      "flags": "0xad812406",
+      "payload_offset": 220,
+      "offset_mod24": 4,
+      "protected_under_partial_model": true
+    }
+  ],
+  "model_sha256": "e3d038f165d8b4e03aae8fd4ac7f46a9dcf81edb61709f135605b7ba5e034dcc",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "cwo246-foundation-input.bin": {
+      "bytes": 12845056,
+      "sha256": "e66cae0fc8a65486ea6b76f577d1c6b920e7d7fe853314624dbc8e5b66d8bf9a",
+      "matches_committed_fixture": true
+    },
+    "cwo246-foundation-output.bin": {
+      "bytes": 12867740,
+      "sha256": "574f3506dc12f34a8087fa0dd5badf08a0f904bde2f6107d22f65acaf7b1b4a5",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Four protected Hilbert coefficients explicitly substituted by the authored model.",
+    "Original root callback, delay workspace, smoother cadence, routing and host integration not established.",
+    "Raw control domain 0..32767; default ASTAT rounding and valid phase parity only."
+  ],
+  "date": "2026-11-02",
+  "timezone": "Europe/Madrid",
+  "independent_repeat": "byte-identical in a second fresh private directory",
+  "local_cmake_ctest": {
+    "passed": 1,
+    "total": 1,
+    "original_helper_cases": 65536,
+    "helper_entry_calls": 524288
+  },
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "leak": "disabled in traced environment"
+  },
+  "phase_model": {
+    "scope": "Four authored coefficients, four locked legible coefficients; no decryption",
+    "design_grid_max_error_degrees": 4.256726822130152,
+    "verification_grid_points": 10000,
+    "verification_budget_degrees": 4.3,
+    "linear_response_only": true
+  },
+  "instrument": "0.25.0 unchanged; CWO is not integrated",
+  "native_ci": "pending implementation commit; independent CWO workflow only",
+  "owned_sources": {
+    "research/cwo-foundation/Cwo246Foundation.h": "99ba90c1f73c4ef8c8934053a282169acb97b082544974d4d79dba3fa06b645c",
+    "research/cwo-foundation/Cwo246Tables.h": "1b25ea5a6aa885296843b12f4e77920da03fe0863019b74dd37452be7c61961d",
+    "research/cwo-foundation/Cwo246FoundationTests.cpp": "d5fe884d811e0aa3afc6c650e3ff98fb21e55029b5b962909056501f26a6f052",
+    "research/cwo-foundation/CMakeLists.txt": "4fe807d50c4c7b1e1bf4a46d62dbbfdcd573677a098df083c018497278225722",
+    "research/blackfin/cwo-foundation.s.in": "20f427b177b5234306d7df31691eeea92559fdf6f43e4159da2a4055d6126331",
+    "research/blackfin/cwo-foundation.ld": "9903975f95e70f98bd62bea7baa5d3386d17e60160374b6dbe38fc8a0e7c233f",
+    "research/blackfin/cwo246-phase-model.json": "e3d038f165d8b4e03aae8fd4ac7f46a9dcf81edb61709f135605b7ba5e034dcc",
+    "scripts/verify-cwo246-foundation.py": "f3139d6198f1bc22814eb320369a99420e070fb83f5375ee1e6bfccfa2a92c08",
+    "scripts/design-cwo246-phase.py": "1b56885a3ea62c9278a9209a692f2f1733afe03e811f9682b14cd34875182c1e",
+    "Source/ReferenceDsp.h": "6f237e97236494636a71ae47582b4b9b0f75357176bdf102a45c87d230808acd"
+  }
+}

@@ -82,7 +82,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Phone | Núcleo mono, segmentación, filtros/remuestreo y reset contrastados en 262.144 muestras y ocho memorias completas. Integrado con Value FX; slot/workspace, guardas, pánico y ruteo propios. [Guía](phone246-native.md). |
 | Spring | [Mono e integración](spring246-native.md) contrastados: inicializador, tablas/constantes, 4096 bloques, estados y workspaces completos. Allocator, estéreo y equivalencia acústica pendientes. |
 | Nitro | Híbrido integrado: ruta mono legible contrastada en 262.144 muestras bajo coeficientes/punteros sustituidos. Los originales siguen protegidos; no hay equivalencia acústica demostrada. [Guía y límites](nitro246-hybrid.md). |
-| CWO | Presente en el firmware/DB; pendiente. No está en los seis diagramas de efectos del manual suministrado. |
+| CWO | [Fundamentos contrastados](cwo246-foundation.md): tablas, controles, clipper/allpass/filtro/suavizado y red de fase condicionada a cuatro coeficientes propios. Retardo, callback e integración pendientes. |
 | Filter, ruta interna | Núcleo mono contrastado: 262.144 muestras, estado/display y 194 coeficientes. Integrado en bus de salida con PDC fijo; tasa/ruteo propios. [Guía](filter246-native.md). |
 | Filtros internos de cada motor y decimación/salida | Pendientes individualmente. Los filtros de salida/adaptación actuales son propios. |
 | EQ y master | Implementación propia; EQ, dinámica y ruteo originales pendientes. |

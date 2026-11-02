@@ -1,0 +1,29 @@
+name: Validate CWO building blocks
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/cwo-foundation/**'
+      - 'research/blackfin/cwo-foundation.*'
+      - 'research/blackfin/cwo246-phase-model.json'
+      - 'scripts/verify-cwo246-foundation.py'
+      - 'scripts/design-cwo246-phase.py'
+      - 'Source/ReferenceDsp.h'
+      - '.github/workflows/cwo-foundation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure independent CWO verification
+        run: cmake -S research/cwo-foundation -B build-cwo -DCMAKE_BUILD_TYPE=Release
+      - name: Build CWO verification
+        run: cmake --build build-cwo --config Release --parallel 2
+      - name: Compare original instruction results
+        run: ctest --test-dir build-cwo -C Release --output-on-failure

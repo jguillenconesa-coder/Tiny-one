@@ -1,0 +1,48 @@
+{
+  "model": "Authored least-squares quadrature design, four protected coefficients substituted",
+  "rate": 44100,
+  "fitted_positions": [
+    0,
+    1,
+    6,
+    7
+  ],
+  "locked_legible_positions": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "float32_coefficients": [
+    0.982521653175354,
+    0.9170584678649902,
+    0.664528489112854,
+    0.13199974596500397,
+    0.9952077269554138,
+    0.9603016972541809,
+    0.8291112780570984,
+    0.4108353555202484
+  ],
+  "float32_words": [
+    "3f7b868a",
+    "3f6ac458",
+    "3f2a1e8a",
+    "3e072af1",
+    "3f7ec5ef",
+    "3f75d655",
+    "3f5440a3",
+    "3ed25903"
+  ],
+  "design_band_hz": [
+    30,
+    18000
+  ],
+  "design_grid_points": 600,
+  "maximum_design_grid_quadrature_error_degrees": 4.256726822130152,
+  "rms_design_grid_cosine_error": 0.0106190359480615,
+  "limitations": [
+    "Four substituted coefficients are not recovered firmware data.",
+    "Metric is analytic unsaturated response on the design grid, not hardware/acoustic validation.",
+    "No active CWO callback, host integration or physical sample-rate calibration is established."
+  ]
+}

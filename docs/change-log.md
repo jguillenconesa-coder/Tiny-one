@@ -1,5 +1,15 @@
 # Historial de cambios
 
+## Fundamentos de CWO — instrumento 0.25.0
+
+- Productores de tablas y ocho auxiliares contrastados en 65.536 casos, estados
+  completos, límites signed16/signed32 y repetición independiente.
+- Cuatro coeficientes de fase legibles conservados; cuatro protegidos sustituidos
+  por un modelo de cuadratura propio y explícito. No es CWO integrado todavía.
+- CI ligero separado del instrumento para Linux, MSVC y macOS Intel.
+- Spring 0.25 confirma las tres plataformas y sus paquetes nativos.
+
+
 ## 0.25.0 — Spring 246
 
 - Reverb mono con Tone/Turns/Damping/Send, Value FX, automatización, proxies y

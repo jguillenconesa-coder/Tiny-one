@@ -410,3 +410,9 @@ Spring 246 (0.25): análisis propio del inicializador y callback mono, con ejecu
 acotada y repetición independiente. Kernel C++, adaptador, UI, harness y regresión
 propios; las fixtures contienen entradas sintéticas y resultados generados, sin
 instrucciones ni pseudocódigo del fabricante. No se copia DSP del SDK externo.
+
+Fundamentos CWO 246: análisis propio de productores/auxiliares y ejecución acotada
+con datos explícitos. Cuatro coeficientes protegidos usan un diseño de cuadratura
+propio con NumPy/SciPy; no se presentan como firmware descifrado. Reconstrucciones
+C++, harness, fixtures sintéticas y validación propios; no se distribuyen código
+original, ELF ni pseudocódigo de Ghidra. La composición completa no se integra aún.

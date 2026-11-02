@@ -38,7 +38,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Spring 246 (0.25.0)
+## Bloque actual: fundamentos de CWO, instrumento 0.25.0
+
+CWO ya tiene productores de tablas y ocho auxiliares contrastados en 65.536
+casos, con mapas exhaustivos, clipper, allpass, filtro, suavizado y estados
+completos de la red de fase. Cuatro coeficientes protegidos usan un modelo propio
+de cuadratura; los cuatro legibles se conservan exactamente.
+[Alcance y límites](cwo246-foundation.md). Retardo, generador de fases por bloque,
+callback completo e integración siguen pendientes. El instrumento mantiene
+Spring 0.25.0. La nueva verificación nativa es independiente de JUCE/instaladores.
+Avance global: **46 % ±10 puntos**, sin dar por completado CWO.
+
+## Entrega 0.25.0: Spring 246 (0.25.0)
 
 Set 3 → FX → Spring 246 añade Tone/Turns/Damping/Send, Value FX, automatización,
 proxies y guardado. [Guía y límites](spring246-native.md). Se ejecuta el
@@ -50,9 +61,8 @@ completo del host se distingue de la limpieza diferida original.
 0.25 compila standalone/VST3 y pasa **84/84 suites Linux** y **348 cargas de
 callback sin heap rastreado**. Sanitizadores de núcleo/adaptador aprobados;
 el [CI nativo propio](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41430846718)
-ya tiene asignados los tres runners, incluido macOS Intel; resultados completos
-e instaladores aún pendientes. La prueba temprana de DSP entero de Windows
-ya pasó, incluidos Spring y su ciclo de memoria. El volumen sigue después del bus y el PDC permanece
+pasó Linux, Windows y macOS, incluidos instalador Windows y paquete macOS universal.
+Las pruebas runtime de macOS cubren x86_64, no el slice arm64. El volumen sigue después del bus y el PDC permanece
 fijo. El CI pasa a un runner macOS Intel manteniendo binarios universales, tras
 dos trabajos ARM64 cancelados por falta de capacidad antes de arrancar. Prueba
 runtime de arm64 y Ableton real siguen pendientes. Avance de planificación:

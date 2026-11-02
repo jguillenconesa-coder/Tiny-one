@@ -1,0 +1,194 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP,0x03f00000
+SP += -24;
+P1.H = phase_floats;
+P1.L = phase_floats;
+imm32 P2,0xff9004b0
+P0 = 8;
+LSETUP(copy_coeff,copy_coeff_end) LC0 = P0;
+copy_coeff: R0 = [P1++];
+copy_coeff_end: [P2++] = R0;
+// Original initializer with four explicit substitutions, not decrypted bytes.
+imm32 P0,0x01946228
+CALL (P0);
+imm32 P0,0x019463b0
+CALL (P0);
+// Independent table producer, consuming legible SDRAM constants.
+imm32 P0,0x01945da8
+CALL (P0);
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+R0 = P5;
+R1 = P4;
+imm32 P0,0x01944528
+CALL (P0);
+P5 += 4;
+R0 = P5;
+R1 = P4;
+R1 += 4;
+imm32 P0,0x019445a8
+CALL (P0);
+P5 += 8;
+R0 = P5;
+R1 = P4;
+R1 += 2;
+imm32 P0,0x01944660
+CALL (P0);
+P5 += 4;
+// Cubic clipper writes two int16 outputs.
+R0 = P5;
+R1 = P5;
+R1 += 2;
+P1 = R1;
+R2 = W[P4 + 8] (X);
+W[P1] = R2;
+imm32 P0,0x0194444e
+CALL (P0);
+P5 += 4;
+// Allpass state is an explicit independent input on every record.
+R0 = W[P4 + 10] (X);
+P1.H = allpass_state;
+P1.L = allpass_state;
+W[P1] = R0;
+R0 = P1;
+R1 = P4;
+R1 += 12;
+R2 = P4;
+R2 += 14;
+[SP + 12] = P5;
+imm32 P0,0x01943b2e
+CALL (P0);
+P1.H = allpass_state;
+P1.L = allpass_state;
+R0 = W[P1] (X);
+W[P5 + 2] = R0;
+P5 += 4;
+P0 = 160;
+P0 = P4 + P0;
+R0 = [P0];
+CC = R0 == 0;
+IF CC JUMP phase_ready;
+P1 = 24;
+P1 = P4 + P1;
+P2.H = phase_state;
+P2.L = phase_state;
+P0 = 34;
+LSETUP(load_state,load_state_end) LC0 = P0;
+load_state: R0 = [P1++];
+load_state_end: [P2++] = R0;
+phase_ready:
+R0.H = phase_state;
+R0.L = phase_state;
+R1 = P4;
+R1 += 16;
+R2 = P4;
+R2 += 20;
+[SP + 12] = P5;
+P0 = P5;
+P0 += 4;
+[SP + 16] = P0;
+imm32 P0,0x01943e0a
+CALL (P0);
+P5 += 8;
+P1.H = phase_state;
+P1.L = phase_state;
+P0 = 34;
+LSETUP(save_state,save_state_end) LC0 = P0;
+save_state: R0 = [P1++];
+save_state_end: [P5++] = R0;
+// Independent filter state/input and coefficient.
+P1 = 164;
+P1 = P4 + P1;
+P2.H = filter_state;
+P2.L = filter_state;
+R0 = [P1++];
+[P2++] = R0;
+R0 = [P1++];
+[P2++] = R0;
+R0 = [P1];
+[P2] = R0;
+R0.H = filter_state;
+R0.L = filter_state;
+R1 = P4;
+R2 = 176;
+R1 = R1 + R2;
+R2 = P4;
+R3 = 180;
+R2 = R2 + R3;
+P0 = P5;
+P0 += 12;
+[SP + 12] = P0;
+imm32 P0,0x01943bea
+CALL (P0);
+P1.H = filter_state;
+P1.L = filter_state;
+P0 = 3;
+LSETUP(save_filter,save_filter_end) LC0 = P0;
+save_filter: R0 = [P1++];
+save_filter_end: [P5++] = R0;
+R0 = 0;
+W[P5 + 2] = R0;
+P5 += 4;
+P1 = 184;
+P1 = P4 + P1;
+P2.H = smooth_state;
+P2.L = smooth_state;
+R0 = [P1++];
+[P2++] = R0;
+R0 = [P1];
+[P2] = R0;
+R0.H = smooth_state;
+R0.L = smooth_state;
+R1 = P5;
+R1 += 8;
+R2 = P4;
+R2 += 6;
+P0 = 192;
+P0 = P4 + P0;
+[SP + 12] = P0;
+imm32 P0,0x0194435c
+CALL (P0);
+P1.H = smooth_state;
+P1.L = smooth_state;
+R0 = [P1++];
+[P5++] = R0;
+R0 = [P1];
+[P5++] = R0;
+R0 = 0;
+W[P5 + 2] = R0;
+P5 += 4;
+P0 = 196;
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+table_args: .long 1,0x01ba4e14,22684
+output_args: .long 1,results,@BYTES@
+allpass_state: .space 4
+phase_state: .space 136
+filter_state: .space 12
+smooth_state: .space 8
+phase_floats: .incbin "@WORK@/phase-floats.bin"
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

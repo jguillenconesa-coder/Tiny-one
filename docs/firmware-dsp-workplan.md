@@ -357,3 +357,13 @@ completos. El dominio usa slot 0, no el allocator. La activación/pánico del ho
 limpian todo mediante política propia distinta al soft reset original. Selector,
 Value FX, automatización, proxies y persistencia integrados; volumen tras el bus
 y PDC mantenidos. Siguiente componente: productores/auxiliares y render de CWO.
+
+## Fundamentos de CWO (instrumento 0.25.0)
+
+[Ocho auxiliares y tablas](cwo246-foundation.md) contrastados en 65.536 casos.
+Se identifican cuatro coeficientes de fase protegidos; los cuatro legibles se
+conservan y se diseña un modelo propio explícito para los otros. El oráculo de la
+red de fase queda condicionado a esas sustituciones. Verificación independiente
+de JUCE y de los instaladores. Quedan retardo y buffers, fases por bloque y
+composición original; después integración/Value/controles/persistencia. El diseño
+de cuadratura no sustituye una comparación acústica ni recupera L1.
