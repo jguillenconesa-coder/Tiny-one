@@ -145,7 +145,75 @@
     "sanitizers": "ASan/UBSan lifecycle/history and modulation passed; leak detection disabled under managed ptrace"
   },
   "ci": {
-    "status": "pending implementation push"
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (macos-15-intel)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098182"
   },
-  "estimated_progress": "58% +/-10 planning points, unchanged; D-synth audio port remains pending"
+  "estimated_progress": "58% +/-10 planning points, unchanged; D-synth audio port remains pending",
+  "action_counts": {
+    "reload": 2056,
+    "factory_and_bind": 41,
+    "voice_reset": 142,
+    "release": 111,
+    "shared_init": 37,
+    "meter_decay": 96,
+    "capture_reset": 27
+  },
+  "raw_mix_selectors": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "oscillator_configurations": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "plugin_package_ci": {
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "build (windows-2022)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (macos-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (ubuntu-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      }
+    ],
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098231"
+  },
+  "implementation_commit": "2a33075c004a2174ffc2b6eb5482be1837acf815",
+  "ci_observed_at": "2026-11-02T18:14:51+00:00"
 }

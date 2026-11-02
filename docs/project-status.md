@@ -47,7 +47,8 @@ con 8192 callbacks coincidentes. El oráculo registra4096 bloques/524288 muestra
 del render original; **el renderer C++ y la integración audible siguen pendientes**.
 Linux: 103 suites aprobadas, 468 cargas existentes sin heap rastreado y ASan/UBSan
 de ciclo/modulación aprobados. Las envolventes específicas no quedan completadas
-por el ADSR común. La estimación
+por el ADSR común. El [CI específico](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098182)
+pasa en Linux/Windows/macOS Intel; el CI completo del commit sigue en curso. La estimación
 permanece en **≈58 % ±10 puntos** mientras se completa ese portado.
 
 ## Última entrega audible: Voltage 246 (0.31.0)

@@ -104,3 +104,10 @@ de host siguen sin ejecutar D-synth como motor audible.
 
 [Formato de los vectores](../research/dsynth-render/vectors/README.md) ·
 [Metadatos y validación](firmware/dsynth246-foundation-validation.json).
+
+
+[CI específico](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098182)
+aprobado en Linux, Windows/MSVC y macOS Intel. El
+[CI completo de plugins/instaladores de este commit](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098231)
+sigue en curso al registrar esta evidencia; el CI completo anterior de Voltage
+terminó con éxito en Linux, Windows y macOS universal (runtime Intel).
