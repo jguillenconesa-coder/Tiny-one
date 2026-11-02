@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 43 % del objetivo completo
+## Avance estimado: aproximadamente 44 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 65 % | 13 puntos |
+| Efectos, envolventes y moduladores | 20 % | 70 % | 14 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **43 %** |
+| Total | 100 % | | **44 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Grid 246 y selector de efectos (0.23.0)
+## Entrega agrupada actual: Phone 246 (0.24.0)
+
+Set 3 → FX → Phone 246 añade Tone, Phonic, Baud y Telematic, con Value FX,
+controles contextuales, automatización y guardado. El núcleo mono coincide en
+262.144 muestras, estados/displays completos y ocho capturas de sus tres buffers.
+Las tablas proceden de fragmentos legibles; repetición independiente idéntica.
+Se acota el centinela máximo mediante guardas explícitas. El reset original
+preserva filtros/parte de la memoria; el pánico completo del host es propio.
+[Guía y límites](phone246-native.md), [validación](releases/v0.24.0-validation.json).
+
+Se comprueban siete tasas, señal solo procesada, controles extremos, selector,
+estados y bloques independientes. Pasan 80/80 suites Linux y 324 cargas de callback
+sin heap rastreado.
+No añade otro retardo al PDC compartido. El CI propio debe confirmar Windows/macOS.
+Grid 0.23 ([41363363963](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963))
+ya pasó las tres plataformas, con instaladores Windows y macOS universal.
+Ableton real y comparación acústica siguen pendientes. Estimación ~44 % (±10
+puntos), sin resolver OTP/L1 ni atribuir al host el ruteo original completo.
+
+Siguiente bloque: Spring/CWO y revisión del ruteo de salida; presets originales
+completos al final.
+
+## Entrega anterior: Grid 246 y selector de efectos (0.23.0)
 
 Set 3 → selector FX → Grid 246 añade X/Y Size, Feedback y Mix, con Value FX,
 controles contextuales, automatización y guardado. Se contrasta el callback mono,

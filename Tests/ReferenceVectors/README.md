@@ -801,3 +801,16 @@ con una instantánea de 270400 bytes (135200 int16 de ambos planos) cada 512
 registros; ocho en total. No hay prefijo. Little endian. Seno contrastado compartido;
 workspace y cursores sintéticos acotados, no memoria descifrada.
 [Contrato](../../docs/grid246-native.md).
+
+## Phone 246
+
+`phone246-input.bin`: 4096 registros de 344 bytes: estado140, cuatro controles
+int16, audio128, display64 y acción uint32 (0 conservar; 1 cargar y limpiar
+workspace, con patrones de guarda 0x1234/-0x2345; 2 cargar y ejecutar el soft reset
+original sobre memoria retenida). Slot 0 explícito.
+`phone246-output.bin`: prefijo de 1224 bytes (129 int32 frecuencia, 129 int16
+pasabajos y 225 int16 interpolación), después registros de 332 bytes (audio128 +
+estado140 + display64). Cada 512 registros se intercala una captura de 35284 bytes
+(17642 int16: tres buffers y dos guardas); ocho en total. Little endian. Incluye
+DC negativa sostenida y el caso 3584 con cursores/longitudes máximos. No es una
+captura descifrada. [Contrato](../../docs/phone246-native.md).

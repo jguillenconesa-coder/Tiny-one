@@ -75,12 +75,17 @@
   "native_ci": {
     "run_id": 41363363963,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963",
-    "status": "Windows exact Grid/Delay/Filter/Nitro core checks passed; full builds/tests/packages in progress",
+    "status": "success: all three native jobs, Windows installer and macOS universal pkg",
     "windows_exact_cores": {
       "grid246": "pass, complete states/displays and eight two-plane snapshots",
       "delay246": "pass after explicit high-word extraction",
       "filter246": "pass",
       "nitro246_hybrid": "pass under explicit substitutions"
+    },
+    "platforms": {
+      "linux": "success",
+      "windows": "success",
+      "macos": "success"
     }
   },
   "limitations": [

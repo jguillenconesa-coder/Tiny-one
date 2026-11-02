@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.23.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.24.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -79,7 +79,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Delay | Callback mono, siete taps/interpolación, 225 coeficientes y reset contrastados: 262.144 muestras, estado/display y ocho memorias completas. Integrado en bus con Value FX; workspace/tasa/ruteo propios. [Guía](delay246-native.md). |
 | Grid | Núcleo mono, dos planos y reset contrastados: 262.144 muestras, estado/display y ocho memorias completas. Integrado con Value FX y selector; transición de resize/ruteo propios. [Guía](grid246-native.md). |
 | Punch | Núcleo mono contrastado con 131.072 muestras, 2.048 estados y display. Integración opcional con conversión de tasa/DC propios. Cola potencialmente sostenida. |
-| Phone | Callback mono localizado en 0x01a1bb74; pendientes buffers segmentados, filtros/estados e integración. |
+| Phone | Núcleo mono, segmentación, filtros/remuestreo y reset contrastados en 262.144 muestras y ocho memorias completas. Integrado con Value FX; slot/workspace, guardas, pánico y ruteo propios. [Guía](phone246-native.md). |
 | Spring | Pendiente el reverb original y sus tablas/controles. |
 | Nitro | Híbrido integrado: ruta mono legible contrastada en 262.144 muestras bajo coeficientes/punteros sustituidos. Los originales siguen protegidos; no hay equivalencia acústica demostrada. [Guía y límites](nitro246-hybrid.md). |
 | CWO | Presente en el firmware/DB; pendiente. No está en los seis diagramas de efectos del manual suministrado. |

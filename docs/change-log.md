@@ -1,5 +1,11 @@
 # Historial de cambios
 
+## 0.24.0
+
+- Phone 246: Tone/Phonic/Baud/Telematic, segmentación y filtros contrastados en 262.144 muestras, estados/displays y ocho memorias completas.
+- Guardas explícitas para el centinela máximo y soft reset original contrastado; pánico completo del host separado.
+- Selector, Value FX, automatización y guardado, sin otro retardo de salida. [Guía](phone246-native.md).
+
 ## 0.23.0
 
 - Grid 246 mono: X/Y Size, Feedback y Mix, dos planos y reset contrastados en 262.144 muestras y ocho memorias completas.

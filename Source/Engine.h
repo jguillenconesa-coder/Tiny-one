@@ -14,6 +14,7 @@
 #include "Nitro246Controls.h"
 #include "Delay246Controls.h"
 #include "Grid246Controls.h"
+#include "Phone246Controls.h"
 #include "Value246Fx.h"
 #include "ValueVoice246Control.h"
 #include "Random246Control.h"
@@ -35,6 +36,7 @@ struct Parameters {
     bool digital246=false,digital246Envelope=false;std::array<int16_t,4> digital246Controls{{0,16384,0,0}},digital246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> drWave246Controls{{0,0,0,0}},drWave246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> cluster246Controls{{8192,0,12000,30}},cluster246Adsr{{64,8064,32767,8192}};
+    bool phone246=false;std::array<int16_t,4> phone246Controls{{12000,8192,6144,20000}};
     bool grid246=false;std::array<int16_t,4> grid246Controls{{6144,8192,27000,16000}};
     bool delay246=false;std::array<int16_t,4> delay246Controls{{6144,24000,9000,16000}};
     bool nitro246=false;std::array<int16_t,4> nitro246Controls{{512,0,8000,14000}};
@@ -274,11 +276,11 @@ public:
         const float cleanDriven=p.drive<.000001f?cleanInput:std::tanh(cleanInput*(1+p.drive*12))/(1+p.drive*2);
         float driven=legacyDriven+(cleanDriven-legacyDriven)*cleanMix;
         valueActive=target.value246&&!nativeValueVoice&&!nativeTremolo&&!nativeRandom;
-        const bool outputFx=target.filter246||target.nitro246||target.delay246||target.grid246;const auto& outputControls=target.grid246?target.grid246Controls:target.delay246?target.delay246Controls:target.nitro246?target.nitro246Controls:target.filter246Controls;const auto& outputMin=target.grid246?grid246Min:target.delay246?delay246Min:target.nitro246?nitro246Min:filter246Min;const auto& outputMax=target.grid246?grid246Max:target.delay246?delay246Max:target.nitro246?nitro246Max:filter246Max;
+        const bool outputFx=target.filter246||target.nitro246||target.delay246||target.grid246||target.phone246;const auto& outputControls=target.phone246?target.phone246Controls:target.grid246?target.grid246Controls:target.delay246?target.delay246Controls:target.nitro246?target.nitro246Controls:target.filter246Controls;const auto& outputMin=target.phone246?phone246Min:target.grid246?grid246Min:target.delay246?delay246Min:target.nitro246?nitro246Min:filter246Min;const auto& outputMax=target.phone246?phone246Max:target.grid246?grid246Max:target.delay246?delay246Max:target.nitro246?nitro246Max:filter246Max;
         const bool punchSelected=target.punch246&&!outputFx;
         if(punchSelected||punchActive){for(size_t i=0;i<4;++i){if(!punchActive)punchWords[i]=target.punch246Controls[i];else punchWords[i]+=smoothing*(target.punch246Controls[i]-punchWords[i]);punchRaw[i]=int16_t(std::lround(std::clamp(punchWords[i],0.f,32767.f)));}punchActive=true;follow(punchMix,punchSelected?1.f:0.f);}
         if(outputFx){for(size_t i=0;i<4;++i){if(!filterControlsInitialized)filterWords[i]=outputControls[i];else filterWords[i]+=smoothing*(outputControls[i]-filterWords[i]);filterRaw[i]=int16_t(std::lround(std::clamp(filterWords[i],float(outputMin[i]),float(outputMax[i]))));}filterControlsInitialized=true;}else filterControlsInitialized=false;
-        const auto modulated=valueEffect.next(valueActive,target.value246Destination&&(outputFx||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,outputFx?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2);
+        const auto modulated=valueEffect.next(valueActive,target.value246Destination&&(outputFx||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,outputFx?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.phone246?3:target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2);
         filterModulated=outputFx?modulated:outputControls;
         if(punchActive){const auto processed=punchEffect.next(driven,outputFx?punchRaw:modulated,phaseConfig.table);driven+=punchMix*(processed-driven);if(!punchSelected&&punchMix<.000001f){punchMix=0;punchActive=false;punchEffect.reset();}}
         const auto lag=std::clamp(size_t(sampleRate*p.delayTime),size_t(1),delay.size()-1);

@@ -1,0 +1,53 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "kernel": "0x01a1bb74",
+  "reset": "0x01a1c03e, explicit slot 0",
+  "cases": 4096,
+  "samples": 262144,
+  "state_bytes": 140,
+  "display_bytes": 64,
+  "workspace": "Three 5880-sample buffers plus two explicit guard cells; eight complete snapshots",
+  "tables": "129 Q31 frequency, 129 Q15 low-pass and 225 Q15 interpolation coefficients from legible conversion fragments",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "phone246-input.bin": {
+      "bytes": 1409024,
+      "sha256": "b241a222943c0897e7fcf7a5c1a0f75a4c6ee28a8f39b0bf19c43b611f3913ce",
+      "matches_committed_fixture": true
+    },
+    "phone246-output.bin": {
+      "bytes": 1643368,
+      "sha256": "3b812cfeab92082f54eed7bb75bb34189bb71c097a9ac731627669012263e35a",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Mono callback, valid triple-buffer indices, explicit workspace slot 0 and sentinel guard.",
+    "Original allocator/routing/clock and complete instrument startup are not established."
+  ],
+  "independent_repeat": {
+    "input_identical": true,
+    "output_identical": true
+  },
+  "patches": {
+    "gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3"
+  },
+  "reset_segments": 4,
+  "guard_cells": 2,
+  "boundary_case": 3584,
+  "initial_guard_patterns": [
+    4660,
+    -9029
+  ],
+  "coefficients_generated": 483,
+  "runtime_coefficient_sources": {
+    "frequency": "0x018be744 -> 0xff801f50 via 0x01aa6fd0",
+    "low_pass": "0x018be948 -> 0x0106a5ec via 0x01aa7014; index 127 used",
+    "interpolation": "0x018bebcc -> 0x0106a730 via 0x01aa7014"
+  }
+}

@@ -394,3 +394,9 @@ planos, con oráculo GNU Blackfin y decompilación privada Ghidra. Candidatos de
 ya acreditado y fijado a la misma revisión; sin copiar su DSP. Se reutiliza el seno
 contrastado. Workspace acotado, resize, bus y selector son adaptadores propios.
 [Contrato](docs/grid246-native.md). Firmware y pseudocódigo no se distribuyen.
+
+Phone 246: reconstrucción independiente del callback mono y soft reset mediante
+GNU Blackfin y análisis privado Ghidra; candidatos del SDK fijado ya acreditado,
+sin copiar su DSP. Coeficientes numéricos de fragmentos legibles compartidos con
+Filter/Delay. Workspace acotado, guardas y pánico completo del host son propios.
+[Contrato](docs/phone246-native.md). Firmware/ELF/pseudocódigo permanecen privados.

@@ -1,0 +1,75 @@
+{
+  "version": "0.24.0",
+  "date": "2026-11-02",
+  "timezone": "Europe/Madrid",
+  "linux_ctest": {
+    "passed": 80,
+    "total": 80,
+    "seconds": 155.76
+  },
+  "linux_build": "standalone and VST3 passed",
+  "oracle": {
+    "blocks": 4096,
+    "samples": 262144,
+    "state_bytes": 140,
+    "display_bytes": 64,
+    "generated_coefficients": 483,
+    "logical_buffers": 3,
+    "cells_per_buffer": 5880,
+    "guard_cells": 2,
+    "complete_workspace_snapshots": 8,
+    "independent_repeat": "byte-identical",
+    "evidence": "../firmware/phone246-validation.json",
+    "scope": "Bounded mono callback and original soft reset; explicit slot 0 and guard cells, not original allocator/full startup"
+  },
+  "integration": {
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "priority": "Phone > Grid > Delay > Nitro > Filter > Punch",
+    "latency": "unchanged shared fixed PDC; intrinsic segment repetition is musical effect delay",
+    "checks": [
+      "Exact delayed bypass and no underruns",
+      "8192 native samples versus direct core",
+      "Wet-only response and extreme Tone/Phonic/Baud/enable automation",
+      "Max-length sentinel with explicit guards",
+      "Selector seven choices, Configure and contextual proxies",
+      "Append-only identities, project/slot/clipboard and proxy detachment",
+      "Identical 64/257 renders and CC120 clears buffered output"
+    ]
+  },
+  "realtime": {
+    "workloads": 324,
+    "new_phone_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "controls_and_enable_automated": true,
+    "timing": "Diagnostic on shared host, not physical deadline certification"
+  },
+  "sanitizers": {
+    "address": "pass",
+    "undefined": "pass",
+    "scope": "Phone core including sentinel boundary and adapter extreme controls",
+    "leak": "disabled in traced environment"
+  },
+  "previous_grid_ci": {
+    "run_id": 41363363963,
+    "linux": "success",
+    "windows": "success including installer/startup/install/uninstall",
+    "macos": "success including universal app/VST3 and pkg"
+  },
+  "native_ci": "pending implementation commit",
+  "limitations": [
+    "Fixed slot 0 and explicitly guarded workspace, not original allocation protocol.",
+    "Original soft reset preserves filter histories and buffers 0/1; host panic clears everything.",
+    "Host resampling, DC, initial silence guard, scheduling and routing authored.",
+    "Real Ableton/hardware sound matching and original presets pending."
+  ],
+  "estimated_progress": "44% +/-10 points; planning estimate, not acoustic equivalence"
+}

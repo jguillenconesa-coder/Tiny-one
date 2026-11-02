@@ -1,0 +1,176 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+imm32 P4, 0x018be744
+imm32 P5, 0xff801f50
+P3 = 129;
+LSETUP(freq_start,freq_end) LC0 = P3;
+freq_start: R0 = [P4++];
+imm32 P0, 0x01aa6fd0
+CALL (P0);
+freq_end: [P5++] = R0;
+imm32 P4, 0x018be948
+imm32 I0, 0x0106a5ec
+P3 = 129;
+LSETUP(low_start,low_end) LC0 = P3;
+low_start: R0 = [P4++];
+imm32 P0, 0x01aa7014
+CALL (P0);
+low_end: W[I0++] = R0.L;
+imm32 P4, 0x018bebcc
+imm32 I0, 0x0106a730
+P3 = 225;
+LSETUP(table_start,table_end) LC0 = P3;
+table_start: R0 = [P4++];
+imm32 P0, 0x01aa7014
+CALL (P0);
+table_end: W[I0++] = R0.L;
+R0.H = freq_args;
+R0.L = freq_args;
+P0 = 5;
+EXCPT 0;
+R0.H = low_args;
+R0.L = low_args;
+P0 = 5;
+EXCPT 0;
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+P0 = 340;
+P1 = P4 + P0;
+R0 = [P1];
+CC = R0 == 0;
+IF CC JUMP copy_audio;
+P1 = P4;
+P2.H = state;
+P2.L = state;
+// Slot 0 workspace. The original reset clears only playback buffer 2.
+P0 = 340;
+P0 = P4 + P0;
+R0 = [P0];
+R1 = 2;
+CC = R0 == R1;
+IF CC JUMP workspace_ready;
+imm32 P2, 0x027d1fe0
+P0 = 8821;
+R0 = 0;
+LSETUP(clear_start,clear_end) LC0 = P0;
+clear_start: NOP;
+clear_end: [P2++] = R0;
+// Explicit guard sentinels, outside the logical 17640-cell voice stride.
+imm32 P2, 0x027da9b0
+R0 = 0x1234;
+W[P2++] = R0;
+R0 = -0x2345;
+W[P2] = R0;
+workspace_ready:
+P2.H = state;
+P2.L = state;
+P0 = 35;
+LSETUP(state_start,state_end) LC0 = P0;
+state_start: R0 = [P1++];
+state_end: [P2++] = R0;
+P0 = 276;
+P1 = P4 + P0;
+imm32 P2, 0xff801774
+P0 = 16;
+LSETUP(meter_start,meter_end) LC0 = P0;
+meter_start: R0 = [P1++];
+meter_end: [P2++] = R0;
+// Original Phone reset preserves filter history and clears only playback buffer 2.
+P0 = 340;
+P0 = P4 + P0;
+R0 = [P0];
+R1 = 2;
+CC = R0 == R1;
+IF !CC JUMP copy_audio;
+R0.H = state;
+R0.L = state;
+R1 = 0;
+imm32 P0, 0x01a1c03e
+CALL (P0);
+copy_audio:
+P1 = P4;
+P0 = 148;
+P1 = P1 + P0;
+P2.H = audio;
+P2.L = audio;
+P0 = 32;
+LSETUP(audio_start,audio_end) LC0 = P0;
+audio_start: R0 = [P1++];
+audio_end: [P2++] = R0;
+R0.H = state;
+R0.L = state;
+R1.H = audio;
+R1.L = audio;
+R2 = P4;
+R3 = 140;
+R2 = R2 + R3;
+imm32 P0, 0x01a1bb74
+CALL (P0);
+P1.H = audio;
+P1.L = audio;
+P0 = 32;
+LSETUP(save_audio,save_audio_end) LC0 = P0;
+save_audio: R0 = [P1++];
+save_audio_end: [P5++] = R0;
+P1.H = state;
+P1.L = state;
+P0 = 35;
+LSETUP(save_state,save_state_end) LC0 = P0;
+save_state: R0 = [P1++];
+save_state_end: [P5++] = R0;
+imm32 P1, 0xff801774
+P0 = 16;
+LSETUP(save_meter,save_meter_end) LC0 = P0;
+save_meter: R0 = [P1++];
+save_meter_end: [P5++] = R0;
+// Save a complete ring at every 512-block stream boundary.
+R0.H = calls;
+R0.L = calls;
+P0 = R0;
+R0 = [P0];
+R0 += 1;
+[P0] = R0;
+R1 = 511;
+R1 = R0 & R1;
+CC = R1 == 0;
+IF !CC JUMP no_ring;
+imm32 P1, 0x027d1fe0
+P0 = 8821;
+LSETUP(ring_start,ring_end) LC0 = P0;
+ring_start: R0 = [P1++];
+ring_end: [P5++] = R0;
+no_ring:
+P0 = 344;
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+freq_args: .long 1,0xff801f50,516
+low_args: .long 1,0x0106a5ec,258
+table_args: .long 1,0x0106a730,450
+output_args: .long 1,results,@BYTES@
+calls: .long 0
+state: .space 140
+audio: .space 128
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

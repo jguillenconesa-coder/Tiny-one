@@ -10,6 +10,9 @@
 #include "Delay246Tables.h"
 #include "Grid246.h"
 #include "Grid246Controls.h"
+#include "Phone246.h"
+#include "Phone246Controls.h"
+#include "Phone246Tables.h"
 #include <cmath>
 #include <vector>
 namespace pocket {
@@ -17,9 +20,10 @@ namespace pocket {
 // dependency is preserved. A fixed dry delay aligns bypass and all output paths.
 struct Filter246Effect {
     static constexpr double internalRate=44100;
-    reference::Filter246State state;reference::Nitro246State nitroState;bool wasNitro=false,wasDelay=false,wasGrid=false;
+    reference::Filter246State state;reference::Nitro246State nitroState;bool wasNitro=false,wasDelay=false,wasGrid=false,wasPhone=false;
     reference::Delay246State delayState;std::array<int32_t,44100> delayMemory{};
     reference::Grid246State gridState;reference::Grid246Memory gridMemory{};
+    reference::Phone246State phoneState;reference::Phone246Memory phoneMemory{};
     std::array<uint32_t,16> meters{};
     std::array<int16_t,64> block{};
     std::array<int16_t,512> history{};
@@ -39,11 +43,11 @@ struct Filter246Effect {
         for(size_t i=0;i<2;++i){const double alpha=sn/(2*q[i]),a0=1+alpha;filters[i]={(1-cs)/(2*a0),(1-cs)/a0,(1-cs)/(2*a0),-2*cs/a0,(1-alpha)/a0,0,0};}
         reset();
     }
-    void reset() noexcept {state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);wasNitro=wasDelay=wasGrid=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
-    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false) noexcept {
+    void reset() noexcept {state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);phoneState={};phoneMemory.fill(0);wasNitro=wasDelay=wasGrid=wasPhone=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
+    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false) noexcept {
         if(dry.empty())return input;
         if(!initialized){mix=enabled?1.f:0.f;initialized=true;}
-        if(enabled&&(!wasEnabled||nitro!=wasNitro||delay!=wasDelay||grid!=wasGrid)){state={};nitroState={};delayState={};gridState={};if(delay)delayMemory.fill(0);if(grid)gridMemory.fill(0);awake=false;firstSignal=firstSignalHost=~uint64_t(0);dcInput=dcOutput=0;}wasEnabled=enabled;wasNitro=nitro;wasDelay=delay;wasGrid=grid;if(input!=0){awake=true;if(enabled&&firstSignalHost==~uint64_t(0))firstSignalHost=hostPosition;}
+        if(enabled&&(!wasEnabled||nitro!=wasNitro||delay!=wasDelay||grid!=wasGrid||phone!=wasPhone)){phoneState={};if(phone)phoneMemory.fill(0);state={};nitroState={};delayState={};gridState={};if(delay)delayMemory.fill(0);if(grid)gridMemory.fill(0);awake=false;firstSignal=firstSignalHost=~uint64_t(0);dcInput=dcOutput=0;}wasEnabled=enabled;wasNitro=nitro;wasDelay=delay;wasGrid=grid;wasPhone=phone;if(input!=0){awake=true;if(enabled&&firstSignalHost==~uint64_t(0))firstSignalHost=hostPosition;}
         const float clean=hostPosition>=uint64_t(latency)?dry[size_t((hostPosition-uint64_t(latency))%dry.size())]:0;
         dry[size_t(hostPosition%dry.size())]=input;
         double filtered=input;if(hostRate!=internalRate)for(auto& f:filters)filtered=f.next(filtered);
@@ -53,7 +57,7 @@ struct Filter246Effect {
             block[cursor++]=int16_t(std::clamp(std::lround(sample*32768),-32768l,32767l));
             if(enabled&&block[cursor-1]!=0&&firstSignal==~uint64_t(0))firstSignal=inputPosition;
             if(cursor==64){
-                if(enabled&&awake){std::array<int16_t,4> bounded;for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),grid?grid246Min[i]:delay?delay246Min[i]:nitro?nitro246Min[i]:filter246Min[i],grid?grid246Max[i]:delay?delay246Max[i]:nitro?nitro246Max[i]:filter246Max[i]));if(grid){if(!gridState.scanFits(2*(bounded[0]/128),2*(bounded[1]/128)))gridState.reset();reference::grid246Block(gridState,bounded,sine,gridMemory,block,meters);}else if(delay)reference::delay246Block(delayState,bounded,reference::delay246Interpolation,delayMemory,block,meters);else if(nitro)reference::nitro246HybridBlock(nitroState,bounded,reference::nitro246HybridMix,reference::filter246Frequency,sine,block,meters);else reference::filter246Block(state,bounded,reference::filter246Mix,reference::filter246Frequency,sine,block,meters);}
+                if(enabled&&awake){std::array<int16_t,4> bounded;for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),phone?phone246Min[i]:grid?grid246Min[i]:delay?delay246Min[i]:nitro?nitro246Min[i]:filter246Min[i],phone?phone246Max[i]:grid?grid246Max[i]:delay?delay246Max[i]:nitro?nitro246Max[i]:filter246Max[i]));if(phone)reference::phone246Block(phoneState,bounded,reference::delay246Interpolation,reference::saturate32(int64_t(2147483647)-reference::filter246Frequency[0]),reference::phone246LowCoefficient,phoneMemory,block,meters);else if(grid){if(!gridState.scanFits(2*(bounded[0]/128),2*(bounded[1]/128)))gridState.reset();reference::grid246Block(gridState,bounded,sine,gridMemory,block,meters);}else if(delay)reference::delay246Block(delayState,bounded,reference::delay246Interpolation,delayMemory,block,meters);else if(nitro)reference::nitro246HybridBlock(nitroState,bounded,reference::nitro246HybridMix,reference::filter246Frequency,sine,block,meters);else reference::filter246Block(state,bounded,reference::filter246Mix,reference::filter246Frequency,sine,block,meters);}
                 const auto start=inputPosition-63;for(size_t i=0;i<64;++i)history[size_t((start+i)%history.size())]=(enabled&&guardSilence&&start+i<firstSignal)?0:block[i];completed=int64_t(inputPosition);cursor=0;
             }
             ++inputPosition;

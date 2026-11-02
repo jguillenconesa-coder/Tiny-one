@@ -328,3 +328,12 @@ slot 2 y cursores válidos; el adaptador normaliza los cursores al reducir ejes 
 forma incompatible. Esa política de resize y el ruteo siguen siendo propios.
 Selector común, Value FX, automatización y persistencia integrados. Phone tiene
 callback legible 0x01a1bb74; siguiente paso: buffers segmentados y filtros compartidos.
+
+## Entrega 0.24.0: Phone mono
+
+[Phone 246](phone246-native.md) contrasta 4096 bloques, estados/displays y ocho
+workspaces completos. Se conservan los tres buffers, cruces por cero, repeticiones,
+filtros y resampling. Las tablas vienen de conversiones legibles; el slot 0 y dos
+guardas hacen explícito el acceso de centinela al final del stride lógico. Soft
+reset contrastado y pánico completo propio se documentan por separado. Selector,
+Value FX y persistencia integrados. Siguiente bloque: Spring/CWO y ruteo de salida.
