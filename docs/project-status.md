@@ -54,7 +54,8 @@ fuente compartida original. Reloj, afinación, mapa/asignación, alineación y s
 son adaptaciones, sin equivalencia acústica medida. [Validación](releases/v0.34.0-validation.json):
 109 suites Linux, 522 cargas sin heap rastreado, núcleo/adaptador ASan/UBSan y dos
 suites independientes aprobadas. Vista de onda, cola reportada y regresiones de
-ruteo/tiempo real verificadas; CI de esta implementación pendiente de push. D-box 0.33 pasó su CI completo en las tres plataformas.
+ruteo/tiempo real verificadas. CI del lector/adaptador aprobado en Linux,
+Windows/MSVC y macOS Intel; plugins/instaladores completos en curso. D-box 0.33 pasó su CI completo en las tres plataformas.
 
 Estimación **≈63 % ±10 puntos de planificación**. Siguen el productor de ganancia
 dinámica y modulación drum, sampler synth, fuente compartida/voz/ruteo, calibración,

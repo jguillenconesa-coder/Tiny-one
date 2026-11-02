@@ -1,7 +1,7 @@
 {
   "version": "0.34.0",
   "date": "2026-11-02",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "fb2ddc0f6be072db65c1f8847fb6673f994fd1f9",
   "linux_build": "Release Standalone and VST3 passed",
   "linux_ctest": "109/109 suites passed, 140.12 s",
   "standalone_tests": "2/2 independent reader/adapter suites passed, 1.09 s",
@@ -14,10 +14,12 @@
   },
   "sanitizers": "ASan/UBSan reader and native adapter passed, including seven rates, twelve voices, cache conversion and mode/modulation cases; LeakSanitizer disabled under managed ptrace",
   "native_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41542068718",
+    "status": "success on Linux, Windows/MSVC and macOS Intel; two reader/adapter suites per system"
   },
   "plugin_package_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41542068689",
+    "status": "in_progress; not yet validated"
   },
   "evidence": "../firmware/drum246-render-validation.json",
   "previous_ci": {
@@ -37,5 +39,9 @@
     "visual": "Passed: SAMPLER 246 pad/dynamics, kit editor and legacy controls inspected; no overlapping sampler/legacy/kit buttons",
     "visual_sha256": "45daea5fee5d5cfdf3e26495262444490342af2501a64b9d13f3705c46f33cfb",
     "final_incremental": "Release Standalone/VST3 rebuilt; plugin smoke passed after final button layout/contrast adjustment"
+  },
+  "dbox_regression_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41542068687",
+    "status": "success on Linux, Windows/MSVC and macOS Intel"
   }
 }

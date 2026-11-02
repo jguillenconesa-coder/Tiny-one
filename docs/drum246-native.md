@@ -56,7 +56,7 @@ Se usa el [modelo BF524 corregido de D-synth](dsynth246-native.md), no hardware.
 
 ## Envolvente dinámica: modelo propio
 
-El manual v2.2, §6.4 (PDF pág.14), describe tres niveles —ataque, zona media y
+El manual v2.2, §6.4 (PDF pág. 14), describe tres niveles —ataque, zona media y
 salida— y un control de región. El callback de audio consume una ganancia ya
 preparada; **su productor original no se ha reconstruido**. No se sustituye por
 el ADSR común ni se declara numéricamente comprobado este contorno.
@@ -72,16 +72,16 @@ de la envolvente dinámica del OP-1. Las pruebas de esa curva solo fijan ese con
 ## Audio importado y demás dependencias propias
 
 El audio original de la sesión se conserva. Al cargar un pad, una conversión propia
-fuera del callback prepara PCM16 mono a 44,1 kHz, hasta los primeros12 segundos.
+fuera del callback prepara PCM16 mono a 44,1 kHz, hasta los primeros 12 segundos.
 Usa interpolación lineal para convertir otras tasas; no se atribuye ese conversor
 al aparato ni se ha calibrado acústicamente. El camino de audio solo lee el cache,
 sin crear ni liberar vectores. El lector anterior conserva el float audio completo.
 
 El plugin conserva su banco de 24 muestras independientes. El flujo original de
-un único archivo de 12 segundos con24 regiones compartidas no se completa aquí.
+un único archivo de 12 segundos con 24 regiones compartidas no se completa aquí.
 Tampoco se replica automáticamente el layout de fábrica ni se incluyen sus kits.
 
-El adaptador aporta reloj de 88,2 kHz, pitch según la tasa de44,1 kHz y afinación del
+El adaptador aporta reloj de 88,2 kHz, pitch según la tasa de 44,1 kHz y afinación del
 pad/canal, conversión de trims a coarse/fine y alineación propia de ocho frames en
 el acceso PCM. Aplica la ganancia del pad mediante raíz, mantiene margen para
 Tremolo antes del callback y usa filtro/interpolación de salida propios. Estos
