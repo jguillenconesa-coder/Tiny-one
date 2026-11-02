@@ -38,6 +38,22 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Trabajo activo: dependencias internas del FM
+
+[Base FM 246](fm246-foundation.md): 30 conversiones/copia de tabla, constructor,
+reset, seis pools completos de factoría y 8192 actualizaciones de seis envolventes
+contrastados con instrucciones originales. Repetición idéntica y sanitizadores.
+Se conservan 20 palabras fuente legibles y se sustituyen explícitamente 10
+protegidas; esa conversión de arranque es condicionada, no memoria recuperada.
+El ensayo por registro usa tablas sintéticas explícitas y compara self/table/guardas.
+
+El instrumento sigue en **0.26.0** y su FM sigue siendo propio de dos osciladores:
+esta base no se conecta al audio antes de reconstruir los nueve destinos legibles
+del callback y su composición completa. Los tests nativos de esta base se compilan
+independientemente de JUCE/instaladores para evitar regenerar binarios sin cambios.
+La estimación se mantiene en **48 % ±10 puntos**: progreso de dependencias, sin
+nuevo motor tocable ni evidencia acústica. Presets originales al final.
+
 ## Entrega agrupada actual: CWO Hybrid 246 (0.26.0)
 
 Frequency/Delay/Feedback/Sideband, Value FX, automatización, proxies y guardado
@@ -50,7 +66,7 @@ memorias completas contrastados, con repetición independiente idéntica.
 Linux Release: **88/88 suites** y **372 cargas sin heap rastreado**; sanitizadores
 y revisión visual pasan. Los tres verificadores CWO pasan en Linux, MSVC y macOS
 Intel ([CI](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033728));
-los paquetes completos siguen [en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033959).
+los plugins y paquetes completos [pasan en Linux/Windows/macOS universal](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033959), incluidos los instaladores. El runtime macOS probado es x86_64.
 PDC y volumen tras el bus mantenidos; reset y
 ruteo del host propios. Los ocho FX del perfil tienen una opción tocable mono,
 con límites individuales; quedan voz/ruteo y motores restantes, empezando por

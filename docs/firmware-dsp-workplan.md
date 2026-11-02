@@ -379,3 +379,16 @@ del host diferenciados del original. Selector/Value/persistencia integrados.
 Los ocho FX tienen opción mono tocable; siguiente prioridad: voz/ruteo y motores
 restantes, empezando por las dependencias del FM de cuatro operadores. No dar por
 resuelta la calibración acústica ni adelantar la réplica completa de presets.
+
+## Base interna del FM, instrumento 0.26.0
+
+[Contrato y ensayos](fm246-foundation.md): se cierran conversión/copia de las 30
+palabras, constructor/reset distintos, factoría de seis slots y actualización de
+seis envolventes internas. Las 20 palabras legibles se bloquean contra cambios y
+10 protegidas se sustituyen por un modelo propio explícito. La comparación del
+arranque es condicionada; el test de envolventes usa tablas sintéticas explícitas.
+
+Siguiente cierre del mismo frente: reconstruir los nueve destinos de render de
+`0x019a23d4` y contrastar audio, estados y scratch con la tabla definida; después
+integrar voz/ADSR/reloj propios y validar el host en un único lote. No reinterpretar
+el FM propio de dos osciladores como ese render ni añadir presets para aparentarlo.

@@ -1,0 +1,29 @@
+name: Validate FM building blocks
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/fm-foundation/**'
+      - 'research/blackfin/fm-foundation.s.in'
+      - 'research/blackfin/fm246-table-model.json'
+      - 'scripts/verify-fm246-foundation.py'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Fractional246.h'
+      - '.github/workflows/fm-foundation.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure independent FM verification
+        run: cmake -S research/fm-foundation -B build-fm -DCMAKE_BUILD_TYPE=Release
+      - name: Build FM verification
+        run: cmake --build build-fm --config Release --parallel 2
+      - name: Compare original instruction results
+        run: ctest --test-dir build-fm -C Release --output-on-failure

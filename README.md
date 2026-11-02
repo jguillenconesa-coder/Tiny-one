@@ -26,6 +26,8 @@
 
 **Nuevo en 0.13.0:** [Value 246 Voice](docs/value-voice246-native.md), modulación por voz de los cuatro controles Phase/Digital o de su ADSR. Cinco variantes adicionales, con los mismos mandos MIDI del set 4 y estados antiguos conservados. [Cobertura completa y pendientes](docs/original-op1-coverage.md).
 
+**Investigación FM:** [base interna contrastada](docs/fm246-foundation.md), con tablas, seis envolventes y ciclo de voces. El FM original todavía no está integrado; la opción actual sigue usando el motor propio.
+
 **Trabajo activo: reconstrucción híbrida del instrumento.** [Dr. Wave](docs/drwave246-hybrid.md) y [Cluster](docs/cluster246-hybrid.md) ya son tocables con seis voces, ADSR, Value y modos de interpretación. Se conservan sus núcleos contrastados; reloj, voz/salida y las dependencias L1 sin recuperar usan adaptadores propios documentados. [Plan por componentes](docs/firmware-dsp-workplan.md) y [estado actual](docs/project-status.md). Los presets originales completos siguen aplazados.
 
 **Voces de Dr. Wave:** [factoría y eventos Core contrastados](docs/drwave246-core-routing.md) con otras 61.568 muestras y pools previos al render. La [activación VoiceCtl](docs/drwave246-note-activation.md) añade pitch, velocidad y actividad con afinación explícita y otras 61.568 muestras. El release de motor no sustituye al ADSR común pendiente.

@@ -105,3 +105,13 @@ checks 128 numeric words, not the complete initializer. The harness holds the
 prepared pitch over 128 samples; the original per-sample provider and L1 ADSR
 handoff are not reconstructed. No original code fragment is bundled here.
 [Contract, evidence and reproduction](../../docs/cluster246-note-activation.md).
+
+## FM dependency foundation (instrument 0.26.0)
+
+`fm-foundation.s.in` calls the original thirty-word table producer/copy, six-slot
+factory, constructor/reset and six internal envelopes. Twenty source binary32
+words are clear and locked; ten use `fm246-table-model.json` as explicit authored
+substitutions. The complete sixty-byte state and numeric tables/guards are checked
+in 8192 records, plus six complete factory pools. This is not an FM audio render.
+Original code, ELF and input firmware stay private.
+[Scope and reproduction](../../docs/fm246-foundation.md).

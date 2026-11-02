@@ -1,0 +1,45 @@
+{
+  "scope": "FM binary32 table provenance under the documented partial-encryption group model; not a decrypted image",
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "source_words": "// SPDX-License-Identifier: AGPL-3.0-only\n.include \"testutils.inc\"\nstart\nimm32 SP, 0x03000000\nimm32 P0, 0xff906f6c\nimm32 R0, 0xffb00168\n[P0] = R0;\nP0.H = table_floats;\nP0.L = table_floats;\nimm32 P1, 0xff906f70\nP2 = 30;\nLSETUP(copy_floats,copy_floats_end) LC0 = P2;\ncopy_floats:\nR0 = [P0++];\ncopy_floats_end: [P1++] = R0;\nimm32 P0, 0x019a3de4\nCALL (P0);\nR0.H = table_args;\nR0.L = table_args;\nP0 = 5;\nEXCPT 0;\nimm32 P0, 0x018b6688\nimm32 P1, 0x0101e5e8\nP2 = 8192;\nLSETUP(copy_sine,copy_sine_end) LC0 = P2;\ncopy_sine:\nR0 = [P0++];\ncopy_sine_end: W[P1++] = R0;\nimm32 P0, 0xffb00000\nimm32 R0, 0xa5a5a5a5\nP1 = 90;\nLSETUP(fill_pool,fill_pool_end) LC0 = P1;\nfill_pool:\nfill_pool_end: [P0++] = R0;\nimm32 R0, 0\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\nimm32 R0, 1\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\nimm32 R0, 2\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\nimm32 R0, 3\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\nimm32 R0, 4\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\nimm32 R0, 5\nimm32 P0, 0x019a3d38\nCALL (P0);\nP0.H = factory_return;\nP0.L = factory_return;\n[P0] = R0;\nR0.H = pool_args;\nR0.L = pool_args;\nP0 = 5;\nEXCPT 0;\nR0.H = return_args;\nR0.L = return_args;\nP0 = 5;\nEXCPT 0;\n\nP0.H = inputs;\nP0.L = inputs;\nP1.H = input_ptr;\nP1.L = input_ptr;\n[P1] = P0;\nP0.H = results;\nP0.L = results;\nP1.H = result_ptr;\nP1.L = result_ptr;\n[P1] = P0;\nprobe_loop:\nP0.H = input_ptr;\nP0.L = input_ptr;\nP1 = [P0];\nR0 = [P1 + 64];\nCC = R0 == 0;\nIF CC JUMP copy_table;\nP2.H = state;\nP2.L = state;\nP3 = 15;\nLSETUP(load_state,load_state_end) LC0 = P3;\nload_state:\nR0 = [P1++];\nload_state_end: [P2++] = R0;\ncopy_table:\nP0.H = input_ptr;\nP0.L = input_ptr;\nP1 = [P0];\nP4 = 68;\nP1 = P1 + P4;\nimm32 P2, 0x01d05880\nP3 = 15;\nLSETUP(load_table,load_table_end) LC0 = P3;\nload_table:\nR0 = [P1++];\nload_table_end: [P2++] = R0;\nimm32 P0, 0xffb00164\nimm32 R0, 0x13579bdf\n[P0] = R0;\nimm32 P0, 0xffb001a4\nimm32 R0, 0x2468ace0\n[P0] = R0;\nimm32 P0, 0x019a3d84\nCALL (P0);\nP0.H = input_ptr;\nP0.L = input_ptr;\nP1 = [P0];\nR2 = [P1 + 64];\nR0.H = state;\nR0.L = state;\nCC = R2 == 2;\nIF !CC JUMP constructor;\nimm32 P0, 0x019a2248\nCALL (P0);\nJUMP advance;\nconstructor:\nCC = R2 == 3;\nIF !CC JUMP advance;\nimm32 P0, 0x019a21d8\nCALL (P0);\nadvance:\nP0.H = input_ptr;\nP0.L = input_ptr;\nR1 = [P0];\nR1 += 60;\nR0.H = state;\nR0.L = state;\nimm32 P0, 0x019a22a4\nCALL (P0);\nP0.H = result_ptr;\nP0.L = result_ptr;\nP2 = [P0];\nP1.H = state;\nP1.L = state;\nP3 = 15;\nLSETUP(save_state,save_state_end) LC0 = P3;\nsave_state:\nR0 = [P1++];\nsave_state_end: [P2++] = R0;\nimm32 P1, 0xffb00168\nP3 = 15;\nLSETUP(save_table,save_table_end) LC0 = P3;\nsave_table:\nR0 = [P1++];\nsave_table_end: [P2++] = R0;\nimm32 P1, 0xffb00164\nR0 = [P1];\n[P2++] = R0;\nimm32 P1, 0xffb001a4\nR0 = [P1];\n[P2++] = R0;\n[P0] = P2;\nP0.H = input_ptr;\nP0.L = input_ptr;\nR0 = [P0];\nR1 = 128;\nR0 = R0 + R1;\n[P0] = R0;\nR1.H = inputs_end;\nR1.L = inputs_end;\nCC = R0 == R1;\nIF !CC JUMP probe_loop;\nR0.H = io_args;\nR0.L = io_args;\nP0 = 5;\nEXCPT 0;\nexit 0\n.data\n.align 4\npool_args: .long 1,0xffb00000,360\nreturn_args: .long 1,factory_return,4\nfactory_return: .long 0\ntable_args: .long 1,0x01d05880,60\nio_args: .long 1,results,1048576\ninput_ptr: .long 0\nresult_ptr: .long 0\nstate: .space 60\ninputs: .incbin \"/workspace/work/fm246/oracle-repeat/inputs.bin\"\ninputs_end:\ntable_floats: .incbin \"/workspace/work/fm246/oracle-repeat/table-floats.bin\"\nresults: .space 1048576\n.section .sdram,\"awx\"\n.incbin \"/workspace/work/fm246/oracle-repeat/sdram.bin\"\n",
+  "clear_words": 20,
+  "protected_words": 10,
+  "authored_indices": [
+    0,
+    1,
+    6,
+    7,
+    12,
+    13,
+    18,
+    19,
+    24,
+    25
+  ],
+  "clear_shared_pointer": {
+    "address": "0xff906f6c",
+    "value": "0xffb00168",
+    "offset_mod24": 20
+  },
+  "initializer": "0x019a3de4",
+  "copy_to_shared_workspace": "0x019a3d84",
+  "model": "research/blackfin/fm246-table-model.json",
+  "model_sha256": "a8b3ddb7fbe075a294144e4aef5e6bb72b4db0b3a87b66f7c2b5e30b0411a15d",
+  "audio_callback": "0x019a23d4",
+  "explicit_selector_targets": [
+    "0x019a24b8",
+    "0x019a2730",
+    "0x019a29ec",
+    "0x019a2ca8",
+    "0x019a2f3e",
+    "0x019a31ec",
+    "0x019a34ba",
+    "0x019a37ae",
+    "0x019a3a64"
+  ],
+  "limits": [
+    "Static selector targets do not establish audio equivalence or completed reconstruction.",
+    "Ten substitutions are authored and uncalibrated.",
+    "No protected ciphertext is interpreted as a coefficient."
+  ]
+}

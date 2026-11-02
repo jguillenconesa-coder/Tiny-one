@@ -422,3 +422,15 @@ del callback mono, contrastados con estados y workspaces explícitos. La coincid
 depende de los cuatro coeficientes propios declarados; no se distribuyen código
 original ni pseudocódigo. Adaptador, reset inicial, semilla del medidor y ruteo del
 host son propios; no representan el allocator/arranque ni la cadena estéreo originales.
+
+## FM internal foundation (instrument remains 0.26.0)
+
+Independently written reconstruction of the rev246 FM constructor, reset, six
+internal envelope update, thirty-word boot conversion and table-copy helpers.
+8192 records and six complete factory pools are compared against private original
+GNU BF524 instruction execution, with independent repeat and sanitizers. Twenty
+clear binary32 words are locked; ten protected words are explicitly authored
+substitutions, not decrypted data or acoustically calibrated values. Only own
+source/harness, scalar observations and synthetic numeric vectors are published.
+No original FM audio renderer or host integration is claimed by this component.
+[Scope, source provenance and reproduction](docs/fm246-foundation.md).

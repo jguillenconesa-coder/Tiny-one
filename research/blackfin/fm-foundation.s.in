@@ -1,0 +1,152 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP, 0x03000000
+imm32 P0, 0xff906f6c
+imm32 R0, 0xffb00168
+[P0] = R0;
+P0.H = table_floats;
+P0.L = table_floats;
+imm32 P1, 0xff906f70
+P2 = 30;
+LSETUP(copy_floats,copy_floats_end) LC0 = P2;
+copy_floats:
+R0 = [P0++];
+copy_floats_end: [P1++] = R0;
+imm32 P0, 0x019a3de4
+CALL (P0);
+R0.H = table_args;
+R0.L = table_args;
+P0 = 5;
+EXCPT 0;
+imm32 P0, 0x018b6688
+imm32 P1, 0x0101e5e8
+P2 = 8192;
+LSETUP(copy_sine,copy_sine_end) LC0 = P2;
+copy_sine:
+R0 = [P0++];
+copy_sine_end: W[P1++] = R0;
+@FACTORY@
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = result_ptr;
+P1.L = result_ptr;
+[P1] = P0;
+probe_loop:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+R0 = [P1 + 64];
+CC = R0 == 0;
+IF CC JUMP copy_table;
+P2.H = state;
+P2.L = state;
+P3 = 15;
+LSETUP(load_state,load_state_end) LC0 = P3;
+load_state:
+R0 = [P1++];
+load_state_end: [P2++] = R0;
+copy_table:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+P4 = 68;
+P1 = P1 + P4;
+imm32 P2, 0x01d05880
+P3 = 15;
+LSETUP(load_table,load_table_end) LC0 = P3;
+load_table:
+R0 = [P1++];
+load_table_end: [P2++] = R0;
+imm32 P0, 0xffb00164
+imm32 R0, 0x13579bdf
+[P0] = R0;
+imm32 P0, 0xffb001a4
+imm32 R0, 0x2468ace0
+[P0] = R0;
+imm32 P0, 0x019a3d84
+CALL (P0);
+P0.H = input_ptr;
+P0.L = input_ptr;
+P1 = [P0];
+R2 = [P1 + 64];
+R0.H = state;
+R0.L = state;
+CC = R2 == 2;
+IF !CC JUMP constructor;
+imm32 P0, 0x019a2248
+CALL (P0);
+JUMP advance;
+constructor:
+CC = R2 == 3;
+IF !CC JUMP advance;
+imm32 P0, 0x019a21d8
+CALL (P0);
+advance:
+P0.H = input_ptr;
+P0.L = input_ptr;
+R1 = [P0];
+R1 += 60;
+R0.H = state;
+R0.L = state;
+imm32 P0, 0x019a22a4
+CALL (P0);
+P0.H = result_ptr;
+P0.L = result_ptr;
+P2 = [P0];
+P1.H = state;
+P1.L = state;
+P3 = 15;
+LSETUP(save_state,save_state_end) LC0 = P3;
+save_state:
+R0 = [P1++];
+save_state_end: [P2++] = R0;
+imm32 P1, 0xffb00168
+P3 = 15;
+LSETUP(save_table,save_table_end) LC0 = P3;
+save_table:
+R0 = [P1++];
+save_table_end: [P2++] = R0;
+imm32 P1, 0xffb00164
+R0 = [P1];
+[P2++] = R0;
+imm32 P1, 0xffb001a4
+R0 = [P1];
+[P2++] = R0;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+R1 = 128;
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP probe_loop;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+pool_args: .long 1,0xffb00000,360
+return_args: .long 1,factory_return,4
+factory_return: .long 0
+table_args: .long 1,0x01d05880,60
+io_args: .long 1,results,@BYTES@
+input_ptr: .long 0
+result_ptr: .long 0
+state: .space 60
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+table_floats: .incbin "@WORK@/table-floats.bin"
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

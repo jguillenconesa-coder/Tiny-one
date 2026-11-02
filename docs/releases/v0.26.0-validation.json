@@ -80,6 +80,11 @@
   "plugin_package_ci": {
     "run_id": 41440033959,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033959",
-    "status": "in_progress at evidence capture; configure on all three platforms"
+    "status": "success",
+    "linux": "success, Release tests and artifacts",
+    "windows": "success, VST3/standalone tests, startup and installer install/uninstall",
+    "macos": "success, universal app/VST3/pkg; runtime x86_64",
+    "runtime_arm64": "not exercised",
+    "checked_date": "2026-11-02"
   }
 }
