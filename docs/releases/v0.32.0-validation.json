@@ -7,10 +7,17 @@
   "sanitizers": "ASan/UBSan full signed-gain render and seven-rate adapter passed; modulation passed; leak detection disabled under managed ptrace",
   "evidence": "../firmware/dsynth246-render-validation.json",
   "native_ci": {
-    "status": "pending implementation push"
+    "status": "in_progress at evidence update; result pending",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518003",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
   },
   "plugin_package_ci": {
-    "status": "pending implementation push"
+    "status": "in_progress at evidence update; result pending",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518077"
   },
   "estimated_progress": "Approximately 60% +/-10 planning points; not acoustic fidelity",
   "authored_dependencies": [
@@ -29,5 +36,6 @@
     "No complete original scheduling/routing or physical acoustic equivalence claimed",
     "Ableton Live real, macOS arm64 execution and complete original presets pending"
   ],
-  "visual_smoke": "Reviewed D-synth II screenshot: two traces, eight controls via OSC II, eleventh engine, 73-sound catalogue; final button contrast fixed and smoke repeated"
+  "visual_smoke": "Reviewed D-synth II screenshot: two traces, eight controls via OSC II, eleventh engine, 73-sound catalogue; final button contrast fixed and smoke repeated",
+  "implementation_commit": "7cb21881a95ac04616e4b9043253057d5754d66f"
 }
