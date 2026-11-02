@@ -22,7 +22,7 @@
     ]
   },
   "plugin_package_ci": {
-    "status": "in_progress at evidence update; final result pending",
+    "status": "success on Linux, Windows and macOS universal; macOS runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41531892291"
   },
   "evidence": "../firmware/dbox246-render-validation.json",

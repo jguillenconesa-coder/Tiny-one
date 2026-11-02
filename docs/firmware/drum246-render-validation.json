@@ -1,0 +1,85 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "original_render_blocks": 4096,
+  "original_render_samples": 524288,
+  "cpp_renderer": "Source/Drum246.h; complete independent comparison passed",
+  "model": "GNU BF524 with Dreg, halfword and FP-load writeback patches",
+  "routines": {
+    "render": "0x019789ec",
+    "factory": "0x01978df4",
+    "bind": "0x019788ec",
+    "reset": "0x01978926",
+    "release": "0x01978898",
+    "active_query": "0x019788b0"
+  },
+  "input_prefix_bytes": 33024,
+  "input_record_bytes": 1032,
+  "output_prefix_bytes": 2052,
+  "output_suffix_bytes": 33024,
+  "output_record_bytes": 2032,
+  "voices": 12,
+  "state_bytes": 20,
+  "fir_coefficients": 1025,
+  "coefficient_source": "0x018bf010 via original float-to-fract16 helper",
+  "artifacts": {
+    "drum246-input.bin": {
+      "bytes": 4260096,
+      "sha256": "217cdd8241465df232d3ebccfa7464e468a0fbf5b5822a2fa0a1c1c26929062b"
+    },
+    "drum246-output.bin": {
+      "bytes": 8358148,
+      "sha256": "07092a1b1a6227434741ef71d852d6cf4d01ffda4624ff805ca4709d3187c137"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Caller-supplied PCM, nonnegative pitch streams, gain and event cadence.",
+    "Corrected simulator is not physical acoustic validation. Dynamic envelope producer not included."
+  ],
+  "cpp_comparison": {
+    "status": "passed",
+    "blocks": 4096,
+    "samples": 524288,
+    "state_pool_bytes": 240,
+    "complete_output_record_bytes": 2032,
+    "poststate_handoff": false,
+    "independent_repeat": "Original repeat input/output hashes identical to prior run"
+  },
+  "coefficient_substitutions": [],
+  "supplied_dependencies": [
+    "Four synthetic PCM banks with sixteen explicit zero guards on both sides",
+    "Nonnegative pitch and signed gain per sample; raw controls and explicit lifecycle order",
+    "Corrected GNU BF524 with three writeback patches; no physical hardware execution"
+  ],
+  "host_models": [
+    "Own cache conversion to PCM16/44100 Hz capped at 12 s per independent pad",
+    "Own 88.2 kHz clock, pitch/note/pad map, twelve-voice allocation/stealing and output resampling",
+    "Own dynamic region/level curve inspired by manual §6.4; original gain-buffer producer remains pending"
+  ],
+  "provenance": "Authored harness/functional reconstruction and synthetic observations only; no original firmware, resources, patches or decompiled code",
+  "corpus_coverage": {
+    "playmode_control_bands": {
+      "0": 1024,
+      "1": 1024,
+      "2": 1024,
+      "3": 1024
+    },
+    "reverse_bands": {
+      "0": 2048,
+      "1": 2048
+    },
+    "lifecycle_action_bits": {
+      "0": 2056,
+      "1": 41,
+      "2": 142,
+      "3": 111,
+      "4": 316,
+      "5": 2048
+    },
+    "output_alignment": "2048 word aligned / 2048 halfword aligned"
+  }
+}

@@ -1,0 +1,32 @@
+name: Validate drum sampler reader and host adapter
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/drum-render/**'
+      - 'research/blackfin/drum-*'
+      - 'research/blackfin/gnu-13.1-fp-load-writeback.patch'
+      - 'scripts/verify-drum246.py'
+      - 'Tests/Drum246IntegrationTests.cpp'
+      - 'Source/Drum246*.h'
+      - 'Source/SampleData.h'
+      - 'Source/Engine.h'
+      - 'Source/Phase246.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Envelope246*.h'
+      - 'Source/Tremolo246*.h'
+      - '.github/workflows/drum246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/drum-render -B build-drum -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-drum --config Release --parallel 2
+      - run: ctest --test-dir build-drum -C Release --output-on-failure

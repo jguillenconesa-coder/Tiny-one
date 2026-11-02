@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.33.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.34.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -18,7 +18,7 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-62 % del objetivo completo, con incertidumbre explícita; no es una medición
+63 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
@@ -36,7 +36,7 @@ del plugin. El plugin añade Dr. Wave, Cluster y DNA Hybrid como séptima, octav
 | 5 | Pulse | Render localizado en L1 cifrada (`0xffa04b88`), sin imagen descifrada validada. Port pendiente; [bloqueo](firmware/pulse246-l1-blocker.json). |
 | 6 | Synth sampler | Reproductor propio con CLEAN, raíz/loop/trim; banco de audio importable. No es el render original completo con sus cuatro controles secundarios. |
 | 7 | Phase | Núcleo Pd y ADSR contrastados; NCO, salida, mezcla y asignación propios. 16 presets CORE. |
-| 8 | Drum sampler | Kit propio de 24 pads con edición y bancos; falta el render/envolvente dinámica original. |
+| 8 | Drum sampler | **[Lector 246 integrado](drum246-native.md)**: 4096 bloques/524288 muestras, doce estados, FIR original, ciclo, buffers y guardas contrastados bajo PCM/padding/pitch/ganancia suministrados. Opción sobre el kit, doce voces, trim fino, Gated/One Shot/Loop, estado/mandos/UI y Tremolo. Dinámica de región propia inspirada en el manual; productor original pendiente. Cache/conversión, reloj/pitch/asignación, banco de 24 muestras independientes, alineación/salida propios; fuente única original, ruteo, modulación drum y acústica pendientes. |
 | 9 | D-box | **[D-box 246 tocable](dbox246-native.md)**: 4096 bloques / 524288 muestras, doce estados, contexto y todos los buffers contrastados, bajo pitch/ganancia explícitos y CPU corregida. Dos envolventes internas, ocho mezclas y tablas legibles sin sustituciones. 24 pads con ocho controles independientes, doce voces, Tremolo, automatización/estado/UI. Afinación/mapa de pads/cadencias/allocator/eventos/salida propios; Value/Random drum, ruta completa y calibración acústica pendientes. Drum synth anterior conserva su modelo propio. |
 | 10 | LS, identificador interno | Referencia candidata; sin equivalencia comercial confirmada, port ni presets de fábrica encontrados en el DB. |
 | 11 | DNA | **[DNA Hybrid tocable](dna246-hybrid.md)**: callback contrastado en 4096 bloques / 524288 muestras con identidades/RAM explícitas, seis estados vivos, RNG y 16 capturas completas. Cuatro controles y ADSR, seis voces, modos y moduladores integrados. Identidad virtual propia y RAM externa al pool modelada como cero; no OTP/RAM físicos recuperados ni calibración acústica. Scheduler/pitch/salida propios; 16 presets originales pendientes. No aparece en el diagrama de referencia del manual suministrado. |
@@ -94,11 +94,12 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | ADSR común | Núcleo, tablas y callbacks contrastados; 2.621.440 muestras / 20.480 estados. |
 | Arranque del pool ADSR | [Accessor e inicialización diferida](adsr246-lazy-pool.md): seis estados, ready de palabra completa, 1.024 accesos y 1.536 eventos compuestos; no completa allocator ni scheduler. |
 | Cuatro campos ADSR adicionales y ruteo | [Entrada de cuatro fuentes a ADSR 0–3](drwave246-envelope-control-input.md), seguida del render: 131.072 muestras / 1.024 estados adicionales. [Selector auxiliar 4 en contexto Dr. Wave](drwave246-envelope-mode-control.md): otras 131.072 muestras, seis estados y scratch dither compartido. Demás campos auxiliares, relevo por voz y salida siguen pendientes. |
-| Envolventes D-synth / D-box / drum dinámica | Envolventes internas D-synth y D-box reconstruidas y contrastadas dentro de sus callbacks completos. Envolvente dinámica del drum sampler y ruteo/cadencia originales pendientes; no se completan con el ADSR común. |
+| Envolventes D-synth / D-box / drum dinámica | Envolventes internas D-synth y D-box reconstruidas y contrastadas dentro de sus callbacks completos. Envolvente dinámica original del drum sampler y ruteo/cadencia pendientes; [modelo propio de región](drum246-native.md) disponible, sin presentarlo como port original ni reemplazarlo por el ADSR común. |
 | Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 8.192 llamadas instrument/primeros cuatro ADSR para Digital/Phase/Dr. Wave/Cluster; estado independiente por voz y wrap/clamp contrastados. [Integración híbrida](value-hybrid246-native.md). Otras familias, drum y auxiliares pendientes; reloj/allocator propios. |
 | Tremolo | [Callback completo contrastado e integrado en Phase/Digital/Dr. Wave/Cluster](tremolo246-native.md): 2048 llamadas, 262144 muestras de amplitud y palabras de pitch, 28 bytes de estado / 32 de display, cinco formas, reset y 24 coeficientes. Clock, display por voz y ruteo propios; resto de motores y comparación con hardware pendientes. |
 | Random | [Callback synth reconstruido e integrado](random246-native.md) en Digital/Phase/Dr. Wave/Cluster: 4096 llamadas, self44/RNG/display/destinos completos, Instrument en dos pasadas y ADSR. Reloj, seed y scheduling propios; FX/drum y comparación con hardware pendientes. |
 | Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
+| Tremolo en batería | D-box y [sampler 246](drum246-native.md) reutilizan la aritmética mono contrastada con reloj/composición propios. No valida el dispatcher completo de batería ni convierte Value/Random synth en drum. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
 | Poly / mono / legato / unison / portamento | [Mono/Legato y glide propios para Dr. Wave/Cluster](hybrid-performance.md), con prioridad de última nota y sustain/bend por canal. No implementan los modos originales ni unison. Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |
 | Octavas del teclado | Interfaz ampliada a −4…+4, guardada en sesión/slot/clipboard, limitada a notas MIDI 0–127. No altera MIDI externo ni implementa aún octave de todos los patches originales. |

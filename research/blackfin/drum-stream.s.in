@@ -1,0 +1,224 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored harness; proprietary executable bytes remain private.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+SP += -24;
+@SETUP@
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,0);
+IF !CC JUMP actions;
+P1 = P4;
+imm32 P2,0xffb00000
+P0 = 60;
+LSETUP(pool,pool_end) LC0 = P0;
+pool: R0 = [P1++];
+pool_end: [P2++] = R0;
+actions:
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,1);
+IF !CC JUMP factory_end;
+R0 = [P0 + 4];
+imm32 P0,0x1978df4
+CALL (P0);
+imm32 R1,0x02010000
+imm32 P0,0x19788ec
+CALL (P0);
+factory_end:
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,2);
+IF !CC JUMP reset_end;
+R0 = [P0 + 4];
+R1 = 20;
+R0 *= R1;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 R1,240
+R3 = P4;
+R1 = R1 + R3;
+imm32 P0,0x1978926
+CALL (P0);
+reset_end:
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,3);
+IF !CC JUMP release_end;
+R0 = [P0 + 4];
+R1 = 20;
+R0 *= R1;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 R1,240
+R3 = P4;
+R1 = R1 + R3;
+imm32 P0,0x1978898
+CALL (P0);
+release_end:
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,4);
+IF !CC JUMP active_end;
+R0 = [P0 + 4];
+R1 = 20;
+R0 *= R1;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 P0,0x19788b0
+CALL (P0);
+active_end:
+imm32 P1,0xffb00000
+P0 = 60;
+LSETUP(before,before_end) LC0 = P0;
+before: R0 = [P1++];
+before_end: [P5++] = R0;
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+R0 >>= 8;
+R2 = 8256;
+R0 *= R2;
+R1.H = samples;
+R1.L = samples;
+R1 += 32;
+R0 = R0 + R1;
+imm32 P0,0x02010004
+[P0] = R0;
+P1 = P4;
+imm32 P0,264
+P1 = P1 + P0;
+imm32 P2,0xff801950
+P0 = 128;
+LSETUP(pitch,pitch_end) LC0 = P0;
+pitch: R0 = [P1++];
+pitch_end: [P2++] = R0;
+P1 = P4;
+imm32 P0,776
+P1 = P1 + P0;
+imm32 P2,0xff801d50
+P0 = 64;
+LSETUP(gain,gain_end) LC0 = P0;
+gain: R0 = [P1++];
+gain_end: [P2++] = R0;
+imm32 P0,0xffb000f0
+imm32 R0,0x13579bdf
+[P0] = R0;
+imm32 P0,0xff802958
+imm32 R0,0x2468ace0
+[P0] = R0;
+P0.H = samples_end;
+P0.L = samples_end;
+imm32 R0,0x789abcde
+[P0] = R0;
+imm32 P0,0xff802bc8
+imm32 R0,0x89abcdef
+[P0] = R0;
+imm32 P0,256
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,5);
+R1.H = audio;
+R1.L = audio;
+IF !CC JUMP aligned;
+R1 += 2;
+aligned:
+P0.H = audio_pointer;
+P0.L = audio_pointer;
+[P0] = R1;
+imm32 P0,260
+P0 = P4 + P0;
+R0 = [P0];
+R2 = 20;
+R0 *= R2;
+imm32 R2,0xffb00000
+R0 = R0 + R2;
+imm32 R2,240
+R3 = P4;
+R2 = R3 + R2;
+imm32 P0,0x19789ec
+CALL (P0);
+imm32 P1,0xffb00000
+P0 = 60;
+LSETUP(after,after_end) LC0 = P0;
+after: R0 = [P1++];
+after_end: [P5++] = R0;
+P0.H = audio_pointer;
+P0.L = audio_pointer;
+P1 = [P0];
+P0 = 128;
+LSETUP(audio_save,audio_save_end) LC0 = P0;
+audio_save: R0 = W[P1++] (X);
+audio_save_end: W[P5++] = R0;
+imm32 P1,0xff801950
+P0 = 128;
+LSETUP(pitch_save,pitch_save_end) LC0 = P0;
+pitch_save: R0 = [P1++];
+pitch_save_end: [P5++] = R0;
+imm32 P1,0xff801b50
+P0 = 128;
+LSETUP(derived_save,derived_save_end) LC0 = P0;
+derived_save: R0 = [P1++];
+derived_save_end: [P5++] = R0;
+imm32 P1,0xff801d50
+P0 = 64;
+LSETUP(gain_save,gain_save_end) LC0 = P0;
+gain_save: R0 = [P1++];
+gain_save_end: [P5++] = R0;
+imm32 P0,0xffb000f0
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,0xff802958
+R0 = [P0];
+[P5++] = R0;
+P0.H = samples_end;
+P0.L = samples_end;
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,0xff802bc8
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,1032
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+R0.H = pcm_args;
+R0.L = pcm_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+coeff_args: .long 1,0xff802154,2052
+io_args: .long 1,results,@BYTES@
+pcm_args: .long 1,samples,33024
+audio_pointer: .long 0
+audio: .space 260
+.align 4
+samples: .incbin "@WORK@/inputs.bin",0,33024
+samples_end: .long 0
+inputs: .incbin "@WORK@/inputs.bin",33024
+inputs_end:
+.section .handles,"aw"
+.long 0x02010004,0
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

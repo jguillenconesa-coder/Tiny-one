@@ -62,6 +62,7 @@ private:
     juce::TextButton phase246{"PHASE 246 CORE"};bool lastDsynth246=false,lastDsynthBank=false;juce::TextButton dsynthBank{"OSC II"};std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> dsynthBankAttachment;bool lastVoltage246=false,lastDna246=false,lastString246=false;bool lastCluster246=false,lastDrWave246=false,lastPhase246=false,lastPhaseEnvelope=false,lastDigital246=false,lastDigitalEnvelope=false,lastCwo246=false,lastSpring246=false,lastPhone246=false,lastGrid246=false,lastDelay246=false,lastNitro246=false,lastFilter246=false,lastPunch246=false,lastValue246=false,lastValueVoice246=false;
     juce::TextButton phaseEnvelope{"246 ENVELOPE"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> phaseAttachment,envelopeAttachment,digitalAttachment,digitalEnvelopeAttachment,valueAttachment,valueFreeAttachment,valueVoiceAttachment,valueVoiceFreeAttachment;
+    juce::TextButton drum246{"SAMPLER 246"};juce::ComboBox drumPad;bool lastDrum246=false;int lastDrumPad=-1;std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> drumAttachment;std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> drumPadAttachment;
     juce::ComboBox dboxPad;bool lastDbox246=false;int lastDboxPad=-1;std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> dboxPadAttachment;
     juce::ComboBox outputFx;
     void syncOutputFx();

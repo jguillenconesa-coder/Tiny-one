@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 62 % del objetivo completo
+## Avance estimado: aproximadamente 63 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 80 % | 24 puntos |
+| Motores originales y sus filtros | 30 % | 84 % | 25,2 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 62 % | 9,3 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 64 % | 9,6 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈62 %** (61,8 antes de redondear) |
+| Total | 100 % | | **≈63 %** (63,3 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,28 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: D-box 246 (0.33.0)
+## Entrega actual: sampler de batería 246 (0.34.0)
+
+[Sampler 246](drum246-native.md) añade el lector reconstruido al kit existente:
+doce voces, FIR original, trims finos y modos Gated/One Shot/Loop. Callback completo
+contrastado en 4096 bloques / 524288 muestras, doce estados y todos los buffers,
+bajo PCM/padding/pitch/ganancia explícitos. 1025 coeficientes sin sustitución.
+Cache PCM16/44,1 kHz de hasta 12 s por pad preparado fuera del callback; se conserva
+el audio original. Mandos contextuales, proyectos, slots, clipboard, editor y Tremolo.
+
+**La envolvente dinámica es un modelo propio inspirado en el manual**; falta su
+productor original. Continúa el banco propio de 24 muestras independientes, no la
+fuente compartida original. Reloj, afinación, mapa/asignación, alineación y salida
+son adaptaciones, sin equivalencia acústica medida. [Validación](releases/v0.34.0-validation.json):
+109 suites Linux, 522 cargas sin heap rastreado, núcleo/adaptador ASan/UBSan y dos
+suites independientes aprobadas. Vista de onda, cola reportada y regresiones de
+ruteo/tiempo real verificadas; CI de esta implementación pendiente de push. D-box 0.33 pasó su CI completo en las tres plataformas.
+
+Estimación **≈63 % ±10 puntos de planificación**. Siguen el productor de ganancia
+dinámica y modulación drum, sampler synth, fuente compartida/voz/ruteo, calibración,
+Ableton real y ejecución arm64. Presets originales completos al final.
+
+## Entrega anterior: D-box 246 (0.33.0)
 
 [D-box](dbox246-native.md) añade la duodécima selección con 24 pads, doce voces y
 ocho parámetros independientes por pad. Callback completo contrastado en4096
@@ -52,7 +73,8 @@ reloj/asignación/eventos/velocidad y salida siguen siendo adaptaciones explíci
 **510 cargas sin heap rastreado**, sanitizadores del núcleo/adaptador y revisión
 visual aprobados. Smoke/ruteo/tiempo real repetidos tras la revisión final. El
 CI independiente de núcleo/adaptador pasó en Linux, Windows/MSVC y macOS Intel;
-los plugins e instaladores de esta implementación siguen en curso.
+los plugins e instaladores de esta implementación terminaron con éxito en las
+tres plataformas (runtime macOS Intel).
 
 Estimación **≈62 % ±10 puntos de planificación**; no fidelidad acústica. D-synth
 0.32.0 pasó su CI nativo y completo de plugins/instaladores en las tres plataformas.

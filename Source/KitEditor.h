@@ -19,6 +19,7 @@ private:
     std::array<juce::Slider,4> sliders;
     std::array<juce::Label,4> labels;
     juce::Label title;
+    bool nativeMode=false;juce::ComboBox playMode;std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeAttachment;
     juce::TextButton reverse{"REVERSE"},gated{"GATED"},load{"LOAD PAD"},reset{"RESET PAD"};
     std::array<std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>,4> attachments;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> reverseAttachment,gatedAttachment;

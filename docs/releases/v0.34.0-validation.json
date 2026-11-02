@@ -1,0 +1,41 @@
+{
+  "version": "0.34.0",
+  "date": "2026-11-02",
+  "implementation_commit": "pending verified push",
+  "linux_build": "Release Standalone and VST3 passed",
+  "linux_ctest": "109/109 suites passed, 140.12 s",
+  "standalone_tests": "2/2 independent reader/adapter suites passed, 1.09 s",
+  "realtime": {
+    "workloads": 522,
+    "native_kit_workloads": 12,
+    "tracked_callback_heap_calls": 0,
+    "scope": "Twelve voices, pad trim/pitch/gain/direction/play modes, cache reads, dynamics and Tremolo automation",
+    "timing": "Shared host diagnostic; not an Ableton/driver dropout guarantee"
+  },
+  "sanitizers": "ASan/UBSan reader and native adapter passed, including seven rates, twelve voices, cache conversion and mode/modulation cases; LeakSanitizer disabled under managed ptrace",
+  "native_ci": {
+    "status": "pending implementation push"
+  },
+  "plugin_package_ci": {
+    "status": "pending implementation push"
+  },
+  "evidence": "../firmware/drum246-render-validation.json",
+  "previous_ci": {
+    "version": "0.33.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41531892291",
+    "status": "success on Linux/Windows/macOS universal; macOS runtime Intel"
+  },
+  "estimated_progress": "Approximately 63% +/-10 planning points; not acoustic fidelity",
+  "limits": [
+    "Original dynamic envelope producer, pitch caller/clock/allocator/routing and drum Value/Random pending",
+    "Own independent 24-sample bank does not complete the single shared original 12 s source workflow",
+    "Own linear import resampling, gain model and eight-frame alignment not acoustically calibrated",
+    "Ableton Live real, macOS arm64 execution and full original presets pending"
+  ],
+  "final_review": {
+    "affected_paths": "Latest waveform cache/tail changes: plugin smoke passed; output_routing and realtime 2/2 passed in 42.25 s",
+    "visual": "Passed: SAMPLER 246 pad/dynamics, kit editor and legacy controls inspected; no overlapping sampler/legacy/kit buttons",
+    "visual_sha256": "45daea5fee5d5cfdf3e26495262444490342af2501a64b9d13f3705c46f33cfb",
+    "final_incremental": "Release Standalone/VST3 rebuilt; plugin smoke passed after final button layout/contrast adjustment"
+  }
+}

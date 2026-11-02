@@ -496,7 +496,7 @@ explícitamente abiertos; presets originales completos al final.
 ## D-box 246 integrado (0.33.0)
 
 [Render completo y pads](dbox246-native.md): `0x01970ee8`, vtable verificada,
-doce estados de72 bytes y contexto de1640 bytes. 4096 bloques/524288 muestras
+doce estados de72 bytes y contexto de 1640 bytes. 4096 bloques/524288 muestras
 coincidentes bajo streams explícitos de pitch/ganancia y el modelo BF524 corregido.
 Ocho mezclas, ambas alineaciones, envolventes internas, ciclo, consulta de actividad,
 indicadores/históricos y todos los buffers contrastados. Sin coeficientes sustituidos.
@@ -508,3 +508,27 @@ incluido Value/Random de batería antes de habilitar esos destinos. El dispatch
 synth no demuestra el de drum. Ruteo de voz, Pulse/L1 y comparación acústica siguen
 pendientes. Mantener los presets completos al final; no hacen falta materiales
 privados adicionales para reproducir la evidencia de D-box.
+
+
+## Sampler de batería 246 integrado (0.34.0)
+
+[Callback completo y adaptación](drum246-native.md): vtable verificada apunta a
+`0x019789ec`; doce estados de 20 bytes, ciclo/actividad, posiciones coarse/fine y
+FIR de 16 taps. 1025 coeficientes convertidos por el helper original sin sustitución.
+4096 bloques/524288 muestras coincidentes con PCM sintético/padding explícito,
+pitch no negativo, ganancia signed16 y modelo BF524 corregido. Pools, audio,
+pitch/ganancia derivada, PCM intacto y guardas contrastados; repetición idéntica.
+
+Integración opt-in sobre el kit: doce voces, Gated/One Shot/Loop, reverse, trims
+finos, automatización/estado/slots/clipboard, editor y Tremolo. Conversión/cache,
+reloj/afinación/asignación, alineación/salida y contorno dinámico son propios.
+La curva sigue la descripción funcional del manual, no una rutina original
+recuperada. El banco propio de 24 muestras tampoco completa la fuente única de 12 s.
+
+Próximo bloque: delimitar el productor original de la ganancia dinámica y sus
+dependencias y continuar la familia sampler, incluido el sampler synth. Value y
+Random de batería requieren su propio dispatch/oráculo antes de habilitarlos.
+El gain stream `0xff801d50` es entrada del lector: no dar por recuperado su
+productor por coincidir el consumidor. No atribuir a L1 un bloqueo sin seguir sus
+dependencias. Voz/ruteo original, Pulse/L1, acústica/Live/arm64 y presets completos
+mantienen sus pendientes y límites anteriores.

@@ -48,6 +48,7 @@ public:
     void applyDna246Init();
     void applyVoltage246Init();void applyDsynth246Init();
     void applyDbox246Init();
+    void applyDrum246Init();
     bool cluster246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==7;}
     void applyPunch246Preset(int index);
     void applyValue246Preset(int index);
@@ -62,13 +63,16 @@ public:
     bool filter246Enabled() const {return !cwo246Enabled()&& !spring246Enabled()&& !phone246Enabled()&&!grid246Enabled()&&!delay246Enabled()&&!nitro246Enabled()&&phaseAudio[66]->load()>.5f;}
     bool punch246Enabled() const {return !cwo246Enabled()&& !spring246Enabled()&& !phone246Enabled()&&!grid246Enabled()&&!delay246Enabled()&&!nitro246Enabled()&&!filter246Enabled()&&phaseAudio[20]->load()>.5f;}
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
-    bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled());}
+    bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
     bool valueVoice246Available() const {return dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
     bool valueVoice246Enabled() const {return !random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
+    bool drum246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==5&&drumAudio[0]->load()>.5f;}
+    int drum246SelectedPad() const {return std::clamp(int(drumAudio[5]->load()),0,23);}
+    static juce::String drum246ModeId(int pad){return "drum246Pad"+juce::String(pad+1)+"Mode";}
     bool dbox246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==11;}
     int dbox246SelectedPad() const {return std::clamp(int(dboxPadSelection->load()),0,23);}
     static juce::String dbox246ParameterId(int pad,int control) {return "dbox246Pad"+juce::String(pad+1)+"Control"+juce::String(control+1);}
@@ -137,6 +141,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
+    std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
     std::array<std::array<std::atomic<float>*,8>,24> dboxAudio{};std::atomic<float>* dboxPadSelection=nullptr;
     std::array<std::atomic<float>*,146> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;
@@ -171,7 +176,7 @@ private:
     std::atomic<int> visiblePage{0};
     std::atomic<bool> visibleTape{false};
     void refreshUserPresets();
-    std::array<std::array<std::atomic<float>,128>,pocket::kitCapacity> padPreviews{};
+    std::array<std::array<std::atomic<float>,128>,pocket::kitCapacity> padPreviews{},drumPreviews{};std::array<std::atomic<int>,pocket::kitCapacity> drumFrames{};
     void publishPadPreview(int,const pocket::Sample&);
     void publishSamplePreview(const pocket::Sample&);
     double processedTime=0;

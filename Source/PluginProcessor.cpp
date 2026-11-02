@@ -138,7 +138,12 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     const char* dboxNames[]={"Pitch I","Wave I","Envelope I","Cross Mod","Pitch II","Wave II","Envelope II","Filter"};
     for(int pad=0;pad<24;++pad)for(int c=0;c<8;++c)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{dbox246ParameterId(pad,c),1},"D-box Pad "+juce::String(pad+1)+": "+dboxNames[c],0,32767,pocket::dbox246Default(pad)[size_t(c)]));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{"dbox246EditPad",1},"D-box: Edit Pad",0,23,0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"drum246Enabled",1},"Kit: Reconstructed Sampler 246",false));
+    const char* drumNames[]={"Attack Level","Mid Level","Release Level","Region"};for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::drum246EnvelopeIds[i],1},juce::String("Kit Dynamics: ")+drumNames[i],0,32767,pocket::drum246EnvelopeDefaults[i]));
+    phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{"drum246EditPad",1},"Kit: Edit Pad",0,23,0));
+    for(int pad=0;pad<24;++pad)phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{drum246ModeId(pad),1},"Kit Pad "+juce::String(pad+1)+": Native Play Mode",juce::StringArray{"Gated","One Shot","Loop"},1));
     phaseState=std::make_unique<juce::AudioProcessorValueTreeState>(*this,nullptr,"Phase246",std::move(phaseLayout));
+    drumAudio[0]=phaseState->getRawParameterValue("drum246Enabled");drumAudio[5]=phaseState->getRawParameterValue("drum246EditPad");for(size_t i=0;i<4;++i)drumAudio[i+1]=phaseState->getRawParameterValue(pocket::drum246EnvelopeIds[i]);for(int pad=0;pad<24;++pad)drumModeAudio[size_t(pad)]=phaseState->getRawParameterValue(drum246ModeId(pad));
     for(int pad=0;pad<24;++pad)for(int c=0;c<8;++c)dboxAudio[size_t(pad)][size_t(c)]=phaseState->getRawParameterValue(dbox246ParameterId(pad,c));dboxPadSelection=phaseState->getRawParameterValue("dbox246EditPad");
     phaseAudio[0]=phaseState->getRawParameterValue("phase246Enabled");for(size_t i=0;i<4;++i)phaseAudio[i+1]=phaseState->getRawParameterValue(pocket::phase246Ids[i]);
     phaseAudio[5]=phaseState->getRawParameterValue("phase246Envelope");for(size_t i=0;i<4;++i)phaseAudio[i+6]=phaseState->getRawParameterValue(pocket::phase246EnvelopeIds[i]);
@@ -183,6 +188,7 @@ juce::String PocketProcessor::screenParameterId(int index) const {
         if(index==1)return "track"+juce::String(1+int(state.getRawParameterValue("tapeTrack")->load()));
         return index==2?"tapeSpeed":"tapeRecordGain";
     }
+    if(drum246Enabled()&&visiblePage.load()<2)return visiblePage.load()==1?juce::String(pocket::drum246EnvelopeIds[size_t(index)]):index==3?drum246ModeId(drum246SelectedPad()):padParameterId(drum246SelectedPad(),index==0?"pitch":index==1?"start":"end");
     if(dbox246Enabled()&&visiblePage.load()<2)return dbox246ParameterId(dbox246SelectedPad(),index+4*visiblePage.load());
     if(dsynth246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::dsynth246Ids[size_t(index)+(dsynth246Secondary()?4:0)]:pocket::dsynth246EnvelopeIds[size_t(index)];
     if(voltage246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::voltage246Ids[size_t(index)]:pocket::voltage246EnvelopeIds[size_t(index)];
@@ -219,6 +225,8 @@ void PocketProcessor::setScreenPage(int page,bool tapeMode) {
         else if(visiblePage.load()==2)screenKnobs[size_t(i)]->followValue(state.getParameter(i==0?"lfoRate":i==1?"lfoDepth":i==2?"lfoDestination":"lfoShape"),phaseState->getParameter(pocket::value246Ids[size_t(i)]),phaseState->getParameter(pocket::valueVoice246Ids[size_t(i)]),*phaseAudio[25],*phaseAudio[31],*audioParameters[size_t(Param::engine)],*phaseAudio[0],*phaseAudio[10]);
         else if(page==4&&tapeMode&&i==1)screenKnobs[1]->followTapeTrack();else screenKnobs[size_t(i)]->follow(state.getParameter(screenParameterId(i)));
         if(visiblePage.load()<2){std::array<juce::RangedAudioParameter*,24> targets{};for(int pad=0;pad<24;++pad)targets[size_t(pad)]=phaseState->getParameter(dbox246ParameterId(pad,i+visiblePage.load()*4));screenKnobs[size_t(i)]->followDbox(targets,*audioParameters[size_t(Param::engine)],*dboxPadSelection);}
+        if(visiblePage.load()<2){std::array<juce::RangedAudioParameter*,24> targets{};for(int pad=0;pad<24;++pad)targets[size_t(pad)]=visiblePage.load()==1?phaseState->getParameter(pocket::drum246EnvelopeIds[size_t(i)]):i==3?phaseState->getParameter(drum246ModeId(pad)):state.getParameter(padParameterId(pad,i==0?"pitch":i==1?"start":"end"));screenKnobs[size_t(i)]->followDrum(targets,*audioParameters[size_t(Param::engine)],*drumAudio[5],*drumAudio[0]);}
+        screenKnobs[size_t(i)]->followDrumTremoloAvailability(*drumAudio[0]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followDsynth(phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)]:pocket::dsynth246EnvelopeIds[size_t(i)]),phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)+4]:pocket::dsynth246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)],*phaseAudio[145]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followVoltage(phaseState->getParameter(visiblePage.load()==0?pocket::voltage246Ids[size_t(i)]:pocket::voltage246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followDna(phaseState->getParameter(visiblePage.load()==0?pocket::dna246Ids[size_t(i)]:pocket::dna246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
@@ -330,7 +338,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout PocketProcessor::layout() {
     for(int pad=0;pad<pocket::kitCapacity;++pad){
         const auto prefix="Pad "+juce::String(pad+1).paddedLeft('0',2)+": ";
         for(const auto* field:{"start","end","gain","pitch"}){const float low=juce::String(field)=="pitch"?-24:0,high=juce::String(field)=="pitch"?24:juce::String(field)=="gain"?2:1,initial=juce::String(field)=="end"||juce::String(field)=="gain"?1:0;
-            p.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{padParameterId(pad,field),1},prefix+juce::String(field).substring(0,1).toUpperCase()+juce::String(field).substring(1),juce::NormalisableRange<float>(low,high,.01f),initial,juce::AudioParameterFloatAttributes().withLabel(juce::String(field)=="pitch"?"st":"")));}
+            p.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{padParameterId(pad,field),1},prefix+juce::String(field).substring(0,1).toUpperCase()+juce::String(field).substring(1),juce::NormalisableRange<float>(low,high,(juce::String(field)=="start"||juce::String(field)=="end")?0.0000001f:.01f),initial,juce::AudioParameterFloatAttributes().withLabel(juce::String(field)=="pitch"?"st":"")));}
         for(const auto* field:{"reverse","gated"})p.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{padParameterId(pad,field),1},prefix+juce::String(field).substring(0,1).toUpperCase()+juce::String(field).substring(1),false));
     }
     flag("sampleClean");
@@ -359,6 +367,12 @@ double PocketProcessor::getTailLengthSeconds() const {
         envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+128./88200.;
     }
     if(dbox246Enabled()){envelopeTail=0;for(size_t pad=0;pad<24;++pad)for(size_t oscillator=0;oscillator<2;++oscillator){const int v=int(dboxAudio[pad][2+4*oscillator]->load()),centre=oscillator?94:96;const int index=std::max(0,centre-std::abs(centre-int(pocket::reference::multiplyQ15(int16_t(v),192))));const double pole=pocket::reference::adsr246Decay[size_t(index)]/2147483648.;envelopeTail=std::max(envelopeTail,std::log(16./2147483648.)/std::log(pole*pole)/88200.);}envelopeTail+=.25;}
+    if(drum246Enabled()){
+        if(tremolo246Enabled()&&phaseAudio[57]->load()!=0)return std::numeric_limits<double>::infinity();
+        envelopeTail=.25+512./88200.;const double pitchLfo=int(state.getRawParameterValue("lfoDestination")->load())==0?2*state.getRawParameterValue("lfoDepth")->load():0;
+        const double lowerTune=std::exp2(((state.getRawParameterValue("tone")->load()-.5)*2-2-pitchLfo)/12.);
+        for(size_t pad=0;pad<24;++pad)if(int(drumModeAudio[pad]->load())==1){const auto& p=padParameters[pad];const double length=std::max(0.,double(p[1]->load()-p[0]->load()))*drumFrames[pad].load();const double ratio=.5*std::exp2(double(p[3]->load())/12.)*lowerTune;const auto step=std::max(1ll,std::llround(ratio*268435456.)/131072);const double seconds=length/(double(step)*88200./2048.);envelopeTail=std::max(envelopeTail,seconds*1.05+.25+512./88200.);}
+    }
     if(dsynth246Enabled())envelopeTail+=.25; // Own conservative allowance for the core poles after gain reaches zero.
     return envelopeTail+(state.getRawParameterValue("effect")->load()>0?echo:0)+masterTail+getLatencySamples()/std::max(8000.,rate);
 }
@@ -370,7 +384,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     const bool arp=get(Param::sequencer)>.5f&&seqMode>=4;
     if(previousSeqMode!=seqMode){engine.allNotesOff();seqNote=-1;sequenceNote.store(-1);lastHostStep=INT64_MIN;previousSeqMode=seqMode;}
     if(panicRequested.exchange(false)) {engine.reset();if(panicOutputRequested.exchange(false))resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);}
-    engine.selectEngine(int(get(Param::engine)),phaseAudio[10]->load(std::memory_order_relaxed)>.5f);
+    engine.selectEngine(int(get(Param::engine)),phaseAudio[10]->load(std::memory_order_relaxed)>.5f,drum246Enabled());
     const int hybridMode=int(phaseAudio[53]->load(std::memory_order_relaxed));
     const float hybridGlide=phaseAudio[54]->load(std::memory_order_relaxed);
     engine.configureHybridPerformance(hybridMode,hybridGlide);
@@ -404,12 +418,13 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     p.value246Destination=phaseAudio[28]->load(std::memory_order_relaxed)>.5f;p.value246Colour=int(phaseAudio[29]->load(std::memory_order_relaxed));p.value246Free=phaseAudio[30]->load(std::memory_order_relaxed)>.5f;
     p.valueVoice246=phaseAudio[31]->load(std::memory_order_relaxed)>.5f;p.valueVoice246Speed=int(phaseAudio[32]->load(std::memory_order_relaxed));p.valueVoice246Amount=int(phaseAudio[33]->load(std::memory_order_relaxed));
     p.valueVoice246Envelope=phaseAudio[34]->load(std::memory_order_relaxed)>.5f;p.valueVoice246Colour=int(phaseAudio[35]->load(std::memory_order_relaxed));p.valueVoice246Free=phaseAudio[36]->load(std::memory_order_relaxed)>.5f;
+    p.drum246=drum246Enabled();for(size_t i=0;i<4;++i)p.drum246Dynamics[i]=int16_t(drumAudio[i+1]->load(std::memory_order_relaxed));
     p.engine=int(get(Param::engine)); p.tone=get(Param::tone); p.color=get(Param::color); p.envelope=get(Param::envelope); p.effect=get(Param::effect); p.volume=1;
     if(p.engine==11)for(size_t pad=0;pad<24;++pad)for(size_t c=0;c<8;++c)p.dbox246Controls[pad][c]=int16_t(dboxAudio[pad][c]->load(std::memory_order_relaxed));
     p.attack=get(Param::attack); p.decay=get(Param::decay); p.sustain=get(Param::sustain); p.release=get(Param::release);
     p.lfoRate=get(Param::lfoRate); p.lfoDepth=get(Param::lfoDepth); p.lfoDestination=int(get(Param::lfoDestination)); p.lfoShape=int(get(Param::lfoShape));
     p.delayTime=get(Param::delayTime); p.feedback=get(Param::delayFeedback); p.drive=get(Param::drive); p.sampleLoop=get(Param::sampleLoop)>.5f;p.sampleRoot=get(Param::sampleRoot);p.sampleClean=get(Param::sampleClean)>.5f;
-    if(p.engine==5)for(size_t pad=0;pad<p.pads.size();++pad){const auto& source=padParameters[pad];auto& target=p.pads[pad];target.start=source[0]->load(std::memory_order_relaxed);target.end=source[1]->load(std::memory_order_relaxed);target.gain=source[2]->load(std::memory_order_relaxed);target.pitch=source[3]->load(std::memory_order_relaxed);target.reverse=source[4]->load(std::memory_order_relaxed)>.5f;target.gated=source[5]->load(std::memory_order_relaxed)>.5f;}
+    if(p.engine==5)for(size_t pad=0;pad<p.pads.size();++pad){const auto& source=padParameters[pad];auto& target=p.pads[pad];target.start=source[0]->load(std::memory_order_relaxed);target.end=source[1]->load(std::memory_order_relaxed);target.gain=source[2]->load(std::memory_order_relaxed);target.pitch=source[3]->load(std::memory_order_relaxed);target.reverse=source[4]->load(std::memory_order_relaxed)>.5f;target.gated=source[5]->load(std::memory_order_relaxed)>.5f;target.nativeMode=int(drumModeAudio[pad]->load(std::memory_order_relaxed));}
     const float outputTarget=get(Param::volume);
     bool running=get(Param::sequencer)>.5f;
     double bpm=get(Param::tempo),ppq=0; bool hostPosition=false,hostPlaying=true;
@@ -513,7 +528,7 @@ pocket::Sample PocketProcessor::readSample(const juce::File& file,juce::String& 
     if(!reader->read(&audio,0,length,0,true,true)) {error="Audio file could not be decoded.";return {};}
     pocket::Sample data; data.rate=reader->sampleRate; data.frames.resize(size_t(length));
     for(int i=0;i<length;++i) data.frames[size_t(i)]=reader->numChannels>1?(audio.getSample(0,i)+audio.getSample(1,i))*.5f:audio.getSample(0,i);
-    return data;
+    data.prepareDrumPcm();return data;
 }
 bool PocketProcessor::loadSample(const juce::File& file,juce::String& error) {
     auto data=readSample(file,error);if(data.frames.empty()) return false;
@@ -546,7 +561,7 @@ pocket::Sample PocketProcessor::factorySample(const juce::String& name) const {
     juce::AudioBuffer<float> audio(1,int(reader->lengthInSamples));
     if(!reader->read(&audio,0,audio.getNumSamples(),0,true,false)) return {};
     pocket::Sample result;result.rate=reader->sampleRate;
-    result.frames.assign(audio.getReadPointer(0),audio.getReadPointer(0)+audio.getNumSamples());return result;
+    result.frames.assign(audio.getReadPointer(0),audio.getReadPointer(0)+audio.getNumSamples());result.prepareDrumPcm();return result;
 }
 void PocketProcessor::loadFactoryKit(int index) {
     const char* kits[]={"Studio","Circuit","Dust"};
@@ -560,6 +575,7 @@ void PocketProcessor::loadFactoryKit(int index) {
 }
 void PocketProcessor::applyPreset(int index) {
     if(index<0||index>=int(pocket::factoryPresets.size())) return;
+    phaseState->getParameter("drum246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("phase246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("phase246Envelope")->setValueNotifyingHost(0);
     phaseState->getParameter("digital246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("digital246Envelope")->setValueNotifyingHost(0);
     phaseState->getParameter("filter246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("nitro246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("delay246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("grid246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("phone246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("spring246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("cwo246Enabled")->setValueNotifyingHost(0);
@@ -626,6 +642,12 @@ void PocketProcessor::applyVoltage246Init() {
     for(auto item:{std::pair{"engine",9.f},{"effect",0.f},{"drive",0.f},{"lfoDepth",0.f}}){auto* p=state.getParameter(item.first);p->setValueNotifyingHost(p->convertTo0to1(item.second));}
     for(size_t i=0;i<4;++i)for(auto* id:{pocket::voltage246Ids[i],pocket::voltage246EnvelopeIds[i]}){auto* p=phaseState->getParameter(id);p->setValueNotifyingHost(p->getDefaultValue());}
     setSelectedSound("voltage246:0");currentFactoryPreset.store(-1);currentUserPreset.store(-1);requestPanic(false);
+}
+void PocketProcessor::applyDrum246Init() {
+    applyPreset(22);for(auto item:{std::pair{"engine",5.f},{"tone",.5f},{"color",1.f},{"effect",0.f},{"drive",0.f},{"lfoDepth",0.f}}){auto* p=state.getParameter(item.first);p->setValueNotifyingHost(p->convertTo0to1(item.second));}
+    phaseState->getParameter("drum246Enabled")->setValueNotifyingHost(1);phaseState->getParameter("drum246EditPad")->setValueNotifyingHost(0);
+    for(size_t i=0;i<4;++i){auto* p=phaseState->getParameter(pocket::drum246EnvelopeIds[i]);p->setValueNotifyingHost(p->getDefaultValue());}for(int pad=0;pad<24;++pad){auto* p=phaseState->getParameter(drum246ModeId(pad));p->setValueNotifyingHost(p->getDefaultValue());}
+    setSelectedSound("drum246:0");currentFactoryPreset.store(-1);currentUserPreset.store(-1);requestPanic(false);
 }
 void PocketProcessor::applyDbox246Init() {
     applyPreset(0);
@@ -717,6 +739,7 @@ juce::ValueTree PocketProcessor::normalizedPhaseState(juce::ValueTree tree) cons
         child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);
     }
     for(int pad=-1;pad<24;++pad)for(int c=0;c<(pad<0?1:8);++c){const auto id=pad<0?juce::String("dbox246EditPad"):dbox246ParameterId(pad,c);if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);}}
+    juce::StringArray drumIds{"drum246Enabled","drum246EditPad"};for(const auto* id:pocket::drum246EnvelopeIds)drumIds.add(id);for(int pad=0;pad<24;++pad)drumIds.add(drum246ModeId(pad));for(const auto& id:drumIds)if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);}
     return tree;
 }
 void PocketProcessor::setStateInformation(const void* data,int size) {
@@ -742,7 +765,7 @@ void PocketProcessor::setStateInformation(const void* data,int size) {
         for(const char* id:{"seqMode","seqLength","seqRate","seqGate","seqSwing","arpOctaves","seqVelocity","seqEuclidean","seqPulses","seqRotation","sampleClean"})
             if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree parameter("PARAM");parameter.setProperty("id",id,nullptr);auto* p=state.getParameter(id);parameter.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(parameter,-1,nullptr);}
         {const juce::ScopedLock lock(libraryStateLock);for(int pad=0;pad<pocket::kitCapacity;++pad)kitNames[size_t(pad)]=tree.getProperty("kitName"+juce::String(pad),"Pad "+juce::String(pad+1)).toString().substring(0,160);}
-        for(int pad=0;pad<pocket::kitCapacity;++pad)publishPadPreview(pad,restoredKit[size_t(pad)]);
+        for(int pad=0;pad<pocket::kitCapacity;++pad){restoredKit[size_t(pad)].prepareDrumPcm();publishPadPreview(pad,restoredKit[size_t(pad)]);}
         const int selected=int(tree.getProperty("factoryPreset",-1));
         currentFactoryPreset.store(selected>=0&&selected<int(pocket::factoryPresets.size())?selected:-1);
         tree.removeProperty("factoryPreset",nullptr);
@@ -768,7 +791,10 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {return new PocketProce
 
 juce::String PocketProcessor::padParameterId(int pad,const char* field){return "pad"+juce::String(pad+1)+"_"+field;}
 bool PocketProcessor::loadKitPad(int pad,const juce::File& file,juce::String& error){if(pad<0||pad>=pocket::kitCapacity)return false;auto sample=readSample(file,error);if(sample.frames.empty())return false;publishPadPreview(pad,sample);{const juce::ScopedLock lock(libraryStateLock);kitNames[size_t(pad)]=file.getFileName();}{const juce::ScopedLock lock(getCallbackLock());engine.swapKitPad(pad,sample);kitPads.store(engine.getKitCount());}setSelectedSound({});currentFactoryPreset.store(-1);currentUserPreset.store(-1);return true;}
-void PocketProcessor::publishPadPreview(int pad,const pocket::Sample& sample){auto& preview=padPreviews[size_t(pad)];for(size_t bin=0;bin<preview.size();++bin){float peak=0;for(size_t i=sample.frames.size()*bin/preview.size();i<sample.frames.size()*(bin+1)/preview.size();++i)peak=std::max(peak,std::abs(sample.frames[i]));preview[bin].store(peak,std::memory_order_relaxed);}}
-std::array<float,128> PocketProcessor::kitPadPreview(int pad){std::array<float,128> out{};if(pad>=0&&pad<pocket::kitCapacity)for(size_t i=0;i<out.size();++i)out[i]=padPreviews[size_t(pad)][i].load(std::memory_order_relaxed);return out;}
+void PocketProcessor::publishPadPreview(int pad,const pocket::Sample& sample){
+    auto& preview=padPreviews[size_t(pad)];auto& native=drumPreviews[size_t(pad)];drumFrames[size_t(pad)].store(int(sample.drumPcm.size()),std::memory_order_relaxed);
+    for(size_t bin=0;bin<preview.size();++bin){float peak=0,nativePeak=0;for(size_t i=sample.frames.size()*bin/preview.size();i<sample.frames.size()*(bin+1)/preview.size();++i)peak=std::max(peak,std::abs(sample.frames[i]));for(size_t i=sample.drumPcm.size()*bin/native.size();i<sample.drumPcm.size()*(bin+1)/native.size();++i)nativePeak=std::max(nativePeak,std::abs(sample.drumPcm[i]/32768.f));preview[bin].store(peak,std::memory_order_relaxed);native[bin].store(nativePeak,std::memory_order_relaxed);}
+}
+std::array<float,128> PocketProcessor::kitPadPreview(int pad){std::array<float,128> out{};if(pad>=0&&pad<pocket::kitCapacity)for(size_t i=0;i<out.size();++i)out[i]=(drum246Enabled()?drumPreviews[size_t(pad)][i]:padPreviews[size_t(pad)][i]).load(std::memory_order_relaxed);return out;}
 
 juce::String PocketProcessor::kitPadName(int pad) const{if(pad<0||pad>=pocket::kitCapacity)return {};const juce::ScopedLock lock(libraryStateLock);return kitNames[size_t(pad)];}

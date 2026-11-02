@@ -563,3 +563,23 @@ smoothing, event/velocity/allocation policies, output interpolation/filtering,
 quiet detection, init, labels and graphics. Shared Tremolo is reused with authored
 drum composition; original drum Value/Random dispatch and acoustic validation
 remain pending. The legacy Drum synth remains explicitly authored.
+
+### Drum sampler 246 and host kit adaptation
+
+Drum246.h independently reconstructs the isolated mono reader, coarse/fine
+positioning, forward/reverse/loop branches, lifecycle/activity and saturating
+16-tap FIR. Drum246Tables.h contains numerical observations of all 1025 legible
+coefficients after the original float-to-fract16 conversion. Complete synthetic
+PCM/state/buffer observations are compared under the previously documented GNU
+BF524 profile with three writeback fixes. PCM guards, pitch/gain streams and event
+order are supplied; no firmware, factory audio/patches or decompiled code is shipped.
+Ghidra/Blackfin was a private aid, not a substitute for the full comparison.
+
+SampleData.h and Drum246Voice.h add authored offline linear import conversion to
+PCM16/44100 Hz (first twelve seconds), PCM alignment/guards, host clock/pitch,
+independent pad bank, allocation/stealing, output resampling and timing policies.
+The dynamic region/level curve is our model informed by operator-supplied manual
+v2.2 §6.4, not a recovered or numerically validated original envelope producer.
+Tremolo is composed with that supplied gain using our host policy. Original
+shared-source kit layout, dynamics producer, drum LFO dispatch and hardware
+acoustics remain pending. Original source audio is retained for sessions/legacy use.
