@@ -127,15 +127,15 @@ public:
         for(auto& v:voices) if(channel==0||v.channel==channel) { v.keyDown=false; v.released=true; }
         if(channel==0) pedals.fill(false); else pedals[channelIndex(channel)]=false;
     }
-    struct VisualState {std::array<float,4> random{};float envelope=0,progress=0,lfo=0;int active=0,stage=0,note=-1,channel=0;double frequency=0;uint64_t trigger=0;};
+    struct VisualState {std::array<float,4> random{};float envelope=0,progress=0,lfo=0;int active=0,stage=0,note=-1,channel=0,fmAlgorithm=0;double frequency=0;uint64_t trigger=0;};
     VisualState visualState(int mode) const noexcept {
         VisualState out;out.trigger=age;out.lfo=valueActive?valueEffect.phase():float(lfoPhase);uint64_t latest=0;
         for(const auto& v:voices) if(v.active) {
             ++out.active;out.envelope=std::max(out.envelope,v.level);
-            if(v.age>=latest) {latest=v.age;out.note=v.note;out.channel=v.channel;out.frequency=(monophonic()?v.glide.value:v.frequency)*bends[channelIndex(v.channel)];out.stage=nativeEnvelopeActive?(nativeFmActive?v.fm246.output.envelopeStage():nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
+            if(v.age>=latest) {latest=v.age;out.fmAlgorithm=v.fm246.algorithm;out.note=v.note;out.channel=v.channel;out.frequency=(monophonic()?v.glide.value:v.frequency)*bends[channelIndex(v.channel)];out.stage=nativeEnvelopeActive?(nativeFmActive?v.fm246.output.envelopeStage():nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
                 for(size_t i=0;i<4;++i)out.random[i]=v.randomLfo.active?v.randomLfo.modulation[i]/32768.f:0;
                 if(valueVoiceActive)out.lfo=v.valueVoice.phase();
-                if(tremoloActive)out.lfo=(nativeClusterActive?v.cluster246.output:nativeDrWaveActive?v.drWave246.output:nativeDigitalActive?v.digital246.output:v.phase246).tremolo.phase();
+                if(tremoloActive)out.lfo=(nativeFmActive?v.fm246.output:nativeClusterActive?v.cluster246.output:nativeDrWaveActive?v.drWave246.output:nativeDigitalActive?v.digital246.output:v.phase246).tremolo.phase();
                 const size_t length=mode==5?kit[size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
                 if(length) out.progress=std::clamp(float(v.samplePosition/double(length))+(mode==3?current.tone*.9f:0.f),0.f,1.f);
             }
@@ -152,10 +152,10 @@ public:
         const bool nativePhase=target.engine==1&&target.phase246;
         const bool nativeDigital=target.engine==0&&target.digital246;
         const bool nativeCore=nativeFm||nativePhase||nativeDigital||nativeDrWave||nativeCluster;
-        const bool nativeRandom=target.random246&&nativeCore&&!nativeFm;
+        const bool nativeRandom=target.random246&&nativeCore;
         const bool modEnvelope=nativeRandom?target.random246Controls[2]>=2048:target.valueVoice246Envelope;
-        const bool nativeTremolo=target.tremolo246&&nativeCore&&!nativeRandom&&!nativeFm;tremoloActive=nativeTremolo;
-        const bool nativeValueVoice=target.valueVoice246&&nativeCore&&!nativeTremolo&&!nativeRandom&&!nativeFm;
+        const bool nativeTremolo=target.tremolo246&&nativeCore&&!nativeRandom;tremoloActive=nativeTremolo;
+        const bool nativeValueVoice=target.valueVoice246&&nativeCore&&!nativeTremolo&&!nativeRandom;
         valueVoiceActive=nativeValueVoice;nativeFmActive=nativeFm;
         nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeEnvelopeActive=nativeFm||nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
         if(nativePhase){for(size_t i=0;i<4;++i){if(!phaseControlsInitialized)phaseWords[i]=target.phase246Controls[i];else phaseWords[i]+=smoothing*(target.phase246Controls[i]-phaseWords[i]);phaseRaw[i]=int16_t(std::clamp(phaseWords[i],0.f,32767.f)+.5f);}phaseControlsInitialized=true;}
@@ -200,16 +200,16 @@ public:
             float s=0, amplitude=v.level;
             std::array<int16_t,4> modulated{};
             if(nativeValueVoice||nativeRandom){
-                const auto& base=modEnvelope?(nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeCluster?clusterRaw:nativeDrWave?drWaveRaw:nativeDigital?digitalRaw:phaseRaw);
-                if(nativeRandom)modulated=v.randomLfo.next(true,target.random246Controls,nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,44100./(64*sampleRate),randomRng,base);
-                else modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
+                const auto& base=modEnvelope?(nativeFm?target.fm246Adsr:nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeFm?fmRaw:nativeCluster?clusterRaw:nativeDrWave?drWaveRaw:nativeDigital?digitalRaw:phaseRaw);
+                if(nativeRandom)modulated=v.randomLfo.next(true,target.random246Controls,nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,44100./(64*sampleRate),randomRng,base);
+                else modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
             }
             if(!nativeValueVoice&&v.valueVoice.active)v.valueVoice.reset();
             if(!nativeRandom&&v.randomLfo.active)v.randomLfo.reset();
-            auto& nativeOutput=nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
-            nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeCluster||nativeDrWave);
+            auto& nativeOutput=nativeFm?v.fm246.output:nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
+            nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeFm||nativeCluster||nativeDrWave);
             if(nativeFm){
-                s=v.fm246.next(frequency,fmRaw,target.fm246Adsr,fmConfig,phaseConfig,v.released);
+                s=v.fm246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?modulated:fmRaw,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:target.fm246Adsr,fmConfig,phaseConfig,v.released);
                 amplitude=1;v.level=v.fm246.output.envelopeLevel();if(v.fm246.output.envelopeDone())v.active=false;
             }
             else if(nativeCluster){

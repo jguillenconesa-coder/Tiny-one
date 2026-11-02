@@ -61,7 +61,7 @@ public:
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
     bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&valueVoice246Available();}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
-    bool valueVoice246Available() const {return phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
+    bool valueVoice246Available() const {return fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
     bool valueVoice246Enabled() const {return !random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
@@ -120,7 +120,7 @@ public:
     std::array<std::atomic<float>,128> samplePreview{};
     std::array<std::atomic<float>,4> visualRandom{};
     std::atomic<float> visualEnvelope{0},visualSamplePosition{0},visualLfoPhase{0},visualTime{0},visualLevel{0};
-    std::atomic<int> visualVoices{0},visualEnvelopeStage{0};
+    std::atomic<int> visualVoices{0},visualEnvelopeStage{0},visualFmAlgorithm{0};
     std::atomic<uint64_t> visualTrigger{0};
     std::array<std::atomic<int>,16> steps{};
 private:

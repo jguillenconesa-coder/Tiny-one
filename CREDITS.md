@@ -461,3 +461,12 @@ protected constants, acoustic equivalence and actual Live acceptance remain
 unverified. The six authored FM recipes are adapted, not original OP-1 presets.
 Own implementation, harness and diagnostic/test source are AGPL-3.0-only.
 [Scope and reproduction](docs/fm246-hybrid.md).
+
+### FM 0.28.0 performance adapters
+
+The fractional pitch interpolation in `Source/Fm246Pitch.h` is independently
+authored and is not recovered firmware arithmetic. Integer pitch preserves the
+separate original callback comparison. FM Value/Random numeric vectors are
+synthetic stimuli and observations from isolated original callbacks; firmware,
+ELFs, disassembly, private media and decompiler output are not distributed.
+The four-operator model retains its ten explicit substitutions unchanged.

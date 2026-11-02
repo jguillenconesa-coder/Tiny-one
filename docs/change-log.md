@@ -1,5 +1,13 @@
 # Historial de cambios
 
+## 0.28.0 — FM: afinación, modulación e interpretación
+
+- Extensión propia de pitch fraccionario; callback entero original conservado.
+- Rangos FM y 8192 callbacks Value/Random contrastados; Instrument/ADSR y Tremolo integrados.
+- Pitch/amplitud de Tremolo alineados, algoritmo efectivo visible, estados/proxies y modos de voz cubiertos.
+- Diez constantes siguen sustituidas explícitamente; sin calibración acústica ni presets originales nuevos.
+
+
 ## 0.26.0 — CWO Hybrid
 
 - Callback mono completo contrastado en 4096 bloques, estados/RNG/display y ocho

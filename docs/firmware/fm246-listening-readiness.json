@@ -1,0 +1,439 @@
+{
+  "schema": 1,
+  "scope": "FM reference triage only; screen selections are not MIDI events or proof of identical patch settings.",
+  "source_sha256": {
+    "factory-preset-inventory.json": "573c4ecd54a83d529ae49fe4093c185c1672d5c896c485d735ab16d1c6688a36",
+    "preset-video-index.json": "e231924ae5d7b793a64c3891194ce67b9e215d747b8169e49e9d628f1b3059a3"
+  },
+  "presets": [
+    {
+      "name": "big bottom",
+      "inventory_id": 145,
+      "selector": 0,
+      "ratio_table_words": [
+        9,
+        19,
+        29
+      ],
+      "authored_ratio_words": [
+        19
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "punch",
+      "lfo": null,
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 60.049023,
+        "video_seconds": 2054.666666,
+        "sampled_frame_ordinal": 31,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "dr fm",
+      "inventory_id": 146,
+      "selector": 8,
+      "ratio_table_words": [
+        7,
+        16,
+        23
+      ],
+      "authored_ratio_words": [
+        7
+      ],
+      "blue_zero": true,
+      "motion_zero": true,
+      "fx": "delay",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 68.049023,
+        "video_seconds": 2062.666666,
+        "sampled_frame_ordinal": 35,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "drill deep",
+      "inventory_id": 147,
+      "selector": 0,
+      "ratio_table_words": [
+        6,
+        16,
+        23
+      ],
+      "authored_ratio_words": [
+        6
+      ],
+      "blue_zero": false,
+      "motion_zero": false,
+      "fx": "cwo",
+      "lfo": "value",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 82.049023,
+        "video_seconds": 2076.666666,
+        "sampled_frame_ordinal": 42,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "inner space",
+      "inventory_id": 148,
+      "selector": 6,
+      "ratio_table_words": [
+        9,
+        14,
+        24
+      ],
+      "authored_ratio_words": [
+        24
+      ],
+      "blue_zero": true,
+      "motion_zero": true,
+      "fx": "delay",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 86.049023,
+        "video_seconds": 2080.666666,
+        "sampled_frame_ordinal": 44,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "mantra tones",
+      "inventory_id": 149,
+      "selector": 8,
+      "ratio_table_words": [
+        6,
+        14,
+        22
+      ],
+      "authored_ratio_words": [
+        6
+      ],
+      "blue_zero": true,
+      "motion_zero": true,
+      "fx": "punch",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 94.049023,
+        "video_seconds": 2088.666666,
+        "sampled_frame_ordinal": 48,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "neutrinos",
+      "inventory_id": 150,
+      "selector": 6,
+      "ratio_table_words": [
+        9,
+        14,
+        24
+      ],
+      "authored_ratio_words": [
+        24
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "delay",
+      "lfo": "element",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 114.049023,
+        "video_seconds": 2108.666666,
+        "sampled_frame_ordinal": 58,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "organized",
+      "inventory_id": 151,
+      "selector": 8,
+      "ratio_table_words": [
+        13,
+        16,
+        29
+      ],
+      "authored_ratio_words": [
+        13
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "spring",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 120.049023,
+        "video_seconds": 2114.666666,
+        "sampled_frame_ordinal": 61,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "repeat",
+      "inventory_id": 152,
+      "selector": 5,
+      "ratio_table_words": [
+        10,
+        19,
+        26
+      ],
+      "authored_ratio_words": [
+        19
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": null,
+      "lfo": "element",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 132.049023,
+        "video_seconds": 2126.666666,
+        "sampled_frame_ordinal": 67,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "rez bass",
+      "inventory_id": 153,
+      "selector": 5,
+      "ratio_table_words": [
+        13,
+        14,
+        29
+      ],
+      "authored_ratio_words": [
+        13
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "nitro",
+      "lfo": "value",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 138.049023,
+        "video_seconds": 2132.666666,
+        "sampled_frame_ordinal": 70,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "space radar",
+      "inventory_id": 154,
+      "selector": 8,
+      "ratio_table_words": [
+        6,
+        19,
+        27
+      ],
+      "authored_ratio_words": [
+        6,
+        19
+      ],
+      "blue_zero": true,
+      "motion_zero": false,
+      "fx": "grid",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 14,
+        "local_pts_seconds": 148.049023,
+        "video_seconds": 2142.666666,
+        "sampled_frame_ordinal": 75,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "squared",
+      "inventory_id": 155,
+      "selector": 5,
+      "ratio_table_words": [
+        13,
+        21,
+        29
+      ],
+      "authored_ratio_words": [
+        13
+      ],
+      "blue_zero": true,
+      "motion_zero": true,
+      "fx": null,
+      "lfo": "element",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 4.047005,
+        "video_seconds": 2153.333333,
+        "sampled_frame_ordinal": 3,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "sub bass",
+      "inventory_id": 156,
+      "selector": 6,
+      "ratio_table_words": [
+        13,
+        20,
+        22
+      ],
+      "authored_ratio_words": [
+        13
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "punch",
+      "lfo": null,
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 10.047005,
+        "video_seconds": 2159.333333,
+        "sampled_frame_ordinal": 6,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "sweet hi",
+      "inventory_id": 157,
+      "selector": 8,
+      "ratio_table_words": [
+        13,
+        16,
+        28
+      ],
+      "authored_ratio_words": [
+        13
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "delay",
+      "lfo": "value",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 14.047005,
+        "video_seconds": 2163.333333,
+        "sampled_frame_ordinal": 8,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "the cellist",
+      "inventory_id": 158,
+      "selector": 8,
+      "ratio_table_words": [
+        10,
+        19,
+        27
+      ],
+      "authored_ratio_words": [
+        19
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "spring",
+      "lfo": "tremolo",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 32.047005,
+        "video_seconds": 2181.333333,
+        "sampled_frame_ordinal": 17,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "warning",
+      "inventory_id": 159,
+      "selector": 3,
+      "ratio_table_words": [
+        8,
+        19,
+        28
+      ],
+      "authored_ratio_words": [
+        19
+      ],
+      "blue_zero": false,
+      "motion_zero": true,
+      "fx": "cwo",
+      "lfo": "bend",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 36.047005,
+        "video_seconds": 2185.333333,
+        "sampled_frame_ordinal": 19,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    },
+    {
+      "name": "yoshonka",
+      "inventory_id": 160,
+      "selector": 7,
+      "ratio_table_words": [
+        13,
+        18,
+        28
+      ],
+      "authored_ratio_words": [
+        13,
+        18
+      ],
+      "blue_zero": false,
+      "motion_zero": false,
+      "fx": "delay",
+      "lfo": "value",
+      "isolated": false,
+      "screen_observation": {
+        "segment": 15,
+        "local_pts_seconds": 44.047005,
+        "video_seconds": 2193.333333,
+        "sampled_frame_ordinal": 23,
+        "visually_reviewed": true,
+        "review_method": "Selected label and category inspected on private category contact sheet"
+      }
+    }
+  ],
+  "isolated_count": 0,
+  "authored_ratio_words_never_selected_by_stored_presets": [
+    12,
+    25
+  ],
+  "limits": [
+    "No audio was listened to, measured or calibrated by this script.",
+    "A blue-zero static preset does not expose modulator ratios; active LFO may change this.",
+    "Internal rate constants require nonzero Motion and audible modulation.",
+    "Video matching by name does not prove firmware version, numeric controls, notes or recording chain."
+  ]
+}

@@ -448,6 +448,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     }
     if(capture)inputCaptureFrames.store(captureWrite);
     const auto visual=engine.visualState(p.engine);
+    visualFmAlgorithm.store(visual.fmAlgorithm,std::memory_order_relaxed);
     visualEnvelope.store(visual.envelope,std::memory_order_relaxed);visualSamplePosition.store(visual.progress,std::memory_order_relaxed);
     for(size_t i=0;i<4;++i)visualRandom[i].store(visual.random[i],std::memory_order_relaxed);
     visualLfoPhase.store(visual.lfo,std::memory_order_relaxed);visualVoices.store(visual.active,std::memory_order_relaxed);visualEnvelopeStage.store(visual.stage,std::memory_order_relaxed);

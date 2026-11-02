@@ -1,5 +1,8 @@
 # Pocket One 0.27.0
 
+FM **0.28.0** adds authored fractional tuning and Value/Random/Tremolo routing.
+[Scope and limits](docs/fm246-performance.md) · [Validation](docs/releases/v0.28.0-validation.json).
+
 An OP-1-inspired **VST3 instrument and standalone application**, written in C++17 with JUCE 8. Independent of Teenage Engineering; no original firmware, factory samples, graphics or branding are included. The interface uses a grey enclosure, dark animated display, blue/green/white/orange encoders and two rows of button keys.
 
 ![Actual JUCE editor](docs/interface.png)

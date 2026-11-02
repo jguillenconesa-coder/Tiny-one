@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "scope": "FM modulation and authored fractional pitch; not hardware acoustic equivalence",
+  "value": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+    "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+    "note_reset": "0x019cfd5a",
+    "range_helper": "0x01a1dfec / 0x019f69b0",
+    "range_initializer": "0x01a1e914",
+    "instrument_types": [
+      0
+    ],
+    "digital_ranges": "0x01de5890",
+    "phase_ranges": "0x01de5890",
+    "envelope_ranges": "0x01de5710",
+    "tempo_float_multiply": "0x01aa55a0",
+    "tempo_float_to_integer": "0x01aa4dbc",
+    "tempo_constant_float32": 1662149.125,
+    "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+    "independent_cases": 2048,
+    "stream_cases": 2048,
+    "cases": 4096,
+    "full_self_bytes": 12,
+    "full_display_bytes": 32,
+    "target_words": 8,
+    "artifacts": {
+      "value-fm246-input.bin": {
+        "bytes": 393216,
+        "sha256": "0193d8b6967f6f9c515cfedd87b35e11a27ad7ebe87c370501faa9b6c1c69707",
+        "matches_committed_fixture": true
+      },
+      "value-fm246-output.bin": {
+        "bytes": 278680,
+        "sha256": "7add41599c1671e2fdf37479b1966d694a275730ebe1c738814a403015fc6e59",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+      "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+    },
+    "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "limitations": [
+      "Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.",
+      "The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity."
+    ]
+  },
+  "random": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "process": "0x019cea70",
+    "note_reset": "0x019ced74",
+    "factory": "0x019cf340",
+    "rng_address": "0xff802bc8",
+    "lcg_multiplier": 1664525,
+    "lcg_increment": 1013904223,
+    "range_initializer": "0x01a1e914",
+    "instrument_helper": "0x01a1dfec",
+    "envelope_helper": "0x019f69b0",
+    "cases": 4096,
+    "state_bytes": 44,
+    "target_words": 8,
+    "instrument_types": [
+      0
+    ],
+    "destinations": [
+      "Instrument eight signals / two passes over four controls",
+      "ADSR first four signals"
+    ],
+    "independent_cases": 2048,
+    "retained_stream_cases": 2048,
+    "artifacts": {
+      "random-fm246-input.bin": {
+        "bytes": 360448,
+        "sha256": "7a2abd1d3cf6128e47d24e66f69c67af1a89dbfb2fe5d3741f029387815b3434",
+        "matches_committed_fixture": true
+      },
+      "random-fm246-output.bin": {
+        "bytes": 294912,
+        "sha256": "0a4e0e9ec65d688a7419a91aba36aaae36721d8261314b55ee1bac6b6638cc88",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+      "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+    },
+    "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+    "limitations": [
+      "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+      "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+    ]
+  },
+  "independent_repeat": "Both oracles repeated byte-identically in fresh private a/b directories",
+  "integer_pitch_regression": {
+    "blocks": 4096,
+    "samples": 524288,
+    "state_and_scratch": "complete comparison with original fixtures"
+  },
+  "tuning": {
+    "cases": 72,
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "midi_notes": [
+      24,
+      36,
+      48,
+      60,
+      69,
+      81,
+      93,
+      105
+    ],
+    "bend_semitones": [
+      -2,
+      0,
+      2
+    ],
+    "max_cents": 0.00691601,
+    "scope": "Actual Engine output with Blue=0 compared to A440; not physical OP-1"
+  },
+  "source_sha256": {
+    "Source/Fm246.h": "7b26401a87bdb841735409576e22f6860885d6a1edad897063d3103e110036ca",
+    "Source/Fm246Pitch.h": "7cc628dd25aa6023b87c9492a9f5c3bcac807a7a3b372c2299c89db1107e508c",
+    "Source/Fm246Voice.h": "0c522fa1b138d147df8078700577f056b59ee8049219719278188cb60d1e54cf",
+    "Source/ValueVoice246Ranges.h": "71b8e3379bca5639fceffa912fd36f8b47ab9f6270457f3c556d9219aaafa8a4",
+    "Tests/Fm246IntegrationTests.cpp": "58a1dea534841cf8d0943942a6a644ccb67d1b1e059e34eb606998ae03780425",
+    "Tests/Fm246ModulationTests.cpp": "4288a98ed48d26be4d64650141d469a8ccba01ce445f2a647082f0e7d3dd3e6c",
+    "scripts/verify-value-voice246.py": "2fe6b359d75f7fecdcbd119c4e35f0a1e07df60532db2404a68d3aa9bf5bbce5",
+    "scripts/verify-random-voice246.py": "36402ba7fb41514a0bdd733be32b3eb43ac340dae9b7f3bcc9cfc3039b474011",
+    "Source/ScreenKnobParameter.h": "d0bc1d931a55adb9b00a938d3f5e0e752ca80e23e9f59e1243c442d85f6eee9a",
+    "Source/PluginProcessor.h": "667b8f137a179f0ea9e4678f845cc8134a45fffe73d290fa50921314f4610e58",
+    "Source/Engine.h": "e04333b0f429bdfcb5507ce96f8b3cfc7b4aee7e798091cda5efeb6624bd5377",
+    "Tests/PluginSmoke.cpp": "ecbb56a2c6f41af724a2432d57b3d1118e666ad9c6f0ab5f321f6bf65d394c82"
+  },
+  "sanitizers": "ASan/UBSan passed for render/integer parity, both FM modulation oracles and tuning/Value Engine integration; leak detection disabled"
+}

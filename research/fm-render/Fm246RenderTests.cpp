@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-#include "Fm246.h"
+#include "Fm246Pitch.h"
 #include <cmath>
 #include <cstring>
 #include <filesystem>
@@ -26,7 +26,10 @@ int main(int argc,char** argv){try{
         const std::array<int16_t,4> controls{{half(x+60),half(x+62),half(x+64),half(x+66)}};
         const auto fields=pocket::reference::decodeFmFields(uint16_t(controls[1]),uint16_t(controls[2]));
         ++coverage[size_t(fields.selector>=0&&fields.selector<9?fields.selector:9)];
+        auto hybridState=state;auto hybridWork=work;auto hybridAudio=audio;
+        pocket::fm246HybridBlock(hybridState,hybridWork,controls,word(x+68)&0xffff0000u,table,sine,hybridAudio);
         pocket::reference::fm246Block(state,work,controls,word(x+68),table,sine,audio);
+        check(std::memcmp(&state,&hybridState,sizeof state)==0&&std::memcmp(&work,&hybridWork,sizeof work)==0&&audio==hybridAudio,"Integer pitch extension diverges from original");
         std::array<unsigned char,896> actual{};
         std::memcpy(actual.data(),&state,60);std::memcpy(actual.data()+60,table.data(),60);
         std::memcpy(actual.data()+120,&work,512);std::memcpy(actual.data()+632,audio.data(),256);

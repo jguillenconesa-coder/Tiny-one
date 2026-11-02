@@ -43,6 +43,7 @@ def main():
     for name in ['ldr','assembler','linker','simulator','testutils','output']: p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--record',action='store_true')
     p.add_argument('--hybrid',action='store_true',help='Validate Dr. Wave (2) and Cluster (4) instead of Digital/Phase')
+    p.add_argument('--fm',action='store_true',help='Validate FM type 0 and its range descriptors')
     a = p.parse_args(); out = a.output.resolve(); templates = ROOT/'research/blackfin'
     if out.exists() or out.is_relative_to(ROOT): raise ValueError('Choose a NEW private directory outside the repository')
     expected = json.loads((ROOT/'docs/firmware/op1-246-ldr-map.json').read_text())['sha256']
@@ -54,10 +55,11 @@ def main():
         if base <= address and address+count <= base+len(image) and not flags&0x1000:
             image[address-base:address-base+count] = (struct.pack('<I',argument)*((count+3)//4))[:count] if flags&0x100 else raw[offset+16:offset+16+count]
         offset += 16+(0 if flags&0x100 else count)
-    out.mkdir(parents=True); (out/'sdram.bin').write_bytes(image); data = inputs((2,4) if a.hybrid else (1,7)); blocks = len(data)//96
+    out.mkdir(parents=True); (out/'sdram.bin').write_bytes(image); data = inputs((0,0) if a.fm else (2,4) if a.hybrid else (1,7)); blocks = len(data)//96
     (out/'inputs.bin').write_bytes(data)
     source = (templates/'value-voice-stream.s.in').read_text().replace('@WORK@',out.as_posix()).replace('@BYTES@',str(blocks*68))
     if a.hybrid: source = source.replace('0x01de58d0','0x01de5910').replace('0x01de5a50','0x01de5990')
+    if a.fm: source = source.replace('0x01de58d0','0x01de5890').replace('0x01de5a50','0x01de5890')
     (out/'probe.s').write_text(source)
     def run(args,**kw): subprocess.run([str(x) for x in args],check=True,timeout=60,**kw)
     run([a.assembler,'-I',a.testutils,'-o',out/'probe.o',out/'probe.s']); run([a.linker,'-T',templates/'voice-contract.ld','-o',out/'probe.elf',out/'probe.o'])
@@ -66,13 +68,13 @@ def main():
     if (out/'output.bin').stat().st_size != 152+blocks*68: raise RuntimeError('Incomplete Value voice/ENV output')
     artifacts = {}
     for name,path in [('value-voice246-input.bin',out/'inputs.bin'),('value-voice246-output.bin',out/'output.bin')]:
-        fixture = ROOT/'Tests/ReferenceVectors'/(name.replace('value-voice246','value-hybrid246') if a.hybrid else name)
+        fixture = ROOT/'Tests/ReferenceVectors'/(name.replace('value-voice246','value-fm246') if a.fm else name.replace('value-voice246','value-hybrid246') if a.hybrid else name)
         if a.record: fixture.write_bytes(path.read_bytes())
         if fixture.read_bytes() != path.read_bytes(): raise RuntimeError('Oracle differs: '+name)
         artifacts[fixture.name] = {'bytes':path.stat().st_size,'sha256':sha(path),'matches_committed_fixture':True}
     evidence = {'ldr_sha256':expected,'model':'GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation',
         'process':'0x019cfaf8 (synth instrument/first four ENV parameters only)','note_reset':'0x019cfd5a','range_helper':'0x01a1dfec / 0x019f69b0','range_initializer':'0x01a1e914',
-        'instrument_types':[2,4] if a.hybrid else [1,7],('drwave_ranges' if a.hybrid else 'digital_ranges'):'0x01de5910' if a.hybrid else '0x01de58d0',('cluster_ranges' if a.hybrid else 'phase_ranges'):'0x01de5990' if a.hybrid else '0x01de5a50','envelope_ranges':'0x01de5710','tempo_float_multiply':'0x01aa55a0','tempo_float_to_integer':'0x01aa4dbc',
+        'instrument_types':[0] if a.fm else [2,4] if a.hybrid else [1,7],('drwave_ranges' if a.hybrid else 'digital_ranges'):'0x01de5890' if a.fm else '0x01de5910' if a.hybrid else '0x01de58d0',('cluster_ranges' if a.hybrid else 'phase_ranges'):'0x01de5890' if a.fm else '0x01de5990' if a.hybrid else '0x01de5a50','envelope_ranges':'0x01de5710','tempo_float_multiply':'0x01aa55a0','tempo_float_to_integer':'0x01aa4dbc',
         'tempo_constant_float32':1662149.125,'tempo_setter_calls':'0x01a5e850 / 0x01a5e908 / 0x01a5e972',
         'independent_cases':2048,'stream_cases':2048,'cases':blocks,'full_self_bytes':12,'full_display_bytes':32,'target_words':8,
         'artifacts':artifacts,'tools':{str(x):sha(x) for x in [a.assembler,a.linker,a.simulator]},'patch_sha256':sha(templates/'gnu-13.1-dreg-writeback.patch'),

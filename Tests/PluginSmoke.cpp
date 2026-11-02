@@ -30,11 +30,27 @@ int main(int argc,char** argv) {
    auto renderFm=[&](int block){auto synth=std::make_unique<PocketProcessor>();synth->setStateInformation(saved.getData(),int(saved.getSize()));synth->state.getParameter("sequencer")->setValueNotifyingHost(0);synth->state.getParameter("effect")->setValueNotifyingHost(0);synth->prepareToPlay(48000,block);std::vector<float> audio;
     for(int offset=0;offset<8192;offset+=block){const int count=std::min(block,8192-offset);juce::AudioBuffer<float> buffer(2,count);buffer.clear();juce::MidiBuffer events;if(offset==0)events.addEvent(juce::MidiMessage::noteOn(1,69,.8f),0);if(offset<=4096&&offset+count>4096)events.addEvent(juce::MidiMessage::noteOff(1,69),4096-offset);synth->processBlock(buffer,events);for(int i=0;i<count;++i){check(std::isfinite(buffer.getSample(0,i)),"FM plugin nonfinite output");check(buffer.getSample(0,i)==buffer.getSample(1,i),"FM stereo output mismatch");audio.push_back(buffer.getSample(0,i));}}return audio;};
    const auto shortBlocks=renderFm(64),oddBlocks=renderFm(257);double energy=0;for(size_t i=0;i<shortBlocks.size();++i){check(std::abs(shortBlocks[i]-oddBlocks[i])<1e-6,"FM depends on host buffer boundaries");energy+=double(shortBlocks[i])*shortBlocks[i];}check(energy>.001,"FM plugin render is silent");
+   check(fm->valueVoice246Available(),"FM modulation unavailable");
+   for(int mode=0;mode<4;++mode){
+    raw.getParameter("random246Enabled")->setValueNotifyingHost(mode==0?1.f:0.f);
+    raw.getParameter("tremolo246Enabled")->setValueNotifyingHost(mode==1?1.f:0.f);
+    raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(mode>=2?1.f:0.f);
+    raw.getParameter("valueVoice246Destination")->setValueNotifyingHost(mode==3?1.f:0.f);
+    raw.getParameter("valueVoice246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("random246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("tremolo246Pitch")->setValueNotifyingHost(.3f);
+    raw.getParameter("tremolo246Volume")->setValueNotifyingHost(.5f);
+    fm->setScreenPage(2);check(fm->screenKnob(0).followedParameter()==raw.getParameter(mode==0?"random246Amount":mode==1?"tremolo246Speed":"valueVoice246Speed"),"FM LFO closed-editor proxy failed");
+    fm->getStateInformation(saved);restored->setStateInformation(saved.getData(),int(saved.getSize()));
+    check(restored->random246Enabled()==(mode==0)&&restored->tremolo246Enabled()==(mode==1)&&restored->valueVoice246Enabled()==(mode>=2),"FM modulation restore failed");
+    const auto a=renderFm(64),b=renderFm(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::abs(a[i]-b[i])<1e-6,"FM modulation depends on host buffer");energy+=a[i]*a[i];}check(energy>.001,"FM modulation is silent");
+   }
+   raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(0);fm->setScreenPage(0);
    raw.getParameter("digital246Enabled")->setValueNotifyingHost(1);
    check(fm->screenKnob(0).followedParameter()==raw.getParameter("digital246Blue"),"FM to Digital proxy switch failed");
    raw.getParameter("digital246Enabled")->setValueNotifyingHost(0);
    check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"Digital to FM proxy switch failed");
-   {std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("fm-hybrid.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"FM screenshot failed");}}
+   {restored->setScreenPage(0);std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("fm-hybrid.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"FM screenshot failed");}}
   }
   // The four host identities follow the visible page, including GUI touches,
   // host automation, discrete controls, editor closure and project restoration.
@@ -406,7 +422,7 @@ int main(int argc,char** argv) {
    for(int i=0;i<4;++i){auto* parameter=raw.getParameter(pocket::valueVoice246Ids[size_t(i)]);check(voice->screenKnob(i).followedParameter()==parameter,"Voice Value proxy target incorrect");voice->screenKnob(i).setValueNotifyingHost(.2f+i*.15f);check(std::abs(parameter->getValue()-voice->screenKnob(i).getValue())<.0001,"Voice MIDI proxy failed");}
    raw.getParameter("value246Enabled")->setValueNotifyingHost(1);check(!voice->value246Enabled()&&voice->screenKnob(0).followedParameter()==raw.getParameter("valueVoice246Speed"),"Voice priority over FX inconsistent");
    raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(0);check(voice->screenKnob(0).followedParameter()==raw.getParameter("value246Speed"),"Voice OFF failed to restore old FX mapping");raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(1);
-   raw.getParameter("digital246Enabled")->setValueNotifyingHost(0);check(!voice->valueVoice246Enabled()&&voice->screenKnob(0).followedParameter()==raw.getParameter("value246Speed"),"Voice native-core guard failed");raw.getParameter("digital246Enabled")->setValueNotifyingHost(1);
+   raw.getParameter("digital246Enabled")->setValueNotifyingHost(0);check(voice->valueVoice246Enabled(),"FM lost Voice Value after switching from Digital");voice->state.getParameter("engine")->setValueNotifyingHost(voice->state.getParameter("engine")->convertTo0to1(2));check(!voice->valueVoice246Enabled()&&voice->screenKnob(0).followedParameter()==raw.getParameter("value246Speed"),"Voice native-core guard failed");voice->state.getParameter("engine")->setValueNotifyingHost(0);raw.getParameter("digital246Enabled")->setValueNotifyingHost(1);
    check(voice->assignSoundSlot(false,0)&&voice->copySound(error),"Voice slot/copy failed");juce::MemoryBlock saved;voice->getStateInformation(saved);
    voice->applyPreset(0);check(!voice->valueVoice246Enabled(),"Legacy patch inherited Voice Value");check(voice->recallSoundSlot(false,0,error)&&voice->valueVoice246Enabled(),"Edited slot lost Voice Value");voice->applyPreset(1);check(voice->pasteSound(error)&&voice->valueVoice246Enabled(),"Clipboard lost Voice Value");
    voice->setStateInformation(saved.getData(),int(saved.getSize()));check(voice->valueVoice246Enabled()&&voice->screenKnob(0).followedParameter()==raw.getParameter("valueVoice246Speed"),"Project lost Voice Value");

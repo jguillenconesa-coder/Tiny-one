@@ -14,6 +14,10 @@ on:
       - 'scripts/verify-fm246-foundation.py'
       - 'Source/ReferenceDsp.h'
       - 'Source/Fractional246.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Random246.h'
+      - 'Tests/Fm246ModulationTests.cpp'
+      - 'Tests/ReferenceVectors/*fm246*.bin'
       - '.github/workflows/fm-foundation.yml'
   workflow_dispatch:
 jobs:

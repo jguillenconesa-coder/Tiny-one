@@ -5,10 +5,10 @@
 #include <stdexcept>
 static void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 int main(){try{
- for(double rate:{8000.,44100.,48000.,88200.,96000.,192000.})for(int mode:{6,7})for(int policy:{1,2}){
+ for(double rate:{8000.,44100.,48000.,88200.,96000.,192000.})for(int mode:{0,6,7})for(int policy:{1,2}){
   auto engine=std::make_unique<pocket::Engine>();pocket::Parameters p;
   p.engine=mode;p.hybridVoiceMode=policy;p.hybridGlideMs=100;p.effect=0;
-  p.drWave246Adsr[3]=p.cluster246Adsr[3]=16383;p.cluster246Controls={3072,0,512,3};
+  p.fm246Controls[0]=0;p.fm246Adsr[3]=p.drWave246Adsr[3]=p.cluster246Adsr[3]=16383;p.cluster246Controls={3072,0,512,3};
   engine->prepare(rate);engine->selectEngine(mode);engine->configureHybridPerformance(policy,100);
   auto render=[&](int count){double energy=0;for(int i=0;i<count;++i){const float s=engine->next(p);check(std::isfinite(s)&&std::abs(s)<1,"Unstable performance output");energy+=s*s;}return energy;};
   auto state=[&]{return engine->visualState(mode);};

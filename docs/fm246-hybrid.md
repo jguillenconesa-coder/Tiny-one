@@ -1,5 +1,9 @@
 # FM Hybrid 246 — cuatro operadores (0.27.0)
 
+> Actualización: la [0.28.0](fm246-performance.md) añade pitch fraccionario propio y
+> Value/Random/Tremolo para FM. Los límites de resolución y modulación descritos
+> abajo documentan la entrega 0.27.0.
+
 El FM de dos osciladores se sustituye por un núcleo de cuatro operadores
 reconstruido y contrastado con el callback mono de rev246. No basta con duplicar
 osciladores: se reproducen nueve rutas, realimentación por operador, aritmética

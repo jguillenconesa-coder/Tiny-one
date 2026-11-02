@@ -401,3 +401,14 @@ Se mantienen las veinte constantes legibles y diez sustituciones explícitas.
 La voz tocable usa ADSR reconstruida y adaptadores propios de pitch/reloj/salida.
 Quedan los moduladores Instrument/ENV del FM, dependencias protegidas, scheduler
 original y comparación acústica/Live; presets completos al final.
+
+
+## FM 0.28.0: afinación y modulación
+
+[Pitch fraccionario propio y moduladores](fm246-performance.md): conserva el
+callback original separado y exacto con pitch entero; conecta Value Instrument/ENV,
+Random y Tremolo al tipo FM 0 y sus descriptores contrastados. No recupera el
+scheduler ni modifica las diez constantes híbridas. El siguiente frente será
+comparar carácter con las referencias de vídeo ya aportadas y priorizar los
+motores restantes según la matriz, sin pretender calibrar constantes a partir de
+patches con FX/LFO activos ni bloquear el proyecto por falta de hardware.

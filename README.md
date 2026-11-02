@@ -1,5 +1,8 @@
 # Pocket One 0.27.0
 
+FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
+[Alcance y límites](docs/fm246-performance.md) · [Validación](docs/releases/v0.28.0-validation.json).
+
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
 [English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.27.0.md)

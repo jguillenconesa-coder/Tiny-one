@@ -1,0 +1,38 @@
+{
+  "version": "0.28.0",
+  "date": "2026-11-02",
+  "linux_build": "passed: standalone and VST3 Release",
+  "linux_ctest": {
+    "suites": 92,
+    "final_passed": 92,
+    "initial_full_run_seconds": 160.87,
+    "initial_full_run_passed": 91,
+    "corrected_proxy_regression_retest": {
+      "test": "plugin_smoke",
+      "passed": 1,
+      "seconds": 22.11
+    },
+    "scope": "Full suite plus focused successful rerun after correcting FM closed-editor LFO guard and updating previous FM exclusion expectation"
+  },
+  "sanitizers": {
+    "address": "passed (detect_leaks=0)",
+    "undefined": "passed",
+    "scope": "Original FM render plus integer-extension parity, FM Value/Random oracles, fractional tuning and Engine Value integration"
+  },
+  "realtime": {
+    "workloads": 396,
+    "tracked_callback_heap_calls": 0,
+    "new_coverage": "FM Random Instrument/ADSR, Tremolo and Value; raw control/modulation automation; existing output-bus PDC regression",
+    "timing": "diagnostic shared host, not a guarantee of DAW deadlines"
+  },
+  "native_ci": "pending implementation commit",
+  "evidence": "../firmware/fm246-performance-validation.json",
+  "estimated_progress": "51% +/-10 planning points; unchanged",
+  "limits": [
+    "Ten model substitutions remain",
+    "Fractional pitch, 88.2 kHz clock and scheduler are authored",
+    "No new acoustic calibration, Live test or complete original presets",
+    "Only previously supplied videos/presets available; hardware access not assumed"
+  ],
+  "visual_review": "passed: actual JUCE FM graph/four controls, modulator proxy and state checks"
+}

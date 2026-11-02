@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: FM Hybrid 246 (0.27.0)
+## Entrega actual: FM afinación y modulación (0.28.0)
+
+[FM: interpretación y moduladores](fm246-performance.md) recupera y completa el
+bloque del chat anterior: pitch fraccionario propio, Value Instrument/ADSR, Random
+y Tremolo, con los rangos originales de FM. Se conserva el callback entero exacto
+y su comparación de 4096 bloques, estados y scratch. Los 4096 callbacks Value y
+4096 Random de FM coinciden con dos ejecuciones originales independientes.
+
+72 mediciones de salida (notas MIDI 24–105, bend ±2 y tres tasas) dan un error
+máximo de 0.00691601 cents respecto a A440. Tremolo alinea pitch y amplitud al
+siguiente bloque; modos Mono/Legato/glide, sustain, cambios y pánico se amplían a
+FM. La UI muestra el algoritmo latcheado por la última voz. **92 suites Linux
+validadas**, **396 cargas sin heap rastreado**, ASan/UBSan y revisión visual pasan;
+CI nativo pendiente. [Evidencia](releases/v0.28.0-validation.json).
+
+El propietario solo dispone de vídeos y presets: se usarán esas referencias para
+comparaciones orientativas. El inventario encuentra cero presets FM sin FX/LFO
+activos simultáneamente y dos palabras de ratio protegidas sin excitar. No se ha
+calibrado audio ni se presupone acceso a un OP-1 físico. Las diez sustituciones,
+reloj/scheduler y comparación acústica/Live siguen pendientes. Se mantiene
+**51 % ±10 puntos** de planificación; presets originales completos al final.
+
+## Entrega anterior: FM Hybrid 246 (0.27.0)
 
 [FM de cuatro operadores](fm246-hybrid.md) sustituye el render propio de dos
 osciladores: nueve rutas, feedback Q15 y seis evoluciones internas. 4096 bloques /

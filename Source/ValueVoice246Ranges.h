@@ -3,13 +3,14 @@
 #include <array>
 #include <cstdint>
 namespace pocket::reference {
-// Numeric range-initializer observations for Digital (1), Phase (7), Dr. Wave (2), Cluster (4) and ADSR.
-inline constexpr std::array<std::array<std::array<int16_t,4>,8>,4> valueVoice246Ranges{{
+// Numeric range-initializer observations for Digital (1), Phase (7), Dr. Wave (2), Cluster (4), FM (0) and ADSR.
+inline constexpr std::array<std::array<std::array<int16_t,4>,8>,5> valueVoice246Ranges{{
     {{{{0,32767,32767,0}},{{2048,26624,24576,0}},{{-32768,32767,16384,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{0,32767,32767,0}},{{0,29491,32767,0}},{{0,32767,32767,0}},{{0,32767,32767,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{0,24575,4915,1}},{{0,16383,3276,1}},{{0,16383,3276,1}},{{0,32767,6553,0}},{{0,32767,0,1}},{{0,32767,0,1}},{{0,32767,0,1}},{{0,32767,0,0}}}},
     {{{{3072,17408,14336,0}},{{0,32767,32767,0}},{{512,24064,23552,0}},{{3,1638,1635,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
+    {{{{0,32767,32767,0}},{{0,32767,10485,0}},{{1024,17408,16384,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
 }};
-inline constexpr int valueVoice246RangeIndex(int type) noexcept {return type==1?0:type==7?1:type==2?2:type==4?3:-1;}
+inline constexpr int valueVoice246RangeIndex(int type) noexcept {return type==1?0:type==7?1:type==2?2:type==4?3:type==0?4:-1;}
 inline constexpr std::array<std::array<int16_t,3>,4> valueVoice246EnvelopeRanges{{{{64,16320,16384}},{{64,16320,16384}},{{0,32767,16384}},{{64,16320,16384}}}};
 }

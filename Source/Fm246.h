@@ -51,13 +51,10 @@ inline void fm246Operator(Fm246Operator& state,uint32_t increment,int16_t feedba
         output[n]=accumulate?saturate16(int(output[n])+value):value;
     }
 }
-// Mono block; invalid selectors advance contours but preserve output/scratch.
-inline bool fm246Block(Fm246State& state,Fm246Workspace& work,
-                       const std::array<int16_t,4>& controls,uint32_t pitch,
-                       const std::array<int16_t,30>& table,const std::array<int16_t,8192>& sine,
+// Routing shared by the exact callback and the explicitly authored pitch adapter.
+inline bool fm246Render(Fm246State& state,Fm246Workspace& work,
+                       const Fm246Coefficients& c,const std::array<int16_t,8192>& sine,
                        std::array<int16_t,128>& output) noexcept {
-    fm246AdvanceEnvelopes(state,multiplyQ15(controls[3],controls[3]),table,sine);
-    const Fm246Coefficients c(state,controls,pitch,table);
     if(c.algorithm<0||c.algorithm>8)return false;
     auto render=[&](size_t op,const std::array<int16_t,128>* in,std::array<int16_t,128>& out,bool sum=false){
         fm246Operator(state.operators[op],c.increments[op],c.feedback,c.levels[op-1],in,out,sum,sine);
@@ -83,5 +80,13 @@ inline bool fm246Block(Fm246State& state,Fm246Workspace& work,
         output[n]=parallel?saturate16(int(floorDivide(carrier.sample,2))+int(floorDivide(mix[n],2))):carrier.sample;
     }
     return true;
+}
+// Original mono block; low pitch bits are ignored by the original callback.
+inline bool fm246Block(Fm246State& state,Fm246Workspace& work,
+                       const std::array<int16_t,4>& controls,uint32_t pitch,
+                       const std::array<int16_t,30>& table,const std::array<int16_t,8192>& sine,
+                       std::array<int16_t,128>& output) noexcept {
+    fm246AdvanceEnvelopes(state,multiplyQ15(controls[3],controls[3]),table,sine);
+    return fm246Render(state,work,Fm246Coefficients(state,controls,pitch,table),sine,output);
 }
 }
