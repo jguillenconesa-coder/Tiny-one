@@ -42,7 +42,9 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
 [Base FM 246](fm246-foundation.md): 30 conversiones/copia de tabla, constructor,
 reset, seis pools completos de factoría y 8192 actualizaciones de seis envolventes
-contrastados con instrucciones originales. Repetición idéntica y sanitizadores.
+contrastados con instrucciones originales. Repetición idéntica y sanitizadores;
+[verificación independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41445071992)
+aprobada en Linux, Windows/MSVC y macOS Intel.
 Se conservan 20 palabras fuente legibles y se sustituyen explícitamente 10
 protegidas; esa conversión de arranque es condicionada, no memoria recuperada.
 El ensayo por registro usa tablas sintéticas explícitas y compara self/table/guardas.

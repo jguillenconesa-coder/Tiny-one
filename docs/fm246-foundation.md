@@ -37,7 +37,8 @@ entradas sintéticas explícitas, no constantes originales recuperadas.
 Coinciden todos los bytes de cada estado, las 30 palabras de tabla y ambas guardas.
 La repetición en otro directorio privado produce archivos idénticos. AddressSanitizer
 y UndefinedBehaviorSanitizer pasan. La compilación cruzada clang-cl con CRT/SDK de
-Microsoft también pasa bajo Wine; el CI dedicado verifica las plataformas nativas.
+Microsoft también pasa bajo Wine. El [CI nativo dedicado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41445071992)
+pasa en Linux, Windows/MSVC y macOS Intel.
 [Evidencia](firmware/fm246-foundation-validation.json).
 
 ## Procedencia de las 30 constantes

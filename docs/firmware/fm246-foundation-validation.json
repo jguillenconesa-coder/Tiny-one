@@ -79,7 +79,15 @@
     ],
     "rejected_before_simulation_or_output_creation": true
   },
-  "native_ci": "Pending dedicated FM workflow; no instrument implementation changed",
+  "native_ci": {
+    "run_id": 41445071992,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41445071992",
+    "linux": "success",
+    "windows_msvc": "success",
+    "macos_intel": "success",
+    "scope": "Independent table/factory/constructor/reset/six-envelope verifier; not audio renderer, plugin or installer validation",
+    "implementation_commit": "9c09de7ae15156a9af842904b6b28c402aeeb370"
+  },
   "local_windows_cross_check": {
     "compiler": "clang-cl 19 with Microsoft CRT/SDK",
     "runtime": "Wine 10, not native Windows",
