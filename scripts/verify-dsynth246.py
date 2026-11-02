@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-only
-"""Private D-synth original-render observations; lifecycle port only, not C++ audio parity."""
+"""Private D-synth oracle for the independently reconstructed complete render."""
 import argparse,hashlib,importlib.util,json,struct,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -27,7 +27,7 @@ def inputs():
   if n%43==0:action|=32
   if n%157==0:action|=64
   pitch=[(0,1,0x146f108,0x7fffffff,0x80000000,0xffffffff)[(n+i//16)%6] if n<1024 else rnd() for i in range(128)]
-  gain=[rnd()%32768 for _ in range(128)]
+  gain=[int(rnd()%65536)-32768 for _ in range(128)]
   data+=struct.pack('<314I8h2I128I128h',*pool,*context,*c,action,n%6,*pitch,*gain)
  assert len(data)==CASES*2048
  return data
@@ -55,6 +55,9 @@ def main():
  run([a.assembler,'-I',a.testutils,'-o',out/'halfword.o',templates/'parallel-halfword.s']);run([a.linker,'-T',templates/'flat.ld','-o',out/'halfword.elf',out/'halfword.o'])
  with (out/'halfword.bin').open('wb') as f:run([a.simulator,'--model','bf524',out/'halfword.elf'],stdout=f,stderr=subprocess.DEVNULL)
  if struct.unpack('<5I',(out/'halfword.bin').read_bytes())!=(0x1234,0x0200abcd,0x1234,0xabcd0300,0x2468abcd):raise RuntimeError('Both simulator writeback patches required')
+ run([a.assembler,'-I',a.testutils,'-o',out/'fp.o',templates/'parallel-fp-load.s']);run([a.linker,'-T',templates/'flat.ld','-o',out/'fp.elf',out/'fp.o'])
+ with (out/'fp.bin').open('wb') as f:run([a.simulator,'--model','bf524',out/'fp.elf'],stdout=f,stderr=subprocess.DEVNULL)
+ if struct.unpack('<5I',(out/'fp.bin').read_bytes())!=(0x1234,0xaabbccdd,0x1357,0xaabbccdd,6):raise RuntimeError('FP word-load source-latching patch required')
  run([a.assembler,'-I',a.testutils,'-o',out/'probe.o',out/'probe.s']);run([a.linker,'-T',templates/'cwo-foundation.ld','-o',out/'probe.elf',out/'probe.o'])
  with (out/'output.bin').open('wb') as f,(out/'probe.log').open('wb') as log:run([a.simulator,'--model','bf524','--memory-size','64M','--memory-region','0xff800000,0x8000','--memory-region','0xff900000,0x8000','--watch-cycles-int','3500000000',out/'probe.elf'],stdout=f,stderr=log)
  if (out/'output.bin').stat().st_size!=1604+CASES*4320:raise RuntimeError('Incomplete D-synth output')
@@ -64,7 +67,7 @@ def main():
   if a.record:target.write_bytes(source.read_bytes())
   if target.read_bytes()!=source.read_bytes():raise RuntimeError('Oracle mismatch '+target.name)
   artifacts[target.name]={'bytes':source.stat().st_size,'sha256':sha(source)}
- report={'ldr_sha256':expected,'original_render_blocks':CASES,'original_render_observed_samples':CASES*128,'cpp_audio_renderer':'not implemented; no audio parity claim','routines':{'render':'0x0197e1d8','factory':'0x0197ee60','constructor':'0x0197e058','bind':'0x0197e0b0','reset':'0x0197e0ee','release':'0x0197e168','shared_init':'0x0197eeb0'},'ranges':'0x01de5b90','state_bytes':72,'pool_bytes':432,'shared_context_bytes':824,'input_record_bytes':2048,'output_prefix_bytes':1604,'output_record_bytes':4320,'controls':8,'guards':{'pool':'0xffb001b0','context':'0x01cebbe0','frequency_end':'0xff802154','rng':'0xff802bc8'},'mix_modes_exercised':8,'artifacts':artifacts,'tools':{Path(k).name:sha(k) for k in (a.assembler,a.linker,a.simulator)},'limits':['Audio and post-render state are original-instruction observations, not a reconstructed renderer.','C++ implements lifecycle and history capture only; render state is explicitly handed back by the oracle.','Caller supplies pitch, gain, event order and bounded six-voice context. No original scheduler or acoustic-equivalence claim.']}
+ report={'ldr_sha256':expected,'original_render_blocks':CASES,'original_render_observed_samples':CASES*128,'cpp_audio_renderer':'Source/Dsynth246.h; compared separately by dsynth246_render_tests','model':'GNU 13.1 BF524 with Dreg, halfword and FP word-load writeback fixes','fp_patch_sha256':sha(ROOT/'research/blackfin/gnu-13.1-fp-load-writeback.patch'),'routines':{'render':'0x0197e1d8','factory':'0x0197ee60','constructor':'0x0197e058','bind':'0x0197e0b0','reset':'0x0197e0ee','release':'0x0197e168','shared_init':'0x0197eeb0'},'ranges':'0x01de5b90','state_bytes':72,'pool_bytes':432,'shared_context_bytes':824,'input_record_bytes':2048,'output_prefix_bytes':1604,'output_record_bytes':4320,'controls':8,'guards':{'pool':'0xffb001b0','context':'0x01cebbe0','frequency_end':'0xff802154','rng':'0xff802bc8'},'mix_modes_exercised':8,'artifacts':artifacts,'tools':{Path(k).name:sha(k) for k in (a.assembler,a.linker,a.simulator)},'limits':['Complete original instructions run under the documented corrected simulator; hardware execution not measured.','Caller supplies pitch, gain, event order and bounded six-voice context. No original scheduler or acoustic-equivalence claim.']}
  (out/'evidence.json').write_text(json.dumps(report,indent=2)+'\n')
  print('PASS: D-synth original complete render observations, 4096 blocks / 524288 samples')
 if __name__=='__main__':main()

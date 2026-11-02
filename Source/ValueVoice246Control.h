@@ -12,14 +12,15 @@ struct ValueVoice246Control {
     bool active=false,pendingNote=false;
     void reset() noexcept {*this={};}
     void noteOn() noexcept {pendingNote=true;}
-    std::array<int16_t,4> next(bool enabled,bool envelope,bool free,int speed,int amount,int colour,int type,
-                               uint32_t tempo,double clockStep,const std::array<int16_t,4>& base,
+    template<size_t Count=4>
+    std::array<int16_t,Count> next(bool enabled,bool envelope,bool free,int speed,int amount,int colour,int type,
+                               uint32_t tempo,double clockStep,const std::array<int16_t,Count>& base,
                                const std::array<int16_t,8192>& sine) noexcept {
         const auto index=reference::valueVoice246RangeIndex(type);
         if(!enabled||index<0){if(active)reset();return base;}
-        active=true;colour=std::clamp(colour,0,3);
+        active=true;const bool extended=type==12&&!envelope&&Count==8;colour=std::clamp(colour,0,extended?7:3);
         const std::array<int16_t,8> controls{{int16_t(std::clamp(speed,0,16384)),int16_t(std::clamp(amount,-32767,32767)),
-            int16_t((envelope?4096:0)|(free?2048:0)),int16_t(colour*4096),0,0,0,0}};
+            int16_t((envelope?4096:0)|(free?2048:0)),int16_t(colour*(extended?2048:4096)),0,0,0,0}};
         if(pendingNote){state.noteOn(controls);pendingNote=false;}
         if(position>=1){
             std::array<int16_t,8> targets{};std::copy(base.begin(),base.end(),targets.begin());

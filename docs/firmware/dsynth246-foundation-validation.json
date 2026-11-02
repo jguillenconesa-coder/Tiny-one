@@ -1,4 +1,7 @@
 {
+  "scope": "Historical foundation-only evidence, not the current renderer validation",
+  "artifact_revision": "2a33075c004a2174ffc2b6eb5482be1837acf815",
+  "superseded_by": "dsynth246-render-validation.json",
   "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
   "original_render_blocks": 4096,
   "original_render_observed_samples": 524288,

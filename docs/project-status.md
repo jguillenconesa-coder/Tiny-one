@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 58 % del objetivo completo
+## Avance estimado: aproximadamente 60 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 68 % | 20,4 puntos |
+| Motores originales y sus filtros | 30 % | 74 % | 22,2 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈58 %** (57,9 antes de redondear) |
+| Total | 100 % | | **≈60 %** (59,7 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,19 +39,24 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Bloque actual de investigación: D-synth
+## Entrega actual: D-synth 246 (0.32.0)
 
-[Base de D-synth](dsynth246-foundation.md) implementa y contrasta el ciclo de seis
-voces y la memoria de captura. Value/Random tipo12 añade ocho destinos directos,
-con 8192 callbacks coincidentes. El oráculo registra4096 bloques/524288 muestras
-del render original; **el renderer C++ y la integración audible siguen pendientes**.
-Linux: 103 suites aprobadas, 468 cargas existentes sin heap rastreado y ASan/UBSan
-de ciclo/modulación aprobados. Las envolventes específicas no quedan completadas
-por el ADSR común. El [CI específico](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098182)
-pasa en Linux/Windows/macOS Intel; el CI completo del commit sigue en curso. La estimación
-permanece en **≈58 % ±10 puntos** mientras se completa ese portado.
+[D-synth](dsynth246-native.md) añade el undécimo motor con dos osciladores,
+cuatro configuraciones, ocho mezclas y envolventes internas. El renderer C++
+completo coincide en 4096 bloques / 524288 muestras, seis estados y memorias,
+bajo pitch/ganancia explícitos y el modelo BF524 corregido. Sin coeficientes
+sustituidos. Un tercer parche de cargas relativas a FP corrige un defecto del
+simulador; doce oráculos anteriores conservan sus resultados.
 
-## Última entrega audible: Voltage 246 (0.31.0)
+Ocho controles con banco OSC II, ADSR de ganancia antes del filtro, seis voces,
+Mono/Legato/glide, moduladores, automatización, estado y animación integrados.
+[Validación de entrega](releases/v0.32.0-validation.json). Estimación **≈60 % ±10**
+de planificación. La fidelidad acústica no está medida; faltan calibración,
+Ableton real, runtime arm64 y los componentes pendientes de la matriz.
+Presets originales completos al final. Sigue el estudio de D-box/drum y del
+ruteo de voz pendiente, manteniendo las dependencias L1 explícitas.
+
+## Entrega anterior: Voltage 246 (0.31.0)
 
 [Voltage](voltage246-native.md) añade el décimo motor. La candidata se valida como
 callback mono completo: cuatro osciladores, XOR/feedback, carga, dispersión y filtro,

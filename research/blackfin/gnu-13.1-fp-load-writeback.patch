@@ -1,0 +1,18 @@
+SPDX-License-Identifier: GPL-3.0-or-later
+Local research patch to GNU GDB 13.1 simulator, FSF/Analog Devices source.
+Not linked into Pocket One. Apply after the two existing writeback patches.
+
+--- a/sim/bfin/bfin-sim.c
++++ b/sim/bfin/bfin-sim.c
+@@ -3430,7 +3430,10 @@
+   if (W == 0)
+     {
+       TRACE_INSN (cpu, "%s = [FP + %s];", reg_name, imm_str);
+-      reg_write (cpu, grp, reg, GET_LONG (ea));
++      if (grp == 0)
++        SET_DREG (reg, GET_LONG (ea));
++      else
++        reg_write (cpu, grp, reg, GET_LONG (ea));
+     }
+   else
+     {

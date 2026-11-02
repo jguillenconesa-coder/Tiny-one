@@ -9,3 +9,13 @@ add_test(NAME dsynth246_foundation COMMAND dsynth246_foundation_tests "${CMAKE_C
 add_executable(dsynth246_modulation_tests ../../Tests/Fm246ModulationTests.cpp)
 target_include_directories(dsynth246_modulation_tests PRIVATE ../../Source)
 add_test(NAME dsynth246_modulation COMMAND dsynth246_modulation_tests "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/ReferenceVectors" dsynth)
+
+add_executable(dsynth246_render_tests Dsynth246RenderTests.cpp)
+target_include_directories(dsynth246_render_tests PRIVATE ../../Source)
+add_test(NAME dsynth246_render COMMAND dsynth246_render_tests "${CMAKE_CURRENT_SOURCE_DIR}/vectors")
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  add_executable(dsynth246_integration_tests ../../Tests/Dsynth246IntegrationTests.cpp)
+  target_include_directories(dsynth246_integration_tests PRIVATE ../../Source)
+  add_test(NAME dsynth246_integration COMMAND dsynth246_integration_tests)
+endif()

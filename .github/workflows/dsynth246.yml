@@ -1,4 +1,4 @@
-name: Validate D-synth lifecycle, original render contract and modulation
+name: Validate D-synth reconstructed render and modulation
 permissions:
   contents: read
 on:
@@ -7,6 +7,9 @@ on:
       - 'research/dsynth-render/**'
       - 'research/blackfin/dsynth-stream.s.in'
       - 'scripts/verify-dsynth246.py'
+      - 'research/blackfin/parallel-fp-load.s'
+      - 'research/blackfin/gnu-13.1-fp-load-writeback.patch'
+      - 'Tests/Dsynth246IntegrationTests.cpp'
       - 'Source/Dsynth246*.h'
       - 'Source/ReferenceDsp.h'
       - 'Source/Envelope246Tables.h'

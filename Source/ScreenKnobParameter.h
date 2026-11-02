@@ -10,6 +10,7 @@ public:
     ScreenKnobParameter(const juce::String& id,const juce::String& name)
         : RangedAudioParameter(juce::ParameterID{id,1},name,juce::AudioProcessorParameterWithIDAttributes{}) {}
     void disconnect() {
+        if(auto* p=dsynthAlternative.exchange(nullptr))p->removeListener(this);if(auto* p=dsynthSecondary.exchange(nullptr))p->removeListener(this);
         if(auto* p=voltageAlternative.exchange(nullptr))p->removeListener(this);
         if(auto* p=dnaAlternative.exchange(nullptr))p->removeListener(this);
         if(auto* p=stringAlternative.exchange(nullptr))p->removeListener(this);
@@ -32,7 +33,7 @@ public:
         if(auto* p=target.exchange(nullptr))p->removeListener(this);
     }
     void follow(juce::RangedAudioParameter* next) {
-        if(!voltageAlternative.load()&&!dnaAlternative.load()&&!stringAlternative.load()&&!fmAlternative.load()&&!trackMode.load()&&!alternative.load()&&!digitalAlternative.load()&&!drWaveAlternative.load()&&!clusterAlternative.load()&&!tremoloAlternative.load()&&!randomAlternative.load()&&!filterAlternative.load()&&!nitroAlternative.load()&&!delayAlternative.load()&&!gridAlternative.load()&&!phoneAlternative.load()&&!springAlternative.load()&&!cwoAlternative.load()&&currentTarget()==next)return;
+        if(!dsynthAlternative.load()&&!voltageAlternative.load()&&!dnaAlternative.load()&&!stringAlternative.load()&&!fmAlternative.load()&&!trackMode.load()&&!alternative.load()&&!digitalAlternative.load()&&!drWaveAlternative.load()&&!clusterAlternative.load()&&!tremoloAlternative.load()&&!randomAlternative.load()&&!filterAlternative.load()&&!nitroAlternative.load()&&!delayAlternative.load()&&!gridAlternative.load()&&!phoneAlternative.load()&&!springAlternative.load()&&!cwoAlternative.load()&&currentTarget()==next)return;
         disconnect();target.store(next);
         if(next){next->addListener(this);sendValueChangedMessageToListeners(next->getValue());}
     }
@@ -51,6 +52,7 @@ public:
         digitalSelection=&digitalEnabled;digitalPrerequisite.store(digitalGuard);digitalAlternative.store(digital);
         digital->addListener(this);sendValueChangedMessageToListeners(getValue());
     }
+    void followDsynth(juce::RangedAudioParameter* primary,juce::RangedAudioParameter* secondary,std::atomic<float>& engine,std::atomic<float>& bank){dsynthEngine=&engine;dsynthBank=&bank;dsynthAlternative=primary;primary->addListener(this);if(secondary!=primary){dsynthSecondary=secondary;secondary->addListener(this);}sendValueChangedMessageToListeners(getValue());}
     void followVoltage(juce::RangedAudioParameter* parameter,std::atomic<float>& engine){voltageEngine=&engine;voltageAlternative=parameter;parameter->addListener(this);sendValueChangedMessageToListeners(getValue());}
     void followDna(juce::RangedAudioParameter* parameter,std::atomic<float>& engine){dnaEngine=&engine;dnaAlternative=parameter;parameter->addListener(this);sendValueChangedMessageToListeners(getValue());}
     void followString(juce::RangedAudioParameter* parameter,std::atomic<float>& engine){stringEngine=&engine;stringAlternative=parameter;parameter->addListener(this);sendValueChangedMessageToListeners(getValue());}
@@ -111,6 +113,7 @@ private:
     std::atomic<juce::RangedAudioParameter*> filterAlternative{nullptr};std::atomic<std::atomic<float>*> filterSelection{nullptr};
     std::atomic<juce::RangedAudioParameter*> clusterAlternative{nullptr};std::atomic<std::atomic<float>*> clusterEngine{nullptr};
     std::atomic<juce::RangedAudioParameter*> drWaveAlternative{nullptr};std::atomic<std::atomic<float>*> drWaveEngine{nullptr};
+    std::atomic<juce::RangedAudioParameter*> dsynthAlternative{nullptr},dsynthSecondary{nullptr};std::atomic<std::atomic<float>*> dsynthEngine{nullptr},dsynthBank{nullptr};
     std::atomic<juce::RangedAudioParameter*> voltageAlternative{nullptr};std::atomic<std::atomic<float>*> voltageEngine{nullptr};
     std::atomic<juce::RangedAudioParameter*> dnaAlternative{nullptr};std::atomic<std::atomic<float>*> dnaEngine{nullptr};
     std::atomic<juce::RangedAudioParameter*> stringAlternative{nullptr};std::atomic<std::atomic<float>*> stringEngine{nullptr};
@@ -125,8 +128,8 @@ private:
     std::array<juce::RangedAudioParameter*,4> tracks{};
     std::atomic<float>* trackSelection=nullptr;
     std::atomic<bool> trackMode{false};
-    juce::RangedAudioParameter* currentTarget() const {if(auto* p=voltageAlternative.load())if(int(voltageEngine.load()->load())==9)return p;if(auto* p=dnaAlternative.load())if(int(dnaEngine.load()->load())==8)return p;if(auto* p=stringAlternative.load())if(int(stringEngine.load()->load())==2)return p;if(auto* p=fmAlternative.load())if(int(fmEngine.load()->load())==0&&fmDigital.load()->load()<=.5f)return p;if(auto* p=cwoAlternative.load())if(cwoSelection.load()->load()>.5f)return p;if(auto* p=springAlternative.load())if(springSelection.load()->load()>.5f)return p;if(auto* p=phoneAlternative.load())if(phoneSelection.load()->load()>.5f)return p;if(auto* p=gridAlternative.load())if(gridSelection.load()->load()>.5f)return p;if(auto* p=delayAlternative.load())if(delaySelection.load()->load()>.5f)return p;if(auto* p=nitroAlternative.load())if(nitroSelection.load()->load()>.5f)return p;if(auto* p=filterAlternative.load())if(filterSelection.load()->load()>.5f)return p;if(auto* p=randomAlternative.load())if(randomSelection.load()->load()>.5f){const auto e=int(randomEngine.load()->load());if(e==6||e==7||(e==1&&randomPhase.load()->load()>.5f)||e==0||e==2||e==8||e==9)return p;}if(auto* p=tremoloAlternative.load())if(tremoloSelection.load()->load()>.5f){const auto e=int(tremoloEngine.load()->load());if(e==6||e==7||(e==1&&tremoloPhase.load()->load()>.5f)||e==0||e==2||e==8||e==9)return p;}if(auto* p=clusterAlternative.load())if(int(clusterEngine.load()->load())==7)return p;if(auto* p=drWaveAlternative.load())if(int(drWaveEngine.load()->load())==6)return p;if(trackMode.load())return tracks[size_t(std::clamp(int(trackSelection->load()),0,3))];
-        if(auto* p=voiceAlternative.load())if(voiceSelection.load()->load()>.5f){const auto e=int(voiceEngine.load()->load());if(e==6||e==7||(e==1&&voicePhase.load()->load()>.5f)||e==0||e==2||e==8||e==9)return p;}
+    juce::RangedAudioParameter* currentTarget() const {if(auto* p=dsynthAlternative.load())if(int(dsynthEngine.load()->load())==10){auto* q=dsynthSecondary.load();return q&&dsynthBank.load()->load()>.5f?q:p;}if(auto* p=voltageAlternative.load())if(int(voltageEngine.load()->load())==9)return p;if(auto* p=dnaAlternative.load())if(int(dnaEngine.load()->load())==8)return p;if(auto* p=stringAlternative.load())if(int(stringEngine.load()->load())==2)return p;if(auto* p=fmAlternative.load())if(int(fmEngine.load()->load())==0&&fmDigital.load()->load()<=.5f)return p;if(auto* p=cwoAlternative.load())if(cwoSelection.load()->load()>.5f)return p;if(auto* p=springAlternative.load())if(springSelection.load()->load()>.5f)return p;if(auto* p=phoneAlternative.load())if(phoneSelection.load()->load()>.5f)return p;if(auto* p=gridAlternative.load())if(gridSelection.load()->load()>.5f)return p;if(auto* p=delayAlternative.load())if(delaySelection.load()->load()>.5f)return p;if(auto* p=nitroAlternative.load())if(nitroSelection.load()->load()>.5f)return p;if(auto* p=filterAlternative.load())if(filterSelection.load()->load()>.5f)return p;if(auto* p=randomAlternative.load())if(randomSelection.load()->load()>.5f){const auto e=int(randomEngine.load()->load());if(e==6||e==7||(e==1&&randomPhase.load()->load()>.5f)||e==0||e==2||e==8||e==9||e==10)return p;}if(auto* p=tremoloAlternative.load())if(tremoloSelection.load()->load()>.5f){const auto e=int(tremoloEngine.load()->load());if(e==6||e==7||(e==1&&tremoloPhase.load()->load()>.5f)||e==0||e==2||e==8||e==9||e==10)return p;}if(auto* p=clusterAlternative.load())if(int(clusterEngine.load()->load())==7)return p;if(auto* p=drWaveAlternative.load())if(int(drWaveEngine.load()->load())==6)return p;if(trackMode.load())return tracks[size_t(std::clamp(int(trackSelection->load()),0,3))];
+        if(auto* p=voiceAlternative.load())if(voiceSelection.load()->load()>.5f){const auto e=int(voiceEngine.load()->load());if(e==6||e==7||(e==1&&voicePhase.load()->load()>.5f)||e==0||e==2||e==8||e==9||e==10)return p;}
         if(auto* p=digitalAlternative.load())if(digitalSelection.load()->load()>.5f&&int(engineSelection.load()->load())==0){auto* condition=digitalPrerequisite.load();if(!condition||condition->load()>.5f)return p;}
         if(auto* p=alternative.load())if(selection.load()->load()>.5f){auto* engine=engineSelection.load();if(!engine||int(engine->load())==1){auto* condition=guard.load();if(!condition||condition->load()>.5f)return p;}}
         return target.load();}

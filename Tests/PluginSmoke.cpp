@@ -160,6 +160,45 @@ int main(int argc,char** argv) {
    fm->state.getParameter("engine")->setValueNotifyingHost(0);check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"Voltage to FM proxy switch failed");fm->state.getParameter("engine")->setValueNotifyingHost(fm->state.getParameter("engine")->convertTo0to1(9));check(fm->screenKnob(0).followedParameter()==raw.getParameter("voltage246Blue"),"FM to Voltage proxy switch failed");
    {restored->setScreenPage(0);std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("voltage246-native.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"Voltage screenshot failed");}}
   }
+  {
+   auto fm=std::make_unique<PocketProcessor>();juce::String loadError;check(fm->loadSound("dsynth246:0",loadError)&&fm->selectedSound()=="dsynth246:0","Dsynth catalogue init failed");
+   {auto tail=std::make_unique<PocketProcessor>();tail->applyDsynth246Init();tail->phaseParameters().getParameter("dsynth246OrangeII")->setValueNotifyingHost(0);tail->phaseParameters().getParameter("dsynth246Release")->setValueNotifyingHost(1);tail->state.getParameter("masterEcho")->setValueNotifyingHost(0);tail->state.getParameter("sequencer")->setValueNotifyingHost(0);tail->prepareToPlay(48000,128);const auto reported=tail->getTailLengthSeconds();int last=-1;for(int n=0;n<24000;n+=128){juce::AudioBuffer<float> audio(2,128);audio.clear();juce::MidiBuffer events;if(n==0)events.addEvent(juce::MidiMessage::noteOn(1,57,1.f),0);if(n==8192)events.addEvent(juce::MidiMessage::noteOff(1,57),0);tail->processBlock(audio,events);for(int k=0;k<128;++k)if(std::abs(audio.getSample(0,k))>1e-6)last=n+k;}check(last>8192+tail->getLatencySamples()+128,"Dsynth filter-tail fixture did not ring out");check(reported>=double(last-8192)/48000.,"Host tail truncates Dsynth core filters");}
+   check(fm->dsynth246Enabled(),"Dsynth is not selected");auto& raw=fm->phaseParameters();
+   for(int bank=0;bank<2;++bank){raw.getParameter("dsynth246Bank")->setValueNotifyingHost(float(bank));fm->setScreenPage(0);for(size_t k=0;k<4;++k){auto* target=raw.getParameter(pocket::dsynth246Ids[k+size_t(bank)*4]);check(fm->screenKnob(int(k)).followedParameter()==target,"Dsynth bank proxy failed");fm->screenKnob(int(k)).setValueNotifyingHost(.3f+float(k)*.13f);check(std::abs(fm->screenKnob(int(k)).getValue()-target->getValue())<.0001,"Dsynth bank proxy write failed");}}raw.getParameter("dsynth246Bank")->setValueNotifyingHost(0);
+   for(int page=0;page<2;++page){fm->setScreenPage(page);for(size_t i=0;i<4;++i){
+    auto* target=raw.getParameter(page?pocket::dsynth246EnvelopeIds[i]:pocket::dsynth246Ids[i]);
+    check(fm->screenKnob(int(i)).followedParameter()==target,"Dsynth closed-editor proxy target failed");
+    fm->screenKnob(int(i)).setValueNotifyingHost(.2f+float(i)*.15f);
+    check(std::abs(target->getValue()-fm->screenKnob(int(i)).getValue())<.0001,"Dsynth proxy write failed");
+   }}
+   raw.getParameter("dsynth246Bank")->setValueNotifyingHost(1);fm->setScreenPage(0);juce::MemoryBlock saved;fm->getStateInformation(saved);
+   auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));
+   check(restored->dsynth246Enabled()&&restored->screenKnob(0).followedParameter()==restored->phaseParameters().getParameter("dsynth246BlueII"),"Dsynth restore lost proxy target");
+   for(size_t i=0;i<4;++i)for(const auto* id:{pocket::dsynth246Ids[i],pocket::dsynth246EnvelopeIds[i]})check(restored->phaseParameters().getRawParameterValue(id)->load()==raw.getRawParameterValue(id)->load(),"Dsynth restore lost raw control");
+   for(size_t i=4;i<8;++i)check(restored->phaseParameters().getRawParameterValue(pocket::dsynth246Ids[i])->load()==raw.getRawParameterValue(pocket::dsynth246Ids[i])->load(),"Dsynth secondary restore failed");check(restored->dsynth246Secondary(),"Dsynth bank restore failed");
+   auto renderFm=[&](int block){auto synth=std::make_unique<PocketProcessor>();synth->setStateInformation(saved.getData(),int(saved.getSize()));synth->state.getParameter("sequencer")->setValueNotifyingHost(0);synth->state.getParameter("effect")->setValueNotifyingHost(0);synth->prepareToPlay(48000,block);std::vector<float> audio;
+    for(int offset=0;offset<8192;offset+=block){const int count=std::min(block,8192-offset);juce::AudioBuffer<float> buffer(2,count);buffer.clear();juce::MidiBuffer events;if(offset==0)events.addEvent(juce::MidiMessage::noteOn(1,69,.8f),0);if(offset<=4096&&offset+count>4096)events.addEvent(juce::MidiMessage::noteOff(1,69),4096-offset);synth->processBlock(buffer,events);for(int i=0;i<count;++i){check(std::isfinite(buffer.getSample(0,i)),"Dsynth plugin nonfinite output");check(buffer.getSample(0,i)==buffer.getSample(1,i),"Dsynth stereo output mismatch");audio.push_back(buffer.getSample(0,i));}}return audio;};
+   const auto shortBlocks=renderFm(64),oddBlocks=renderFm(257);double energy=0;for(size_t i=0;i<shortBlocks.size();++i){check(std::abs(shortBlocks[i]-oddBlocks[i])<1e-6,"Dsynth depends on host buffer boundaries");energy+=double(shortBlocks[i])*shortBlocks[i];}check(energy>.001,"Dsynth plugin render is silent");
+   check(fm->valueVoice246Available(),"Dsynth modulation unavailable");
+   for(int mode=0;mode<4;++mode){
+    raw.getParameter("random246Enabled")->setValueNotifyingHost(mode==0?1.f:0.f);
+    raw.getParameter("tremolo246Enabled")->setValueNotifyingHost(mode==1?1.f:0.f);
+    raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(mode>=2?1.f:0.f);
+    raw.getParameter("valueVoice246Destination")->setValueNotifyingHost(mode==3?1.f:0.f);
+    raw.getParameter("valueVoice246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("random246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("tremolo246Pitch")->setValueNotifyingHost(.3f);
+    raw.getParameter("tremolo246Volume")->setValueNotifyingHost(.5f);
+    fm->setScreenPage(2);check(fm->screenKnob(0).followedParameter()==raw.getParameter(mode==0?"random246Amount":mode==1?"tremolo246Speed":"valueVoice246Speed"),"Dsynth LFO closed-editor proxy failed");
+    fm->getStateInformation(saved);restored->setStateInformation(saved.getData(),int(saved.getSize()));
+    check(restored->random246Enabled()==(mode==0)&&restored->tremolo246Enabled()==(mode==1)&&restored->valueVoice246Enabled()==(mode>=2),"Dsynth modulation restore failed");
+    const auto a=renderFm(64),b=renderFm(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::abs(a[i]-b[i])<1e-6,"Dsynth modulation depends on host buffer");energy+=a[i]*a[i];}check(energy>.001,"Dsynth modulation is silent");
+   }
+   raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(0);fm->setScreenPage(0);
+   juce::String error;check(fm->assignSoundSlot(false,0)&&fm->copySound(error),"Dsynth slot/clipboard save failed");fm->applyPreset(0);check(fm->recallSoundSlot(false,0,error)&&fm->dsynth246Enabled(),"Dsynth slot recall failed");fm->applyPreset(0);check(fm->pasteSound(error)&&fm->dsynth246Enabled(),"Dsynth clipboard restore failed");
+   fm->state.getParameter("engine")->setValueNotifyingHost(0);check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"Dsynth to FM proxy switch failed");fm->state.getParameter("engine")->setValueNotifyingHost(fm->state.getParameter("engine")->convertTo0to1(10));check(fm->screenKnob(0).followedParameter()==raw.getParameter("dsynth246BlueII"),"FM to Dsynth proxy switch failed");
+   {restored->setScreenPage(0);std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("dsynth246-native.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"Dsynth screenshot failed");}}
+  }
   // The four host identities follow the visible page, including GUI touches,
   // host automation, discrete controls, editor closure and project restoration.
   {
@@ -715,7 +754,7 @@ int main(int argc,char** argv) {
    check(installed.findChildFiles(juce::File::findFilesAndDirectories,true).isEmpty(),"Purge left bank files on disk");
    check(bankProcessor->userPresetNames().isEmpty()&&!bankProcessor->isFavorite(purgedId)&&bankProcessor->selectedSound().isEmpty(),"Purge left stale browser entries");
    check(bankProcessor->soundSlot(false,0)=="factory:0"&&bankProcessor->clipboardKind.load()==0&&bankProcessor->sampleFrames.load()==0,"Purge retained loaded audio or sound references");
-   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==72,"Purge deleted source files or factory sounds");
+   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==73,"Purge deleted source files or factory sounds");
    bankProcessor->getStateInformation(saved);auto purgedTree=juce::ValueTree::fromXml(*juce::AudioProcessor::getXmlFromBinary(saved.getData(),int(saved.getSize())));
    check(!purgedTree.hasProperty("sampleAudio")&&!purgedTree.hasProperty("kitAudio0"),"Purged audio still embedded in a new project snapshot");
    check(bankProcessor->importUserBank(valid,error)&&bankProcessor->importUserBank(valid,error),"Import after purge failed");
@@ -726,7 +765,7 @@ int main(int argc,char** argv) {
   }
   // Browser metadata and independent edited sound slots survive project state.
   auto libraryProcessor=std::make_unique<PocketProcessor>(library.getChildFile("Catalog"));
-  check(libraryProcessor->soundCatalog().size()==72,"Factory catalog incomplete");
+  check(libraryProcessor->soundCatalog().size()==73,"Factory catalog incomplete");
   libraryProcessor->applyPreset(0);libraryProcessor->state.getParameter("tone")->setValueNotifyingHost(.83f);
   libraryProcessor->state.getParameter("seqMode")->setValueNotifyingHost(1);
   libraryProcessor->toggleFavorite("factory:0");check(libraryProcessor->assignSoundSlot(false,0),"Could not store edited synth slot");

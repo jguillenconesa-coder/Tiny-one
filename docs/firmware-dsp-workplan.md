@@ -475,3 +475,19 @@ implementado. Las tablas legibles coinciden con ADSR/Filter existentes. Ghidra
 omite ramas ejecutadas: continuar desde simulación/disassembly privado para
 portar ambos osciladores, envolventes, todas las mezclas y filtros antes de añadir
 D-synth al plugin. No hacen falta materiales privados adicionales ahora.
+
+
+## D-synth 246 integrado (0.32.0)
+
+[Render completo](dsynth246-native.md): el C++ ya calcula el estado posterior y
+coincide en4096 bloques/524288 muestras, incluyendo las dos envolventes internas,
+cuatro configuraciones, ocho mezclas, pitch/ganancia y contexto de seis voces.
+Tercer parche GNU BF524 de cargas Dreg relativas a FP; probes y §4-9 del manual
+sustentan operandos anteriores al paquete. Se repiten doce oráculos sin cambios
+de sus resultados. Tablas originales sin sustituciones. Ocho controles, bancos,
+ganancia ADSR antes del filtro, interpretación, modulación, interfaz y estado
+integrados. Cadencias, asignación/velocidad y salida siguen siendo propios.
+
+El siguiente bloque prioriza estudiar D-box/drum y sus envolventes/dependencias,
+además del ruteo de voz original pendiente. Pulse/L1 y calibración siguen
+explícitamente abiertos; presets originales completos al final.

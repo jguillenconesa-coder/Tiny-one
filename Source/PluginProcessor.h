@@ -46,7 +46,7 @@ public:
     void applyDrWave246Init();
     void applyCluster246Init();
     void applyDna246Init();
-    void applyVoltage246Init();
+    void applyVoltage246Init();void applyDsynth246Init();
     bool cluster246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==7;}
     void applyPunch246Preset(int index);
     void applyValue246Preset(int index);
@@ -63,11 +63,13 @@ public:
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
     bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&valueVoice246Available();}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
-    bool valueVoice246Available() const {return voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
+    bool valueVoice246Available() const {return dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
     bool valueVoice246Enabled() const {return !random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
+    bool dsynth246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==10;}
+    bool dsynth246Secondary() const {return phaseAudio[145]->load()>.5f;}
     bool voltage246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==9;}
     bool dna246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==8;}
     bool string246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==2;}
@@ -131,7 +133,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
-    std::array<std::atomic<float>*,133> phaseAudio{};
+    std::array<std::atomic<float>*,146> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;
     enum class Param {engine,tone,color,envelope,effect,attack,decay,sustain,release,lfoRate,lfoDepth,lfoDestination,lfoShape,delayTime,delayFeedback,drive,sampleLoop,sampleRoot,volume,sequencer,tempo,track1,track2,track3,track4,tapePlay,tapeRecord,tapeOverdub,tapeTrack,tapeSpeed,tapeLength,tapeLoop,tapeLoopIn,tapeLoopOut,metronome,inputMonitor,inputGain,tapeRecordGain,eqLow,eqMid,eqHigh,eqMix,masterDrive,masterEcho,masterDelayTime,masterFeedback,clickVolume,seqMode,seqLength,seqRate,seqGate,seqSwing,arpOctaves,seqVelocity,seqEuclidean,seqPulses,seqRotation,sampleClean,Count};
     std::array<std::atomic<float>*,size_t(Param::Count)> audioParameters{};

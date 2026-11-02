@@ -1,4 +1,7 @@
-# Pocket One 0.31.0
+# Pocket One 0.32.0
+
+**D-synth 246**: ocho controles, dos osciladores, envolventes internas y ocho mezclas reconstruidos.
+[Alcance y controles](docs/dsynth246-native.md) · [Validación](docs/releases/v0.32.0-validation.json).
 
 **Voltage 246**: décimo motor, cuatro osciladores, XOR/feedback y filtro sin coeficientes sustituidos.
 [Alcance y límites](docs/voltage246-native.md) · [Validación](docs/releases/v0.31.0-validation.json).
@@ -14,7 +17,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.31.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.32.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

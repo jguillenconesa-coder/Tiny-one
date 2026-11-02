@@ -68,10 +68,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--jobs',type=int,default=2)
+    p.add_argument('--fp-load-writeback',action='store_true',help='Also defer D-register FP word loads; implies halfword fix (required for D-synth)')
     p.add_argument('--halfword-writeback',action='store_true',help='Also merge disjoint halfword loads in the deferred queue (required for volume route)')
     p.add_argument('--binutils-archive',type=Path)
     p.add_argument('--gdb-archive',type=Path)
     args=p.parse_args();out=args.output.resolve()
+    if args.fp_load_writeback:args.halfword_writeback=True
     if not 1<=args.jobs<=16:raise ValueError('Use 1..16 jobs')
     if out.exists() or out.is_relative_to(ROOT):raise ValueError('Choose a NEW output directory outside the checkout')
     if not hasattr(tarfile,'data_filter'):raise RuntimeError('Use Python with tarfile.data_filter (Python 3.12+ or an updated 3.11)')
@@ -93,6 +95,9 @@ def main():
     halfword_patch=ROOT/'research/blackfin/gnu-13.1-halfword-writeback.patch'
     if args.halfword_writeback:
         run('patch-halfword',['patch','--batch','--forward','-p1','-i',halfword_patch],out/'src-patched/gdb-13.1')
+    fp_patch=ROOT/'research/blackfin/gnu-13.1-fp-load-writeback.patch'
+    if args.fp_load_writeback:
+        run('patch-fp-load',['patch','--batch','--forward','-p1','-i',fp_patch],out/'src-patched/gdb-13.1')
     configurations=[
         ('binutils',out/'src-binutils/binutils-2.44',['--target=bfin-elf','--disable-nls','--disable-werror','--disable-gdb','--enable-gas','--enable-ld','--disable-gprof','--disable-gold','--without-zstd'],['all-gas','all-ld','all-binutils']),
         ('stock',out/'src-stock/gdb-13.1',['--target=bfin-elf','--disable-gdb','--disable-gdbserver','--disable-binutils','--disable-gas','--disable-ld','--disable-gprof','--disable-nls','--enable-sim','--disable-werror','--without-zstd'],['all-sim']),
@@ -130,6 +135,17 @@ def main():
         if words!=(0x1234,0x0200abcd,0x1234,0xabcd0300,0x2468abcd):raise RuntimeError('Disjoint-halfword packet probe failed')
         report['halfword_patch_sha256']=sha(halfword_patch)
         report['halfword_probe']=[hex(x) for x in words]
+    if args.fp_load_writeback:
+        probe=out/'model-check'
+        run('assemble-fp-load',[out/'bin/bfin-elf-as','-I',out/'src-stock/gdb-13.1/sim/testsuite/bfin','-o',probe/'fp.o',ROOT/'research/blackfin/parallel-fp-load.s'],out)
+        run('link-fp-load',[out/'bin/bfin-elf-ld','-T',ROOT/'research/blackfin/flat.ld','-o',probe/'fp.elf',probe/'fp.o'],out)
+        results={}
+        for name in ['run-stock','run-parallel']:
+            with (probe/(name+'-fp.bin')).open('wb') as f:
+                subprocess.run([str(out/'bin'/name),'--model','bf524',str(probe/'fp.elf')],check=True,timeout=60,stdout=f,stderr=subprocess.DEVNULL)
+            results[name]=struct.unpack('<5I',(probe/(name+'-fp.bin')).read_bytes())
+        if results['run-stock']!=(0xaabb,0xaabbccdd,0xccdd,0xaabbccdd,6) or results['run-parallel']!=(0x1234,0xaabbccdd,0x1357,0xaabbccdd,6):raise RuntimeError('FP word-load packet probe failed')
+        report['fp_load_patch_sha256']=sha(fp_patch);report['fp_load_probe']={k:[hex(v) for v in values] for k,values in results.items()}
     (out/'build-evidence.json').write_text(json.dumps(report,indent=2)+'\n')
     print('PASS: Blackfin tools built. Source '+str(out/'blackfin-env.sh'),flush=True)
 if __name__=='__main__':main()

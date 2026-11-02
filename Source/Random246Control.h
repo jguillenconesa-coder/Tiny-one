@@ -10,8 +10,9 @@ struct Random246Control {
     std::array<int16_t,8> modulation{};bool active=false,pendingNote=false;
     void reset() noexcept {*this={};}
     void noteOn() noexcept {pendingNote=true;}
-    std::array<int16_t,4> next(bool enabled,const std::array<int16_t,4>& raw,int type,double clockStep,
-                               uint32_t& rng,const std::array<int16_t,4>& base) noexcept {
+    template<size_t Count=4>
+    std::array<int16_t,Count> next(bool enabled,const std::array<int16_t,4>& raw,int type,double clockStep,
+                               uint32_t& rng,const std::array<int16_t,Count>& base) noexcept {
         const int index=reference::valueVoice246RangeIndex(type);
         if(!enabled||index<0){if(active)reset();return base;}
         active=true;const bool envelope=raw[2]>=2048;
@@ -24,7 +25,8 @@ struct Random246Control {
             position-=1;++ticks;
         }
         position+=clockStep;auto result=base;
-        for(size_t i=0;i<(envelope?4u:8u);++i){const size_t target=i%4;const auto mod=i<4?modulation[i]:int16_t(reference::floorDivide(modulation[i],16));
+        const bool extended=type==12&&!envelope&&Count==8;
+        for(size_t i=0;i<(envelope?4u:8u);++i){const size_t target=extended?i:i%4;const auto mod=i<4||extended?modulation[i]:int16_t(reference::floorDivide(modulation[i],16));
             result[target]=envelope?reference::value246Adjust(result[target],mod,reference::valueVoice246EnvelopeRanges[target]):reference::valueVoice246Adjust(result[target],mod,reference::valueVoice246Ranges[size_t(index)][target]);
         }
         return result;

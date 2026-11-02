@@ -1,4 +1,8 @@
-# D-synth 246: ciclo de voz, modulación y referencia del render
+# D-synth 246: evidencia histórica de la base
+
+Este documento describe el commit `2a33075`, anterior al renderer C++ completo.
+La versión actual es [D-synth integrado en 0.32.0](dsynth246-native.md), con un
+corpus corregido y la comparación completa de audio/estado.
 
 Este bloque prepara la reconstrucción de D-synth. **Todavía no añade D-synth al
 selector ni implementa su renderer de audio C++.** El callback original se ejecuta

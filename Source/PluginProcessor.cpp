@@ -131,6 +131,10 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     const char* voltageEnvNames[]={"Voltage 246: Attack","Voltage 246: Decay","Voltage 246: Sustain","Voltage 246: Release"};
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::voltage246Ids[i],1},voltageNames[i],pocket::voltage246Min[i],pocket::voltage246Max[i],pocket::voltage246Defaults[i]));
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::voltage246EnvelopeIds[i],1},voltageEnvNames[i],0,i==2?32767:16383,envelopeDefaults[i]));
+    const char* dsynthNames[]={"Shape I / II","Feedback I","Envelope I","Mix","Pitch II","Feedback II","Envelope II","Filter"};
+    for(size_t i=0;i<8;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::dsynth246Ids[i],1},juce::String("D-synth 246: ")+dsynthNames[i],0,32767,pocket::dsynth246Defaults[i]));
+    for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::dsynth246EnvelopeIds[i],1},juce::String("D-synth 246: ")+juce::StringArray{"Attack","Decay","Sustain","Release"}[int(i)],0,i==2?32767:16383,envelopeDefaults[i]));
+    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"dsynth246Bank",1},"D-synth 246: Oscillator II Controls / Value Bank",false));
     phaseState=std::make_unique<juce::AudioProcessorValueTreeState>(*this,nullptr,"Phase246",std::move(phaseLayout));
     phaseAudio[0]=phaseState->getRawParameterValue("phase246Enabled");for(size_t i=0;i<4;++i)phaseAudio[i+1]=phaseState->getRawParameterValue(pocket::phase246Ids[i]);
     phaseAudio[5]=phaseState->getRawParameterValue("phase246Envelope");for(size_t i=0;i<4;++i)phaseAudio[i+6]=phaseState->getRawParameterValue(pocket::phase246EnvelopeIds[i]);
@@ -154,6 +158,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     for(size_t i=0;i<4;++i){phaseAudio[101+i]=phaseState->getRawParameterValue(pocket::fm246Ids[i]);phaseAudio[105+i]=phaseState->getRawParameterValue(pocket::fm246EnvelopeIds[i]);}
     for(size_t i=0;i<4;++i){phaseAudio[109+i]=phaseState->getRawParameterValue(pocket::string246Ids[i]);phaseAudio[113+i]=phaseState->getRawParameterValue(pocket::string246EnvelopeIds[i]);}
     for(size_t i=0;i<4;++i){phaseAudio[117+i]=phaseState->getRawParameterValue(pocket::dna246Ids[i]);phaseAudio[121+i]=phaseState->getRawParameterValue(pocket::dna246EnvelopeIds[i]);}
+    for(size_t i=0;i<8;++i)phaseAudio[133+i]=phaseState->getRawParameterValue(pocket::dsynth246Ids[i]);for(size_t i=0;i<4;++i)phaseAudio[141+i]=phaseState->getRawParameterValue(pocket::dsynth246EnvelopeIds[i]);phaseAudio[145]=phaseState->getRawParameterValue("dsynth246Bank");
     for(size_t i=0;i<4;++i){phaseAudio[125+i]=phaseState->getRawParameterValue(pocket::voltage246Ids[i]);phaseAudio[129+i]=phaseState->getRawParameterValue(pocket::voltage246EnvelopeIds[i]);}
     setScreenPage(0);
     for(int pad=0;pad<pocket::kitCapacity;++pad){const char* ids[]={"start","end","gain","pitch","reverse","gated"};for(int i=0;i<6;++i)padParameters[size_t(pad)][size_t(i)]=state.getRawParameterValue(padParameterId(pad,ids[i]));}
@@ -174,6 +179,7 @@ juce::String PocketProcessor::screenParameterId(int index) const {
         if(index==1)return "track"+juce::String(1+int(state.getRawParameterValue("tapeTrack")->load()));
         return index==2?"tapeSpeed":"tapeRecordGain";
     }
+    if(dsynth246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::dsynth246Ids[size_t(index)+(dsynth246Secondary()?4:0)]:pocket::dsynth246EnvelopeIds[size_t(index)];
     if(voltage246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::voltage246Ids[size_t(index)]:pocket::voltage246EnvelopeIds[size_t(index)];
     if(dna246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::dna246Ids[size_t(index)]:pocket::dna246EnvelopeIds[size_t(index)];
     if(string246Enabled()&&visiblePage.load()<2)return visiblePage.load()==0?pocket::string246Ids[size_t(index)]:pocket::string246EnvelopeIds[size_t(index)];
@@ -207,6 +213,7 @@ void PocketProcessor::setScreenPage(int page,bool tapeMode) {
         else if(visiblePage.load()==3)screenKnobs[size_t(i)]->followSwitch(state.getParameter(i==0?"delayTime":i==1?"delayFeedback":i==2?"effect":"drive"),phaseState->getParameter(pocket::punch246Ids[size_t(i)]),*phaseAudio[20]);
         else if(visiblePage.load()==2)screenKnobs[size_t(i)]->followValue(state.getParameter(i==0?"lfoRate":i==1?"lfoDepth":i==2?"lfoDestination":"lfoShape"),phaseState->getParameter(pocket::value246Ids[size_t(i)]),phaseState->getParameter(pocket::valueVoice246Ids[size_t(i)]),*phaseAudio[25],*phaseAudio[31],*audioParameters[size_t(Param::engine)],*phaseAudio[0],*phaseAudio[10]);
         else if(page==4&&tapeMode&&i==1)screenKnobs[1]->followTapeTrack();else screenKnobs[size_t(i)]->follow(state.getParameter(screenParameterId(i)));
+        if(visiblePage.load()<2)screenKnobs[size_t(i)]->followDsynth(phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)]:pocket::dsynth246EnvelopeIds[size_t(i)]),phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)+4]:pocket::dsynth246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)],*phaseAudio[145]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followVoltage(phaseState->getParameter(visiblePage.load()==0?pocket::voltage246Ids[size_t(i)]:pocket::voltage246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followDna(phaseState->getParameter(visiblePage.load()==0?pocket::dna246Ids[size_t(i)]:pocket::dna246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followString(phaseState->getParameter(visiblePage.load()==0?pocket::string246Ids[size_t(i)]:pocket::string246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
@@ -237,7 +244,7 @@ void PocketProcessor::updateKeyboardDisplay() {
 }
 juce::AudioProcessorValueTreeState::ParameterLayout PocketProcessor::layout() {
     juce::AudioProcessorValueTreeState::ParameterLayout p;
-    p.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"engine",1},"Sound: Engine",juce::StringArray{"FM","PHASE","STRING","SAMPLER","DRUM","KIT","DR. WAVE","CLUSTER","DNA HYBRID","VOLTAGE"},0));
+    p.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"engine",1},"Sound: Engine",juce::StringArray{"FM","PHASE","STRING","SAMPLER","DRUM","KIT","DR. WAVE","CLUSTER","DNA HYBRID","VOLTAGE","D-SYNTH"},0));
     const auto name=[](const char* id)->juce::String{
         static const std::pair<const char*,const char*> names[]={
             {"tone","Sound: Tone"},
@@ -339,12 +346,13 @@ double PocketProcessor::getTailLengthSeconds() const {
     const double masterFeedback=std::clamp(double(state.getRawParameterValue("masterFeedback")->load()),.001,.85);
     const double masterTail=state.getRawParameterValue("masterEcho")->load()>0?state.getRawParameterValue("masterDelayTime")->load()*std::log(.00001)/std::log(masterFeedback):0;
     double envelopeTail=(.008+release*release*5*(.5+macro))*12;
-    if(voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||cluster246Enabled()||drWave246Enabled()||phase246EnvelopeEnabled()||digital246EnvelopeEnabled()){
+    if(dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||cluster246Enabled()||drWave246Enabled()||phase246EnvelopeEnabled()||digital246EnvelopeEnabled()){
         const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&phaseAudio[64]->load()>.5f&&phaseAudio[62]->load()!=0);
-        const int index=127-std::clamp(modulatedRelease?0:int(phaseAudio[voltage246Enabled()?132:dna246Enabled()?124:string246Enabled()?116:fm246Enabled()?108:cluster246Enabled()?52:drWave246Enabled()?44:digital246EnvelopeEnabled()?19:9]->load())/128,0,127);
+        const int index=127-std::clamp(modulatedRelease?0:int(phaseAudio[dsynth246Enabled()?144:voltage246Enabled()?132:dna246Enabled()?124:string246Enabled()?116:fm246Enabled()?108:cluster246Enabled()?52:drWave246Enabled()?44:digital246EnvelopeEnabled()?19:9]->load())/128,0,127);
         const double coefficient=pocket::reference::adsr246Decay[size_t(index)]/2147483648.;
         envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+128./88200.;
     }
+    if(dsynth246Enabled())envelopeTail+=.25; // Own conservative allowance for the core poles after gain reaches zero.
     return envelopeTail+(state.getRawParameterValue("effect")->load()>0?echo:0)+masterTail+getLatencySamples()/std::max(8000.,rate);
 }
 bool PocketProcessor::isBusesLayoutSupported(const BusesLayout& b) const {return b.getMainOutputChannelSet()==juce::AudioChannelSet::stereo()&&(b.getMainInputChannelSet().isDisabled()||b.getMainInputChannelSet()==juce::AudioChannelSet::mono()||b.getMainInputChannelSet()==juce::AudioChannelSet::stereo());}
@@ -363,6 +371,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     if(keyboardOverflow.exchange(false)) {engine.allNotesOff();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);for(int i=0;i<1024&&uiToAudio.pop(key);++i) {}keyboardDisplayReset.store(true);}
     for(int i=0;i<1024&&uiToAudio.pop(key);++i) {heldNotes.set(key.channel,key.note,key.on);if(key.on){if(!arp)engine.noteOn(key.note,key.velocity,key.channel);lastNote.store(key.note);}else if(!arp)engine.noteOff(key.note,key.channel);}
     pocket::Parameters p;
+    for(size_t i=0;i<8;++i)p.dsynth246Controls[i]=int16_t(phaseAudio[133+i]->load(std::memory_order_relaxed));for(size_t i=0;i<4;++i)p.dsynth246Adsr[i]=int16_t(phaseAudio[141+i]->load(std::memory_order_relaxed));p.dsynth246Secondary=phaseAudio[145]->load()>.5f;
     for(size_t i=0;i<4;++i){p.voltage246Controls[i]=int16_t(phaseAudio[125+i]->load(std::memory_order_relaxed));p.voltage246Adsr[i]=int16_t(phaseAudio[129+i]->load(std::memory_order_relaxed));}
     for(size_t i=0;i<4;++i){p.dna246Controls[i]=int16_t(phaseAudio[117+i]->load(std::memory_order_relaxed));p.dna246Adsr[i]=int16_t(phaseAudio[121+i]->load(std::memory_order_relaxed));}
     for(size_t i=0;i<4;++i){p.string246Controls[i]=int16_t(phaseAudio[109+i]->load(std::memory_order_relaxed));p.string246Adsr[i]=int16_t(phaseAudio[113+i]->load(std::memory_order_relaxed));}
@@ -610,6 +619,13 @@ void PocketProcessor::applyVoltage246Init() {
     for(size_t i=0;i<4;++i)for(auto* id:{pocket::voltage246Ids[i],pocket::voltage246EnvelopeIds[i]}){auto* p=phaseState->getParameter(id);p->setValueNotifyingHost(p->getDefaultValue());}
     setSelectedSound("voltage246:0");currentFactoryPreset.store(-1);currentUserPreset.store(-1);requestPanic(false);
 }
+void PocketProcessor::applyDsynth246Init() {
+    applyPreset(0);
+    for(auto item:{std::pair{"engine",10.f},{"effect",0.f},{"drive",0.f},{"lfoDepth",0.f}}){auto* p=state.getParameter(item.first);p->setValueNotifyingHost(p->convertTo0to1(item.second));}
+    for(size_t i=0;i<8;++i)for(auto* id:{pocket::dsynth246Ids[i]}){auto* p=phaseState->getParameter(id);p->setValueNotifyingHost(p->getDefaultValue());}
+    for(auto* id:{"dsynth246Attack","dsynth246Decay","dsynth246Sustain","dsynth246Release","dsynth246Bank"}){auto* p=phaseState->getParameter(id);p->setValueNotifyingHost(p->getDefaultValue());}
+    setSelectedSound("dsynth246:0");currentFactoryPreset.store(-1);currentUserPreset.store(-1);requestPanic(false);
+}
 void PocketProcessor::applyDrWave246Init() {
     applyPreset(0);
     for(auto item:{std::pair{"engine",6.f},{"effect",0.f},{"drive",0.f},{"lfoDepth",0.f}}){auto* p=state.getParameter(item.first);p->setValueNotifyingHost(p->convertTo0to1(item.second));}
@@ -680,7 +696,7 @@ void PocketProcessor::getStateInformation(juce::MemoryBlock& dest) {
 }
 juce::ValueTree PocketProcessor::normalizedPhaseState(juce::ValueTree tree) const {
     if(!tree.isValid())tree=juce::ValueTree("Phase246");
-    const char* ids[]={"phase246Enabled","phase246Blue","phase246Green","phase246White","phase246Orange","phase246Envelope","phase246Attack","phase246Decay","phase246Sustain","phase246Release","digital246Enabled","digital246Blue","digital246Green","digital246White","digital246Orange","digital246Envelope","digital246Attack","digital246Decay","digital246Sustain","digital246Release","punch246Enabled","punch246Blue","punch246Green","punch246White","punch246Orange","value246Enabled","value246Speed","value246Amount","value246Destination","value246Colour","value246Free","valueVoice246Enabled","valueVoice246Speed","valueVoice246Amount","valueVoice246Destination","valueVoice246Colour","valueVoice246Free","drWave246Blue","drWave246Green","drWave246White","drWave246Orange","drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release","cluster246Blue","cluster246Green","cluster246White","cluster246Orange","cluster246Attack","cluster246Decay","cluster246Sustain","cluster246Release","hybridVoiceMode","hybridGlideMs","tremolo246Enabled","tremolo246Speed","tremolo246Pitch","tremolo246Volume","tremolo246Envelope","tremolo246Shape","random246Enabled","random246Amount","random246Speed","random246Destination","random246Envelope","filter246Enabled","filter246Blue","filter246Green","filter246White","filter246Orange","nitro246Enabled","nitro246Blue","nitro246Green","nitro246White","nitro246Orange","delay246Enabled","delay246Blue","delay246Green","delay246White","delay246Orange","grid246Enabled","grid246Blue","grid246Green","grid246White","grid246Orange","phone246Enabled","phone246Blue","phone246Green","phone246White","phone246Orange","spring246Enabled","spring246Blue","spring246Green","spring246White","spring246Orange","cwo246Enabled","cwo246Blue","cwo246Green","cwo246White","cwo246Orange","fm246Blue","fm246Green","fm246White","fm246Orange","fm246Attack","fm246Decay","fm246Sustain","fm246Release","string246Blue","string246Green","string246White","string246Orange","string246Attack","string246Decay","string246Sustain","string246Release","dna246Blue","dna246Green","dna246White","dna246Orange","dna246Attack","dna246Decay","dna246Sustain","dna246Release","voltage246Blue","voltage246Green","voltage246White","voltage246Orange","voltage246Attack","voltage246Decay","voltage246Sustain","voltage246Release"};
+    const char* ids[]={"phase246Enabled","phase246Blue","phase246Green","phase246White","phase246Orange","phase246Envelope","phase246Attack","phase246Decay","phase246Sustain","phase246Release","digital246Enabled","digital246Blue","digital246Green","digital246White","digital246Orange","digital246Envelope","digital246Attack","digital246Decay","digital246Sustain","digital246Release","punch246Enabled","punch246Blue","punch246Green","punch246White","punch246Orange","value246Enabled","value246Speed","value246Amount","value246Destination","value246Colour","value246Free","valueVoice246Enabled","valueVoice246Speed","valueVoice246Amount","valueVoice246Destination","valueVoice246Colour","valueVoice246Free","drWave246Blue","drWave246Green","drWave246White","drWave246Orange","drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release","cluster246Blue","cluster246Green","cluster246White","cluster246Orange","cluster246Attack","cluster246Decay","cluster246Sustain","cluster246Release","hybridVoiceMode","hybridGlideMs","tremolo246Enabled","tremolo246Speed","tremolo246Pitch","tremolo246Volume","tremolo246Envelope","tremolo246Shape","random246Enabled","random246Amount","random246Speed","random246Destination","random246Envelope","filter246Enabled","filter246Blue","filter246Green","filter246White","filter246Orange","nitro246Enabled","nitro246Blue","nitro246Green","nitro246White","nitro246Orange","delay246Enabled","delay246Blue","delay246Green","delay246White","delay246Orange","grid246Enabled","grid246Blue","grid246Green","grid246White","grid246Orange","phone246Enabled","phone246Blue","phone246Green","phone246White","phone246Orange","spring246Enabled","spring246Blue","spring246Green","spring246White","spring246Orange","cwo246Enabled","cwo246Blue","cwo246Green","cwo246White","cwo246Orange","fm246Blue","fm246Green","fm246White","fm246Orange","fm246Attack","fm246Decay","fm246Sustain","fm246Release","string246Blue","string246Green","string246White","string246Orange","string246Attack","string246Decay","string246Sustain","string246Release","dna246Blue","dna246Green","dna246White","dna246Orange","dna246Attack","dna246Decay","dna246Sustain","dna246Release","voltage246Blue","voltage246Green","voltage246White","voltage246Orange","voltage246Attack","voltage246Decay","voltage246Sustain","voltage246Release","dsynth246Blue","dsynth246Green","dsynth246White","dsynth246Orange","dsynth246BlueII","dsynth246GreenII","dsynth246WhiteII","dsynth246OrangeII","dsynth246Attack","dsynth246Decay","dsynth246Sustain","dsynth246Release","dsynth246Bank"};
     for(const char* id:ids)if(!tree.getChildWithProperty("id",id).isValid()){
         juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);
         child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);

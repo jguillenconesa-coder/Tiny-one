@@ -24,12 +24,13 @@
 #include "String246Voice.h"
 #include "Dna246Voice.h"
 #include "Voltage246Voice.h"
+#include "Dsynth246Voice.h"
 #include "HybridPerformance.h"
 
 namespace pocket {
 constexpr double pi = 3.14159265358979323846;
 constexpr int kitCapacity=24;
-inline constexpr bool isHybridEngine(int mode) noexcept {return mode==2||mode==6||mode==7||mode==8||mode==9;}
+inline constexpr bool isHybridEngine(int mode) noexcept {return mode==2||mode==6||mode==7||mode==8||mode==9||mode==10;}
 inline constexpr bool isDrumEngine(int mode) noexcept {return mode==4||mode==5;}
 struct PadSettings {float start=0,end=1,gain=1,pitch=0;bool reverse=false,gated=false;};
 struct Parameters {
@@ -38,6 +39,7 @@ struct Parameters {
     std::array<int16_t,4> string246Controls=string246Defaults,string246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> dna246Controls=dna246Defaults,dna246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> voltage246Controls=voltage246Defaults,voltage246Adsr{{64,8064,32767,8192}};
+    std::array<int16_t,8> dsynth246Controls=dsynth246Defaults;std::array<int16_t,4> dsynth246Adsr{{64,8064,32767,8192}};bool dsynth246Secondary=false;
     int hybridVoiceMode=0;float hybridGlideMs=0;
     bool random246=false;std::array<int16_t,4> random246Controls{{2000,4000,0,24000}};
     bool tremolo246=false;int tremolo246Shape=0;std::array<int16_t,4> tremolo246Controls{{16000,0,0,16000}};
@@ -70,9 +72,10 @@ class Engine {
 public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
-    void reset() {voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void reset() {dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false) noexcept {
         if(selectionInitialized&&(mode!=selectedEngine||(mode==0&&digital!=selectedDigital))&&(hybridPerformance()||isHybridEngine(mode)||mode==0)){voices={};held.clear();}
+        if(mode==10&&(!selectionInitialized||selectedEngine!=10)){dsynthContext={};dsynthContext.initialize();}
         if(mode==8&&(!selectionInitialized||selectedEngine!=8))dnaContext.prepare();
         selectedEngine=mode;selectedDigital=digital;selectionInitialized=true;
     }
@@ -138,10 +141,10 @@ public:
         VisualState out;out.trigger=age;out.lfo=valueActive?valueEffect.phase():float(lfoPhase);uint64_t latest=0;
         for(const auto& v:voices) if(v.active) {
             ++out.active;out.envelope=std::max(out.envelope,v.level);
-            if(v.age>=latest) {latest=v.age;out.fmAlgorithm=v.fm246.algorithm;out.note=v.note;out.channel=v.channel;out.frequency=(monophonic()?v.glide.value:v.frequency)*bends[channelIndex(v.channel)];out.stage=nativeEnvelopeActive?(nativeVoltageActive?v.voltage246.output.envelopeStage():nativeDnaActive?v.dna246.output.envelopeStage():nativeStringActive?v.string246.output.envelopeStage():nativeFmActive?v.fm246.output.envelopeStage():nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
+            if(v.age>=latest) {latest=v.age;out.fmAlgorithm=v.fm246.algorithm;out.note=v.note;out.channel=v.channel;out.frequency=(monophonic()?v.glide.value:v.frequency)*bends[channelIndex(v.channel)];out.stage=nativeEnvelopeActive?(nativeDsynthActive?v.dsynth246.output.envelopeStage():nativeVoltageActive?v.voltage246.output.envelopeStage():nativeDnaActive?v.dna246.output.envelopeStage():nativeStringActive?v.string246.output.envelopeStage():nativeFmActive?v.fm246.output.envelopeStage():nativeClusterActive?v.cluster246.output.envelopeStage():nativeDrWaveActive?v.drWave246.output.envelopeStage():nativeDigitalActive?v.digital246.output.envelopeStage():v.phase246.envelopeStage()):v.released?4:v.stage==0?1:std::abs(v.level-currentSustain)>.005f?2:3;
                 for(size_t i=0;i<4;++i)out.random[i]=v.randomLfo.active?v.randomLfo.modulation[i]/32768.f:0;
                 if(valueVoiceActive)out.lfo=v.valueVoice.phase();
-                if(tremoloActive)out.lfo=(nativeVoltageActive?v.voltage246.output:nativeDnaActive?v.dna246.output:nativeStringActive?v.string246.output:nativeFmActive?v.fm246.output:nativeClusterActive?v.cluster246.output:nativeDrWaveActive?v.drWave246.output:nativeDigitalActive?v.digital246.output:v.phase246).tremolo.phase();
+                if(tremoloActive)out.lfo=(nativeDsynthActive?v.dsynth246.output:nativeVoltageActive?v.voltage246.output:nativeDnaActive?v.dna246.output:nativeStringActive?v.string246.output:nativeFmActive?v.fm246.output:nativeClusterActive?v.cluster246.output:nativeDrWaveActive?v.drWave246.output:nativeDigitalActive?v.digital246.output:v.phase246).tremolo.phase();
                 const size_t length=mode==5?kit[size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
                 if(length) out.progress=std::clamp(float(v.samplePosition/double(length))+(mode==3?current.tone*.9f:0.f),0.f,1.f);
             }
@@ -154,19 +157,20 @@ public:
         configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs);
         const bool nativeFm=target.engine==0&&!target.digital246;
         const bool nativeString=target.engine==2;
+        const bool nativeDsynth=target.engine==10;
         const bool nativeVoltage=target.engine==9;
         const bool nativeDna=target.engine==8;
         const bool nativeCluster=target.engine==7;
         const bool nativeDrWave=target.engine==6;
         const bool nativePhase=target.engine==1&&target.phase246;
         const bool nativeDigital=target.engine==0&&target.digital246;
-        const bool nativeCore=nativeVoltage||nativeDna||nativeString||nativeFm||nativePhase||nativeDigital||nativeDrWave||nativeCluster;
+        const bool nativeCore=nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativePhase||nativeDigital||nativeDrWave||nativeCluster;
         const bool nativeRandom=target.random246&&nativeCore;
         const bool modEnvelope=nativeRandom?target.random246Controls[2]>=2048:target.valueVoice246Envelope;
         const bool nativeTremolo=target.tremolo246&&nativeCore&&!nativeRandom;tremoloActive=nativeTremolo;
         const bool nativeValueVoice=target.valueVoice246&&nativeCore&&!nativeTremolo&&!nativeRandom;
         valueVoiceActive=nativeValueVoice;nativeFmActive=nativeFm;
-        nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeVoltageActive=nativeVoltage;nativeDnaActive=nativeDna;nativeStringActive=nativeString;nativeEnvelopeActive=nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
+        nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeVoltageActive=nativeVoltage;nativeDnaActive=nativeDna;nativeStringActive=nativeString;nativeDsynthActive=nativeDsynth;nativeEnvelopeActive=nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
         if(nativePhase){for(size_t i=0;i<4;++i){if(!phaseControlsInitialized)phaseWords[i]=target.phase246Controls[i];else phaseWords[i]+=smoothing*(target.phase246Controls[i]-phaseWords[i]);phaseRaw[i]=int16_t(std::clamp(phaseWords[i],0.f,32767.f)+.5f);}phaseControlsInitialized=true;}
         else phaseControlsInitialized=false;
         if(nativeDigital){for(size_t i=0;i<4;++i){if(!digitalControlsInitialized)digitalWords[i]=target.digital246Controls[i];else digitalWords[i]+=smoothing*(target.digital246Controls[i]-digitalWords[i]);digitalRaw[i]=int16_t(std::lround(std::clamp(digitalWords[i],i==2?-32768.f:0.f,32767.f)));}digitalControlsInitialized=true;}
@@ -175,6 +179,7 @@ public:
         if(nativeCluster){for(size_t i=0;i<4;++i){if(!clusterControlsInitialized)clusterWords[i]=target.cluster246Controls[i];else clusterWords[i]+=smoothing*(target.cluster246Controls[i]-clusterWords[i]);clusterRaw[i]=int16_t(std::lround(std::clamp(clusterWords[i],float(reference::cluster246ControlMin[i]),float(reference::cluster246ControlMax[i]))));}clusterControlsInitialized=true;}else clusterControlsInitialized=false;
         if(nativeFm){for(size_t i=0;i<4;++i){if(!fmControlsInitialized)fmWords[i]=target.fm246Controls[i];else fmWords[i]+=smoothing*(target.fm246Controls[i]-fmWords[i]);fmRaw[i]=int16_t(std::lround(std::clamp(fmWords[i],float(fm246Min[i]),float(fm246Max[i]))));}fmControlsInitialized=true;}else fmControlsInitialized=false;
         if(nativeString){for(size_t i=0;i<4;++i){if(!stringControlsInitialized)stringWords[i]=target.string246Controls[i];else stringWords[i]+=smoothing*(target.string246Controls[i]-stringWords[i]);stringRaw[i]=int16_t(std::lround(std::clamp(stringWords[i],float(string246Min[i]),float(string246Max[i]))));}stringControlsInitialized=true;}else stringControlsInitialized=false;
+        if(nativeDsynth){for(size_t i=0;i<8;++i){if(!dsynthControlsInitialized)dsynthWords[i]=target.dsynth246Controls[i];else dsynthWords[i]+=smoothing*(target.dsynth246Controls[i]-dsynthWords[i]);dsynthRaw[i]=int16_t(std::lround(std::clamp(dsynthWords[i],0.f,32767.f)));}dsynthControlsInitialized=true;}else dsynthControlsInitialized=false;
         if(nativeVoltage){for(size_t i=0;i<4;++i){if(!voltageControlsInitialized)voltageWords[i]=target.voltage246Controls[i];else voltageWords[i]+=smoothing*(target.voltage246Controls[i]-voltageWords[i]);voltageRaw[i]=int16_t(std::lround(std::clamp(voltageWords[i],float(voltage246Min[i]),float(voltage246Max[i]))));}voltageControlsInitialized=true;}else voltageControlsInitialized=false;
         if(nativeDna){for(size_t i=0;i<4;++i){if(!dnaControlsInitialized)dnaWords[i]=target.dna246Controls[i];else dnaWords[i]+=smoothing*(target.dna246Controls[i]-dnaWords[i]);dnaRaw[i]=int16_t(std::lround(std::clamp(dnaWords[i],float(dna246Min[i]),float(dna246Max[i]))));}dnaControlsInitialized=true;}else dnaControlsInitialized=false;
         const reference::PdCoefficients phaseCoefficients(phaseRaw);
@@ -211,16 +216,23 @@ public:
             v.modPhase+=frequency*(1+std::round(p.color*7))/sampleRate; v.modPhase-=std::floor(v.modPhase);
             float s=0, amplitude=v.level;
             std::array<int16_t,4> modulated{};
-            if(nativeValueVoice||nativeRandom){
-                const auto& base=modEnvelope?(nativeVoltage?target.voltage246Adsr:nativeDna?target.dna246Adsr:nativeString?target.string246Adsr:nativeFm?target.fm246Adsr:nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeVoltage?voltageRaw:nativeDna?dnaRaw:nativeString?stringRaw:nativeFm?fmRaw:nativeCluster?clusterRaw:nativeDrWave?drWaveRaw:nativeDigital?digitalRaw:phaseRaw);
-                if(nativeRandom)modulated=v.randomLfo.next(true,target.random246Controls,nativeVoltage?13:nativeDna?11:nativeString?3:nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,44100./(64*sampleRate),randomRng,base);
-                else modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeVoltage?13:nativeDna?11:nativeString?3:nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
+            auto dsynthModulated=dsynthRaw;
+            if(nativeDsynth&&!modEnvelope&&(nativeValueVoice||nativeRandom)){
+                if(nativeRandom)dsynthModulated=v.randomLfo.next(true,target.random246Controls,12,44100./(64*sampleRate),randomRng,dsynthRaw);
+                else dsynthModulated=v.valueVoice.next(true,false,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour+(target.dsynth246Secondary?4:0),12,target.value246Tempo,44100./(64*sampleRate),dsynthRaw,phaseConfig.table);
+            }else if(nativeValueVoice||nativeRandom){
+                const auto& base=modEnvelope?(nativeDsynth?target.dsynth246Adsr:nativeVoltage?target.voltage246Adsr:nativeDna?target.dna246Adsr:nativeString?target.string246Adsr:nativeFm?target.fm246Adsr:nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr):(nativeVoltage?voltageRaw:nativeDna?dnaRaw:nativeString?stringRaw:nativeFm?fmRaw:nativeCluster?clusterRaw:nativeDrWave?drWaveRaw:nativeDigital?digitalRaw:phaseRaw);
+                if(nativeRandom)modulated=v.randomLfo.next(true,target.random246Controls,nativeDsynth?12:nativeVoltage?13:nativeDna?11:nativeString?3:nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,44100./(64*sampleRate),randomRng,base);
+                else modulated=v.valueVoice.next(true,target.valueVoice246Envelope,target.valueVoice246Free,target.valueVoice246Speed,target.valueVoice246Amount,target.valueVoice246Colour,nativeDsynth?12:nativeVoltage?13:nativeDna?11:nativeString?3:nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7,target.value246Tempo,44100./(64*sampleRate),base,phaseConfig.table);
             }
             if(!nativeValueVoice&&v.valueVoice.active)v.valueVoice.reset();
             if(!nativeRandom&&v.randomLfo.active)v.randomLfo.reset();
-            auto& nativeOutput=nativeVoltage?v.voltage246.output:nativeDna?v.dna246.output:nativeString?v.string246.output:nativeFm?v.fm246.output:nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
-            nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
-            if(nativeVoltage){
+            auto& nativeOutput=nativeDsynth?v.dsynth246.output:nativeVoltage?v.voltage246.output:nativeDna?v.dna246.output:nativeString?v.string246.output:nativeFm?v.fm246.output:nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
+            nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
+            if(nativeDsynth){
+                s=v.dsynth246.next(frequency,dsynthModulated,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:target.dsynth246Adsr,dsynthContext,int(&v-voices.data()),phaseConfig,v.released);
+                amplitude=1;v.level=v.dsynth246.output.envelopeLevel();if(v.dsynth246.done())v.active=false;
+            }else if(nativeVoltage){
                 s=v.voltage246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?modulated:voltageRaw,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:target.voltage246Adsr,phaseConfig,v.released);
                 amplitude=1;v.level=v.voltage246.output.envelopeLevel();if(v.voltage246.output.envelopeDone())v.active=false;
             }
@@ -293,7 +305,7 @@ public:
             }
             v.time+=1/sampleRate;
             float contribution=s*amplitude*v.velocity*.16f;
-            if((nativeVoltage||nativeDna||nativeString||nativeFm||nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
+            if((nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
             v.lastOutput=contribution;sum+=contribution;
         }
         const double cutoff=(900+p.tone*14500)*(target.lfoDestination==1&&lfo!=0?std::exp2(lfo*3):1);
@@ -326,7 +338,7 @@ private:
     static size_t channelIndex(int ch) { return size_t(std::clamp(ch,1,17)-1); }
     struct Voice {
         bool active=false,released=false,keyDown=false; int note=0,channel=1,stage=0;
-        Voltage246Voice voltage246;Dna246Voice dna246;String246Voice string246;
+        Dsynth246Voice dsynth246;Voltage246Voice voltage246;Dna246Voice dna246;String246Voice string246;
         Phase246Voice phase246;
         Fm246Voice fm246;
         Digital246Voice digital246;
@@ -366,6 +378,7 @@ private:
     Cluster246Config clusterConfig;bool nativeClusterActive=false,clusterControlsInitialized=false;
     std::array<float,4> clusterWords{};std::array<int16_t,4> clusterRaw{};
     DrWave246Config drWaveConfig;bool nativeDrWaveActive=false,drWaveControlsInitialized=false;int selectedEngine=0;bool selectedDigital=false,selectionInitialized=false;
+    reference::Dsynth246Context dsynthContext;bool nativeDsynthActive=false,dsynthControlsInitialized=false;std::array<float,8> dsynthWords{};std::array<int16_t,8> dsynthRaw=dsynth246Defaults;
     bool nativeVoltageActive=false,voltageControlsInitialized=false;std::array<float,4> voltageWords{};std::array<int16_t,4> voltageRaw=voltage246Defaults;
     reference::Dna246Context dnaContext;bool nativeDnaActive=false,dnaControlsInitialized=false;std::array<float,4> dnaWords{};std::array<int16_t,4> dnaRaw=dna246Defaults;
     bool nativeStringActive=false,stringControlsInitialized=false;std::array<float,4> stringWords{};std::array<int16_t,4> stringRaw=string246Defaults;

@@ -528,3 +528,22 @@ destinations are independently reconstructed and numerically checked. Ghidra12.2
 with Blackfin1.2.0 was used as a private aid; decompiler output is neither trusted
 as audio equivalence nor redistributed. No firmware, memory dump, original
 instructions or decompiled code is shipped.
+
+
+### D-synth 246 complete render and FP-load simulator fix
+
+Dsynth246.h independently reconstructs the mono render, internal envelopes,
+oscillator morphing, eight mixes and filters. Complete audio/state/buffer parity
+is checked against isolated GNU BF524 execution with caller-supplied pitch/gain.
+No original instructions or decompiler output are included. Dsynth246Voice.h
+uses authored host clock, pitch/allocation/velocity policies, ADSR composition,
+quiet detection, output filtering/resampling and UI; init values are authored.
+
+The GNU GDB13.1 FP-relative Dreg load path bypassed deferred packet writeback.
+The additional GPL3-or-later patch uses SET_DREG in that path; authored source-
+latching probes and Analog Devices' Blackfin Programming Reference rev2.2 §4-9
+support this research correction. Tools are not linked into the product. Twelve
+existing original-instruction oracles preserve their numerical results under
+this profile, including all previously documented hybrid substitutions. Hardware
+acoustics remain unmeasured. The historical foundation corpus is versioned in
+its original commit; the current corpus uses the corrected model and signed gain.

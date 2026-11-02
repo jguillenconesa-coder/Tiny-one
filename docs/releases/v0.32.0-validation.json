@@ -1,0 +1,33 @@
+{
+  "version": "0.32.0",
+  "date": "2026-11-02",
+  "linux_build": "Release Standalone and VST3 passed",
+  "linux_ctest": "105/105 suites passed, 114.27 s; D-synth tests repeated on expanded signed-gain corpus and plugin smoke repeated after tail/visual fixes, passed",
+  "realtime": "498 workloads, including 30 D-synth workloads across both Value banks, zero tracked callback heap calls; timing diagnostic on shared host",
+  "sanitizers": "ASan/UBSan full signed-gain render and seven-rate adapter passed; modulation passed; leak detection disabled under managed ptrace",
+  "evidence": "../firmware/dsynth246-render-validation.json",
+  "native_ci": {
+    "status": "pending implementation push"
+  },
+  "plugin_package_ci": {
+    "status": "pending implementation push"
+  },
+  "estimated_progress": "Approximately 60% +/-10 planning points; not acoustic fidelity",
+  "authored_dependencies": [
+    "88.2 kHz clock, note/pitch and control/event cadence",
+    "Allocation/stealing, velocity and Poly/Mono/Legato/glide policies",
+    "ADSR/Tremolo composition in gain-before-filter buffer, output resampling/filtering",
+    "Quiet detection at one LSB per block, 0.25 s conservative host filter-tail allowance",
+    "Functional control labels, OSC II/Value-bank UI, init and animation"
+  ],
+  "previous_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41498098231",
+    "status": "success on Linux, Windows and macOS universal; runtime Intel"
+  },
+  "limits": [
+    "Numerical equivalence conditioned on supplied pitch/gain/events and corrected BF524 model",
+    "No complete original scheduling/routing or physical acoustic equivalence claimed",
+    "Ableton Live real, macOS arm64 execution and complete original presets pending"
+  ],
+  "visual_smoke": "Reviewed D-synth II screenshot: two traces, eight controls via OSC II, eleventh engine, 73-sound catalogue; final button contrast fixed and smoke repeated"
+}
