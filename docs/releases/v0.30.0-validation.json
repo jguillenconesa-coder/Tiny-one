@@ -5,7 +5,10 @@
   "linux_ctest": "98/98 suites passed, 224.65 s",
   "realtime": "444 workloads passed, zero tracked callback heap calls; timings diagnostic on shared host",
   "sanitizers": "ASan/UBSan core, modulation and seven-rate adapter passed (leak detection disabled)",
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204653",
+    "status": "success: Linux, Windows/MSVC and macOS Intel, core and modulation"
+  },
   "evidence": "../firmware/dna246-validation.json",
   "authored_dependencies": [
     "Fixed virtual identity, not physical OTP",
@@ -19,5 +22,20 @@
     "windows_plugins_and_installer": "success",
     "macos_universal_plugins_and_package": "success; runtime Intel"
   },
-  "visual_smoke": "DNA screenshot reviewed: ninth engine, helix, four raw controls, virtual identity init and 71-sound catalogue"
+  "visual_smoke": "DNA screenshot reviewed: ninth engine, helix, four raw controls, virtual identity init and 71-sound catalogue",
+  "implementation_commit": "a635d53bbe97f0596564d9452d0e0a1c85b45167",
+  "plugin_package_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204475",
+    "status": "in progress; includes Windows installer and macOS universal package"
+  },
+  "regression_ci": {
+    "fm": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482205092",
+      "status": "success on Linux, Windows and macOS Intel"
+    },
+    "string": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482205148",
+      "status": "success on Linux, Windows and macOS Intel"
+    }
+  }
 }

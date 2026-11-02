@@ -56,7 +56,10 @@ ese perfil permanece sin medir. Reloj, pitch/cursor, scheduler/voz y salida prop
 Cuatro controles raw, ADSR, seis voces, Mono/Legato/glide, moduladores,
 automatización, proyectos/slots/clipboard integrados. Linux Release: **98/98 suites**
 y **444 cargas sin heap rastreado**; ASan/UBSan de núcleo/modulación/adaptador y
-revisión visual pasan. Verificación nativa y paquetes en CI pendientes:
+revisión visual pasan. [Núcleo/modulación DNA](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204653)
+y regresiones FM/String pasan en Linux, Windows/MSVC y macOS Intel.
+[Plugins e instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204475)
+siguen en CI:
 [evidencia](releases/v0.30.0-validation.json). Estimación **≈56 % ±10 puntos** de
 planificación, no de fidelidad. Voltage/D-synth y demás componentes pendientes
 siguen según la matriz; presets originales completos al final.
