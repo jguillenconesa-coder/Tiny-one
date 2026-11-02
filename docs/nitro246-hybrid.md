@@ -1,5 +1,9 @@
 # Nitro Hybrid — dos filtros y seguimiento bipolar
 
+Desde 0.24.1, el volumen maestro sigue al bus de FX y controla también sus colas;
+[orden de salida y límites](output-routing.md). Las menciones a «master» como
+etapa anterior al bus se refieren a drive/eco, no al volumen de salida.
+
 Desde 0.23, elige este efecto en el **selector FX de set 3**; sustituye los botones anteriores.
 
 Activa **set 3 → NITRO HYBRID**. Los mandos controlan **Frequency 1, Follow,

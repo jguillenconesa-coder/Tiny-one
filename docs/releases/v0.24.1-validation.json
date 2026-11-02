@@ -1,0 +1,60 @@
+{
+  "version": "0.24.1",
+  "date": "2026-11-02",
+  "linux_build": "standalone and VST3 passed",
+  "linux_ctest": {
+    "passed": 82,
+    "total": 82,
+    "seconds": 135.31
+  },
+  "routing": {
+    "position": "Master volume after complete output FX bus",
+    "selections": [
+      "Off",
+      "Punch",
+      "Filter",
+      "Nitro",
+      "Delay",
+      "Grid",
+      "Phone"
+    ],
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "checks": [
+      "Quarter output equals quarter of unity render",
+      "Exact settled mute",
+      "Retained tails after unmute",
+      "Identical output channels",
+      "Unchanged PDC",
+      "64/257 host partition invariance"
+    ],
+    "scope": "Authored output routing, not original OP-1 stereo routing"
+  },
+  "spring_lifecycle": {
+    "original_resets": 8,
+    "deferred_clear_calls": 16,
+    "full_dual_slot_snapshots": 24,
+    "independent_repeat": "byte-identical",
+    "sanitizers": "Address and undefined behavior passed; leak detection disabled in traced environment",
+    "evidence": "../firmware/spring246-lifecycle-validation.json",
+    "scope": "Only reset and pending clear branch; no active audio renderer or plugin integration"
+  },
+  "realtime": {
+    "workloads": 324,
+    "tracked_heap_calls": 0,
+    "master_volume_automated": true,
+    "first_note_checked": true,
+    "scope": "Diagnostic on shared host, not physical deadline certification"
+  },
+  "previous_phone_ci": {
+    "run_id": 41423346404,
+    "linux": "success",
+    "windows": "success including installer/startup/install/uninstall",
+    "macos": "queued"
+  },
+  "native_ci": "pending implementation commit",
+  "estimated_progress": "44% +/-10 planning points"
+}

@@ -68,7 +68,10 @@
     "run_id": 41423346404,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404",
     "implementation_commit": "c0dc9fa2eac7c34fa6e9a647e2c72276b31f5a93",
-    "status": "in progress; Linux/Windows checkout, macOS queued; native results pending"
+    "status": "Linux and Windows success including Windows installer/startup/install/uninstall; macOS queued",
+    "linux": "success",
+    "windows": "success",
+    "macos": "queued"
   },
   "limitations": [
     "Fixed slot 0 and explicitly guarded workspace, not original allocation protocol.",

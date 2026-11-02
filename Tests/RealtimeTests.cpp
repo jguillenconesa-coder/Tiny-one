@@ -49,6 +49,7 @@ int main(int argc,char** argv) {
     if(preset<=-21&&preset>=-24&&iteration%64==0){auto& raw=p->phaseParameters();for(size_t knob=0;knob<4;++knob)raw.getParameter(pocket::tremolo246Ids[knob])->setValueNotifyingHost(float((iteration/64+int(knob)+1)%8)/7.f);raw.getParameter("tremolo246Shape")->setValueNotifyingHost(float(iteration/64%5)/4.f);}
     if(preset<=-17&&iteration%128==0)p->phaseParameters().getParameter("hybridVoiceMode")->setValueNotifyingHost(iteration%256==0?.5f:1.f);
     if(preset<=-17&&iteration%64==32){midi.addEvent(juce::MidiMessage::controllerEvent(1,64,iteration%128==32?127:0),0);for(int note:{48,52,55,59,60,68,76,83})midi.addEvent(juce::MidiMessage::noteOff(1,note),0);}
+    if(iteration%64==0)p->state.getParameter("volume")->setValueNotifyingHost(iteration%192==0?0.f:iteration%192==64?.25f:1.f);
     if(iteration%128==0){const std::array<uint8_t,128> sysex{};midi.addEvent(juce::MidiMessage::createSysExMessage(sysex.data(),int(sysex.size())),0);}
     if(iteration%100==0)p->keyboard.noteOn(2,65,.6f);
     if(iteration%100==50)p->keyboard.noteOff(2,65,0);
@@ -62,7 +63,7 @@ int main(int argc,char** argv) {
    auto result=std::make_unique<juce::DynamicObject>();result->setProperty("preset",preset);result->setProperty("rate",rate);result->setProperty("block",block);result->setProperty("deadlineUs",deadline);result->setProperty("medianUs",times[times.size()/2]);result->setProperty("p99Us",times[size_t(times.size()*.99)]);result->setProperty("maxUs",times.back());result->setProperty("deadlineOverruns",int(std::count_if(times.begin(),times.end(),[&](double value){return value>deadline;})));result->setProperty("heapCalls",0);measurements.add(juce::var(result.release()));
   }
   if(argc>1) {juce::File output(juce::String::fromUTF8(argv[1]));if(!output.replaceWithText(juce::JSON::toString(juce::var(measurements))))throw std::runtime_error("Cannot write realtime metrics");}
-  std::cout<<"PASS: 324 realtime workloads (including Phone, Grid, Delay and Nitro output automation, Random Instrument/ADSR and Tremolo on four native cores, Mono/Legato/glide and six-voice Cluster/Dr. Wave hybrids, Phase/Digital 246, both envelopes, Punch, Value FX and per-voice Instrument/ENV), 8 voices + MIDI/GUI/SysEx + tape/master FX/EQ/LFO + all 7 sequence modes/swing/Euclidean + input capture; no tracked callback heap calls; fixed output-bus latency matches host PDC\n";
+  std::cout<<"PASS: 324 realtime workloads (including master-volume automation, Phone, Grid, Delay and Nitro output automation, Random Instrument/ADSR and Tremolo on four native cores, Mono/Legato/glide and six-voice Cluster/Dr. Wave hybrids, Phase/Digital 246, both envelopes, Punch, Value FX and per-voice Instrument/ENV), 8 voices + MIDI/GUI/SysEx + tape/master FX/EQ/LFO + all 7 sequence modes/swing/Euclidean + input capture; no tracked callback heap calls; fixed output-bus latency matches host PDC\n";
   // Timing remains diagnostic: OS scheduling on shared CI cannot certify a DAW deadline.
  }catch(const std::exception& error){tracking=false;std::cerr<<error.what()<<'\n';return 1;}
 }

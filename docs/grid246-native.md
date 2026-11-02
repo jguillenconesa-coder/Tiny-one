@@ -1,5 +1,9 @@
 # Grid 246 — dos planos y selector de efectos
 
+Desde 0.24.1, el volumen maestro sigue al bus de FX y controla también sus colas;
+[orden de salida y límites](output-routing.md). Las menciones a «master» como
+etapa anterior al bus se refieren a drive/eco, no al volumen de salida.
+
 En **set 3**, abre el selector **FX** y elige **Grid 246**. Los cuatro mandos
 controlan **X Size, Y Size, Feedback y Mix**. Value 246 FX puede modular cualquiera
 de esos colores con la ruta/rangos de tipo 1 ya contrastados. Los cinco parámetros

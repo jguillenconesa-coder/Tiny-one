@@ -400,3 +400,8 @@ GNU Blackfin y análisis privado Ghidra; candidatos del SDK fijado ya acreditado
 sin copiar su DSP. Coeficientes numéricos de fragmentos legibles compartidos con
 Filter/Delay. Workspace acotado, guardas y pánico completo del host son propios.
 [Contrato](docs/phone246-native.md). Firmware/ELF/pseudocódigo permanecen privados.
+
+La investigación de Spring 246 en 0.24.1 contrasta únicamente el reset y dos
+callbacks de borrado diferido con estados y workspaces sintéticos explícitos.
+El modelo de ciclo de memoria, harness, pruebas y corrección del volumen de
+salida son propios; no se incorpora pseudocódigo ni código DSP del SDK externo.

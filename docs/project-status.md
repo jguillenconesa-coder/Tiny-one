@@ -38,7 +38,28 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: Phone 246 (0.24.0)
+## Entrega agrupada actual: volumen de salida y ciclo de Spring (0.24.1)
+
+El volumen maestro pasa después del bus de efectos: controla también las colas,
+alcanza cero exacto tras el suavizado y conserva las memorias al desmutear.
+[Cadena y regresión](output-routing.md). Se mantienen la latencia fija y el
+pánico completo. La cadena sigue siendo propia, no el ruteo estéreo original.
+
+Spring aporta un bloque de investigación contrastado: reset, dos callbacks de
+borrado diferido y preservación de historiales/memoria intermedia. Coinciden
+24 estados y capturas completas de dos slots en dos ejecuciones independientes.
+[Contrato y límites](spring246-lifecycle.md). No se presenta como un Spring
+integrado ni se añade una opción sin render al selector. CWO tiene contratos
+candidatos localizados; aún faltan los productores de sus tablas.
+
+0.24.1 compila standalone/VST3 y pasa **82/82 suites Linux**, incluidas las
+324 cargas de callback con volumen automatizado y sin heap rastreado.
+Sanitizadores de Spring aprobados; el CI nativo propio está pendiente. El avance global se mantiene en **44 % ±10 puntos**:
+se mejora el comportamiento del instrumento y la base de Spring, sin dar por
+completado otro efecto. Siguiente bloque: render activo de Spring e integración;
+después CWO. Presets originales completos al final.
+
+## Entrega 0.24.0: Phone 246 (0.24.0)
 
 Set 3 → FX → Phone 246 añade Tone, Phonic, Baud y Telematic, con Value FX,
 controles contextuales, automatización y guardado. El núcleo mono coincide en
@@ -51,7 +72,7 @@ preserva filtros/parte de la memoria; el pánico completo del host es propio.
 Se comprueban siete tasas, señal solo procesada, controles extremos, selector,
 estados y bloques independientes. Pasan 80/80 suites Linux y 324 cargas de callback
 sin heap rastreado.
-No añade otro retardo al PDC compartido. El [CI propio 41423346404](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404) está en curso; Windows/macOS siguen pendientes.
+No añade otro retardo al PDC compartido. El [CI propio 41423346404](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404) ha pasado Linux y Windows con su instalador; macOS sigue en cola.
 Grid 0.23 ([41363363963](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963))
 ya pasó las tres plataformas, con instaladores Windows y macOS universal.
 Ableton real y comparación acústica siguen pendientes. Estimación ~44 % (±10

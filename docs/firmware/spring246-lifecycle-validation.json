@@ -1,0 +1,50 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "reset": "0x01a32e9a",
+  "callback": "0x01a326e8 pending branch only",
+  "cases": 24,
+  "original_resets": 8,
+  "deferred_clear_calls": 16,
+  "state_bytes": 104,
+  "display_bytes": 64,
+  "workspace_bytes_per_slot": 58272,
+  "explicit_slots": [
+    0,
+    1
+  ],
+  "full_dual_slot_snapshots": 24,
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "spring246-lifecycle-input.bin": {
+      "bytes": 7584,
+      "sha256": "1b6ba4f613e2b598713f5b75b30bc2d60a0242ed39d67d0dcdac800f9d1f8e36",
+      "matches_committed_fixture": true
+    },
+    "spring246-lifecycle-output.bin": {
+      "bytes": 2804352,
+      "sha256": "2a1d9f1c51b5f8fe2807f7b1c91b67a4b72077c8f7ce41cfde557ba698b77324",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Synthetic workspace contents and state; no original allocator or startup.",
+    "Active audio branch, static initializer and coefficients are not executed or validated.",
+    "This is a lifecycle building block, not an integrated Spring effect."
+  ],
+  "date": "2026-11-02",
+  "independent_repeat": "byte-identical to committed fixtures in a second fresh private directory",
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "leak": "disabled in traced environment"
+  },
+  "owned_sources": {
+    "Source/Spring246Lifecycle.h": "77917a8570f880de4f9430303967d2dcbc7cb06d58d463ee0738aeed7e1488fd",
+    "research/blackfin/spring-lifecycle.s.in": "ace02e784dcb98eaacacffcf294f472f0fede7749651a2699c6956c320ef670c",
+    "scripts/verify-spring246-lifecycle.py": "842d1bd2b81f5b0a0a747f1551eff432b5f6d96cb96c00892dcf50470873778a"
+  }
+}

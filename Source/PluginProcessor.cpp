@@ -418,7 +418,9 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
         const size_t lag=std::clamp(size_t(rate*masterTimeSmooth),size_t(1),masterDelay.size()-1);const float echo=lag<=masterDelayValid?masterDelay[(masterDelayWrite+masterDelay.size()-lag)%masterDelay.size()]:0;
         masterDelay[masterDelayWrite]=std::tanh(mixed+echo*masterFeedback);masterDelayWrite=(masterDelayWrite+1)%masterDelay.size();if(masterDelayValid<masterDelay.size())++masterDelayValid;mixed+=echo*masterEchoSmooth;
         outputGain+=outputSmoothing*(outputTarget-outputGain);
-        const float value=outputFilter.next(mixed*outputGain,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246);blockPeak=std::max(blockPeak,std::abs(value));
+        // Master gain follows the complete FX bus so it also controls retained tails.
+        if(std::abs(outputTarget-outputGain)<(outputTarget==0?1.e-7f:1.e-5f))outputGain=outputTarget;
+        const float value=outputGain*outputFilter.next(mixed,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246);blockPeak=std::max(blockPeak,std::abs(value));
         for(int ch=0;ch<buffer.getNumChannels();++ch) buffer.setSample(ch,i,value);
         if(++scopeCounter>=8) {scopeCounter=0; scope[size_t(scopeIndex)].store(value,std::memory_order_relaxed); scopeIndex=(scopeIndex+1)%256;}
     }

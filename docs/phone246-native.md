@@ -1,5 +1,9 @@
 # Phone 246 — buffers segmentados y voz telefónica
 
+Desde 0.24.1, el volumen maestro sigue al bus de FX y controla también sus colas;
+[orden de salida y límites](output-routing.md). Las menciones a «master» como
+etapa anterior al bus se refieren a drive/eco, no al volumen de salida.
+
 En **set 3 → selector FX → Phone 246**, los mandos son **Tone, Phonic, Baud y
 Telematic**. Tone determina el avance del remuestreador; Phonic agrupa cruces por
 cero para formar segmentos, Baud controla sus repeticiones y Telematic mezcla la

@@ -80,7 +80,7 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Grid | Núcleo mono, dos planos y reset contrastados: 262.144 muestras, estado/display y ocho memorias completas. Integrado con Value FX y selector; transición de resize/ruteo propios. [Guía](grid246-native.md). |
 | Punch | Núcleo mono contrastado con 131.072 muestras, 2.048 estados y display. Integración opcional con conversión de tasa/DC propios. Cola potencialmente sostenida. |
 | Phone | Núcleo mono, segmentación, filtros/remuestreo y reset contrastados en 262.144 muestras y ocho memorias completas. Integrado con Value FX; slot/workspace, guardas, pánico y ruteo propios. [Guía](phone246-native.md). |
-| Spring | Pendiente el reverb original y sus tablas/controles. |
+| Spring | Reset y dos callbacks de borrado diferido contrastados en dos slots; [límites](spring246-lifecycle.md). Render activo, inicializador, tablas/controles e integración pendientes. |
 | Nitro | Híbrido integrado: ruta mono legible contrastada en 262.144 muestras bajo coeficientes/punteros sustituidos. Los originales siguen protegidos; no hay equivalencia acústica demostrada. [Guía y límites](nitro246-hybrid.md). |
 | CWO | Presente en el firmware/DB; pendiente. No está en los seis diagramas de efectos del manual suministrado. |
 | Filter, ruta interna | Núcleo mono contrastado: 262.144 muestras, estado/display y 194 coeficientes. Integrado en bus de salida con PDC fijo; tasa/ruteo propios. [Guía](filter246-native.md). |

@@ -337,3 +337,13 @@ filtros y resampling. Las tablas vienen de conversiones legibles; el slot 0 y do
 guardas hacen explícito el acceso de centinela al final del stride lógico. Soft
 reset contrastado y pánico completo propio se documentan por separado. Selector,
 Value FX y persistencia integrados. Siguiente bloque: Spring/CWO y ruteo de salida.
+
+## Entrega 0.24.1: salida y ciclo de Spring
+
+El volumen maestro sigue al bus de FX y controla sus colas sin vaciar memorias;
+[contrato de salida](output-routing.md). [Spring: ciclo de memoria](spring246-lifecycle.md)
+contrasta 8 resets, 16 callbacks pendientes y 24 capturas de dos slots. Conserva
+los historiales y las líneas intermedias; ambos callbacks borran el mismo tramo
+final. No se integra todavía un render de Spring. Se localizan también los
+auxiliares y tablas candidatos de CWO. Próximo cierre: inicializador y render
+activo de Spring, controles/Value/persistencia; después productores y render CWO.

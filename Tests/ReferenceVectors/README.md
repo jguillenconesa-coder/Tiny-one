@@ -814,3 +814,13 @@ estado140 + display64). Cada 512 registros se intercala una captura de 35284 byt
 (17642 int16: tres buffers y dos guardas); ocho en total. Little endian. Incluye
 DC negativa sostenida y el caso 3584 con cursores/longitudes máximos. No es una
 captura descifrada. [Contrato](../../docs/phone246-native.md).
+
+## Spring 246 lifecycle (0.24.1)
+
+24 records: eight original resets, each followed by two pending-clear callbacks.
+Inputs: 316 bytes = state104 + controls8 + audio128 + display64 + action4 + seed4
++ requested slot4. Outputs: 116848 bytes = state104 + audio128 + display64 + two
+clear counters8 + both complete 58272-byte workspaces. Action 0 loads state, seeds
+both slots and calls reset; action 1 retains state/workspaces/display and invokes
+only the pending branch with fresh audio. These fixtures do not execute active
+Spring DSP or establish original startup contents. [Evidence](../../docs/spring246-lifecycle.md).

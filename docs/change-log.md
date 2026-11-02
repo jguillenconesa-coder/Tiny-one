@@ -1,5 +1,15 @@
 # Historial de cambios
 
+## 0.24.1 — volumen de salida y ciclo de Spring
+
+- Volumen maestro tras el bus de FX: controla colas, mute exacto tras suavizado y
+  conservación de memorias al desmutear. PDC sin cambios.
+- Regresión del procesador en siete selecciones y tres tasas, automatización
+  64/257 y volumen automatizado en las 324 cargas de callback existentes.
+- Reset y borrado diferido de Spring contrastados: 8 resets, 16 callbacks y 24
+  snapshots completos de dos slots; no añade todavía el render de Spring.
+
+
 ## 0.24.0
 
 - Phone 246: Tone/Phonic/Baud/Telematic, segmentación y filtros contrastados en 262.144 muestras, estados/displays y ocho memorias completas.
