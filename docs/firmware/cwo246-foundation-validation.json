@@ -136,7 +136,15 @@
     "linear_response_only": true
   },
   "instrument": "0.25.0 unchanged; CWO is not integrated",
-  "native_ci": "pending implementation commit; independent CWO workflow only",
+  "native_ci": {
+    "run_id": 41435943183,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41435943183",
+    "implementation_commit": "c371def9dee35d66f2800c80a3b5d7f275883eab",
+    "linux": "success",
+    "windows_msvc": "success",
+    "macos_intel": "success",
+    "scope": "Independent C++17 CWO building blocks; no instrument build or CWO host integration"
+  },
   "owned_sources": {
     "research/cwo-foundation/Cwo246Foundation.h": "99ba90c1f73c4ef8c8934053a282169acb97b082544974d4d79dba3fa06b645c",
     "research/cwo-foundation/Cwo246Tables.h": "1b25ea5a6aa885296843b12f4e77920da03fe0863019b74dd37452be7c61961d",

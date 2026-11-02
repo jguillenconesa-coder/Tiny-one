@@ -47,6 +47,8 @@ de cuadratura; los cuatro legibles se conservan exactamente.
 [Alcance y límites](cwo246-foundation.md). Retardo, generador de fases por bloque,
 callback completo e integración siguen pendientes. El instrumento mantiene
 Spring 0.25.0. La nueva verificación nativa es independiente de JUCE/instaladores.
+La [verificación independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41435943183)
+pasa Linux, Windows/MSVC y macOS Intel, además de sanitizadores locales.
 Avance global: **46 % ±10 puntos**, sin dar por completado CWO.
 
 ## Entrega 0.25.0: Spring 246 (0.25.0)

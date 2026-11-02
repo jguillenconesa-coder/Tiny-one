@@ -50,6 +50,8 @@ paridad 0/1, extremos signed16, saturación serial, redondeo par y cambios de
 coeficientes. El segundo oráculo privado independiente reproduce las fixtures
 byte a byte. Los sanitizadores verifican los componentes C++ con esas fixtures.
 [Registro de validación](firmware/cwo246-foundation-validation.json).
+El [CI independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41435943183)
+pasa Linux, Windows/MSVC y macOS Intel.
 
 ## Qué significa el modelo de fase
 
