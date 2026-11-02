@@ -425,6 +425,12 @@ host son propios; no representan el allocator/arranque ni la cadena estéreo ori
 
 ## FM internal foundation (instrument remains 0.26.0)
 
+The independently authored diagnostic in `research/fm-study` examines Pocket One's
+existing two-oscillator FM using its actual Engine and a mathematical Bessel
+reference for its own stationary formula. It contains no original firmware,
+manual pages, disassembly or recovered original audio. Its metrics do not claim
+OP-1 acoustic equivalence. Own tool source is AGPL-3.0-only.
+
 Independently written reconstruction of the rev246 FM constructor, reset, six
 internal envelope update, thirty-word boot conversion and table-copy helpers.
 8192 records and six complete factory pools are compared against private original

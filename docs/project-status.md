@@ -40,6 +40,12 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
 ## Trabajo activo: dependencias internas del FM
 
+[Estudio del FM propio](fm-authored-study.md): arquitectura, controles y ruta
+implícita contrastados con el código; 45 diagnósticos estacionarios y doce renders
+del Engine real. Se documentan aliasing y dependencia de tasa sin usarlos como
+medida de fidelidad al OP-1. No modifica audio ni sustituye el siguiente bloque
+de reconstrucción de los nueve destinos originales.
+
 [Base FM 246](fm246-foundation.md): 30 conversiones/copia de tabla, constructor,
 reset, seis pools completos de factoría y 8192 actualizaciones de seis envolventes
 contrastados con instrucciones originales. Repetición idéntica y sanitizadores;
