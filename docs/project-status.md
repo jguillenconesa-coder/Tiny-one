@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 51 % del objetivo completo
+## Avance estimado: aproximadamente 54 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 45 % | 13,5 puntos |
+| Motores originales y sus filtros | 30 % | 55 % | 16,5 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **51 %** |
+| Total | 100 % | | **54 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,26 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: FM afinación y modulación (0.28.0)
+## Entrega actual: String 246 (0.29.0)
+
+[String](string246-native.md) sustituye el Karplus–Strong propio: waveguide mono,
+ruido filtrado e interpolación de siete pasos. 4096 bloques / 524288 muestras,
+estados/RNG y dieciséis workspaces completos coinciden, sin coeficientes
+sustituidos. Constructor, binding de slot 0, reset y liberación contrastados.
+Value/Random añaden 8192 callbacks específicos del tipo String 3.
+
+Seis voces, cuatro controles raw, ADSR, Mono/Legato/glide, Value Instrument/ADSR,
+Random y Tremolo, proxies, proyectos/slots/clipboard integrados. Reloj de 88.2 kHz,
+pitch/cursor, scheduler, asignación y salida propios. Random comparte el RNG de la
+excitación: profundidad cero no implica identidad al activar ese LFO.
+Linux Release: **95/95 suites**, **420 cargas sin heap rastreado**, ASan/UBSan y
+revisión visual pasan; CI nativo pendiente. [Evidencia](releases/v0.29.0-validation.json).
+
+Estimación **54 % ±10 puntos** por otro núcleo tocable contrastado; no mide
+fidelidad sonora. Quedan motores restantes, ruteo/voz originales, comparación
+acústica y Live real. Presets completos al final; solo vídeos/presets disponibles.
+
+## Entrega anterior: FM afinación y modulación (0.28.0)
 
 [FM: interpretación y moduladores](fm246-performance.md) recupera y completa el
 bloque del chat anterior: pitch fraccionario propio, Value Instrument/ADSR, Random
@@ -53,7 +72,7 @@ siguiente bloque; modos Mono/Legato/glide, sustain, cambios y pánico se amplía
 FM. La UI muestra el algoritmo latcheado por la última voz. **92 suites Linux
 validadas**, **396 cargas sin heap rastreado**, ASan/UBSan y revisión visual pasan;
 Los verificadores independientes pasan en [Linux, Windows/MSVC y macOS Intel](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231292).
-Los plugins e instaladores siguen [en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704).
+Los [plugins e instaladores completos](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704) pasan en Linux, Windows y macOS universal; runtime macOS Intel.
 [Evidencia](releases/v0.28.0-validation.json).
 
 El propietario solo dispone de vídeos y presets: se usarán esas referencias para

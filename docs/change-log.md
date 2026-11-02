@@ -1,5 +1,13 @@
 # Historial de cambios
 
+## 0.29.0 — String 246
+
+- Waveguide original mono contrastado en 4096 bloques, estados/RNG y 16 workspaces completos, sin coeficientes sustituidos.
+- Constructor/reset/release, cuatro controles y ADSR, seis voces, Mono/Legato/glide y moduladores integrados.
+- Value/Random tipo String 3: 8192 callbacks contrastados; RNG compartido con excitación documentado.
+- Automatización, proxies, estado y buffers independientes; reloj, scheduler/pitch/cursor/salida propios. Sin presets originales nuevos.
+
+
 ## 0.28.0 — FM: afinación, modulación e interpretación
 
 - Extensión propia de pitch fraccionario; callback entero original conservado.

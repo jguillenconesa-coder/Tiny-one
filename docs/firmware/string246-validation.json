@@ -1,0 +1,174 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "samples": 524288,
+  "state_bytes": 32,
+  "workspace_bytes": 49152,
+  "complete_workspace_snapshots": 16,
+  "routines": {
+    "render": "0x01a4f098",
+    "construct": "0x01a4ef38",
+    "bind": "0x01a4ef64",
+    "release": "0x01a4efae",
+    "reset": "0x01a4efc8",
+    "period_division": "0x01aa494a"
+  },
+  "slot": 0,
+  "workspace_address": "0x010225ec",
+  "source_tables": [
+    {
+      "source": "0x18be948",
+      "destination": "0x106a5ec",
+      "count": 129,
+      "width": 2,
+      "source_sha256": "67cd9161fa00913959669691a80ae4f010657f8f45ed863bc40dbafe9773d61d"
+    },
+    {
+      "source": "0x18bebcc",
+      "destination": "0x106a730",
+      "count": 225,
+      "width": 2,
+      "source_sha256": "dfe6b9da831f89b89cbe2016895d25e7eaef413ca491a5dcf1ff39976e9018d0"
+    },
+    {
+      "source": "0x18befb0",
+      "destination": "0x106a954",
+      "count": 24,
+      "width": 4,
+      "source_sha256": "6e9181bfe3def658ef5707eb563708de791612601441746a94df3354f2a8358b"
+    }
+  ],
+  "artifacts": {
+    "string246-input.bin": {
+      "bytes": 262144,
+      "sha256": "0bf0783265d93591194062ae5dce935a29fba043865a607e7793703a6a2b25fb",
+      "matches_committed_fixture": true
+    },
+    "string246-output.bin": {
+      "bytes": 2130788,
+      "sha256": "d4a7206e405761ff92054958732889e2250b81a87db2fee154011932bf18597b",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "limits": [
+    "Valid cursors and explicit slot 0 workspace; synthetic states, not complete original startup/allocator.",
+    "RNG and callback ordering supplied by harness; not acoustic or hardware validation."
+  ],
+  "date": "2026-11-02",
+  "independent_repeat": "byte-identical in fresh private a2 and b directories",
+  "modulation": {
+    "value": {
+      "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+      "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+      "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+      "note_reset": "0x019cfd5a",
+      "range_helper": "0x01a1dfec / 0x019f69b0",
+      "range_initializer": "0x01a1e914",
+      "instrument_types": [
+        3
+      ],
+      "digital_ranges": "0x01de5950",
+      "phase_ranges": "0x01de5950",
+      "envelope_ranges": "0x01de5710",
+      "tempo_float_multiply": "0x01aa55a0",
+      "tempo_float_to_integer": "0x01aa4dbc",
+      "tempo_constant_float32": 1662149.125,
+      "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+      "independent_cases": 2048,
+      "stream_cases": 2048,
+      "cases": 4096,
+      "full_self_bytes": 12,
+      "full_display_bytes": 32,
+      "target_words": 8,
+      "artifacts": {
+        "value-string246-input.bin": {
+          "bytes": 393216,
+          "sha256": "243d45f7bef9e73f55e8e0647a01a1589e74013eeeb6151882d83086ebbd6dbc",
+          "matches_committed_fixture": true
+        },
+        "value-string246-output.bin": {
+          "bytes": 278680,
+          "sha256": "ffade58d5d17d7999dde89dae6ea4405a3152b899f6c55d6e66378cda3b4a8c9",
+          "matches_committed_fixture": true
+        }
+      },
+      "tools": {
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+        "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+      },
+      "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+      "limitations": [
+        "Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.",
+        "The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity."
+      ]
+    },
+    "random": {
+      "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+      "process": "0x019cea70",
+      "note_reset": "0x019ced74",
+      "factory": "0x019cf340",
+      "rng_address": "0xff802bc8",
+      "lcg_multiplier": 1664525,
+      "lcg_increment": 1013904223,
+      "range_initializer": "0x01a1e914",
+      "instrument_helper": "0x01a1dfec",
+      "envelope_helper": "0x019f69b0",
+      "cases": 4096,
+      "state_bytes": 44,
+      "target_words": 8,
+      "instrument_types": [
+        3
+      ],
+      "destinations": [
+        "Instrument eight signals / two passes over four controls",
+        "ADSR first four signals"
+      ],
+      "independent_cases": 2048,
+      "retained_stream_cases": 2048,
+      "artifacts": {
+        "random-string246-input.bin": {
+          "bytes": 360448,
+          "sha256": "0b3da0b236ee05a40e0b33db935b175653eac1d60b8075e79a063969e37bd38a",
+          "matches_committed_fixture": true
+        },
+        "random-string246-output.bin": {
+          "bytes": 294912,
+          "sha256": "1d2154c9f057291f64530fd95f93349b781d2a896cf974d793e4fc85da6267b7",
+          "matches_committed_fixture": true
+        }
+      },
+      "tools": {
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+        "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+      },
+      "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+      "limitations": [
+        "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+        "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+      ]
+    }
+  },
+  "source_sha256": {
+    "Source/String246.h": "136c8f1dcfc2d62a4669c8c4d4e81ee8689f8855ac05eb45c16bfeb2caa0a3c0",
+    "Source/String246Voice.h": "a49aec714c309de3f821e3e17c89ad3b56968d7c894bfb24605244eefe8e23ef",
+    "Source/ValueVoice246Ranges.h": "ccc4856350453474c2d3ed81febf7c6b9f59d1b0d9d7fc53c15e503cdbedb233",
+    "scripts/verify-string246.py": "b150916d60aa3d0e079aa2d3159cd053f780ff5e4f5fcbce59bd9d316adc1bd7",
+    "research/blackfin/string-stream.s.in": "26a891f339bc743469a5a0260cd5501aa513570894e041447d39ddd49cbdbae9",
+    "research/string-render/String246Tests.cpp": "6a9bc7364f59afc373f8ee5071e74d9db5d6678bcbf2c44e8b2e6a4f8d13e02f",
+    "Source/Engine.h": "479763c34ba890026754f2c169c3f1faa11186254f60c12a8324029d734c90cb",
+    "Source/PluginProcessor.cpp": "15b04b189f2de105e46676bab587e31c51c417221a5125f532be11209591d254",
+    "Source/ScreenKnobParameter.h": "4657d4cefed7774093194a65684ae655dd6a454dfa26b811b3b7715d110748b6",
+    "Source/SoundLibrary.cpp": "809b9c7951a5232c6e9c91f0047d59db3488be777cccbd1a305ea300ed715ed3",
+    "Tests/String246IntegrationTests.cpp": "73c1ff813453510af488a7fcefb05a9e6443aa57754b462e2bfa2019dbce07d7",
+    "Tests/Fm246ModulationTests.cpp": "a52e8b3a152402e4cbbdca9dbf1f4cce189ec11237e98ed346798650f5995213"
+  },
+  "sanitizers": "ASan/UBSan passed for original lifecycle/render/full workspace replay, String Value/Random callbacks and host adapter at seven rates/extreme controls; leak detection disabled",
+  "ranges": "0x01de5950, produced by 0x01a1e914"
+}

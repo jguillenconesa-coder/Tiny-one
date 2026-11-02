@@ -10,7 +10,7 @@ void dot(juce::Graphics& g,float x,float y,float radius) {g.fillEllipse(x-radius
 }
 void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     g.fillAll(juce::Colour(0xff070b10));
-    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM HYBRID / 4 OP",f.phase246?"PHASE 246 CORE":"PHASE","STRING","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
+    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?"ENVELOPE":f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM HYBRID / 4 OP",f.phase246?"PHASE 246 CORE":"PHASE","STRING 246","SAMPLER","DRUM","SAMPLE KIT","DR. WAVE","CLUSTER"}[std::clamp(f.engine,0,7)];
     label(g,title,{10,4,172,14},10,colors[2]);label(g,juce::String(f.voices)+" VOICES",{183,5,63,12},8,colors[0]);
     const float activity=std::clamp(f.level*6,0.f,1.f),phase=f.time*.7f;
     juce::Path curve;
@@ -124,6 +124,6 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         label(g,"ROUTE "+juce::String(algorithm+1)+" / 9",{91,89,125,10},8,colors[2]);
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.engine==0||f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||(f.page==0&&(f.engine==0||f.engine==2||f.cluster246||f.drWave246||f.phase246||f.digital246))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
 }
 }

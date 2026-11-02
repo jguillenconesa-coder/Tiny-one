@@ -1,0 +1,37 @@
+{
+  "version": "0.29.0",
+  "date": "2026-11-02",
+  "linux_build": "passed: standalone and VST3 Release",
+  "linux_ctest": {
+    "passed": 95,
+    "failed": 0,
+    "seconds": 161.44
+  },
+  "realtime": {
+    "workloads": 420,
+    "tracked_callback_heap_calls": 0,
+    "scope": "Four new String workloads: Random Instrument/ADSR, Tremolo, Value; controls/modulators/mode automation; complete output-bus regression",
+    "timing": "diagnostic shared host; not Live deadline certification"
+  },
+  "sanitizers": {
+    "address": "passed (detect_leaks=0)",
+    "undefined": "passed",
+    "scope": "String full oracle, both modulation oracles and seven-rate Engine integration"
+  },
+  "native_ci": "pending implementation commit",
+  "evidence": "../firmware/string246-validation.json",
+  "model_substitutions": 0,
+  "scope": "Complete mono render/lifecycle with explicit slot 0 and caller-supplied RNG; host clock/pitch/cursor/voice/output adapters authored",
+  "estimated_progress": "54% +/-10 planning points",
+  "previous_028_plugin_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704",
+    "linux": "success",
+    "windows_plugins_and_installer": "success",
+    "macos_universal_plugins_and_package": "success; runtime Intel"
+  },
+  "visual": "passed: actual String 246 screen/four raw controls; authored catalog labels and final plugin smoke passed",
+  "catalog_refresh_smoke": {
+    "passed": 1,
+    "seconds": 27.85
+  }
+}

@@ -36,9 +36,13 @@
     },
     "full_plugins_and_installers": {
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704",
-      "status": "in_progress at evidence capture; configuring all three systems"
+      "status": "completed",
+      "conclusion": "success",
+      "linux": "success",
+      "windows": "success including standalone startup/install/uninstall",
+      "macos": "success universal app/VST3/pkg; runtime Intel"
     },
-    "macos_runtime_limit": "Independent checks run on Intel; universal plugin/package build remains pending at capture"
+    "macos_runtime_limit": "Universal binaries built and inspected; runtime validation covers Intel, not arm64"
   },
   "evidence": "../firmware/fm246-performance-validation.json",
   "estimated_progress": "51% +/-10 planning points; unchanged",

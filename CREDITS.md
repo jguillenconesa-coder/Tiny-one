@@ -470,3 +470,15 @@ separate original callback comparison. FM Value/Random numeric vectors are
 synthetic stimuli and observations from isolated original callbacks; firmware,
 ELFs, disassembly, private media and decompiler output are not distributed.
 The four-operator model retains its ten explicit substitutions unchanged.
+
+### String 246
+
+String246.h independently reconstructs the observed mono waveguide arithmetic,
+constructor/reset/release and explicit slot-0 binding, using the existing legible
+Spring/Delay/Cluster numeric tables without substitutions. op1-sdk's engine_plus
+pointer hook supplied the initial render candidate; this is independently checked
+against the supplied rev246 LDR and isolated GNU BF524 execution. Numeric replay
+vectors contain synthetic stimuli/observations, not original instructions.
+String246Voice.h and its clock, pitch/cursor bounds, scheduler, ADSR composition,
+voice policies, DC/output filtering and UI are authored host adaptations. The old
+Karplus–Strong source remains historical, but is not selected by Engine.

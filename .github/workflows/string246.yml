@@ -1,0 +1,32 @@
+name: Validate String original render and modulation
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/string-render/**'
+      - 'research/blackfin/string-stream.s.in'
+      - 'scripts/verify-string246.py'
+      - 'Source/String246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Spring246Tables.h'
+      - 'Source/Delay246Tables.h'
+      - 'Source/Cluster246.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Random246.h'
+      - 'Tests/Fm246ModulationTests.cpp'
+      - 'Tests/ReferenceVectors/*string246*.bin'
+      - '.github/workflows/string246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/string-render -B build-string -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-string --config Release --parallel 2
+      - run: ctest --test-dir build-string -C Release --output-on-failure

@@ -412,3 +412,14 @@ scheduler ni modifica las diez constantes híbridas. El siguiente frente será
 comparar carácter con las referencias de vídeo ya aportadas y priorizar los
 motores restantes según la matriz, sin pretender calibrar constantes a partir de
 patches con FX/LFO activos ni bloquear el proyecto por falta de hardware.
+
+
+## String 246 (0.29.0)
+
+[Render mono y ciclo](string246-native.md) contrastados con tablas legibles sin
+sustitución: 4096 bloques, estados/RNG, constructor/binding slot 0/reset/release y
+16 workspaces completos. Cuatro controles raw, ADSR, seis voces y moduladores
+integrados; Value/Random contrastados para tipo 3. Reloj, cursor/pitch y asignación
+siguen siendo adaptaciones. El siguiente bloque prioriza los motores restantes
+(DNA/Voltage/D-synth según dependencias), manteniendo Pulse pendiente de L1 y
+calibración orientativa separada. Presets originales completos al final.

@@ -1,4 +1,7 @@
-# Pocket One 0.27.0
+# Pocket One 0.29.0
+
+**String 246**: reconstructed waveguide, four controls, ADSR, six voices and modulators.
+[Scope](docs/string246-native.md) · [Validation](docs/releases/v0.29.0-validation.json).
 
 FM **0.28.0** adds authored fractional tuning and Value/Random/Tremolo routing.
 [Scope and limits](docs/fm246-performance.md) · [Validation](docs/releases/v0.28.0-validation.json).
