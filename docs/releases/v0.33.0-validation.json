@@ -1,7 +1,7 @@
 {
   "version": "0.33.0",
   "date": "2026-11-02",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "20a28c68f9fa0244d0a8d330ecb94f0b0079d475",
   "linux_build": "Release Standalone and VST3 passed; final parameter-path review fix rebuilt",
   "linux_ctest": "107/107 suites passed, 204.93 s; final plugin smoke/output routing/realtime repeats after parameter-copy review fix passed 3/3, 58.25 s",
   "realtime": {
@@ -13,10 +13,17 @@
   },
   "sanitizers": "ASan/UBSan complete render (two alignments/activity query) and final half-scale-gain adapter passed at seven rates, twelve voices and control corners; leak detection disabled under managed ptrace.",
   "native_ci": {
-    "status": "pending implementation push"
+    "status": "success on Linux, Windows/MSVC and macOS Intel (two independent render/adapter suites per platform)",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41531892250",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
   },
   "plugin_package_ci": {
-    "status": "pending implementation push"
+    "status": "in_progress at evidence update; final result pending",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41531892291"
   },
   "evidence": "../firmware/dbox246-render-validation.json",
   "previous_ci": {

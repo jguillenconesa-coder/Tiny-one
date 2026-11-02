@@ -50,8 +50,9 @@ propios integrados. Value/Random de batería pendientes. Afinación/mapa de pads
 reloj/asignación/eventos/velocidad y salida siguen siendo adaptaciones explícitas.
 [Validación de entrega](releases/v0.33.0-validation.json): **107 suites Linux**,
 **510 cargas sin heap rastreado**, sanitizadores del núcleo/adaptador y revisión
-visual aprobados. Smoke/ruteo/tiempo real repetidos tras la revisión final; CI
-nativo y plugins de esta implementación pendientes de la subida.
+visual aprobados. Smoke/ruteo/tiempo real repetidos tras la revisión final. El
+CI independiente de núcleo/adaptador pasó en Linux, Windows/MSVC y macOS Intel;
+los plugins e instaladores de esta implementación siguen en curso.
 
 Estimación **≈62 % ±10 puntos de planificación**; no fidelidad acústica. D-synth
 0.32.0 pasó su CI nativo y completo de plugins/instaladores en las tres plataformas.
