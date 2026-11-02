@@ -64,7 +64,12 @@
     "windows": "success including installer/startup/install/uninstall",
     "macos": "success including universal app/VST3 and pkg"
   },
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "run_id": 41423346404,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404",
+    "implementation_commit": "c0dc9fa2eac7c34fa6e9a647e2c72276b31f5a93",
+    "status": "in progress; Linux/Windows checkout, macOS queued; native results pending"
+  },
   "limitations": [
     "Fixed slot 0 and explicitly guarded workspace, not original allocation protocol.",
     "Original soft reset preserves filter histories and buffers 0/1; host panic clears everything.",

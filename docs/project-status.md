@@ -51,7 +51,7 @@ preserva filtros/parte de la memoria; el pánico completo del host es propio.
 Se comprueban siete tasas, señal solo procesada, controles extremos, selector,
 estados y bloques independientes. Pasan 80/80 suites Linux y 324 cargas de callback
 sin heap rastreado.
-No añade otro retardo al PDC compartido. El CI propio debe confirmar Windows/macOS.
+No añade otro retardo al PDC compartido. El [CI propio 41423346404](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404) está en curso; Windows/macOS siguen pendientes.
 Grid 0.23 ([41363363963](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963))
 ya pasó las tres plataformas, con instaladores Windows y macOS universal.
 Ableton real y comparación acústica siguen pendientes. Estimación ~44 % (±10
