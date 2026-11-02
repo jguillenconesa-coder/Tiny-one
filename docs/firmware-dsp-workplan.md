@@ -460,3 +460,18 @@ D-synth en `0x0197e1d8`; la palabra de render de la vtable `0x0190fbbc + 0x14`
 coincide con esa dirección en el LDR disponible. Esto confirma la referencia,
 **no valida su implementación ni sus dependencias**. Revisar el grafo de llamadas,
 ocho controles y envolventes específicas antes de delimitar el próximo oráculo.
+
+
+## D-synth: ciclo y modulación de ocho destinos
+
+[Base implementada y límites](dsynth246-foundation.md): factoría, binding, reset,
+release, inicialización compartida, decaimiento de indicadores y captura de
+histórico contrastados. Tipo12 kind3: Value selecciona ocho controles y Random
+los trata como ocho destinos directos. 8192 callbacks coincidentes.
+
+El harness ejecuta y registra el render original completo en4096 bloques; sus
+524288 muestras son observaciones, no comparaciones con un renderer C++ ya
+implementado. Las tablas legibles coinciden con ADSR/Filter existentes. Ghidra
+omite ramas ejecutadas: continuar desde simulación/disassembly privado para
+portar ambos osciladores, envolventes, todas las mezclas y filtros antes de añadir
+D-synth al plugin. No hacen falta materiales privados adicionales ahora.

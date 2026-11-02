@@ -3,8 +3,8 @@
 #include <array>
 #include <cstdint>
 namespace pocket::reference {
-// Numeric range-initializer observations for Digital (1), Phase (7), Dr. Wave (2), Cluster (4), FM (0), String (3), DNA (11), Voltage (13) and ADSR.
-inline constexpr std::array<std::array<std::array<int16_t,4>,8>,8> valueVoice246Ranges{{
+// Numeric range-initializer observations for Digital (1), Phase (7), Dr. Wave (2), Cluster (4), FM (0), String (3), DNA (11), Voltage (13), D-synth (12) and ADSR.
+inline constexpr std::array<std::array<std::array<int16_t,4>,8>,9> valueVoice246Ranges{{
     {{{{0,32767,32767,0}},{{2048,26624,24576,0}},{{-32768,32767,16384,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{0,32767,32767,0}},{{0,29491,32767,0}},{{0,32767,32767,0}},{{0,32767,32767,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{0,24575,4915,1}},{{0,16383,3276,1}},{{0,16383,3276,1}},{{0,32767,6553,0}},{{0,32767,0,1}},{{0,32767,0,1}},{{0,32767,0,1}},{{0,32767,0,0}}}},
@@ -13,7 +13,8 @@ inline constexpr std::array<std::array<std::array<int16_t,4>,8>,8> valueVoice246
     {{{{64,8256,8192,0}},{{512,24064,23552,0}},{{0,16384,16384,0}},{{8256,16448,8192,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{-29491,32767,32767,0}},{{4608,12800,12800,0}},{{0,32767,32767,0}},{{0,32767,32767,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
     {{{{0,32767,16384,0}},{{0,32767,16384,0}},{{0,32767,16384,0}},{{0,32767,16384,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}},{{0,32767,0,0}}}},
+    {{{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}},{{0,32767,10485,3}}}},
 }};
-inline constexpr int valueVoice246RangeIndex(int type) noexcept {return type==1?0:type==7?1:type==2?2:type==4?3:type==0?4:type==3?5:type==11?6:type==13?7:-1;}
+inline constexpr int valueVoice246RangeIndex(int type) noexcept {return type==1?0:type==7?1:type==2?2:type==4?3:type==0?4:type==3?5:type==11?6:type==13?7:type==12?8:-1;}
 inline constexpr std::array<std::array<int16_t,3>,4> valueVoice246EnvelopeRanges{{{{64,16320,16384}},{{64,16320,16384}},{{0,32767,16384}},{{64,16320,16384}}}};
 }

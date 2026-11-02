@@ -1,0 +1,151 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "original_render_blocks": 4096,
+  "original_render_observed_samples": 524288,
+  "cpp_audio_renderer": "not implemented; no audio parity claim",
+  "routines": {
+    "render": "0x0197e1d8",
+    "factory": "0x0197ee60",
+    "constructor": "0x0197e058",
+    "bind": "0x0197e0b0",
+    "reset": "0x0197e0ee",
+    "release": "0x0197e168",
+    "shared_init": "0x0197eeb0"
+  },
+  "ranges": "0x01de5b90",
+  "state_bytes": 72,
+  "pool_bytes": 432,
+  "shared_context_bytes": 824,
+  "input_record_bytes": 2048,
+  "output_prefix_bytes": 1604,
+  "output_record_bytes": 4320,
+  "controls": 8,
+  "guards": {
+    "pool": "0xffb001b0",
+    "context": "0x01cebbe0",
+    "frequency_end": "0xff802154",
+    "rng": "0xff802bc8"
+  },
+  "mix_modes_exercised": 8,
+  "artifacts": {
+    "dsynth246-input.bin": {
+      "bytes": 8388608,
+      "sha256": "e65fba38a5de4b32bf1a6aafc3ae025260f250287bddab58fb696aa2f319a801"
+    },
+    "dsynth246-output.bin": {
+      "bytes": 17696324,
+      "sha256": "9d303a9f13436623899c78e9e4c80d419af6db2df754c84c6e29c5308f1e6ff7"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+  },
+  "limits": [
+    "Audio and post-render state are original-instruction observations, not a reconstructed renderer.",
+    "C++ implements lifecycle and history capture only; render state is explicitly handed back by the oracle.",
+    "Caller supplies pitch, gain, event order and bounded six-voice context. No original scheduler or acoustic-equivalence claim."
+  ],
+  "independent_repeat": "Fresh original-instruction runs match all fixtures byte for byte, including final non-overlapping guards.",
+  "value": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+    "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+    "note_reset": "0x019cfd5a",
+    "range_helper": "0x01a1dfec / 0x019f69b0",
+    "range_initializer": "0x01a1e914",
+    "instrument_types": [
+      12
+    ],
+    "envelope_ranges": "0x01de5710",
+    "tempo_float_multiply": "0x01aa55a0",
+    "tempo_float_to_integer": "0x01aa4dbc",
+    "tempo_constant_float32": 1662149.125,
+    "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+    "independent_cases": 2048,
+    "stream_cases": 2048,
+    "cases": 4096,
+    "full_self_bytes": 12,
+    "full_display_bytes": 32,
+    "target_words": 8,
+    "artifacts": {
+      "value-dsynth246-input.bin": {
+        "bytes": 393216,
+        "sha256": "0a9972e90f5a7d887f1c5b55ab0e3d2c40dd2705f9d4c2548aa7b41663a249b8",
+        "matches_committed_fixture": true
+      },
+      "value-dsynth246-output.bin": {
+        "bytes": 278680,
+        "sha256": "4c5b8e2cc7c4f6616597741d175db3b824c66765e4e243cd840406810337f508",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+      "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+      "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+    },
+    "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "limitations": [
+      "Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.",
+      "The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity."
+    ],
+    "dsynth_ranges": "0x01de5b90"
+  },
+  "random": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "process": "0x019cea70",
+    "note_reset": "0x019ced74",
+    "factory": "0x019cf340",
+    "rng_address": "0xff802bc8",
+    "lcg_multiplier": 1664525,
+    "lcg_increment": 1013904223,
+    "range_initializer": "0x01a1e914",
+    "instrument_helper": "0x01a1dfec",
+    "envelope_helper": "0x019f69b0",
+    "cases": 4096,
+    "state_bytes": 44,
+    "target_words": 8,
+    "instrument_types": [
+      12
+    ],
+    "destinations": [
+      "Instrument eight signals / two passes over four controls",
+      "ADSR first four signals"
+    ],
+    "independent_cases": 2048,
+    "retained_stream_cases": 2048,
+    "artifacts": {
+      "random-dsynth246-input.bin": {
+        "bytes": 360448,
+        "sha256": "9ec0badc07669963ab42090fc5a6a3ae786d9cca7293c4b3a4230e7112d98fad",
+        "matches_committed_fixture": true
+      },
+      "random-dsynth246-output.bin": {
+        "bytes": 294912,
+        "sha256": "5501e8ff94e50f8f6a5465c6afa476d4758fffefdfe5ea00a5911ce9f4fc9da4",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+      "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+      "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+    },
+    "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+    "limitations": [
+      "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+      "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+    ]
+  },
+  "linux_validation": {
+    "ctest": "103/103 suites passed: 102 on full 114.62 s run; lifecycle suite passed after corrected 16-bit initialization/preserved padding",
+    "realtime": "468 existing host workloads, no tracked heap calls; D-synth not integrated as audible engine",
+    "sanitizers": "ASan/UBSan lifecycle/history and modulation passed; leak detection disabled under managed ptrace"
+  },
+  "ci": {
+    "status": "pending implementation push"
+  },
+  "estimated_progress": "58% +/-10 planning points, unchanged; D-synth audio port remains pending"
+}

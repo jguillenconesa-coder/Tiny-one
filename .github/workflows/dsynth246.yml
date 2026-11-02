@@ -1,0 +1,36 @@
+name: Validate D-synth lifecycle, original render contract and modulation
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/dsynth-render/**'
+      - 'research/blackfin/dsynth-stream.s.in'
+      - 'scripts/verify-dsynth246.py'
+      - 'Source/Dsynth246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Envelope246Tables.h'
+      - 'Source/Filter246Tables.h'
+      - 'Source/Value246.h'
+      - 'Source/Tremolo246Tables.h'
+      - 'Source/String246.h'
+      - 'Source/Spring246Tables.h'
+      - 'Source/Delay246Tables.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Random246.h'
+      - 'Tests/Fm246ModulationTests.cpp'
+      - 'Tests/ReferenceVectors/*dsynth246*.bin'
+      - '.github/workflows/dsynth246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/dsynth-render -B build-dsynth -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-dsynth --config Release --parallel 2
+      - run: ctest --test-dir build-dsynth -C Release --output-on-failure

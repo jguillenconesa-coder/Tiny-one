@@ -515,3 +515,16 @@ an authored clock, pitch/event/voice policy, ADSR composition, DC/output filteri
 and resampling. Labels, init values and four-trace animation are authored.
 Numerical parity is conditioned on supplied inputs; it is not acoustic
 validation. No firmware, private media/memory dump or decompiler output is included.
+
+
+### D-synth lifecycle and modulation foundation
+
+The previously credited op1-sdk supplied a candidate pointer; it was checked in
+the supplied rev246 vtable. Dsynth246Lifecycle.h independently reconstructs the
+72-byte state lifecycle and bounded six-slot capture context. The original audio
+callback is executed privately to record synthetic numerical observations; its
+audio renderer has not been ported to C++. Value/Random type12's eight direct
+destinations are independently reconstructed and numerically checked. Ghidra12.2
+with Blackfin1.2.0 was used as a private aid; decompiler output is neither trusted
+as audio equivalence nor redistributed. No firmware, memory dump, original
+instructions or decompiled code is shipped.

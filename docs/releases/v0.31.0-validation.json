@@ -9,9 +9,7 @@
   "modulation_oracle": "4096 Value + 4096 Random type13 callbacks, independent repeat byte-identical",
   "evidence": "../firmware/voltage246-validation.json",
   "native_ci": {
-    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913015",
-    "status": "queued",
-    "conclusion": "",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "validate (windows-2022)",
@@ -20,8 +18,8 @@
       },
       {
         "name": "validate (macos-15-intel)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "validate (ubuntu-latest)",
@@ -29,30 +27,30 @@
         "conclusion": "success"
       }
     ],
-    "status_details": "Linux and Windows/MSVC passed; macOS Intel queued"
+    "status": "completed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913015"
   },
   "plugin_package_ci": {
-    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913030",
-    "status": "queued",
-    "conclusion": "",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "build (windows-2022)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (ubuntu-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (macos-latest)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
     ],
-    "status_details": "Linux and Windows building; macOS universal queued"
+    "status": "completed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913030"
   },
   "authored_dependencies": [
     "88.2 kHz clock, note/pitch/cursor/event scheduler",
@@ -77,14 +75,12 @@
   "implementation_commit": "a6f576dc418e9675d5b94715b7c0a0349ac2d8b8",
   "regression_ci": {
     "fm": {
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912931",
-      "status": "queued",
-      "conclusion": "",
+      "conclusion": "success",
       "jobs": [
         {
           "name": "validate (macos-15-intel)",
-          "status": "queued",
-          "conclusion": ""
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (ubuntu-latest)",
@@ -96,17 +92,17 @@
           "status": "completed",
           "conclusion": "success"
         }
-      ]
+      ],
+      "status": "completed",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912931"
     },
     "string": {
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913202",
-      "status": "queued",
-      "conclusion": "",
+      "conclusion": "success",
       "jobs": [
         {
           "name": "validate (macos-15-intel)",
-          "status": "queued",
-          "conclusion": ""
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (windows-2022)",
@@ -118,12 +114,12 @@
           "status": "completed",
           "conclusion": "success"
         }
-      ]
+      ],
+      "status": "completed",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492913202"
     },
     "dna": {
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912925",
-      "status": "in_progress",
-      "conclusion": "",
+      "conclusion": "success",
       "jobs": [
         {
           "name": "validate (ubuntu-latest)",
@@ -132,16 +128,18 @@
         },
         {
           "name": "validate (macos-15-intel)",
-          "status": "in_progress",
-          "conclusion": ""
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (windows-2022)",
           "status": "completed",
           "conclusion": "success"
         }
-      ]
+      ],
+      "status": "completed",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41492912925"
     }
   },
-  "ci_observed_at": "2026-11-02T17:43:38+00:00"
+  "ci_observed_at": "2026-11-02T18:08:20+00:00"
 }

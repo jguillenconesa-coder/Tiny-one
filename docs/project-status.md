@@ -39,7 +39,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Voltage 246 (0.31.0)
+## Bloque actual de investigación: D-synth
+
+[Base de D-synth](dsynth246-foundation.md) implementa y contrasta el ciclo de seis
+voces y la memoria de captura. Value/Random tipo12 añade ocho destinos directos,
+con 8192 callbacks coincidentes. El oráculo registra4096 bloques/524288 muestras
+del render original; **el renderer C++ y la integración audible siguen pendientes**.
+Linux: 103 suites aprobadas, 468 cargas existentes sin heap rastreado y ASan/UBSan
+de ciclo/modulación aprobados. Las envolventes específicas no quedan completadas
+por el ADSR común. La estimación
+permanece en **≈58 % ±10 puntos** mientras se completa ese portado.
+
+## Última entrega audible: Voltage 246 (0.31.0)
 
 [Voltage](voltage246-native.md) añade el décimo motor. La candidata se valida como
 callback mono completo: cuatro osciladores, XOR/feedback, carga, dispersión y filtro,
@@ -54,8 +65,8 @@ asignación, composición ADSR y salida son adaptaciones; la semejanza acústica
 sin medirse. [Evidencia de entrega](releases/v0.31.0-validation.json).
 Linux Release: **101 suites aprobadas** (smoke repetido tras ajustar el catálogo
 a 72 sonidos), **468 cargas sin heap rastreado**, ASan/UBSan y revisión visual.
-Núcleo/modulación CI aprobados en Linux y Windows/MSVC; macOS Intel en cola.
-CI completo de plugins/instaladores en curso, con enlaces y estados en la evidencia.
+Núcleo/modulación, regresiones FM/String/DNA y CI completo de plugins/instaladores
+aprobados en Linux, Windows y macOS universal (runtime Intel); enlaces en la evidencia.
 Estimación **≈58 % ±10 puntos** de planificación. Sigue D-synth según dependencias,
 además de calibración, validación Live y presets originales completos al final.
 
