@@ -70,6 +70,15 @@
     "windows": "success including installer/startup/install/uninstall",
     "macos": "cancelled before runner assignment due to hosted ARM64 capacity constraints"
   },
-  "native_ci": "pending implementation commit; macOS runner switched to macos-15-intel, universal build retained",
-  "estimated_progress": "46% +/-10 planning points, not acoustic equivalence"
+  "native_ci": {
+    "run_id": 41430846718,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41430846718",
+    "implementation_commit": "d6c68cb441b95970bdc029834cc4d27c42bc5059",
+    "status": "Windows integer DSP preflight passed including Spring and retained lifecycle; full builds/packages in progress",
+    "macos_runner": "macos-15-intel, assigned successfully",
+    "macos_scope": "Universal arm64+x86_64 build; runtime tests run on x86_64",
+    "windows_integer_dsp_preflight": "success"
+  },
+  "estimated_progress": "46% +/-10 planning points, not acoustic equivalence",
+  "visual_review": "Spring selector, screen and controls inspected; screenshot smoke passed"
 }

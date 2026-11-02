@@ -49,7 +49,10 @@ completo del host se distingue de la limpieza diferida original.
 
 0.25 compila standalone/VST3 y pasa **84/84 suites Linux** y **348 cargas de
 callback sin heap rastreado**. Sanitizadores de núcleo/adaptador aprobados;
-el CI nativo propio sigue pendiente. El volumen sigue después del bus y el PDC permanece
+el [CI nativo propio](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41430846718)
+ya tiene asignados los tres runners, incluido macOS Intel; resultados completos
+e instaladores aún pendientes. La prueba temprana de DSP entero de Windows
+ya pasó, incluidos Spring y su ciclo de memoria. El volumen sigue después del bus y el PDC permanece
 fijo. El CI pasa a un runner macOS Intel manteniendo binarios universales, tras
 dos trabajos ARM64 cancelados por falta de capacidad antes de arrancar. Prueba
 runtime de arm64 y Ableton real siguen pendientes. Avance de planificación:
