@@ -25,7 +25,21 @@
     "new_coverage": "FM Random Instrument/ADSR, Tremolo and Value; raw control/modulation automation; existing output-bus PDC regression",
     "timing": "diagnostic shared host, not a guarantee of DAW deadlines"
   },
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "independent_fm": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231292",
+      "conclusion": "success",
+      "linux": "success",
+      "windows_msvc": "success",
+      "macos_intel": "success",
+      "scope": "FM foundation, original render, integer-pitch extension parity and FM Value/Random oracles"
+    },
+    "full_plugins_and_installers": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704",
+      "status": "in_progress at evidence capture; configuring all three systems"
+    },
+    "macos_runtime_limit": "Independent checks run on Intel; universal plugin/package build remains pending at capture"
+  },
   "evidence": "../firmware/fm246-performance-validation.json",
   "estimated_progress": "51% +/-10 planning points; unchanged",
   "limits": [
@@ -34,5 +48,6 @@
     "No new acoustic calibration, Live test or complete original presets",
     "Only previously supplied videos/presets available; hardware access not assumed"
   ],
-  "visual_review": "passed: actual JUCE FM graph/four controls, modulator proxy and state checks"
+  "visual_review": "passed: actual JUCE FM graph/four controls, modulator proxy and state checks",
+  "implementation_commit": "0488690ebec72d087984eaab2bf6467a7e88ec63"
 }

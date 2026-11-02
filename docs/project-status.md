@@ -52,7 +52,9 @@ máximo de 0.00691601 cents respecto a A440. Tremolo alinea pitch y amplitud al
 siguiente bloque; modos Mono/Legato/glide, sustain, cambios y pánico se amplían a
 FM. La UI muestra el algoritmo latcheado por la última voz. **92 suites Linux
 validadas**, **396 cargas sin heap rastreado**, ASan/UBSan y revisión visual pasan;
-CI nativo pendiente. [Evidencia](releases/v0.28.0-validation.json).
+Los verificadores independientes pasan en [Linux, Windows/MSVC y macOS Intel](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231292).
+Los plugins e instaladores siguen [en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41463231704).
+[Evidencia](releases/v0.28.0-validation.json).
 
 El propietario solo dispone de vídeos y presets: se usarán esas referencias para
 comparaciones orientativas. El inventario encuentra cero presets FM sin FX/LFO
