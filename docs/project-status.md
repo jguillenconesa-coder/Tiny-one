@@ -48,7 +48,10 @@ está condicionada a ellos. Retardo/oscilador tienen además 8192 casos y diecis
 memorias completas contrastados, con repetición independiente idéntica.
 
 Linux Release: **88/88 suites** y **372 cargas sin heap rastreado**; sanitizadores
-y revisión visual pasan. CI nativo pendiente. PDC y volumen tras el bus mantenidos; reset y
+y revisión visual pasan. Los tres verificadores CWO pasan en Linux, MSVC y macOS
+Intel ([CI](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033728));
+los paquetes completos siguen [en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033959).
+PDC y volumen tras el bus mantenidos; reset y
 ruteo del host propios. Los ocho FX del perfil tienen una opción tocable mono,
 con límites individuales; quedan voz/ruteo y motores restantes, empezando por
 las dependencias del FM de cuatro operadores. Presets originales al final.

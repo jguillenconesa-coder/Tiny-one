@@ -59,7 +59,14 @@
     "tracked_callback_heap_calls": 0,
     "timing": "diagnostic on shared cloud host; not a DAW dropout guarantee"
   },
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "run_id": 41440033728,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033728",
+    "linux": "success",
+    "windows_msvc": "success",
+    "macos_intel": "success",
+    "scope": "Three independent CWO foundation/time/kernel tests on each native platform; not plugin or installer validation"
+  },
   "previous_spring_ci": {
     "run_id": 41430846718,
     "linux": "success",
@@ -68,5 +75,11 @@
   },
   "phase_model": "Four authored substitutions; four locked legible words; analytic linear quadrature budget 4.3 degrees, not physical/acoustic equivalence",
   "estimated_progress": "48% +/-10 planning points",
-  "visual": "passed: CWO screen, four controls and nine-option selector reviewed"
+  "visual": "passed: CWO screen, four controls and nine-option selector reviewed",
+  "implementation_commit": "f40758dbac1d7bf34d845646d587af4bb55852cf",
+  "plugin_package_ci": {
+    "run_id": 41440033959,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41440033959",
+    "status": "in_progress at evidence capture; configure on all three platforms"
+  }
 }
