@@ -53,8 +53,13 @@
     "run_id": 41423346404,
     "linux": "success",
     "windows": "success including installer/startup/install/uninstall",
-    "macos": "queued"
+    "macos": "cancelled before runner assignment; hosted ARM64 capacity constraints"
   },
-  "native_ci": "pending implementation commit",
+  "native_ci": {
+    "run_id": 41425809017,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41425809017",
+    "implementation_commit": "62e2794bfda10fac73ba5cc921db4f4d0f5e587e",
+    "status": "Linux and Windows in progress; macOS queued"
+  },
   "estimated_progress": "44% +/-10 planning points"
 }

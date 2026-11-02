@@ -68,10 +68,11 @@
     "run_id": 41423346404,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404",
     "implementation_commit": "c0dc9fa2eac7c34fa6e9a647e2c72276b31f5a93",
-    "status": "Linux and Windows success including Windows installer/startup/install/uninstall; macOS queued",
+    "status": "Linux and Windows success; macOS cancelled before runner assignment due to GitHub hosted ARM64 capacity constraints",
     "linux": "success",
     "windows": "success",
-    "macos": "queued"
+    "macos": "cancelled before startup; infrastructure capacity, no build/test result",
+    "macos_job_id": 125203928101
   },
   "limitations": [
     "Fixed slot 0 and explicitly guarded workspace, not original allocation protocol.",

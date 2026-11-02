@@ -54,7 +54,8 @@ candidatos localizados; aún faltan los productores de sus tablas.
 
 0.24.1 compila standalone/VST3 y pasa **82/82 suites Linux**, incluidas las
 324 cargas de callback con volumen automatizado y sin heap rastreado.
-Sanitizadores de Spring aprobados; el CI nativo propio está pendiente. El avance global se mantiene en **44 % ±10 puntos**:
+Sanitizadores de Spring aprobados; el [CI nativo propio](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41425809017)
+está en curso (macOS en cola). El avance global se mantiene en **44 % ±10 puntos**:
 se mejora el comportamiento del instrumento y la base de Spring, sin dar por
 completado otro efecto. Siguiente bloque: render activo de Spring e integración;
 después CWO. Presets originales completos al final.
@@ -72,7 +73,8 @@ preserva filtros/parte de la memoria; el pánico completo del host es propio.
 Se comprueban siete tasas, señal solo procesada, controles extremos, selector,
 estados y bloques independientes. Pasan 80/80 suites Linux y 324 cargas de callback
 sin heap rastreado.
-No añade otro retardo al PDC compartido. El [CI propio 41423346404](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404) ha pasado Linux y Windows con su instalador; macOS sigue en cola.
+No añade otro retardo al PDC compartido. El [CI propio 41423346404](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41423346404) ha pasado Linux y Windows con su instalador. macOS terminó cancelado antes de
+recibir un runner por falta de capacidad ARM64 de GitHub; no tiene resultado nativo.
 Grid 0.23 ([41363363963](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41363363963))
 ya pasó las tres plataformas, con instaladores Windows y macOS universal.
 Ableton real y comparación acústica siguen pendientes. Estimación ~44 % (±10
