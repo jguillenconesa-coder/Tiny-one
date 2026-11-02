@@ -88,6 +88,42 @@ int main(int argc,char** argv) {
    fm->state.getParameter("engine")->setValueNotifyingHost(0);check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"String to FM proxy switch failed");fm->state.getParameter("engine")->setValueNotifyingHost(fm->state.getParameter("engine")->convertTo0to1(2));check(fm->screenKnob(0).followedParameter()==raw.getParameter("string246Blue"),"FM to String proxy switch failed");
    {restored->setScreenPage(0);std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("string246-native.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"String screenshot failed");}}
   }
+  {
+   auto fm=std::make_unique<PocketProcessor>();fm->applyDna246Init();
+   check(fm->dna246Enabled(),"DNA Hybrid is not selected");auto& raw=fm->phaseParameters();
+   for(int page=0;page<2;++page){fm->setScreenPage(page);for(size_t i=0;i<4;++i){
+    auto* target=raw.getParameter(page?pocket::dna246EnvelopeIds[i]:pocket::dna246Ids[i]);
+    check(fm->screenKnob(int(i)).followedParameter()==target,"DNA closed-editor proxy target failed");
+    fm->screenKnob(int(i)).setValueNotifyingHost(.2f+float(i)*.15f);
+    check(std::abs(target->getValue()-fm->screenKnob(int(i)).getValue())<.0001,"DNA proxy write failed");
+   }}
+   fm->setScreenPage(0);juce::MemoryBlock saved;fm->getStateInformation(saved);
+   auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));
+   check(restored->dna246Enabled()&&restored->screenKnob(0).followedParameter()==restored->phaseParameters().getParameter("dna246Blue"),"DNA restore lost proxy target");
+   for(size_t i=0;i<4;++i)for(const auto* id:{pocket::dna246Ids[i],pocket::dna246EnvelopeIds[i]})check(restored->phaseParameters().getRawParameterValue(id)->load()==raw.getRawParameterValue(id)->load(),"DNA restore lost raw control");
+   auto renderFm=[&](int block){auto synth=std::make_unique<PocketProcessor>();synth->setStateInformation(saved.getData(),int(saved.getSize()));synth->state.getParameter("sequencer")->setValueNotifyingHost(0);synth->state.getParameter("effect")->setValueNotifyingHost(0);synth->prepareToPlay(48000,block);std::vector<float> audio;
+    for(int offset=0;offset<8192;offset+=block){const int count=std::min(block,8192-offset);juce::AudioBuffer<float> buffer(2,count);buffer.clear();juce::MidiBuffer events;if(offset==0)events.addEvent(juce::MidiMessage::noteOn(1,69,.8f),0);if(offset<=4096&&offset+count>4096)events.addEvent(juce::MidiMessage::noteOff(1,69),4096-offset);synth->processBlock(buffer,events);for(int i=0;i<count;++i){check(std::isfinite(buffer.getSample(0,i)),"DNA plugin nonfinite output");check(buffer.getSample(0,i)==buffer.getSample(1,i),"DNA stereo output mismatch");audio.push_back(buffer.getSample(0,i));}}return audio;};
+   const auto shortBlocks=renderFm(64),oddBlocks=renderFm(257);double energy=0;for(size_t i=0;i<shortBlocks.size();++i){check(std::abs(shortBlocks[i]-oddBlocks[i])<1e-6,"DNA depends on host buffer boundaries");energy+=double(shortBlocks[i])*shortBlocks[i];}check(energy>.001,"DNA plugin render is silent");
+   check(fm->valueVoice246Available(),"DNA modulation unavailable");
+   for(int mode=0;mode<4;++mode){
+    raw.getParameter("random246Enabled")->setValueNotifyingHost(mode==0?1.f:0.f);
+    raw.getParameter("tremolo246Enabled")->setValueNotifyingHost(mode==1?1.f:0.f);
+    raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(mode>=2?1.f:0.f);
+    raw.getParameter("valueVoice246Destination")->setValueNotifyingHost(mode==3?1.f:0.f);
+    raw.getParameter("valueVoice246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("random246Amount")->setValueNotifyingHost(.8f);
+    raw.getParameter("tremolo246Pitch")->setValueNotifyingHost(.3f);
+    raw.getParameter("tremolo246Volume")->setValueNotifyingHost(.5f);
+    fm->setScreenPage(2);check(fm->screenKnob(0).followedParameter()==raw.getParameter(mode==0?"random246Amount":mode==1?"tremolo246Speed":"valueVoice246Speed"),"DNA LFO closed-editor proxy failed");
+    fm->getStateInformation(saved);restored->setStateInformation(saved.getData(),int(saved.getSize()));
+    check(restored->random246Enabled()==(mode==0)&&restored->tremolo246Enabled()==(mode==1)&&restored->valueVoice246Enabled()==(mode>=2),"DNA modulation restore failed");
+    const auto a=renderFm(64),b=renderFm(257);double energy=0;for(size_t i=0;i<a.size();++i){check(std::abs(a[i]-b[i])<1e-6,"DNA modulation depends on host buffer");energy+=a[i]*a[i];}check(energy>.001,"DNA modulation is silent");
+   }
+   raw.getParameter("valueVoice246Enabled")->setValueNotifyingHost(0);fm->setScreenPage(0);
+   juce::String error;check(fm->assignSoundSlot(false,0)&&fm->copySound(error),"DNA slot/clipboard save failed");fm->applyPreset(0);check(fm->recallSoundSlot(false,0,error)&&fm->dna246Enabled(),"DNA slot recall failed");fm->applyPreset(0);check(fm->pasteSound(error)&&fm->dna246Enabled(),"DNA clipboard restore failed");
+   fm->state.getParameter("engine")->setValueNotifyingHost(0);check(fm->screenKnob(0).followedParameter()==raw.getParameter("fm246Blue"),"DNA to FM proxy switch failed");fm->state.getParameter("engine")->setValueNotifyingHost(fm->state.getParameter("engine")->convertTo0to1(8));check(fm->screenKnob(0).followedParameter()==raw.getParameter("dna246Blue"),"FM to DNA proxy switch failed");
+   {restored->setScreenPage(0);std::unique_ptr<juce::AudioProcessorEditor> ui(restored->createEditor());if(argc>1){juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])).getSiblingFile("dna246-native.png"));stream.setPosition(0);stream.truncate();check(png.writeImageToStream(shot,stream),"DNA screenshot failed");}}
+  }
   // The four host identities follow the visible page, including GUI touches,
   // host automation, discrete controls, editor closure and project restoration.
   {
@@ -643,7 +679,7 @@ int main(int argc,char** argv) {
    check(installed.findChildFiles(juce::File::findFilesAndDirectories,true).isEmpty(),"Purge left bank files on disk");
    check(bankProcessor->userPresetNames().isEmpty()&&!bankProcessor->isFavorite(purgedId)&&bankProcessor->selectedSound().isEmpty(),"Purge left stale browser entries");
    check(bankProcessor->soundSlot(false,0)=="factory:0"&&bankProcessor->clipboardKind.load()==0&&bankProcessor->sampleFrames.load()==0,"Purge retained loaded audio or sound references");
-   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==70,"Purge deleted source files or factory sounds");
+   check(valid.existsAsFile()&&bankProcessor->soundCatalog().size()==71,"Purge deleted source files or factory sounds");
    bankProcessor->getStateInformation(saved);auto purgedTree=juce::ValueTree::fromXml(*juce::AudioProcessor::getXmlFromBinary(saved.getData(),int(saved.getSize())));
    check(!purgedTree.hasProperty("sampleAudio")&&!purgedTree.hasProperty("kitAudio0"),"Purged audio still embedded in a new project snapshot");
    check(bankProcessor->importUserBank(valid,error)&&bankProcessor->importUserBank(valid,error),"Import after purge failed");
@@ -654,7 +690,7 @@ int main(int argc,char** argv) {
   }
   // Browser metadata and independent edited sound slots survive project state.
   auto libraryProcessor=std::make_unique<PocketProcessor>(library.getChildFile("Catalog"));
-  check(libraryProcessor->soundCatalog().size()==70,"Factory catalog incomplete");
+  check(libraryProcessor->soundCatalog().size()==71,"Factory catalog incomplete");
   libraryProcessor->applyPreset(0);libraryProcessor->state.getParameter("tone")->setValueNotifyingHost(.83f);
   libraryProcessor->state.getParameter("seqMode")->setValueNotifyingHost(1);
   libraryProcessor->toggleFavorite("factory:0");check(libraryProcessor->assignSoundSlot(false,0),"Could not store edited synth slot");

@@ -1,0 +1,195 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored caller frame and memory stimuli; original executable bytes stay private.
+.include "testutils.inc"
+start
+imm32 SP,0x03f00000
+SP += -24;
+@SETUP@
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+R0 = [P4 + 208];
+CC = BITTST(R0,0);
+IF !CC JUMP actions;
+R0 = [P4 + 212];
+imm32 R1,1664525
+imm32 R2,1013904223
+imm32 P1,0xffb00000
+imm32 P0,49152
+R3 = [P4 + 220];
+CC = R3 == 0;
+IF CC JUMP zero_ram;
+LSETUP(seed,seed_end) LC0 = P0;
+seed: R0 *= R1;
+R0 = R0 + R2;
+seed_end: [P1++] = R0;
+JUMP load_pool;
+zero_ram:
+R0 = 0;
+LSETUP(zero,zero_end) LC0 = P0;
+zero:
+zero_end: [P1++] = R0;
+load_pool:
+P1 = P4;
+imm32 P2,0xffb00000
+P0 = 48;
+LSETUP(pool,pool_end) LC0 = P0;
+pool: R0 = [P1++];
+pool_end: [P2++] = R0;
+R0 = [P4 + 204];
+imm32 P0,0xff802bc8
+[P0] = R0;
+imm32 P0,0x019b4d4e
+CALL (P0);
+R0 = P4;
+R1 = 224;
+R0 = R0 + R1;
+CALL identity_frame;
+imm32 P1,0x01dceb04
+P0 = 128;
+LSETUP(save_identity,save_identity_end) LC0 = P0;
+save_identity: R0 = [P1++];
+save_identity_end: [P5++] = R0;
+actions:
+R0 = [P4 + 208];
+CC = BITTST(R0,3);
+IF !CC JUMP reset;
+R0 = [P4 + 216];
+imm32 P0,0x019b4c64
+CALL (P0);
+reset:
+R0 = [P4 + 208];
+CC = BITTST(R0,1);
+IF !CC JUMP release;
+R0 = [P4 + 216];
+R0 <<= 5;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 P0,0x019b4888
+CALL (P0);
+release:
+R0 = [P4 + 208];
+CC = BITTST(R0,2);
+IF !CC JUMP render;
+R0 = [P4 + 216];
+R0 <<= 5;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 P0,0x019b4844
+CALL (P0);
+render:
+R0 = [P4 + 216];
+R0 <<= 5;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+P1 = R0;
+P2 = P5;
+P0 = 8;
+LSETUP(before,before_end) LC0 = P0;
+before: R0 = [P1++];
+before_end: [P2++] = R0;
+R0 = 0;
+R1 = 0x4000;
+R2 = [P4 + 200];
+R3 = 0;
+imm32 P0,0x01aa494a
+CALL (P0);
+imm32 P0,488
+P0 = P5 + P0;
+[P0] = R0;
+R0 = [P4 + 200];
+imm32 P0,0xff801950
+[P0] = R0;
+R0 = [P4 + 216];
+R0 <<= 5;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+R1.H = audio;
+R1.L = audio;
+R2 = P4;
+imm32 R3,192
+R2 = R2 + R3;
+imm32 P0,0x019b48d8
+CALL (P0);
+P5 += 32;
+imm32 P1,0xffb00000
+P0 = 48;
+LSETUP(after,after_end) LC0 = P0;
+after: R0 = [P1++];
+after_end: [P5++] = R0;
+imm32 P0,0x01dceb00
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,0xff802bc8
+R0 = [P0];
+[P5++] = R0;
+P1.H = audio;
+P1.L = audio;
+P0 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P0;
+save_audio: R0 = [P1++];
+save_audio_end: [P5++] = R0;
+P5 += 4;
+imm32 P0,256
+P4 = P4 + P0;
+P0.H = counter;
+P0.L = counter;
+R0 = [P0];
+R0 += 1;
+[P0] = R0;
+R1 = 255;
+R1 = R0 & R1;
+CC = R1 == 0;
+IF !CC JUMP finish;
+imm32 P1,0xffb00000
+imm32 P0,49152
+LSETUP(ram_out,ram_out_end) LC0 = P0;
+ram_out: R0 = [P1++];
+ram_out_end: [P5++] = R0;
+imm32 P1,0x01dceb04
+imm32 P0,6144
+LSETUP(wave_out,wave_out_end) LC0 = P0;
+wave_out: R0 = [P1++];
+wave_out_end: [P5++] = R0;
+finish:
+R0.H = inputs_end;
+R0.L = inputs_end;
+R1 = P4;
+CC = R0 == R1;
+IF !CC JUMP next_case;
+R0.H = output_args;
+R0.L = output_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+// Supply the exact post-reader frame to the original identity conversion.
+// This models 32 input bytes; no OTP/ROM implementation is claimed.
+identity_frame:
+LINK 0x50;
+[--SP] = (R7:6,P5:3);
+SP += -12;
+P0 = R0;
+P1 = FP;
+P1 += -64;
+P2 = 8;
+LSETUP(id_copy,id_copy_end) LC0 = P2;
+id_copy: R1 = [P0++];
+id_copy_end: [P1++] = R1;
+imm32 P0,0x019b4cd4
+JUMP (P0);
+.data
+.align 4
+table0_args: .long 1,0x0106a5ec,258
+table1_args: .long 1,0x0106a730,450
+range_args: .long 1,0x01de5b50,64
+output_args: .long 1,results,@BYTES@
+counter: .long 0
+audio: .space 256
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

@@ -5,10 +5,10 @@
 #include <stdexcept>
 static void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 int main(){try{
- for(double rate:{8000.,44100.,48000.,88200.,96000.,192000.})for(int mode:{0,2,6,7})for(int policy:{1,2}){
+ for(double rate:{8000.,44100.,48000.,88200.,96000.,192000.})for(int mode:{0,2,6,7,8})for(int policy:{1,2}){
   auto engine=std::make_unique<pocket::Engine>();pocket::Parameters p;
   p.engine=mode;p.hybridVoiceMode=policy;p.hybridGlideMs=100;p.effect=0;
-  p.fm246Controls[0]=0;p.string246Adsr[3]=p.fm246Adsr[3]=p.drWave246Adsr[3]=p.cluster246Adsr[3]=16383;p.cluster246Controls={3072,0,512,3};
+  p.fm246Controls[0]=0;p.dna246Adsr[3]=p.string246Adsr[3]=p.fm246Adsr[3]=p.drWave246Adsr[3]=p.cluster246Adsr[3]=16383;p.cluster246Controls={3072,0,512,3};
   engine->prepare(rate);engine->selectEngine(mode);engine->configureHybridPerformance(policy,100);
   auto render=[&](int count){double energy=0;for(int i=0;i<count;++i){const float s=engine->next(p);check(std::isfinite(s)&&std::abs(s)<1,"Unstable performance output");energy+=s*s;}return energy;};
   auto state=[&]{return engine->visualState(mode);};
@@ -21,7 +21,7 @@ int main(){try{
   render(int(rate*.05));check(std::abs(state().frequency-440)<1e-8,"Glide did not reach exact target");
   int crossings=0;float previous=0;
   for(int i=0;i<int(rate*.4);++i){const float sample=engine->next(p);if(previous<=0&&sample>0)++crossings;previous=sample;}
-  check(mode==2||std::abs(crossings/.4-440)<8,"Audible glide endpoint not tuned to target note");
+  check((mode==2||mode==8)||std::abs(crossings/.4-440)<8,"Audible glide endpoint not tuned to target note");
   engine->pitchBend(1,2);check(std::abs(state().frequency-440)<1e-8,"Bend leaked across channels");
   engine->pitchBend(2,-2);check(std::abs(state().frequency-440*std::exp2(-2./12))<.001,"Current-channel bend failed");
   engine->noteOff(69,2);note(57,1);render(int(rate*.1));check(std::abs(state().frequency-220*std::exp2(2./12))<.001,"Fallback pitch/bend failed");

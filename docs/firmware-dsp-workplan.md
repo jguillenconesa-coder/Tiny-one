@@ -423,3 +423,19 @@ integrados; Value/Random contrastados para tipo 3. Reloj, cursor/pitch y asignac
 siguen siendo adaptaciones. El siguiente bloque prioriza los motores restantes
 (DNA/Voltage/D-synth según dependencias), manteniendo Pulse pendiente de L1 y
 calibración orientativa separada. Presets originales completos al final.
+
+
+## DNA Hybrid 246 (0.30.0)
+
+[Render y perfil virtual](dna246-hybrid.md): 4096 bloques, seis estados vivos,
+RNG y dieciséis capturas de onda/RAM coinciden bajo entradas explícitas. La onda
+original deriva de 32 bytes de identidad obtenidos por OTP; se contrasta el tramo
+posterior al lector con cuatro identidades. El render lee además RAM DSP viva:
+una prueba pareada aísla su efecto audible. El host usa identidad propia fija,
+pool original de seis estados y ceros externos; no se afirma recuperar memoria
+cifrada ni el carácter acústico de un aparato determinado.
+
+Cuatro controles, ADSR, Value/Random/Tremolo, interpretación y estado integrados.
+Próximo motor: Voltage, cuyo render candidato legible es 0x01a49bf4; después
+D-synth según dependencias. No renombrar aproximaciones como constantes recuperadas
+ni adelantar los presets originales completos.

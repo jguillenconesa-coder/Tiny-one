@@ -1,5 +1,13 @@
 # Historial de cambios
 
+## 0.30.0 — DNA Hybrid 246
+
+- Nuevo motor con render/lifecycle contrastados bajo identidad y RAM explícitas: 4096 bloques, seis estados vivos y 16 capturas completas.
+- Conversión de identidad post-OTP y prueba pareada que aísla la dependencia sonora de RAM.
+- Perfil virtual fijo: identidad propia, pool de voces vivo y ceros externos; sin recuperar OTP/RAM físicos.
+- Cuatro controles raw, ADSR, seis voces, modos y Value/Random/Tremolo, proxies y guardado integrados.
+
+
 ## 0.29.0 — String 246
 
 - Waveguide original mono contrastado en 4096 bloques, estados/RNG y 16 workspaces completos, sin coeficientes sustituidos.

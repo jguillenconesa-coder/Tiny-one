@@ -1,0 +1,23 @@
+{
+  "version": "0.30.0",
+  "date": "2026-11-02",
+  "linux_build": "Release Standalone and VST3 passed",
+  "linux_ctest": "98/98 suites passed, 224.65 s",
+  "realtime": "444 workloads passed, zero tracked callback heap calls; timings diagnostic on shared host",
+  "sanitizers": "ASan/UBSan core, modulation and seven-rate adapter passed (leak detection disabled)",
+  "native_ci": "pending implementation commit",
+  "evidence": "../firmware/dna246-validation.json",
+  "authored_dependencies": [
+    "Fixed virtual identity, not physical OTP",
+    "Zero external RAM with live six-state pool",
+    "88.2 kHz clock/pitch/cursor/scheduler/voice/output adapters"
+  ],
+  "estimated_progress": "Approximately 56% +/-10 planning points; not acoustic equivalence",
+  "previous_029_plugin_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468885989",
+    "linux": "success",
+    "windows_plugins_and_installer": "success",
+    "macos_universal_plugins_and_package": "success; runtime Intel"
+  },
+  "visual_smoke": "DNA screenshot reviewed: ninth engine, helix, four raw controls, virtual identity init and 71-sound catalogue"
+}

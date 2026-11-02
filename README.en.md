@@ -1,4 +1,7 @@
-# Pocket One 0.29.0
+# Pocket One 0.30.0
+
+**DNA Hybrid**: ninth engine, explicit virtual identity, six voices and modulators.
+[Scope and limits](docs/dna246-hybrid.md) · [Validation](docs/releases/v0.30.0-validation.json).
 
 **String 246**: reconstructed waveguide, four controls, ADSR, six voices and modulators.
 [Scope](docs/string246-native.md) · [Validation](docs/releases/v0.29.0-validation.json).

@@ -482,3 +482,19 @@ vectors contain synthetic stimuli/observations, not original instructions.
 String246Voice.h and its clock, pitch/cursor bounds, scheduler, ADSR composition,
 voice policies, DC/output filtering and UI are authored host adaptations. The old
 Karplus–Strong source remains historical, but is not selected by Engine.
+
+### DNA Hybrid 246
+
+Dna246.h independently reconstructs the original mono render, six live voice
+states, factory/reset/release and post-identity-reader transformation. The render
+candidate initially came from op1-sdk's engine_plus pointer hooks and was checked
+against supplied rev246 bytes and isolated GNU BF524 execution. Fixtures are
+synthetic inputs and numeric observations, not original executable instructions.
+
+The hardware OTP reader/ROM and physical memory map are not reconstructed.
+Dna246Voice.h uses an authored fixed virtual identity, live six-state pool and
+zero bytes outside that pool, plus authored clock, note/pitch/cursor policies,
+ADSR composition and output filtering. Four supplied identities, controlled RAM
+profiles and an isolated paired RAM experiment condition the numerical comparisons;
+they do not recover the physical unit's acoustic profile. No original presets,
+private media, disassembly, firmware or decompiler output are redistributed.

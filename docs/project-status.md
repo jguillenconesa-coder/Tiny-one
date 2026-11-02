@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 54 % del objetivo completo
+## Avance estimado: aproximadamente 56 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 55 % | 16,5 puntos |
+| Motores originales y sus filtros | 30 % | 62 % | 18,6 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **54 %** |
+| Total | 100 % | | **≈56 %** (56,1 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: String 246 (0.29.0)
+## Entrega actual: DNA Hybrid 246 (0.30.0)
+
+[DNA Hybrid](dna246-hybrid.md) añade la novena selección: dos cursores, onda
+suministrada por identidad, interpolación/no linealidad y lectura de RAM viva.
+4096 bloques / 524288 muestras, seis estados/RNG y dieciséis capturas completas
+coinciden bajo identidades y RAM explícitas. Se contrastan 40 conversiones de
+identidad, factoría/reset/release y 8192 callbacks de Value/Random para tipo 11.
+
+La dependencia de RAM es causal: dos callbacks originales idénticos salvo por
+bytes externos al pool pasan de silencio a salida no nula. El plugin usa una
+identidad virtual fija, los seis estados vivos y ceros fuera del pool; **no se ha
+recuperado el OTP ni la memoria del aparato del vídeo**. La semejanza acústica de
+ese perfil permanece sin medir. Reloj, pitch/cursor, scheduler/voz y salida propios.
+
+Cuatro controles raw, ADSR, seis voces, Mono/Legato/glide, moduladores,
+automatización, proyectos/slots/clipboard integrados. Linux Release: **98/98 suites**
+y **444 cargas sin heap rastreado**; ASan/UBSan de núcleo/modulación/adaptador y
+revisión visual pasan. Verificación nativa y paquetes en CI pendientes:
+[evidencia](releases/v0.30.0-validation.json). Estimación **≈56 % ±10 puntos** de
+planificación, no de fidelidad. Voltage/D-synth y demás componentes pendientes
+siguen según la matriz; presets originales completos al final.
+
+## Entrega anterior: String 246 (0.29.0)
 
 [String](string246-native.md) sustituye el Karplus–Strong propio: waveguide mono,
 ruido filtrado e interpolación de siete pasos. 4096 bloques / 524288 muestras,
@@ -54,7 +76,7 @@ excitación: profundidad cero no implica identidad al activar ese LFO.
 Linux Release: **95/95 suites**, **420 cargas sin heap rastreado**, ASan/UBSan y
 revisión visual pasan. El [verificador de String](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886181) y la
 [regresión FM](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468886071) pasan en Linux, Windows/MSVC y macOS Intel.
-Los [plugins e instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468885989) siguen en curso.
+Los [plugins e instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41468885989) pasan en Linux, Windows y macOS universal; runtime macOS Intel.
 [Evidencia](releases/v0.29.0-validation.json).
 
 Estimación **54 % ±10 puntos** por otro núcleo tocable contrastado; no mide

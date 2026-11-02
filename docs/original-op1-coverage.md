@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.29.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.30.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -18,13 +18,13 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-54 % del objetivo completo, con incertidumbre explícita; no es una medición
+56 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
 
 Los IDs son observaciones/referencias del perfil rev246, no el orden del selector
-del plugin. El plugin añade Dr. Wave y Cluster como séptima y octava opciones; no se prioriza compatibilidad histórica.
+del plugin. El plugin añade Dr. Wave, Cluster y DNA Hybrid como séptima, octava y novena opciones; no se prioriza compatibilidad histórica.
 
 | ID | Motor objetivo | Estado actual |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ del plugin. El plugin añade Dr. Wave y Cluster como séptima y octava opciones;
 | 8 | Drum sampler | Kit propio de 24 pads con edición y bancos; falta el render/envolvente dinámica original. |
 | 9 | D-box | Drum synth propio disponible; pendiente el original con cross-mod y controles secundarios. |
 | 10 | LS, identificador interno | Referencia candidata; sin equivalencia comercial confirmada, port ni presets de fábrica encontrados en el DB. |
-| 11 | DNA | 16 registros de fábrica inventariados; render original pendiente. No aparece en el diagrama de referencia del manual suministrado. |
+| 11 | DNA | **[DNA Hybrid tocable](dna246-hybrid.md)**: callback contrastado en 4096 bloques / 524288 muestras con identidades/RAM explícitas, seis estados vivos, RNG y 16 capturas completas. Cuatro controles y ADSR, seis voces, modos y moduladores integrados. Identidad virtual propia y RAM externa al pool modelada como cero; no OTP/RAM físicos recuperados ni calibración acústica. Scheduler/pitch/salida propios; 16 presets originales pendientes. No aparece en el diagrama de referencia del manual suministrado. |
 | 12 | D-synth | Pendientes dos osciladores, múltiples envolventes y controles secundarios originales. |
 | 13 | Voltage | Ruta candidata y 16 presets inventariados; render/filtros originales pendientes. |
 | 14 | Iter, identificador interno | Referencia candidata; sin presets en este DB, pendiente. |

@@ -13,10 +13,10 @@ inline int random246Period(int16_t speed) noexcept {
     const auto inverse=saturate16(32767-int(speed));
     return int(floorDivide(multiplyQ15(inverse,inverse),64))+1;
 }
-// Original synth callback, bounded here to the four verified native families.
+// Original synth callback, bounded here to the verified synth families.
 // RNG and the shared 32-bit display word are caller-owned; no hidden entropy.
 // Instrument signals 4..7 revisit controls 0..3 at 1/16 modulation; the
-// auxiliary destination words are preserved for these four range families.
+// auxiliary destination words are preserved for these verified range families.
 inline bool random246VoiceStep(Random246State& s,uint32_t& rng,uint32_t& meter,
                                 const std::array<int16_t,8>& c,int kind,int type,
                                 std::array<int16_t,8>& values) noexcept {

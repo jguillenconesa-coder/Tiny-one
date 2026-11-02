@@ -12,7 +12,7 @@ static std::vector<unsigned char> read(const std::filesystem::path& p){std::ifst
 static uint32_t word(const unsigned char* p){return uint32_t(p[0])|(uint32_t(p[1])<<8)|(uint32_t(p[2])<<16)|(uint32_t(p[3])<<24);}
 static int16_t half(const unsigned char* p){const unsigned x=p[0]|(unsigned(p[1])<<8);return int16_t(x<32768?int(x):int(x)-65536);}
 int main(int argc,char** argv){try{
-    check(argc==2||argc==3,"Provide fixture directory and optional string mode");const int type=argc==3?3:0;const std::string family=type==3?"string246":"fm246";using namespace pocket::reference;const std::filesystem::path root(argv[1]);
+    check(argc==2||argc==3,"Provide fixture directory and optional string mode");const int type=argc==3?(std::string(argv[2])=="dna"?11:3):0;const std::string family=type==11?"dna246":type==3?"string246":"fm246";using namespace pocket::reference;const std::filesystem::path root(argv[1]);
     const auto sineBytes=read(root/"verified-sine.bin");check(sineBytes.size()==16386,"Incomplete sine fixture");
     std::array<int16_t,8192> sine{};for(size_t i=0;i<8192;++i)sine[i]=half(sineBytes.data()+i*2);
     {

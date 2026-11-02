@@ -1,0 +1,202 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "samples": 524288,
+  "state_bytes": 32,
+  "pool_bytes": 192,
+  "wave_bytes": 24576,
+  "source_ram_bytes": 196608,
+  "complete_memory_snapshots": 16,
+  "identity_initializations": 40,
+  "routines": {
+    "render": "0x019b48d8",
+    "factory": "0x019b4c64",
+    "reset": "0x019b4888",
+    "release": "0x019b4844",
+    "wave_clear": "0x019b4d4e",
+    "identity_fragment": "0x019b4cd4..0x019b4d40",
+    "hardware_identity_reader_not_executed": "0x019f16a2"
+  },
+  "artifacts": {
+    "dna246-input.bin": {
+      "bytes": 1048576,
+      "sha256": "456ab7e013791c9bd19957009df6159b0159c7d64945fe9ed6d6f836ff2a2f82",
+      "matches_committed_fixture": true
+    },
+    "dna246-output.bin": {
+      "bytes": 5575428,
+      "sha256": "ed162f19a573a5a59b53cb74d394d8261de2f6f06d7cae68f909e7b25475f2f1",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "limits": [
+    "Four synthetic identities and explicit RAM images, not original physical OTP or a hardware RAM capture.",
+    "Original live six-slot pool aliases the first 192 RAM bytes; other RAM is controlled zero/LCG data.",
+    "Positive pitch >=0x40000, valid phases/counters and original four-control descriptor bounds; caller timing and device boot not established."
+  ],
+  "date": "2026-11-02",
+  "independent_repeat": "byte-identical fresh private a4/b runs",
+  "paired_ram_probe": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "cases": 2,
+    "samples": 256,
+    "state_bytes": 32,
+    "pool_bytes": 192,
+    "wave_bytes": 24576,
+    "source_ram_bytes": 196608,
+    "complete_memory_snapshots": 0,
+    "identity_initializations": 2,
+    "routines": {
+      "render": "0x019b48d8",
+      "factory": "0x019b4c64",
+      "reset": "0x019b4888",
+      "release": "0x019b4844",
+      "wave_clear": "0x019b4d4e",
+      "identity_fragment": "0x019b4cd4..0x019b4d40",
+      "hardware_identity_reader_not_executed": "0x019f16a2"
+    },
+    "artifacts": {
+      "dna246-ram-probe-input.bin": {
+        "bytes": 512,
+        "sha256": "620e7456d5aaec739110a382acf81df21e8fc68ef37085a186f4e0b56d83c7a0",
+        "matches_committed_fixture": true
+      },
+      "dna246-ram-probe-output.bin": {
+        "bytes": 2780,
+        "sha256": "fceca11b91da7d82dbd7881566f7c6459bba2f22f5df3d848164efd1f417f8bf",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+      "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+      "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+    },
+    "limits": [
+      "Four synthetic identities and explicit RAM images, not original physical OTP or a hardware RAM capture.",
+      "Original live six-slot pool aliases the first 192 RAM bytes; other RAM is controlled zero/LCG data.",
+      "Positive pitch >=0x40000, valid phases/counters and original four-control descriptor bounds; caller timing and device boot not established."
+    ],
+    "paired_ram_probe": {
+      "difference": "Only non-pool RAM bytes change from zero to seeded LCG; same pool/identity/controls/pitch/RNG",
+      "audio_sum_squares": [
+        0,
+        25146443216
+      ]
+    }
+  },
+  "modulation": {
+    "value": {
+      "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+      "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+      "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+      "note_reset": "0x019cfd5a",
+      "range_helper": "0x01a1dfec / 0x019f69b0",
+      "range_initializer": "0x01a1e914",
+      "instrument_types": [
+        11
+      ],
+      "digital_ranges": "0x01de5b50",
+      "phase_ranges": "0x01de5b50",
+      "envelope_ranges": "0x01de5710",
+      "tempo_float_multiply": "0x01aa55a0",
+      "tempo_float_to_integer": "0x01aa4dbc",
+      "tempo_constant_float32": 1662149.125,
+      "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+      "independent_cases": 2048,
+      "stream_cases": 2048,
+      "cases": 4096,
+      "full_self_bytes": 12,
+      "full_display_bytes": 32,
+      "target_words": 8,
+      "artifacts": {
+        "value-dna246-input.bin": {
+          "bytes": 393216,
+          "sha256": "c732b3dcd9252cf14c2e866d1b90cdcd98b71579b46e5d861a1a192c0b7d15c8",
+          "matches_committed_fixture": true
+        },
+        "value-dna246-output.bin": {
+          "bytes": 278680,
+          "sha256": "078fd208a8be6a891515d3d22f17736b17a4cd0a879e1ef693dc878ba9923301",
+          "matches_committed_fixture": true
+        }
+      },
+      "tools": {
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+        "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+      },
+      "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+      "limitations": [
+        "Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.",
+        "The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity."
+      ]
+    },
+    "random": {
+      "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+      "process": "0x019cea70",
+      "note_reset": "0x019ced74",
+      "factory": "0x019cf340",
+      "rng_address": "0xff802bc8",
+      "lcg_multiplier": 1664525,
+      "lcg_increment": 1013904223,
+      "range_initializer": "0x01a1e914",
+      "instrument_helper": "0x01a1dfec",
+      "envelope_helper": "0x019f69b0",
+      "cases": 4096,
+      "state_bytes": 44,
+      "target_words": 8,
+      "instrument_types": [
+        11
+      ],
+      "destinations": [
+        "Instrument eight signals / two passes over four controls",
+        "ADSR first four signals"
+      ],
+      "independent_cases": 2048,
+      "retained_stream_cases": 2048,
+      "artifacts": {
+        "random-dna246-input.bin": {
+          "bytes": 360448,
+          "sha256": "ae48a5152d5bb5fe2a9bb460035c901fdc5eabdd838ad0e316b93e95e15520c5",
+          "matches_committed_fixture": true
+        },
+        "random-dna246-output.bin": {
+          "bytes": 294912,
+          "sha256": "aad9702cc41d11387cc8d6cc9dc12561172dabdacbad69725efa01e81e630d60",
+          "matches_committed_fixture": true
+        }
+      },
+      "tools": {
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+        "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+        "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+      },
+      "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+      "limitations": [
+        "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+        "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+      ]
+    }
+  },
+  "virtual_profile": {
+    "identity": "706f636b65746f6e652d646e612d7630",
+    "live_pool_bytes": 192,
+    "external_ram": "authored zero model, not physical capture",
+    "otp_reader_executed": false
+  },
+  "source_sha256": {
+    "Source/Dna246.h": "6ea167487031c96765b9c4f2539cfe8108cbeda3f218f268d74a21dfb01fcf0a",
+    "Source/Dna246Voice.h": "a374022d1f876d2a0019df0e2a4c5d20eb6fdd7453c349500e655f9257ed2fc9",
+    "Source/ValueVoice246Ranges.h": "dc6aa7e9a2b79b2520d6ca7d3313b3dd662f27f19d84466eb419509fd49981fe",
+    "scripts/verify-dna246.py": "dfd22eeb49d1b075519ec1faa060464b843db55974c37f80ce686a8e6ed67e15",
+    "research/blackfin/dna-stream.s.in": "199c10f059697e8e6d71ce6e169989cda30bc0f6b8f23a52eb0802c92bab32a8",
+    "research/dna-render/Dna246Tests.cpp": "acb799dae4b082d965cda479c947c49b4dbb2970b86f147a62ab2e59612a7b06"
+  },
+  "sanitizers": "ASan/UBSan core, modulation and seven-rate adapter passed (leak detection disabled)"
+}

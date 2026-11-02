@@ -3,7 +3,7 @@
 #include "Value246.h"
 #include "ValueVoice246Ranges.h"
 namespace pocket::reference {
-// Verified scope: FM/Digital/Phase/Dr. Wave/Cluster controls and common ADSR, colours
+// Verified scope: FM/Digital/Phase/Dr. Wave/Cluster/String/DNA controls and common ADSR, colours
 // 0..3. Other instruments, auxiliary words, drum and play-mode routes are pending.
 inline int16_t valueVoice246Adjust(int16_t base,int16_t modulation,const std::array<int16_t,4>& range) noexcept {
     auto combined=saturate16(int(base)+multiplyQ15(modulation,range[2]));

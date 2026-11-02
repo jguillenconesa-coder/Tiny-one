@@ -1,0 +1,32 @@
+name: Validate DNA conditioned render and modulation
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/dna-render/**'
+      - 'research/blackfin/dna-stream.s.in'
+      - 'scripts/verify-dna246.py'
+      - 'Source/Dna246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/String246.h'
+      - 'Source/Spring246Tables.h'
+      - 'Source/Delay246Tables.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Random246.h'
+      - 'Tests/Fm246ModulationTests.cpp'
+      - 'Tests/ReferenceVectors/*dna246*.bin'
+      - '.github/workflows/dna246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/dna-render -B build-dna -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-dna --config Release --parallel 2
+      - run: ctest --test-dir build-dna -C Release --output-on-failure

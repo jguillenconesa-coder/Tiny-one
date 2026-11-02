@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.22)
+project(PocketDna246 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(CTest)
+add_executable(dna246_tests Dna246Tests.cpp)
+target_include_directories(dna246_tests PRIVATE ../../Source)
+add_test(NAME dna246 COMMAND dna246_tests "${CMAKE_CURRENT_SOURCE_DIR}/vectors")
+
+add_executable(dna246_modulation_tests ../../Tests/Fm246ModulationTests.cpp)
+target_include_directories(dna246_modulation_tests PRIVATE ../../Source)
+add_test(NAME dna246_modulation COMMAND dna246_modulation_tests "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/ReferenceVectors" dna)
