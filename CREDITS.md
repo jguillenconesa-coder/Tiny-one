@@ -547,3 +547,19 @@ existing original-instruction oracles preserve their numerical results under
 this profile, including all previously documented hybrid substitutions. Hardware
 acoustics remain unmeasured. The historical foundation corpus is versioned in
 its original commit; the current corpus uses the corrected model and signed gain.
+
+### D-box 246
+
+Dbox246.h independently reconstructs the isolated mono callback, two internal
+envelopes, eight mix selections, lifecycle/activity query and twelve-slot context.
+Synthetic numerical observations compare complete state/audio/buffers against
+private rev246 execution under the previously documented three-writeback-patch
+GNU BF524 model. Existing ADSR/filter numeric observations are reused without
+coefficient substitution. No firmware, original instructions, decompiled code,
+factory patches or private tool files are included. Ghidra12.2/Blackfin was a
+private aid; simulation/disassembly and full numerical comparison bound the claim.
+Dbox246Voice.h and integration add authored 88.2kHz clock, pad/tuning map,
+smoothing, event/velocity/allocation policies, output interpolation/filtering,
+quiet detection, init, labels and graphics. Shared Tremolo is reused with authored
+drum composition; original drum Value/Random dispatch and acoustic validation
+remain pending. The legacy Drum synth remains explicitly authored.

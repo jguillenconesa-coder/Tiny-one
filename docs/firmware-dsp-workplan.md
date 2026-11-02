@@ -491,3 +491,20 @@ integrados. Cadencias, asignación/velocidad y salida siguen siendo propios.
 El siguiente bloque prioriza estudiar D-box/drum y sus envolventes/dependencias,
 además del ruteo de voz original pendiente. Pulse/L1 y calibración siguen
 explícitamente abiertos; presets originales completos al final.
+
+
+## D-box 246 integrado (0.33.0)
+
+[Render completo y pads](dbox246-native.md): `0x01970ee8`, vtable verificada,
+doce estados de72 bytes y contexto de1640 bytes. 4096 bloques/524288 muestras
+coincidentes bajo streams explícitos de pitch/ganancia y el modelo BF524 corregido.
+Ocho mezclas, ambas alineaciones, envolventes internas, ciclo, consulta de actividad,
+indicadores/históricos y todos los buffers contrastados. Sin coeficientes sustituidos.
+24 pads/192 controles, doce voces, Tremolo, host/estado/slots/UI integrados;
+afinación, mapa/cadencias, allocator/eventos/velocidad y salida son propios.
+
+Siguiente frente: estudiar drum sampler/envolvente dinámica y sus dependencias,
+incluido Value/Random de batería antes de habilitar esos destinos. El dispatch
+synth no demuestra el de drum. Ruteo de voz, Pulse/L1 y comparación acústica siguen
+pendientes. Mantener los presets completos al final; no hacen falta materiales
+privados adicionales para reproducir la evidencia de D-box.

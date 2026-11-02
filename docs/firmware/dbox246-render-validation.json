@@ -1,0 +1,105 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "original_render_blocks": 4096,
+  "original_render_samples": 524288,
+  "cpp_renderer": "Source/Dbox246.h; independent comparison required",
+  "model": "GNU BF524 with Dreg, halfword and FP-load writeback patches",
+  "routines": {
+    "render": "0x01970ee8",
+    "factory": "0x0197189c",
+    "constructor": "0x01970d54",
+    "bind": "0x01970da8",
+    "reset": "0x01970de6",
+    "release": "0x01970e7e",
+    "active_query": "0x01970e5c",
+    "shared_init": "0x019718ec"
+  },
+  "input_record_bytes": 3296,
+  "output_prefix_bytes": 1540,
+  "output_record_bytes": 6816,
+  "voices": 12,
+  "state_bytes": 72,
+  "context_bytes": 1640,
+  "artifacts": {
+    "dbox246-input.bin": {
+      "bytes": 13500416,
+      "sha256": "523dad159fd32d239407320bb49022cf21d9cf4ba641b454fd988ac9700a6902"
+    },
+    "dbox246-output.bin": {
+      "bytes": 27919876,
+      "sha256": "d33b36d3d4508d0e0f7c5ecfcc84509bb99f9e73c978acb9b887eab4e60eca1d"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Caller-supplied pitch/gain, control/event cadence and bounded context.",
+    "Corrected simulator is not physical acoustic validation."
+  ],
+  "cpp_comparison": {
+    "status": "passed",
+    "blocks": 4096,
+    "samples": 524288,
+    "state_pool_bytes": 864,
+    "context_bytes": 1640,
+    "complete_output_record_bytes": 6816,
+    "alignment_profiles": [
+      "word aligned",
+      "halfword aligned"
+    ],
+    "lifecycle": [
+      "constructor/bind",
+      "reset/release",
+      "shared init",
+      "meter decay",
+      "capture reset",
+      "activity query"
+    ],
+    "poststate_handoff": false,
+    "independent_repeat": "oracle-repeat2: byte-identical input/output; original executable remains private"
+  },
+  "scope": "Complete isolated mono callback with supplied pitch/gain/events and corrected simulator; no original caller or hardware acoustic equivalence claim",
+  "coefficient_substitutions": [],
+  "provenance": "Authored harness and functional reconstruction; synthetic observations only, no original instructions, patches/presets, resources or decompiled code",
+  "corpus_coverage": {
+    "mix_modes": {
+      "0": 530,
+      "1": 505,
+      "2": 480,
+      "3": 482,
+      "4": 534,
+      "5": 527,
+      "6": 528,
+      "7": 510
+    },
+    "slots": {
+      "0": 342,
+      "1": 342,
+      "2": 342,
+      "3": 342,
+      "4": 341,
+      "5": 341,
+      "6": 341,
+      "7": 341,
+      "8": 341,
+      "9": 341,
+      "10": 341,
+      "11": 341
+    },
+    "action_bit_counts": {
+      "0": 2056,
+      "1": 41,
+      "2": 142,
+      "3": 111,
+      "4": 37,
+      "5": 96,
+      "6": 27,
+      "7": 316,
+      "8": 2048
+    },
+    "output_alignment": "2048 word-aligned, 2048 halfword-aligned"
+  }
+}

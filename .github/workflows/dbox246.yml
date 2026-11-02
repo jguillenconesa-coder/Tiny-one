@@ -1,0 +1,33 @@
+name: Validate D-box reconstructed render and pad adapter
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/dbox-render/**'
+      - 'research/blackfin/dbox-*'
+      - 'research/blackfin/gnu-13.1-fp-load-writeback.patch'
+      - 'scripts/verify-dbox246.py'
+      - 'Tests/Dbox246IntegrationTests.cpp'
+      - 'Source/Dbox246*.h'
+      - 'Source/Dsynth246*.h'
+      - 'Source/Engine.h'
+      - 'Source/Phase246.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Envelope246*.h'
+      - 'Source/Filter246Tables.h'
+      - 'Source/Tremolo246*.h'
+      - '.github/workflows/dbox246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/dbox-render -B build-dbox -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-dbox --config Release --parallel 2
+      - run: ctest --test-dir build-dbox -C Release --output-on-failure

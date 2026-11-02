@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 60 % del objetivo completo
+## Avance estimado: aproximadamente 62 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 74 % | 22,2 puntos |
+| Motores originales y sus filtros | 30 % | 80 % | 24 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 62 % | 9,3 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈60 %** (59,7 antes de redondear) |
+| Total | 100 % | | **≈62 %** (61,8 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,26 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: D-synth 246 (0.32.0)
+## Entrega actual: D-box 246 (0.33.0)
+
+[D-box](dbox246-native.md) añade la duodécima selección con 24 pads, doce voces y
+ocho parámetros independientes por pad. Callback completo contrastado en4096
+bloques/524288 muestras, doce estados, contexto, ocho mezclas, ambas alineaciones
+y todos los buffers; dos envolventes internas y tablas sin sustituciones.
+Selector/mandos, automatización, proyectos, slots drum, clipboard, Tremolo e init
+propios integrados. Value/Random de batería pendientes. Afinación/mapa de pads,
+reloj/asignación/eventos/velocidad y salida siguen siendo adaptaciones explícitas.
+[Validación de entrega](releases/v0.33.0-validation.json): **107 suites Linux**,
+**510 cargas sin heap rastreado**, sanitizadores del núcleo/adaptador y revisión
+visual aprobados. Smoke/ruteo/tiempo real repetidos tras la revisión final; CI
+nativo y plugins de esta implementación pendientes de la subida.
+
+Estimación **≈62 % ±10 puntos de planificación**; no fidelidad acústica. D-synth
+0.32.0 pasó su CI nativo y completo de plugins/instaladores en las tres plataformas.
+Siguen el drum sampler/envolvente dinámica, modulación de batería y voz/ruteo,
+además de calibración, Ableton real y runtime arm64. Presets originales al final.
+
+## Entrega anterior: D-synth 246 (0.32.0)
 
 [D-synth](dsynth246-native.md) añade el undécimo motor con dos osciladores,
 cuatro configuraciones, ocho mezclas y envolventes internas. El renderer C++

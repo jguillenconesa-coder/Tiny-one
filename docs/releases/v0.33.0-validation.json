@@ -1,0 +1,46 @@
+{
+  "version": "0.33.0",
+  "date": "2026-11-02",
+  "implementation_commit": "pending verified push",
+  "linux_build": "Release Standalone and VST3 passed; final parameter-path review fix rebuilt",
+  "linux_ctest": "107/107 suites passed, 204.93 s; final plugin smoke/output routing/realtime repeats after parameter-copy review fix passed 3/3, 58.25 s",
+  "realtime": {
+    "workloads": 510,
+    "dbox_workloads": 12,
+    "tracked_callback_heap_calls": 0,
+    "scope": "Includes twelve-voice D-box, automation of all 192 pad controls and edit-pad/Tremolo changes",
+    "timing": "Shared host diagnostic; not a driver/Ableton dropout guarantee"
+  },
+  "sanitizers": "ASan/UBSan complete render (two alignments/activity query) and final half-scale-gain adapter passed at seven rates, twelve voices and control corners; leak detection disabled under managed ptrace.",
+  "native_ci": {
+    "status": "pending implementation push"
+  },
+  "plugin_package_ci": {
+    "status": "pending implementation push"
+  },
+  "evidence": "../firmware/dbox246-render-validation.json",
+  "previous_ci": {
+    "version": "0.32.0",
+    "commit": "7cb21881a95ac04616e4b9043253057d5754d66f",
+    "native": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518003",
+    "packages": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518077",
+    "status": "success on all platforms, universal macOS build with Intel runtime"
+  },
+  "estimated_progress": "Approximately 62% +/-10 planning points; not acoustic fidelity",
+  "authored_dependencies": [
+    "88.2 kHz clock, note/pad map, control/event cadence, logarithmic tuning and high-end pitch cap",
+    "Twelve-voice allocation/stealing, velocity, channel sustain and note-off policy",
+    "Half-scale nominal gain with additive Tremolo headroom; original drum LFO dispatch not recovered",
+    "Output filtering/resampling, four-LSB quiet-block detection and 0.25 s filter-tail allowance",
+    "24-pad init, labels, editor and animation"
+  ],
+  "limits": [
+    "Numerical match conditioned on supplied pitch/gain/events/context and corrected BF524 model",
+    "Original tuning caller/routing, drum Value/Random and drum sampler/dynamic envelope pending",
+    "Acoustic comparison, Ableton Live real and macOS arm64 execution pending; full original presets last"
+  ],
+  "standalone_tests": "2/2 independent D-box render/adapter suites passed, 7.51 seconds",
+  "visual_smoke": "Reviewed D-box II screenshot: 24 pads, selected pad, twelve-engine selector, eight controls via two sets and 74-sound catalogue",
+  "visual_sha256": "97cc04062d91dc49bcca3610baf936c85fb41d996423d3601ba19f6487c43c46",
+  "review_regression": "Host audio responds to each of eight raw controls on pads 1 and 24; parameter copying occurs after engine selection. Shared Value FX receives D-box note events."
+}

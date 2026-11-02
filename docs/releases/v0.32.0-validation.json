@@ -7,7 +7,7 @@
   "sanitizers": "ASan/UBSan full signed-gain render and seven-rate adapter passed; modulation passed; leak detection disabled under managed ptrace",
   "evidence": "../firmware/dsynth246-render-validation.json",
   "native_ci": {
-    "status": "in_progress at evidence update; result pending",
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518003",
     "platforms": [
       "Linux",
@@ -16,7 +16,7 @@
     ]
   },
   "plugin_package_ci": {
-    "status": "in_progress at evidence update; result pending",
+    "status": "success on Linux, Windows and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41524518077"
   },
   "estimated_progress": "Approximately 60% +/-10 planning points; not acoustic fidelity",
