@@ -100,3 +100,17 @@ privada nueva fuera del checkout. El verificador ejecuta primero las guardas de
 procedencia y microtests del simulador de esa base. `--record` escribe únicamente
 entradas sintéticas y observaciones numéricas, nunca firmware o desensamblado.
 [Formato](../research/fm-render/README.md) y [evidencia](firmware/fm246-render-validation.json).
+
+## Validación de la entrega
+
+Linux Release: **91/91 suites** y **372 cargas de tiempo real sin llamadas al
+heap rastreadas**, incluyendo automatización de los cuatro controles FM y los ocho
+FX de salida. ASan/UBSan pasan para el núcleo y la integración. Proxies, estado,
+cambio FM/Digital, estéreo y renders con buffers 64/257 pasan; interfaz revisada.
+
+El [verificador independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013655)
+pasa en Linux, Windows/MSVC y macOS Intel. El [CI completo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013446)
+pasa también en los tres sistemas, con VST3/standalone, arranque e instalación/
+desinstalación Windows y paquete macOS universal inspeccionado. Se compilan arm64
+y x86_64, pero el runtime macOS se prueba en Intel. No sustituye una prueba real
+en Ableton ni una comparación acústica con el OP-1 físico.

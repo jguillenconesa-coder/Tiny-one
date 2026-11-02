@@ -74,5 +74,15 @@
     "Source/Fm246.h": "42aba4297598d37a4659d0e002017054a31d19eff5670351db5082621f54623b",
     "Source/Fm246Foundation.h": "5f46892397faed3802eae5b216a92ef7817c3e21193ad8d72c582e539a3187af",
     "Source/Fm246Model.h": "5dc4d08a2107b17fbc132a1c6d7c4984de571b23bf3aea58ac0701ced66b3d1e"
+  },
+  "native_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013655",
+    "conclusion": "success",
+    "implementation_commit": "d2e29820dac12a699d5cc5f64fe4ac3f1496a737",
+    "jobs": {
+      "validate (ubuntu-latest)": "success",
+      "validate (windows-2022)": "success",
+      "validate (macos-15-intel)": "success"
+    }
   }
 }

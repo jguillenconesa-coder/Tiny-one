@@ -56,8 +56,32 @@
   },
   "visual_review": "passed: actual JUCE screenshot with four-operator topology and contextual raw controls",
   "native_ci": {
-    "full_plugins_and_installers": "pending",
-    "independent_fm": "pending"
+    "full_plugins_and_installers": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013446",
+      "conclusion": "success",
+      "implementation_commit": "d2e29820dac12a699d5cc5f64fe4ac3f1496a737",
+      "jobs": {
+        "build (windows-2022)": "success",
+        "build (ubuntu-latest)": "success",
+        "build (macos-latest)": "success"
+      }
+    },
+    "independent_fm": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013655",
+      "conclusion": "success",
+      "implementation_commit": "d2e29820dac12a699d5cc5f64fe4ac3f1496a737",
+      "jobs": {
+        "validate (ubuntu-latest)": "success",
+        "validate (windows-2022)": "success",
+        "validate (macos-15-intel)": "success"
+      }
+    },
+    "macos_build_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "macos_runtime_tested_architecture": "x86_64",
+    "windows_installer_startup_install_uninstall": "passed"
   },
   "ableton_live": "pending actual macOS/Windows validation",
   "acoustic_comparison": "pending OP-1 hardware reference",

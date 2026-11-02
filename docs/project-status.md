@@ -52,6 +52,11 @@ Pitch, reloj de 88.2 kHz, scheduler, filtro y política de voces son propios;
 la resolución de pitch y demás límites se documentan. Los presets propios cambian
 su sonido. No se afirma reconstrucción de presets originales ni equivalencia acústica.
 
+Linux: **91/91 suites**, sanitizadores del núcleo/adaptador y **372 cargas sin
+heap rastreado**. El [verificador independiente](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013655)
+y el [CI completo con instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41452013446)
+pasan en Linux, Windows y macOS (build universal; runtime Intel).
+
 [Evidencia de validación](releases/v0.27.0-validation.json). Se mantienen volumen
 maestro tras el bus y PDC. Falta cerrar moduladores Instrument/ENV para FM, los
 coeficientes protegidos, ruteo original y comparación con hardware/Live.
