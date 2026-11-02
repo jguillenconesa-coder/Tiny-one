@@ -347,3 +347,13 @@ los historiales y las líneas intermedias; ambos callbacks borran el mismo tramo
 final. No se integra todavía un render de Spring. Se localizan también los
 auxiliares y tablas candidatos de CWO. Próximo cierre: inicializador y render
 activo de Spring, controles/Value/persistencia; después productores y render CWO.
+
+## Entrega 0.25.0: Spring mono integrado
+
+[Spring 246](spring246-native.md) ejecuta su inicializador estático y contrasta
+4096 bloques, con 4088 renders activos y ocho callbacks pendientes. Coinciden
+las tablas, cuatro constantes, estados/displays/contador y ocho workspaces
+completos. El dominio usa slot 0, no el allocator. La activación/pánico del host
+limpian todo mediante política propia distinta al soft reset original. Selector,
+Value FX, automatización, proxies y persistencia integrados; volumen tras el bus
+y PDC mantenidos. Siguiente componente: productores/auxiliares y render de CWO.

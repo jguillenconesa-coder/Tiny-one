@@ -405,3 +405,8 @@ La investigación de Spring 246 en 0.24.1 contrasta únicamente el reset y dos
 callbacks de borrado diferido con estados y workspaces sintéticos explícitos.
 El modelo de ciclo de memoria, harness, pruebas y corrección del volumen de
 salida son propios; no se incorpora pseudocódigo ni código DSP del SDK externo.
+
+Spring 246 (0.25): análisis propio del inicializador y callback mono, con ejecución
+acotada y repetición independiente. Kernel C++, adaptador, UI, harness y regresión
+propios; las fixtures contienen entradas sintéticas y resultados generados, sin
+instrucciones ni pseudocódigo del fabricante. No se copia DSP del SDK externo.

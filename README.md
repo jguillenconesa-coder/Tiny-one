@@ -1,14 +1,16 @@
-# Pocket One 0.24.1
+# Pocket One 0.25.0
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.24.1.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.25.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 
 [Navegador de presets y muestras](docs/sound-browser.png) · [Guía de botones](docs/buttons-and-browser.md) · [Captura estática](docs/interface.png) · [Distribución y animaciones inspiradas en OTTO](docs/hardware-interface.md)
 
-**Nuevo en 0.24.1:** el [volumen maestro](docs/output-routing.md) controla también las colas de los efectos, con mute completo y memorias conservadas. Reset y borrado diferido de [Spring](docs/spring246-lifecycle.md) contrastados; su render sigue pendiente.
+**Nuevo en 0.25.0:** [Spring 246](docs/spring246-native.md), reverb mono con Tone, Turns, Damping y Send, Value FX, automatización y guardado. Inicializador, coeficientes y nueve líneas de memoria contrastados con las instrucciones originales.
+
+**Nuevo en 0.24.1:** el [volumen maestro](docs/output-routing.md) controla también las colas de los efectos, con mute completo y memorias conservadas. Reset y borrado diferido de [Spring](docs/spring246-lifecycle.md) contrastados como base de la integración de 0.25.
 
 **Nuevo en 0.24.0:** [Phone 246](docs/phone246-native.md) en **Set 3 → FX → Phone 246**: Tone, Phonic, Baud y Telematic, con Value FX, automatización y guardado. Núcleo mono, filtros y buffers segmentados contrastados; workspace acotado con guardas explícitas. Comparte la latencia fija del bus (~1,5 ms).
 

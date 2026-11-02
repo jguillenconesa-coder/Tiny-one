@@ -1,5 +1,16 @@
 # Historial de cambios
 
+## 0.25.0 — Spring 246
+
+- Reverb mono con Tone/Turns/Damping/Send, Value FX, automatización, proxies y
+  persistencia. Selector de ocho opciones; prioridad Spring sobre Phone.
+- Inicializador, 258 entradas de tabla, cuatro constantes, 4096 bloques, estados,
+  display/contador y ocho workspaces completos contrastados; repetición idéntica.
+- Reset completo propio del host, PDC fijo y volumen tras el bus mantenidos.
+- 24 cargas de Spring adicionales (348 en total) y regresión del volumen ampliada.
+- Runner macOS Intel con build universal tras cancelaciones por capacidad ARM64.
+
+
 ## 0.24.1 — volumen de salida y ciclo de Spring
 
 - Volumen maestro tras el bus de FX: controla colas, mute exacto tras suavizado y

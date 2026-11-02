@@ -1,7 +1,10 @@
 # Paquete macOS universal
 
 El CI configura `CMAKE_OSX_ARCHITECTURES=arm64;x86_64` y ejecuta las suites en el
-runner macOS. Después `packaging/macos/build-package.sh` comprueba que tanto la
+runner macOS. Desde 0.25 se usa `macos-15-intel` tras dos cancelaciones por falta
+de capacidad ARM64 antes de asignar runner, también en el workflow manual de
+reempaquetado. Las suites se ejecutan en x86_64;
+arm64 se compila e inspecciona, pero requiere su propia prueba de ejecución. Después `packaging/macos/build-package.sh` comprueba que tanto la
 aplicación como el VST3 contienen las dos arquitecturas, prepara firmas ad-hoc
 locales y verifica sus bundles. Genera:
 

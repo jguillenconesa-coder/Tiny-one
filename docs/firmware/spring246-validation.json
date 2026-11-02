@@ -1,0 +1,58 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "kernel": "0x01a326e8",
+  "reset": "0x01a32e9a, explicit slot 0",
+  "cases": 4096,
+  "samples": 262144,
+  "state_bytes": 104,
+  "display_bytes": 64,
+  "workspace": "Nine lines, 29136 int16 cells, slot 0; eight complete snapshots",
+  "tables": "129 Q31 frequency, 129 Q15 low-pass; original static initializer produces packed Spring constants",
+  "tools": {
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "/workspace/tiny-one-blackfin/bin/bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "/workspace/tiny-one-blackfin/bin/run-parallel": "cade4c23e3f279a9862cbbd763643f1f87d55c570be5129beedd58ce6eaf9e13"
+  },
+  "artifacts": {
+    "spring246-input.bin": {
+      "bytes": 1277952,
+      "sha256": "9ec9290b3d96308a012ef99df25b83b0c88946685ff1f78e1e77b29f1ab2dd1b",
+      "matches_committed_fixture": true
+    },
+    "spring246-output.bin": {
+      "bytes": 1695766,
+      "sha256": "f9ff9cb51bf67ecbbc8aae6809c6f73f1c404f6af5166082e94d9b6e8932b0b2",
+      "matches_committed_fixture": true
+    }
+  },
+  "limitations": [
+    "Mono callback, valid line cursors, explicit workspace slot 0.",
+    "Original allocator/routing/clock and complete instrument startup are not established."
+  ],
+  "date": "2026-11-02",
+  "static_initializer": "0x01a33964",
+  "generated_table_entries": 258,
+  "render_constants": [
+    29491,
+    3276,
+    8192,
+    26214
+  ],
+  "static_prefix_bytes": 16,
+  "active_blocks": 4088,
+  "active_samples": 261632,
+  "pending_callbacks": 8,
+  "original_resets": 4,
+  "independent_repeat": "byte-identical to committed fixtures in a second fresh private directory",
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "leak": "disabled in traced environment"
+  },
+  "owned_sources": {
+    "Source/Spring246.h": "4ee84784c57106659c1c49a0aec4bfcb43955318f49fcb1618eb9f262aae60e0",
+    "Source/Spring246Tables.h": "b19e36c41f85bb5e9122ef9b1feccf390ffd557d03bb2c5a6cf1eb5529f5b881",
+    "research/blackfin/spring-stream.s.in": "236d502a4651c430745a8bbe2818fe8a476c3c50670992974ffe14c08ff05502",
+    "scripts/verify-spring246.py": "e95b192435b794631f5bebe7782bba1a978927a43e5cddccee816a9f6467a1e9"
+  }
+}

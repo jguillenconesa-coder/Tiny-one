@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 44 % del objetivo completo
+## Avance estimado: aproximadamente 46 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 35 % | 10,5 puntos |
-| Efectos, envolventes y moduladores | 20 % | 70 % | 14 puntos |
+| Efectos, envolventes y moduladores | 20 % | 80 % | 16 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **44 %** |
+| Total | 100 % | | **46 %** |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,7 +38,25 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega agrupada actual: volumen de salida y ciclo de Spring (0.24.1)
+## Entrega agrupada actual: Spring 246 (0.25.0)
+
+Set 3 → FX → Spring 246 añade Tone/Turns/Damping/Send, Value FX, automatización,
+proxies y guardado. [Guía y límites](spring246-native.md). Se ejecuta el
+inicializador original y se contrastan 4096 bloques, todos los estados/displays/
+contadores y ocho workspaces completos. Tablas/constantes legibles sin sustitución;
+slot 0 y memoria explícitos, no allocator ni ruteo estéreo original. El reset
+completo del host se distingue de la limpieza diferida original.
+
+0.25 compila standalone/VST3 y pasa **84/84 suites Linux** y **348 cargas de
+callback sin heap rastreado**. Sanitizadores de núcleo/adaptador aprobados;
+el CI nativo propio sigue pendiente. El volumen sigue después del bus y el PDC permanece
+fijo. El CI pasa a un runner macOS Intel manteniendo binarios universales, tras
+dos trabajos ARM64 cancelados por falta de capacidad antes de arrancar. Prueba
+runtime de arm64 y Ableton real siguen pendientes. Avance de planificación:
+**46 % ±10 puntos**, sin afirmar equivalencia acústica. Siguiente componente: CWO,
+sus productores de tablas y auxiliares; presets originales al final.
+
+## Entrega 0.24.1: volumen de salida y ciclo de Spring (0.24.1)
 
 El volumen maestro pasa después del bus de efectos: controla también las colas,
 alcanza cero exacto tras el suavizado y conserva las memorias al desmutear.
@@ -55,7 +73,8 @@ candidatos localizados; aún faltan los productores de sus tablas.
 0.24.1 compila standalone/VST3 y pasa **82/82 suites Linux**, incluidas las
 324 cargas de callback con volumen automatizado y sin heap rastreado.
 Sanitizadores de Spring aprobados; el [CI nativo propio](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41425809017)
-está en curso (macOS en cola). El avance global se mantiene en **44 % ±10 puntos**:
+pasó Linux/Windows; macOS fue cancelado antes de recibir runner por falta de
+capacidad ARM64. El avance global se mantiene en **44 % ±10 puntos**:
 se mejora el comportamiento del instrumento y la base de Spring, sin dar por
 completado otro efecto. Siguiente bloque: render activo de Spring e integración;
 después CWO. Presets originales completos al final.

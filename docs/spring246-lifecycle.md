@@ -1,7 +1,8 @@
 # Spring 246: reset y borrado diferido contrastados
 
-Este bloque prepara la reconstrucción de Spring. **Todavía no añade Spring al
-selector ni implementa su render de audio.** Se ejecutan el reset original
+Este ensayo de 0.24.1 prepara la reconstrucción de Spring. Desde 0.25, el
+[render mono e integración](spring246-native.md) se contrastan por separado;
+el alcance de estas fixtures continúa limitado al ciclo de memoria. Se ejecutan el reset original
 `0x01a32e9a` y únicamente la rama pendiente del callback mono `0x01a326e8`.
 
 El estado ocupa 104 bytes: tag, trece palabras de historial, cuatro valores de
@@ -30,13 +31,14 @@ El script `scripts/verify-spring246-lifecycle.py --help` documenta los argumento
 para repetirlo con firmware aportado por el operador y una carpeta privada nueva.
 No se distribuyen firmware, ELF, desensamblado ni pseudocódigo del fabricante.
 
-## Contratos localizados para continuar
+## Contratos localizados en 0.24.1
 
 Spring tiene render mono en `0x01a326e8`, estéreo candidato en `0x01a32f94` y
 un inicializador estático candidato en `0x01a33964`. El mono consulta las tablas
 compartidas de frecuencia `0xff801f50` y paso bajo `0x0106a5ec`, además de valores
 en `0x01de6248/0x01de624c`. Se han localizado escrituras de estos últimos dentro
-del inicializador candidato; sus resultados aún no se ejecutan ni contrastan.
+del inicializador candidato; sus resultados no forman parte de este ensayo de ciclo de memoria; se contrastan
+en la evidencia de 0.25 enlazada arriba.
 
 CWO tiene mono candidato en `0x0194480c` y estéreo en `0x019450fc`. El mono llama
 al suavizado `0x0194435c`, a conversiones `0x01944528/0x019445a8/0x01944660` y a
@@ -45,6 +47,5 @@ otros auxiliares de filtro, interpolación y fase. Estas conversiones consultan
 productores. Un decompilador ayuda a describir los contratos, pero no convierte
 estos candidatos en audio validado ni prueba por sí solo un bloqueo por cifrado.
 
-El siguiente bloque es ejecutar el inicializador de Spring, contrastar su render
-activo y después integrarlo con controles, Value FX y persistencia. CWO necesita
-su propio cierre de dependencias. Los presets originales siguen para el final.
+Inicializador, render activo e integración de Spring quedan entregados en 0.25
+con evidencia independiente. CWO necesita su propio cierre de dependencias. Los presets originales siguen para el final.

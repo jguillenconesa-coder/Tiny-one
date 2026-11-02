@@ -1,0 +1,75 @@
+{
+  "version": "0.25.0",
+  "date": "2026-11-02",
+  "linux_build": "standalone and VST3 passed",
+  "linux_ctest": {
+    "passed": 84,
+    "total": 84,
+    "seconds": 155.03
+  },
+  "oracle": {
+    "blocks": 4096,
+    "audio_positions": 262144,
+    "active_blocks": 4088,
+    "active_samples": 261632,
+    "pending_callbacks": 8,
+    "original_resets": 4,
+    "generated_table_entries": 258,
+    "render_constants": [
+      29491,
+      3276,
+      8192,
+      26214
+    ],
+    "complete_workspace_snapshots": 8,
+    "independent_repeat": "byte-identical",
+    "scope": "Mono, valid cursors, explicit slot 0 workspace; not original allocator/full startup",
+    "evidence": "../firmware/spring246-validation.json"
+  },
+  "integration": {
+    "rates": [
+      8000,
+      22050,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "priority": "Spring > Phone > Grid > Delay > Nitro > Filter > Punch",
+    "latency": "Shared fixed PDC unchanged; line delays are musical reverb delays",
+    "checks": [
+      "Exact delayed bypass and no underruns",
+      "8192 native samples versus direct core",
+      "Tail after excitation and extreme controls",
+      "Eight selector choices, Configure and proxies",
+      "Project/slot/clipboard persistence",
+      "64/257 renders and CC120 clearing",
+      "Post-bus master volume including retained Spring tails"
+    ],
+    "host_reset": "Authored full clear, not original retained-history/deferred-clear reset"
+  },
+  "sanitizers": {
+    "address": "passed",
+    "undefined": "passed",
+    "scope": "Spring complete kernel oracle and adapter control extremes",
+    "leak": "disabled in traced environment"
+  },
+  "realtime": {
+    "workloads": 348,
+    "new_spring_workloads": 24,
+    "tracked_heap_calls": 0,
+    "first_note_checked": true,
+    "controls_and_enable_automated": true,
+    "master_volume_automated": true,
+    "timing": "Diagnostic on shared host, not physical deadline certification"
+  },
+  "previous_ci": {
+    "run_id": 41425809017,
+    "linux": "success",
+    "windows": "success including installer/startup/install/uninstall",
+    "macos": "cancelled before runner assignment due to hosted ARM64 capacity constraints"
+  },
+  "native_ci": "pending implementation commit; macOS runner switched to macos-15-intel, universal build retained",
+  "estimated_progress": "46% +/-10 planning points, not acoustic equivalence"
+}

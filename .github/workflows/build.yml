@@ -22,9 +22,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-2022, macos-latest]
         include:
-          # ARM64, like macos-latest; avoid the moving latest image during queues.
+          # Use Intel capacity after two ARM64 jobs expired before runner assignment.
+          # Build both slices; runtime CTest covers the Intel slice on this runner.
           - os: macos-latest
-            runner: macos-15
+            runner: macos-15-intel
     runs-on: ${{ matrix.runner || matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -43,8 +44,8 @@ jobs:
       - name: Validate Windows integer DSP before plugin build
         if: runner.os == 'Windows'
         run: |
-          cmake --build build --config Release --target filter246_tests nitro246_tests delay246_tests grid246_tests phone246_tests spring246_lifecycle_tests --parallel 2
-          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid|delay246|grid246|phone246|spring246_lifecycle)$' --output-on-failure
+          cmake --build build --config Release --target filter246_tests nitro246_tests delay246_tests grid246_tests phone246_tests spring246_lifecycle_tests spring246_tests --parallel 2
+          ctest --test-dir build -C Release -R '^(filter246|nitro246_hybrid|delay246|grid246|phone246|spring246_lifecycle|spring246)$' --output-on-failure
       - run: cmake --build build --config Release --parallel 2
       - name: Linux tests
         if: runner.os == 'Linux'

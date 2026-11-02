@@ -824,3 +824,14 @@ clear counters8 + both complete 58272-byte workspaces. Action 0 loads state, see
 both slots and calls reset; action 1 retains state/workspaces/display and invokes
 only the pending branch with fresh audio. These fixtures do not execute active
 Spring DSP or establish original startup contents. [Evidence](../../docs/spring246-lifecycle.md).
+
+## Spring 246 mono (0.25.0)
+
+4096 input records of 312 bytes: state104 + controls8 + audio128 + display64 +
+action4 + memory seed4. Action 0 retains state/memory/display; action 1 loads state
+and display and seeds slot 0; action 2 loads state/display and calls the original
+reset over retained memory. Outputs start with 790 bytes (129 Q31 frequency +
+129 Q15 low-pass + 16 bytes of static initialization), then records of 300 bytes
+(audio128 + state104 + display64 + pending4), with a complete 58272-byte workspace
+snapshot after every 512 records. 4088 active blocks and 8 pending clear callbacks.
+[Contract and limitations](../../docs/spring246-native.md).
