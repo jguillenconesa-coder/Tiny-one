@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 56 % del objetivo completo
+## Avance estimado: aproximadamente 58 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 62 % | 18,6 puntos |
+| Motores originales y sus filtros | 30 % | 68 % | 20,4 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 60 % | 9 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈56 %** (56,1 antes de redondear) |
+| Total | 100 % | | **≈58 %** (57,9 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,25 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: DNA Hybrid 246 (0.30.0)
+## Entrega actual: Voltage 246 (0.31.0)
+
+[Voltage](voltage246-native.md) añade el décimo motor. La candidata se valida como
+callback mono completo: cuatro osciladores, XOR/feedback, carga, dispersión y filtro,
+sin coeficientes sustituidos ni dependencia OTP/RAM exterior en esta ruta.
+4096 bloques / 524288 muestras, estados completos de las seis voces, factoría,
+reset/release, pitch/display/guardas y 129 coeficientes coinciden. Value/Random
+aportan 8192 callbacks contrastados de tipo 13.
+
+Cuatro controles raw, ADSR, seis voces, Mono/Legato/glide, moduladores, automatización,
+proyectos/slots/clipboard y animación propia integrados. Reloj, pitch/eventos,
+asignación, composición ADSR y salida son adaptaciones; la semejanza acústica sigue
+sin medirse. [Evidencia de entrega](releases/v0.31.0-validation.json).
+Linux Release: **101 suites aprobadas** (smoke repetido tras ajustar el catálogo
+a 72 sonidos), **468 cargas sin heap rastreado**, ASan/UBSan y revisión visual.
+Estimación **≈58 % ±10 puntos** de planificación. Sigue D-synth según dependencias,
+además de calibración, validación Live y presets originales completos al final.
+
+## Entrega anterior: DNA Hybrid 246 (0.30.0)
 
 [DNA Hybrid](dna246-hybrid.md) añade la novena selección: dos cursores, onda
 suministrada por identidad, interpolación/no linealidad y lectura de RAM viva.
@@ -59,7 +77,7 @@ y **444 cargas sin heap rastreado**; ASan/UBSan de núcleo/modulación/adaptador
 revisión visual pasan. [Núcleo/modulación DNA](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204653)
 y regresiones FM/String pasan en Linux, Windows/MSVC y macOS Intel.
 [Plugins e instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204475)
-siguen en CI:
+pasan en Linux, Windows y macOS universal (runtime Intel):
 [evidencia](releases/v0.30.0-validation.json). Estimación **≈56 % ±10 puntos** de
 planificación, no de fidelidad. Voltage/D-synth y demás componentes pendientes
 siguen según la matriz; presets originales completos al final.

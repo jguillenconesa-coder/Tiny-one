@@ -436,6 +436,20 @@ pool original de seis estados y ceros externos; no se afirma recuperar memoria
 cifrada ni el carácter acústico de un aparato determinado.
 
 Cuatro controles, ADSR, Value/Random/Tremolo, interpretación y estado integrados.
-Próximo motor: Voltage, cuyo render candidato legible es 0x01a49bf4; después
-D-synth según dependencias. No renombrar aproximaciones como constantes recuperadas
+Voltage se completa en 0.31.0 en el alcance descrito debajo; sigue D-synth
+según dependencias. No renombrar aproximaciones como constantes recuperadas
 ni adelantar los presets originales completos.
+
+
+## Voltage 246 (0.31.0)
+
+[Render y ciclo contrastados](voltage246-native.md): la candidata `0x01a49bf4`
+queda validada en 4096 bloques / 524288 muestras, pool de seis estados antes/después,
+factoría/reset/release, pitch variable por muestra, display y guardas. Seno y 129
+coeficientes legibles, sin sustituciones; esta ruta no lee OTP/RAM externa ni RNG.
+Value/Random tipo13 añaden 8192 callbacks. Integración completa de controles/ADSR,
+modulación, modos de voz, interfaz, automatización y estado. Reloj/cadencia/pitch,
+política de voz, composición ADSR y salida propios: no equivalencia acústica.
+
+Próximo bloque: estudiar D-synth y sus envolventes/dependencias antes de delimitar
+la integración. Pulse sigue condicionado por L1, y los presets completos al final.

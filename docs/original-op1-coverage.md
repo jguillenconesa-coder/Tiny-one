@@ -41,7 +41,7 @@ del plugin. El plugin añade Dr. Wave, Cluster y DNA Hybrid como séptima, octav
 | 10 | LS, identificador interno | Referencia candidata; sin equivalencia comercial confirmada, port ni presets de fábrica encontrados en el DB. |
 | 11 | DNA | **[DNA Hybrid tocable](dna246-hybrid.md)**: callback contrastado en 4096 bloques / 524288 muestras con identidades/RAM explícitas, seis estados vivos, RNG y 16 capturas completas. Cuatro controles y ADSR, seis voces, modos y moduladores integrados. Identidad virtual propia y RAM externa al pool modelada como cero; no OTP/RAM físicos recuperados ni calibración acústica. Scheduler/pitch/salida propios; 16 presets originales pendientes. No aparece en el diagrama de referencia del manual suministrado. |
 | 12 | D-synth | Pendientes dos osciladores, múltiples envolventes y controles secundarios originales. |
-| 13 | Voltage | Ruta candidata y 16 presets inventariados; render/filtros originales pendientes. |
+| 13 | Voltage | [Núcleo mono y ciclo contrastados](voltage246-native.md): 4096 bloques/524288 muestras, seis estados y 129 coeficientes sin sustitución. Value/Random: 8192 callbacks tipo 13. Integración seis voces/ADSR/modulación/estado; reloj, pitch, asignación y salida propios. Cadencia/ruteo original y equivalencia acústica pendientes; 16 presets inventariados, réplica final pendiente. |
 | 14 | Iter, identificador interno | Referencia candidata; sin presets en este DB, pendiente. |
 
 Las candidatas proceden del análisis estático y de la referencia pública op1-sdk

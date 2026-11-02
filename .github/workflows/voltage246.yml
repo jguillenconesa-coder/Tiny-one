@@ -1,0 +1,32 @@
+name: Validate Voltage original render and modulation
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/voltage-render/**'
+      - 'research/blackfin/voltage-stream.s.in'
+      - 'scripts/verify-voltage246.py'
+      - 'Source/Voltage246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/String246.h'
+      - 'Source/Spring246Tables.h'
+      - 'Source/Delay246Tables.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Random246.h'
+      - 'Tests/Fm246ModulationTests.cpp'
+      - 'Tests/ReferenceVectors/*voltage246*.bin'
+      - '.github/workflows/voltage246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/voltage-render -B build-voltage -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-voltage --config Release --parallel 2
+      - run: ctest --test-dir build-voltage -C Release --output-on-failure

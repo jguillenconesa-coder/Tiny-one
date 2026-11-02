@@ -26,7 +26,7 @@
   "implementation_commit": "a635d53bbe97f0596564d9452d0e0a1c85b45167",
   "plugin_package_ci": {
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204475",
-    "status": "in progress; includes Windows installer and macOS universal package"
+    "status": "success: Linux, Windows plugins/startup/install/uninstall, macOS universal package; runtime Intel"
   },
   "regression_ci": {
     "fm": {

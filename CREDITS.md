@@ -498,3 +498,16 @@ ADSR composition and output filtering. Four supplied identities, controlled RAM
 profiles and an isolated paired RAM experiment condition the numerical comparisons;
 they do not recover the physical unit's acoustic profile. No original presets,
 private media, disassembly, firmware or decompiler output are redistributed.
+
+
+### Voltage 246
+
+Voltage246.h is an independent reconstruction of the rev246 mono callback,
+four-oscillator/XOR/feedback/filter arithmetic and six-slot lifecycle, checked
+against isolated BF524 execution. Sine conversion and 129 legible filter
+coefficients are verified without substitutions. Only synthetic numeric
+fixtures and authored test harnesses are redistributed. Voltage246Voice.h uses
+an authored clock, pitch/event/voice policy, ADSR composition, DC/output filtering
+and resampling. Labels, init values and four-trace animation are authored.
+Numerical parity is conditioned on supplied inputs; it is not acoustic
+validation. No firmware, private media/memory dump or decompiler output is included.

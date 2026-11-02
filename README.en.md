@@ -1,4 +1,7 @@
-# Pocket One 0.30.0
+# Pocket One 0.31.0
+
+**Voltage 246**: tenth engine, four oscillators, XOR/feedback and original filter coefficients.
+[Scope and limits](docs/voltage246-native.md) · [Validation](docs/releases/v0.31.0-validation.json).
 
 **DNA Hybrid**: ninth engine, explicit virtual identity, six voices and modulators.
 [Scope and limits](docs/dna246-hybrid.md) · [Validation](docs/releases/v0.30.0-validation.json).

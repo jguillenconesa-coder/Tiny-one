@@ -1,0 +1,37 @@
+{
+  "version": "0.31.0",
+  "date": "2026-11-02",
+  "linux_build": "Release Standalone and VST3 passed",
+  "linux_ctest": "101/101 suites passed: 100 on full 110.41 s run; plugin_smoke passed on rerun after expected catalogue count updated from 71 to 72",
+  "realtime": "468 workloads passed, including 24 Voltage workloads, zero tracked callback heap calls; timings diagnostic on shared host",
+  "sanitizers": "ASan/UBSan core, modulation and seven-rate adapter passed (leak detection disabled under managed ptrace)",
+  "numerical_oracle": "4096 blocks / 524288 samples, six complete states before/after lifecycle, display, pitch, guards and 129 original coefficients; independent repeat byte-identical",
+  "modulation_oracle": "4096 Value + 4096 Random type13 callbacks, independent repeat byte-identical",
+  "evidence": "../firmware/voltage246-validation.json",
+  "native_ci": {
+    "status": "pending implementation push"
+  },
+  "plugin_package_ci": {
+    "status": "pending implementation push"
+  },
+  "authored_dependencies": [
+    "88.2 kHz clock, note/pitch/cursor/event scheduler",
+    "Voice allocation/stealing, Mono/Legato/glide and ADSR composition",
+    "DC/output filtering and resampling",
+    "Functional knob labels, init values and four-trace animation"
+  ],
+  "limits": [
+    "No coefficient substitutions or OTP/external RAM dependency in this callback; not a decryption of protected L1",
+    "Original full scheduling/routing and acoustic equivalence remain unmeasured",
+    "Ableton Live real and macOS arm64 execution pending; original full presets last"
+  ],
+  "estimated_progress": "Approximately 58% +/-10 planning points; not acoustic fidelity",
+  "previous_030_plugin_ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41482204475",
+    "status": "success Linux, Windows plugins/startup/install/uninstall and macOS universal package; runtime Intel"
+  },
+  "visual_smoke": {
+    "status": "passed and visually reviewed: tenth engine, four traces, integer controls, Voltage init and 72-sound catalogue",
+    "sha256": "8a64f3a0f53405163c1c58b38112d1a3a7c5d9cbb1c38a51594c03a03073dad3"
+  }
+}

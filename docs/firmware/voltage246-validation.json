@@ -1,0 +1,134 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "samples": 524288,
+  "pool_bytes": 312,
+  "state_bytes": 52,
+  "pitch_words": 128,
+  "display_words": 32,
+  "routines": {
+    "render": "0x01a49bf4",
+    "factory": "0x01a49ef8",
+    "reset": "0x01a49b94",
+    "release": "0x01a49b4e",
+    "sine_loader": "0x01a49b1c"
+  },
+  "range_address": "0x01de5bd0",
+  "source_table": {
+    "address": "0x018be948",
+    "count": 129,
+    "sha256": "67cd9161fa00913959669691a80ae4f010657f8f45ed863bc40dbafe9773d61d"
+  },
+  "artifacts": {
+    "voltage246-input.bin": {
+      "bytes": 3440640,
+      "sha256": "86f42dcc6ab554e78402facea4bf8bf34f1194534e2e875d4124e0e46e91e388"
+    },
+    "voltage246-output.bin": {
+      "bytes": 6029636,
+      "sha256": "db17adf38dce296906f0cd9011ed870b3990f03fca7816ffd4a6cd1c013e82d8"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+  },
+  "limits": [
+    "Caller supplies controls, six-state pool, per-sample pitch and event ordering.",
+    "No hardware/OTP/other-RAM model, original scheduler or acoustic equivalence is claimed."
+  ],
+  "repeat": "Independent fresh BF524 runs reproduced all three committed datasets byte for byte.",
+  "model": "GNU BF524 with both documented parallel register/halfword writeback fixes; microprobe checked before execution.",
+  "value": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "model": "GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation",
+    "process": "0x019cfaf8 (synth instrument/first four ENV parameters only)",
+    "note_reset": "0x019cfd5a",
+    "range_helper": "0x01a1dfec / 0x019f69b0",
+    "range_initializer": "0x01a1e914",
+    "instrument_types": [
+      13
+    ],
+    "envelope_ranges": "0x01de5710",
+    "tempo_float_multiply": "0x01aa55a0",
+    "tempo_float_to_integer": "0x01aa4dbc",
+    "tempo_constant_float32": 1662149.125,
+    "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+    "independent_cases": 2048,
+    "stream_cases": 2048,
+    "cases": 4096,
+    "full_self_bytes": 12,
+    "full_display_bytes": 32,
+    "target_words": 8,
+    "artifacts": {
+      "value-voltage246-input.bin": {
+        "bytes": 393216,
+        "sha256": "b2e3db2194da7bd805e55f37e16173ef4cf9844e27dcb11729b1b0486fe3c920",
+        "matches_committed_fixture": true
+      },
+      "value-voltage246-output.bin": {
+        "bytes": 278680,
+        "sha256": "5da4922cf80abae8889bbdf178135b8a739d6cd77d988be49a835ee6c4f2d612",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+      "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+      "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+    },
+    "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "limitations": [
+      "Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.",
+      "The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity."
+    ],
+    "voltage_ranges": "0x01de5bd0"
+  },
+  "random": {
+    "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+    "process": "0x019cea70",
+    "note_reset": "0x019ced74",
+    "factory": "0x019cf340",
+    "rng_address": "0xff802bc8",
+    "lcg_multiplier": 1664525,
+    "lcg_increment": 1013904223,
+    "range_initializer": "0x01a1e914",
+    "instrument_helper": "0x01a1dfec",
+    "envelope_helper": "0x019f69b0",
+    "cases": 4096,
+    "state_bytes": 44,
+    "target_words": 8,
+    "instrument_types": [
+      13
+    ],
+    "destinations": [
+      "Instrument eight signals / two passes over four controls",
+      "ADSR first four signals"
+    ],
+    "independent_cases": 2048,
+    "retained_stream_cases": 2048,
+    "artifacts": {
+      "random-voltage246-input.bin": {
+        "bytes": 360448,
+        "sha256": "118507e6c9e6cd9f07dbd6b744127f313e38465e93a4e92befab5a350808b4f6",
+        "matches_committed_fixture": true
+      },
+      "random-voltage246-output.bin": {
+        "bytes": 294912,
+        "sha256": "fd2748232f14c3e954023623aaa0f3bbf94c7c8bbc34c13e00afd159d66da6ab",
+        "matches_committed_fixture": true
+      }
+    },
+    "tools": {
+      "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+      "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+      "run-parallel": "dff51f542fc86f5f4dd220c2dbfe044411188a8108c96378f3cbdd7ce77db32f"
+    },
+    "model": "GNU 13.1 BF524 with both documented writeback patches; not hardware validation",
+    "limitations": [
+      "Selected native families and synth Instrument/ENV callback only; no FX/drum routing.",
+      "Caller-supplied target words, event order and RNG; original L1 scheduler not recovered."
+    ]
+  }
+}
