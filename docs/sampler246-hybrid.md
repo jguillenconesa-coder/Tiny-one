@@ -1,6 +1,6 @@
 # Sampler melódico 246 — lector reconstruido y adaptador propio
 
-En 0.36.0, carga un sonido SAMPLE o tu WAV/AIFF en **04 / SAMPLER** y activa
+En 0.37.0, carga un sonido SAMPLE o tu WAV/AIFF en **04 / SAMPLER** y activa
 **SAMPLER 246**. El lector y sus ocho campos proceden del callback contrastado;
 la composición de voz mantiene adaptaciones propias explícitas. La opción apagada
 vuelve al reproductor anterior. Cambiarla reinicia las voces activas.
@@ -36,8 +36,9 @@ Ese allocator, mapa de eventos y portamento no se presentan como el original.
 Parámetros, banco de mandos, ADSR y modo de voz se automatizan y guardan en
 proyectos, slots synth y clipboard. Los proxies MIDI cambian de banco y de
 envolvente con el editor cerrado. Root Note y los FX del bus siguen disponibles;
-LFO propio de pitch/filter también. Value/Random/Tremolo nativos del sampler
-requieren su dispatch antes de habilitarlos. No se incluyen presets/audio originales.
+LFO propio de pitch/filter también. Desde 0.37 se integran
+[Value/Random/Tremolo del sampler](sampler246-modulation.md), con reglas acopladas
+contrastadas para los ocho destinos Instrument y ADSR; reloj/composición propios. No se incluyen presets/audio originales.
 
 ## Contrato reconstruido
 
@@ -98,7 +99,7 @@ del lector de 0.35 se mantienen como regresión sin regenerar sus fixtures.
 
 No se priorizan migraciones de sesiones antiguas. No se ha medido equivalencia
 acústica ni probado esta entrega en Ableton Live real o ejecutado en macOS arm64.
-Quedan el pitch/clock/allocator/ruteo originales, dispatch LFO del sampler y de
+Quedan el pitch/clock/allocator/ruteo originales, dispatch LFO de
 batería, dinámica drum, Pulse/L1 y presets completos al final.
 
 ## Dinámica de batería: investigación de este bloque

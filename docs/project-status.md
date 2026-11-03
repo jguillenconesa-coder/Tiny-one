@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 65 % del objetivo completo
+## Avance estimado: aproximadamente 66 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 91 % | 18,2 puntos |
-| Voz, modos de ejecución y ruteo original | 15 % | 31 % | 4,65 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 68 % | 10,2 puntos |
+| Efectos, envolventes y moduladores | 20 % | 93 % | 18,6 puntos |
+| Voz, modos de ejecución y ruteo original | 15 % | 32 % | 4,8 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 69 % | 10,35 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈65 %** (64,85 antes de redondear) |
+| Total | 100 % | | **≈66 %** (65,55 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,28 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: controles y voz del sampler (0.36.0)
+## Entrega actual: moduladores del sampler (0.37.0)
+
+[Value/Random/Tremolo en sampler](sampler246-modulation.md): ocho destinos de
+Instrument con reglas coarse/fine acopladas, ADSR, automatización, estado y proxies
+sin editor. Value selecciona sus ocho campos por el banco de set 1. Random recorre
+los ocho directamente. Dirección usa un mapa propio del botón al rango nativo.
+
+**8192 callbacks originales** de Value/Random coinciden con estado, displays,
+destinos, RNG/tempo y retornos; corpus independientes/retenidos, regiones válidas,
+igualdades y palabras con signo. Repetición idéntica. Tremolo reutiliza aritmética
+ya contrastada; su composición con esta voz y el reloj/allocator siguen propios.
+
+Linux: **114/114 suites**, cinco suites independientes, ASan/UBSan, **582 cargas
+sin heap rastreado** (60 sampler), estado/audio y cinco vistas revisados. CI nativo
+pendiente del push: [evidencia](releases/v0.37.0-validation.json). No se reclama
+fidelidad acústica. Random drum tiene callback/helper legibles y 4096 observaciones
+originales aisladas, aún sin port C++ contrastado: no se habilita ni se confunde
+con la dinámica. Siguen dispatch Value/Random drum/D-box, productor de ganancia,
+ruteo/voz/clock originales, Pulse/L1, Live/arm64 y presets completos al final.
+Estimación **≈66 % ±10 puntos de planificación**. Materiales disponibles suficientes.
+
+## Entrega anterior: controles y voz del sampler (0.36.0)
 
 [Sampler 246](sampler246-hybrid.md) expone ocho campos, incluidos límites de loop
 independientes y fine, dirección y volumen. Dos bancos de mandos, unidades ms/us/%,
@@ -55,7 +76,7 @@ El CI completo de 0.35.0 pasó Linux, Windows y macOS universal (runtime Intel).
 Validación local: **112/112 suites**, tres suites independientes, ASan/UBSan y
 **546 cargas sin heap rastreado** (24 del sampler). Interfaz revisada y estado/audio
 verificados. El verificador del sampler y las regresiones drum/D-box pasan en
-Linux, Windows/MSVC y macOS Intel. Plugins/instaladores completos en curso:
+Linux, Windows/MSVC y macOS Intel. Plugins/instaladores completos aprobados:
 [evidencia y CI](releases/v0.36.0-validation.json).
 Estimación **≈65 % ±10 puntos de planificación**. Pendientes: ruteo/voz original,
 moduladores del sampler y drum, dinámica de batería, Pulse/L1, acústica/Live/arm64

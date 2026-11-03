@@ -835,3 +835,17 @@ reset over retained memory. Outputs start with 790 bytes (129 Q31 frequency +
 (audio128 + state104 + display64 + pending4), with a complete 58272-byte workspace
 snapshot after every 512 records. 4088 active blocks and 8 pending clear callbacks.
 [Contract and limitations](../../docs/spring246-native.md).
+
+## Sampler Value / Random (0.37.0)
+
+`value-sampler246-{input,output}.bin`: 4096 records, 96 input bytes; 152-byte range
+prefix and 68-byte output records, using the Value voice format above. Type 6
+addresses all eight sampler Instrument fields by colour/2048, or four ADSR fields.
+`random-sampler246-{input,output}.bin`: 4096 records, 88 input and 72 output bytes,
+using the Random voice layout. Instrument addresses eight coupled targets directly.
+Both alternate correlated regions/equalities/fractions with arbitrary signed words,
+with 2048 independent and 2048 retained cases. Reproduce with the corresponding
+`verify-*-voice246.py --sampler` tools; see the sampler modulation documentation.
+All inputs are synthetic; outputs are isolated numerical observations, not original
+instructions, firmware, presets or audio. GNU BF524 requires the three documented
+writeback patches; full instrument timing/acoustics remain unverified.

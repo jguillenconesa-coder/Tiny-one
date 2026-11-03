@@ -65,7 +65,7 @@ public:
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
     bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
-    bool valueVoice246Available() const {return dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
+    bool valueVoice246Available() const {return sampler246Enabled()||dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
     bool valueVoice246Enabled() const {return !random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
@@ -73,7 +73,7 @@ public:
     bool sampler246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==3&&samplerAudio[0]->load()>.5f;}
     bool sampler246Secondary() const {return samplerAudio[2]->load()>.5f;}
     bool sampler246EnvelopeEnabled() const {return sampler246Enabled()&&samplerAudio[3]->load()>.5f;}
-    std::array<int16_t,8> sampler246ControlValues() const {std::array<int16_t,8> c{};for(size_t i=0;i<8;++i)c[i]=int16_t(samplerAudio[4+i]->load()*(i==4?16384:1));return c;}
+    std::array<int16_t,8> sampler246ControlValues() const {std::array<int16_t,8> c{};for(size_t i=0;i<8;++i)c[i]=int16_t(i==4?8192+samplerAudio[4+i]->load()*16384:samplerAudio[4+i]->load());return c;}
     void resetSampler246Controls(const pocket::Sample&);
     bool drum246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==5&&drumAudio[0]->load()>.5f;}
     int drum246SelectedPad() const {return std::clamp(int(drumAudio[5]->load()),0,23);}

@@ -31,7 +31,7 @@
     "tests": "3/3 per platform"
   },
   "plugin_package_ci": {
-    "status": "in_progress",
+    "status": "success on Linux/Windows/macOS universal; macOS runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644458033",
     "scope": "Standalone/VST3 and installers; Linux, Windows, macOS universal (runtime Intel)"
   },

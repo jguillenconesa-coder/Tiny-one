@@ -18,6 +18,7 @@ inline int random246Period(int16_t speed) noexcept {
 // Instrument signals 4..7 revisit controls 0..3 at 1/16 modulation; the
 // auxiliary destination words are preserved for those families. D-synth kind 3
 // instead addresses all eight controls directly, without the 1/16 second pass.
+// Sampler type 6 also addresses eight controls, with coupled coarse/fine rules.
 inline bool random246VoiceStep(Random246State& s,uint32_t& rng,uint32_t& meter,
                                 const std::array<int16_t,8>& c,int kind,int type,
                                 std::array<int16_t,8>& values) noexcept {
@@ -33,9 +34,10 @@ inline bool random246VoiceStep(Random246State& s,uint32_t& rng,uint32_t& meter,
     const auto amount=multiplyQ15(s.gate,c[0]);
     const size_t count=kind==1?4:8;
     for(size_t i=0;i<count;++i){auto modulation=multiplyQ15(s.smooth[i],amount);
-        const bool extended=kind==0&&type==12;
+        const bool extended=kind==0&&(type==12||type==6);
         const size_t target=kind==0&&!extended?i%4:i;
         if(kind==0&&!extended&&i>=4)modulation=int16_t(floorDivide(modulation,16));
+        if(kind==0&&type==6){sampler246Modulate(values,target,modulation);continue;}
         values[target]=kind==1?value246Adjust(values[target],modulation,valueVoice246EnvelopeRanges[target]):valueVoice246Adjust(values[target],modulation,valueVoice246Ranges[size_t(index)][target]);
     }
     if(c[3]<16384){const auto x=int16_t(floorDivide(c[3],4));s.gate=saturate16(int(s.gate)+saturate16(int(multiplyQ15(x,x))+1));}

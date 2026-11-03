@@ -32,6 +32,16 @@ def inputs(types=(1,7)):
         controls = [speed,amount,destination*4096+(2048 if i%2 else 0),i//4%4*4096+rnd()%4096,
                     *[int(rnd()%65536)-32768 for _ in range(4)]]
         targets = [int(rnd()%65536)-32768 for _ in range(8)]
+        if types[0]==6 and i%2==0:
+            # Correlated regions exercise equality, zero span and fractional coupling;
+            # odd cases retain arbitrary signed words as boundary stress.
+            points=sorted(rnd()%32768 for _ in range(4));mode=i//2%8
+            if mode in (0,1):points[1]=points[0]
+            if mode in (0,2):points[2]=points[3]
+            if mode==3:points=[0,0,32767,32767]
+            if mode==4:points=[16000]*4
+            if mode==5:points=[0,1,2,3]
+            targets=points+[16384 if mode%2 else 0,rnd()%32768,rnd()%32768,rnd()%32768]
         bpm = (40.,60.,90.,120.,127.5,180.,220.,300.)[i%8]
         tempo = rnd() if i < 2048 else int(struct.unpack('<f',struct.pack('<f',1662149.125*bpm))[0])
         action = (2 if i%3 == 0 else 1) if i < 2048 else (2 if i%128 == 0 else 0)
@@ -42,6 +52,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ['ldr','assembler','linker','simulator','testutils','output']: p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--record',action='store_true')
+    p.add_argument('--sampler',action='store_true',help='Validate melodic sampler type 6 and coupled loop controls')
     p.add_argument('--hybrid',action='store_true',help='Validate Dr. Wave (2) and Cluster (4) instead of Digital/Phase')
     p.add_argument('--fm',action='store_true',help='Validate FM type 0 and its range descriptors')
     p.add_argument('--string',action='store_true',help='Validate String type 3')
@@ -59,9 +70,10 @@ def main():
         if base <= address and address+count <= base+len(image) and not flags&0x1000:
             image[address-base:address-base+count] = (struct.pack('<I',argument)*((count+3)//4))[:count] if flags&0x100 else raw[offset+16:offset+16+count]
         offset += 16+(0 if flags&0x100 else count)
-    out.mkdir(parents=True); (out/'sdram.bin').write_bytes(image); data = inputs((12,12) if a.dsynth else (13,13) if a.voltage else (11,11) if a.dna else (3,3) if a.string else (0,0) if a.fm else (2,4) if a.hybrid else (1,7)); blocks = len(data)//96
+    out.mkdir(parents=True); (out/'sdram.bin').write_bytes(image); data = inputs((6,6) if a.sampler else (12,12) if a.dsynth else (13,13) if a.voltage else (11,11) if a.dna else (3,3) if a.string else (0,0) if a.fm else (2,4) if a.hybrid else (1,7)); blocks = len(data)//96
     (out/'inputs.bin').write_bytes(data)
     source = (templates/'value-voice-stream.s.in').read_text().replace('@WORK@',out.as_posix()).replace('@BYTES@',str(blocks*68))
+    if a.sampler: source = source.replace('0x01de58d0','0x01de5a10').replace('0x01de5a50','0x01de5a10')
     if a.hybrid: source = source.replace('0x01de58d0','0x01de5910').replace('0x01de5a50','0x01de5990')
     if a.fm: source = source.replace('0x01de58d0','0x01de5890').replace('0x01de5a50','0x01de5890')
     if a.string: source = source.replace('0x01de58d0','0x01de5950').replace('0x01de5a50','0x01de5950')
@@ -70,24 +82,37 @@ def main():
     if a.dna: source = source.replace('0x01de58d0','0x01de5b50').replace('0x01de5a50','0x01de5b50')
     (out/'probe.s').write_text(source)
     def run(args,**kw): subprocess.run([str(x) for x in args],check=True,timeout=60,**kw)
+    if a.sampler:
+        for name,expected_probe in [('parallel-halfword.s',(0x1234,0x0200abcd,0x1234,0xabcd0300,0x2468abcd)),('parallel-fp-load.s',(0x1234,0xaabbccdd,0x1357,0xaabbccdd,6))]:
+            stem=Path(name).stem
+            run([a.assembler,'-I',a.testutils,'-o',out/(stem+'.o'),templates/name]);run([a.linker,'-T',templates/'flat.ld','-o',out/(stem+'.elf'),out/(stem+'.o')])
+            with (out/(stem+'.bin')).open('wb') as stdout:run([a.simulator,'--model','bf524',out/(stem+'.elf')],stdout=stdout,stderr=subprocess.DEVNULL)
+            if struct.unpack('<5I',(out/(stem+'.bin')).read_bytes())!=expected_probe:raise RuntimeError('All three documented simulator writeback patches are required')
     run([a.assembler,'-I',a.testutils,'-o',out/'probe.o',out/'probe.s']); run([a.linker,'-T',templates/'voice-contract.ld','-o',out/'probe.elf',out/'probe.o'])
     with (out/'output.bin').open('wb') as stdout,(out/'probe.log').open('wb') as stderr:
         run([a.simulator,'--model','bf524','--memory-size','64M','--memory-region','0xff800000,0x8000','--memory-region','0xff900000,0x8000','--watch-cycles-int','300000000',out/'probe.elf'],stdout=stdout,stderr=stderr)
     if (out/'output.bin').stat().st_size != 152+blocks*68: raise RuntimeError('Incomplete Value voice/ENV output')
     artifacts = {}
     for name,path in [('value-voice246-input.bin',out/'inputs.bin'),('value-voice246-output.bin',out/'output.bin')]:
-        fixture = ROOT/'Tests/ReferenceVectors'/(name.replace('value-voice246','value-dsynth246') if a.dsynth else name.replace('value-voice246','value-voltage246') if a.voltage else name.replace('value-voice246','value-dna246') if a.dna else name.replace('value-voice246','value-string246') if a.string else name.replace('value-voice246','value-fm246') if a.fm else name.replace('value-voice246','value-hybrid246') if a.hybrid else name)
+        fixture = ROOT/'Tests/ReferenceVectors'/(name.replace('value-voice246','value-sampler246') if a.sampler else name.replace('value-voice246','value-dsynth246') if a.dsynth else name.replace('value-voice246','value-voltage246') if a.voltage else name.replace('value-voice246','value-dna246') if a.dna else name.replace('value-voice246','value-string246') if a.string else name.replace('value-voice246','value-fm246') if a.fm else name.replace('value-voice246','value-hybrid246') if a.hybrid else name)
         if a.record: fixture.write_bytes(path.read_bytes())
         if fixture.read_bytes() != path.read_bytes(): raise RuntimeError('Oracle differs: '+name)
         artifacts[fixture.name] = {'bytes':path.stat().st_size,'sha256':sha(path),'matches_committed_fixture':True}
     evidence = {'ldr_sha256':expected,'model':'GNU 13.1 BF524 with documented local D-register writeback patch; not hardware validation',
         'process':'0x019cfaf8 (synth instrument/first four ENV parameters only)','note_reset':'0x019cfd5a','range_helper':'0x01a1dfec / 0x019f69b0','range_initializer':'0x01a1e914',
-        'instrument_types':[12] if a.dsynth else [13] if a.voltage else [11] if a.dna else [3] if a.string else [0] if a.fm else [2,4] if a.hybrid else [1,7],('drwave_ranges' if a.hybrid else 'digital_ranges'):'0x01de5b50' if a.dna else '0x01de5950' if a.string else '0x01de5890' if a.fm else '0x01de5910' if a.hybrid else '0x01de58d0',('cluster_ranges' if a.hybrid else 'phase_ranges'):'0x01de5b50' if a.dna else '0x01de5950' if a.string else '0x01de5890' if a.fm else '0x01de5990' if a.hybrid else '0x01de5a50','envelope_ranges':'0x01de5710','tempo_float_multiply':'0x01aa55a0','tempo_float_to_integer':'0x01aa4dbc',
+        'instrument_types':[6] if a.sampler else [12] if a.dsynth else [13] if a.voltage else [11] if a.dna else [3] if a.string else [0] if a.fm else [2,4] if a.hybrid else [1,7],('drwave_ranges' if a.hybrid else 'digital_ranges'):'0x01de5b50' if a.dna else '0x01de5950' if a.string else '0x01de5890' if a.fm else '0x01de5910' if a.hybrid else '0x01de58d0',('cluster_ranges' if a.hybrid else 'phase_ranges'):'0x01de5b50' if a.dna else '0x01de5950' if a.string else '0x01de5890' if a.fm else '0x01de5990' if a.hybrid else '0x01de5a50','envelope_ranges':'0x01de5710','tempo_float_multiply':'0x01aa55a0','tempo_float_to_integer':'0x01aa4dbc',
         'tempo_constant_float32':1662149.125,'tempo_setter_calls':'0x01a5e850 / 0x01a5e908 / 0x01a5e972',
         'independent_cases':2048,'stream_cases':2048,'cases':blocks,'full_self_bytes':12,'full_display_bytes':32,'target_words':8,
         'artifacts':artifacts,'tools':{str(x):sha(x) for x in [a.assembler,a.linker,a.simulator]},'patch_sha256':sha(templates/'gnu-13.1-dreg-writeback.patch'),
         'limitations':['Instrument kinds 0 and ENV kind 1, selected synth families, first four coloured parameters only. Other types, auxiliary controls, play modes and drum destinations are not reconstructed.',
             'The integrated 64-sample / 44.1 kHz control clock is an assumption; isolated results do not establish complete instrument timing or acoustic fidelity.']}
+    if a.sampler:
+        evidence.pop('digital_ranges',None);evidence.pop('phase_ranges',None);evidence['sampler_ranges']='0x01de5a10'
+        evidence['model']='GNU 13.1 BF524 with all three documented writeback patches; not hardware validation'
+        evidence['patches']={name:sha(templates/name) for name in ['gnu-13.1-dreg-writeback.patch','gnu-13.1-halfword-writeback.patch','gnu-13.1-fp-load-writeback.patch']}
+        evidence['process']='0x019cfaf8 (sampler eight Instrument targets and first four ENV)'
+        evidence['input_scope']='2048 independent and 2048 retained-stream calls; alternating correlated regions/equalities/fractions and arbitrary signed target words'
+        evidence['limitations']=['Sampler type 6, Instrument colours 0..7 and first four common ADSR fields only. Full clock, allocator, mixer and acoustic fidelity not established.']
     if a.dsynth:
         evidence.pop('digital_ranges',None);evidence.pop('phase_ranges',None);evidence['dsynth_ranges']='0x01de5b90'
     if a.voltage:

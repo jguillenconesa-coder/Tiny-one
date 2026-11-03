@@ -18,7 +18,7 @@ struct ValueVoice246Control {
                                const std::array<int16_t,8192>& sine) noexcept {
         const auto index=reference::valueVoice246RangeIndex(type);
         if(!enabled||index<0){if(active)reset();return base;}
-        active=true;const bool extended=type==12&&!envelope&&Count==8;colour=std::clamp(colour,0,extended?7:3);
+        active=true;const bool extended=(type==12||type==6)&&!envelope&&Count==8;colour=std::clamp(colour,0,extended?7:3);
         const std::array<int16_t,8> controls{{int16_t(std::clamp(speed,0,16384)),int16_t(std::clamp(amount,-32767,32767)),
             int16_t((envelope?4096:0)|(free?2048:0)),int16_t(colour*(extended?2048:4096)),0,0,0,0}};
         if(pendingNote){state.noteOn(controls);pendingNote=false;}
@@ -31,6 +31,7 @@ struct ValueVoice246Control {
         position+=clockStep;
         auto result=base;
         const auto& r=reference::valueVoice246Ranges[size_t(index)][size_t(colour)];
+        if(type==6&&!envelope&&Count==8){std::array<int16_t,8> coupled{};std::copy(base.begin(),base.end(),coupled.begin());reference::sampler246Modulate(coupled,size_t(colour),modulation);std::copy_n(coupled.begin(),Count,result.begin());return result;}
         result[size_t(colour)]=envelope?reference::value246Adjust(base[size_t(colour)],modulation,reference::valueVoice246EnvelopeRanges[size_t(colour)]):reference::valueVoice246Adjust(base[size_t(colour)],modulation,r);
         return result;
     }

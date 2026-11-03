@@ -564,3 +564,18 @@ delimitar el dispatch de moduladores del sampler antes de habilitar destinos,
 y continuar dinámica/dispatch drum. Conservar el rastro L1 concreto y evitar
 presentar la referencia aislada al gain buffer como su productor recuperado.
 Calibración, voz/ruteo original, Pulse/L1, Live/arm64 y presets siguen pendientes.
+
+## Modulación del sampler (0.37.0)
+
+[Contrato y límites](sampler246-modulation.md): tipo 6 y ocho descriptores flag 2;
+Value/Random usan reglas acopladas de región, no el mapa de cuatro synth repetido.
+4096+4096 callbacks coincidentes, estados/displays/destinos/RNG/tempo/retornos y
+repetición idéntica. Integración de ocho destinos Value por banco, Random directo,
+ADSR y Tremolo con reloj/composición de voz propios. Sin nuevos IDs/presets.
+
+Siguiente bloque: helper drum `0x01a1e57c`, Random `0x019cedc0` y Value drum,
+con sus propias selecciones/tipos y oráculos antes de habilitar destinos. La
+vtable de Random drum y 4096 observaciones originales delimitan una ruta ejecutable,
+no un port contrastado ni un productor de dinámica. El gain stream y su referencia
+L1 siguen abiertos por separado; no etiquetar todo el dispatcher como cifrado.
+Voz/ruteo/clock original, Pulse/L1, acústica/Live/arm64 y presets completos pendientes.

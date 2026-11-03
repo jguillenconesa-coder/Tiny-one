@@ -1,0 +1,52 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "model": "GNU 13.1 BF524 with all three documented writeback patches; not hardware validation",
+  "process": "0x019cfaf8 (sampler eight Instrument targets and first four ENV)",
+  "note_reset": "0x019cfd5a",
+  "range_helper": "0x01a1dfec / 0x019f69b0",
+  "range_initializer": "0x01a1e914",
+  "instrument_types": [
+    6
+  ],
+  "envelope_ranges": "0x01de5710",
+  "tempo_float_multiply": "0x01aa55a0",
+  "tempo_float_to_integer": "0x01aa4dbc",
+  "tempo_constant_float32": 1662149.125,
+  "tempo_setter_calls": "0x01a5e850 / 0x01a5e908 / 0x01a5e972",
+  "independent_cases": 2048,
+  "stream_cases": 2048,
+  "cases": 4096,
+  "full_self_bytes": 12,
+  "full_display_bytes": 32,
+  "target_words": 8,
+  "artifacts": {
+    "value-sampler246-input.bin": {
+      "bytes": 393216,
+      "sha256": "9e41c8e4acfdaf3cbcb6d66942374b2b970159585fa23914e8e7bf87ae23c2f2",
+      "matches_committed_fixture": true
+    },
+    "value-sampler246-output.bin": {
+      "bytes": 278680,
+      "sha256": "d10153021260dc7f3f6830074dd24f7b29531780ba5a2bd1b2e9c688cef0523b",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "patch_sha256": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+  "limitations": [
+    "Sampler type 6, Instrument colours 0..7 and first four common ADSR fields only. Full clock, allocator, mixer and acoustic fidelity not established."
+  ],
+  "sampler_ranges": "0x01de5a10",
+  "patches": {
+    "gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3",
+    "gnu-13.1-fp-load-writeback.patch": "36b0445a829c635d201057903388085c43d8a74abb9c664e01cdda220b52dc58"
+  },
+  "input_scope": "2048 independent and 2048 retained-stream calls; alternating correlated regions/equalities/fractions and arbitrary signed target words",
+  "independent_repetition": "Recorded b, repeat, final and checked private runs yield identical fixture bytes",
+  "simulator_probes": "PASS: D-register, halfword and FP word-load source latching"
+}

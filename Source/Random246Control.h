@@ -25,8 +25,9 @@ struct Random246Control {
             position-=1;++ticks;
         }
         position+=clockStep;auto result=base;
-        const bool extended=type==12&&!envelope&&Count==8;
+        const bool extended=(type==12||type==6)&&!envelope&&Count==8;
         for(size_t i=0;i<(envelope?4u:8u);++i){const size_t target=extended?i:i%4;const auto mod=i<4||extended?modulation[i]:int16_t(reference::floorDivide(modulation[i],16));
+            if(type==6&&!envelope&&Count==8){std::array<int16_t,8> coupled{};std::copy(result.begin(),result.end(),coupled.begin());reference::sampler246Modulate(coupled,target,mod);std::copy_n(coupled.begin(),Count,result.begin());continue;}
             result[target]=envelope?reference::value246Adjust(result[target],mod,reference::valueVoice246EnvelopeRanges[target]):reference::valueVoice246Adjust(result[target],mod,reference::valueVoice246Ranges[size_t(index)][target]);
         }
         return result;

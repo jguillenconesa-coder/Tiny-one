@@ -1,0 +1,73 @@
+{
+  "version": "0.37.0",
+  "date": "2026-11-03",
+  "implementation_commit": "pending verified push",
+  "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 114,
+    "total": 114,
+    "elapsed_seconds": 107.46
+  },
+  "independent_suites": "5/5 passed, final source, 6.97 s",
+  "original_callbacks": {
+    "value": 4096,
+    "random": 4096,
+    "scope": "Sampler type 6 eight coupled Instrument targets and four ADSR targets, full state/display/eight destinations/return; Value tempo and Random RNG; independent/retained cases and correlated/signed stress",
+    "repetition": "identical fixture bytes in fresh private directories"
+  },
+  "evidence": {
+    "value": "../firmware/value-sampler246-validation.json",
+    "random": "../firmware/random-sampler246-validation.json"
+  },
+  "sanitizers": "success: ASan/UBSan original modulation fixtures and final adapter/performance tests; leak detection disabled for managed ptrace restrictions",
+  "realtime": {
+    "status": "success",
+    "sampler_workloads": 60,
+    "scope": "Two rates x three host buffers; six extra LFO/bank workloads with automation, existing sampler controls and MIDI/performance/bus FX",
+    "timing": "Shared-cloud diagnostic timings, not a dropout/deadline guarantee",
+    "workloads": 582,
+    "heap_calls": 0
+  },
+  "host_integration": "success: five LFO modes, all closed-editor proxy reads/writes, slots/clipboard/project with source audio, MIDI timestamp 37, exact 64/257 frame audio equality, audible on/off effect, modulated-release host tail, Tremolo voice-phase display",
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugin_package_ci": {
+    "status": "pending push"
+  },
+  "previous_ci": {
+    "version": "0.36.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644458033",
+    "status": "success on Linux, Windows, macOS universal; runtime Intel"
+  },
+  "drum_study": {
+    "callback": "0x019cedc0",
+    "vtable": "0x0191092c",
+    "factory": "0x019cf3d0",
+    "reset": "0x019cef66",
+    "helper": "0x01a1e57c",
+    "isolated_calls": 4096,
+    "return_counts": {
+      "0": 2109,
+      "1": 1987
+    },
+    "scope": "Original execution observations only, not a C++ comparison or original gain producer; no drum/D-box Value/Random enabled"
+  },
+  "estimated_progress": "Approximately 66% +/-10 planning points, not acoustic fidelity",
+  "limits": [
+    "Own control clock/RNG schedule, Reverse button mapping, allocator/events and reader/ADSR/Tremolo/output composition",
+    "Original drum modulation/helper and gain producer not reconstructed by sampler proof",
+    "Original full voice/routing/clock, Pulse/L1, acoustic validation, Ableton real, macOS arm64 runtime and full original presets pending"
+  ],
+  "visual": {
+    "status": "reviewed Value Instrument/Fine-Gain and ADSR, Random ADSR and Tremolo; snapshots for five modes",
+    "sha256": {
+      "sampler246-lfo-0.png": "5cfb73ab0ff20c0b38874949cccbd82388d81d1e3336fb029f33869c0d81c0c9",
+      "sampler246-lfo-2.png": "64edd6af199be271d0eeed23edb82015f8f965e83f81b5588bc11e498d71facb",
+      "sampler246-lfo-4.png": "c22f7b07cd8728acd7d9e6befcb5822522637f9ef580a1bc2811df27862b643e",
+      "sampler246-lfo-1.png": "f1730adaf73ca14fa5a7dcb14fa67a23f2a5f6a46d918ab3be8b01ed72a5a281",
+      "sampler246-lfo-3.png": "4dea3637e55ec969e741c6d8bb917e151912a05ac8c565edf5271a29efdce5c4"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "process": "0x019cea70",
+  "note_reset": "0x019ced74",
+  "factory": "0x019cf340",
+  "rng_address": "0xff802bc8",
+  "lcg_multiplier": 1664525,
+  "lcg_increment": 1013904223,
+  "range_initializer": "0x01a1e914",
+  "instrument_helper": "0x01a1dfec",
+  "envelope_helper": "0x019f69b0",
+  "cases": 4096,
+  "state_bytes": 44,
+  "target_words": 8,
+  "instrument_types": [
+    6
+  ],
+  "destinations": [
+    "Instrument eight sequential signals, coupled coarse/fine loop rules",
+    "ADSR first four signals"
+  ],
+  "independent_cases": 2048,
+  "retained_stream_cases": 2048,
+  "artifacts": {
+    "random-sampler246-input.bin": {
+      "bytes": 360448,
+      "sha256": "7dec909ff6b5f735acea672c99f18153292a4a71be4a36eb46358a69e9696aa0",
+      "matches_committed_fixture": true
+    },
+    "random-sampler246-output.bin": {
+      "bytes": 294912,
+      "sha256": "7f768aa0fc161544c7db14243db93c99f88abb234eec9fe31b3e4c777560bcba",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "model": "GNU 13.1 BF524 with all three documented writeback patches; not hardware validation",
+  "limitations": [
+    "Sampler type 6 synth callback only; no drum/FX routing or full instrument scheduling."
+  ],
+  "patches": {
+    "gnu-13.1-dreg-writeback.patch": "2c6ab7239ea1c0d61eec27df6337aa35da2c2dee179d1cf68b52ba6492fc6325",
+    "gnu-13.1-halfword-writeback.patch": "4d3cd3764d85bb4b3ff330358d8417a2928ad0e9daff755fe643477cdfde1cf3",
+    "gnu-13.1-fp-load-writeback.patch": "36b0445a829c635d201057903388085c43d8a74abb9c664e01cdda220b52dc58"
+  },
+  "input_scope": "2048 independent and 2048 retained-stream calls; alternating correlated regions/equalities/fractions and arbitrary signed target words",
+  "independent_repetition": "Recorded b, repeat, final and checked private runs yield identical fixture bytes",
+  "simulator_probes": "PASS: D-register, halfword and FP word-load source latching"
+}

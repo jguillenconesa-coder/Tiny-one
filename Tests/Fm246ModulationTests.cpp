@@ -8,11 +8,11 @@
 #include <stdexcept>
 #include <vector>
 static void check(bool ok,const char* why){if(!ok)throw std::runtime_error(why);}
-static std::vector<unsigned char> read(const std::filesystem::path& p){std::ifstream f(p,std::ios::binary);check(bool(f),"Missing FM modulation fixture");return {std::istreambuf_iterator<char>(f),{}};}
+static std::vector<unsigned char> read(const std::filesystem::path& p){std::ifstream f(p,std::ios::binary);check(bool(f),"Missing instrument modulation fixture");return {std::istreambuf_iterator<char>(f),{}};}
 static uint32_t word(const unsigned char* p){return uint32_t(p[0])|(uint32_t(p[1])<<8)|(uint32_t(p[2])<<16)|(uint32_t(p[3])<<24);}
 static int16_t half(const unsigned char* p){const unsigned x=p[0]|(unsigned(p[1])<<8);return int16_t(x<32768?int(x):int(x)-65536);}
 int main(int argc,char** argv){try{
-    check(argc==2||argc==3,"Provide fixture directory and optional string mode");const int type=argc==3?(std::string(argv[2])=="dsynth"?12:std::string(argv[2])=="voltage"?13:std::string(argv[2])=="dna"?11:3):0;const std::string family=type==12?"dsynth246":type==13?"voltage246":type==11?"dna246":type==3?"string246":"fm246";using namespace pocket::reference;const std::filesystem::path root(argv[1]);
+    check(argc==2||argc==3,"Provide fixture directory and optional instrument family");const int type=argc==3?(std::string(argv[2])=="sampler"?6:std::string(argv[2])=="dsynth"?12:std::string(argv[2])=="voltage"?13:std::string(argv[2])=="dna"?11:3):0;const std::string family=type==6?"sampler246":type==12?"dsynth246":type==13?"voltage246":type==11?"dna246":type==3?"string246":"fm246";using namespace pocket::reference;const std::filesystem::path root(argv[1]);
     const auto sineBytes=read(root/"verified-sine.bin");check(sineBytes.size()==16386,"Incomplete sine fixture");
     std::array<int16_t,8192> sine{};for(size_t i=0;i<8192;++i)sine[i]=half(sineBytes.data()+i*2);
     {
@@ -24,26 +24,26 @@ int main(int argc,char** argv){try{
         Value246State state;std::array<uint32_t,8> display{};
         for(size_t n=0;n<4096;++n){const auto* x=in.data()+n*96;const auto* y=out.data()+152+n*68;
             const auto action=word(x+88);if(action){std::memcpy(&state,x,12);std::memcpy(display.data(),x+12,32);}
-            check(word(x+84)==uint32_t(type),"Fixture is not FM");
+            check(word(x+84)==uint32_t(type),"Unexpected Value instrument type");
             std::array<int16_t,8> controls{},targets{};for(size_t i=0;i<8;++i){controls[i]=half(x+44+i*2);targets[i]=half(x+60+i*2);}
             if(action==2)state.noteOn(controls);
             const uint32_t result=valueVoice246Step(state,display,controls,word(x+76),int(word(x+80)),type,targets,sine)?1u:0u;
             float bpm;std::memcpy(&bpm,x+92,4);const uint32_t tempo=value246Tempo(bpm);
             std::array<unsigned char,68> actual{};std::memcpy(actual.data(),&state,12);std::memcpy(actual.data()+12,display.data(),32);std::memcpy(actual.data()+44,targets.data(),16);std::memcpy(actual.data()+60,&result,4);std::memcpy(actual.data()+64,&tempo,4);
-            if(std::memcmp(actual.data(),y,68)){std::cerr<<"Value FM case "<<n<<'\n';throw std::runtime_error("FM Value state/display/targets/return/tempo mismatch");}
+            if(std::memcmp(actual.data(),y,68)){std::cerr<<"Value "<<family<<" case "<<n<<'\n';throw std::runtime_error("FM Value state/display/targets/return/tempo mismatch");}
         }
     }
     {
         const auto in=read(root/("random-"+family+"-input.bin")),out=read(root/("random-"+family+"-output.bin"));
         check(in.size()==4096*88&&out.size()==4096*72,"Wrong FM Random fixtures");
         Random246State state;uint32_t rng=0,meter=0;
-        for(size_t n=0;n<4096;++n){const auto* x=in.data()+n*88;const auto* y=out.data()+n*72;const auto meta=word(x+84);check((meta>>16)==uint32_t(type),"Random fixture is not FM");
+        for(size_t n=0;n<4096;++n){const auto* x=in.data()+n*88;const auto* y=out.data()+n*72;const auto meta=word(x+84);check((meta>>16)==uint32_t(type),"Unexpected Random instrument type");
             if(meta&255){std::memcpy(&state,x,44);rng=word(x+44);meter=word(x+48);}
             std::array<int16_t,8> controls{},targets{};for(size_t i=0;i<8;++i){controls[i]=half(x+52+i*2);targets[i]=half(x+68+i*2);}
             if((meta&255)==2)state.noteOn(controls[3]);
             const uint32_t result=random246VoiceStep(state,rng,meter,controls,int((meta>>8)&255),type,targets)?1u:0u;
             std::array<unsigned char,72> actual{};std::memcpy(actual.data(),&state,44);std::memcpy(actual.data()+44,&rng,4);std::memcpy(actual.data()+48,&meter,4);std::memcpy(actual.data()+52,targets.data(),16);std::memcpy(actual.data()+68,&result,4);
-            if(std::memcmp(actual.data(),y,72)){std::cerr<<"Random FM case "<<n<<'\n';throw std::runtime_error("FM Random state/RNG/meter/targets/return mismatch");}
+            if(std::memcmp(actual.data(),y,72)){std::cerr<<"Random "<<family<<" case "<<n<<'\n';throw std::runtime_error("FM Random state/RNG/meter/targets/return mismatch");}
         }
     }
     std::cout<<"PASS: native instrument original ranges, 4096 Value and 4096 Random Instrument/ADSR callbacks, full state/display/RNG/targets/returns\n";

@@ -609,3 +609,14 @@ loading/clock, loop permission gate, dither seed/cadence, event/velocity/allocat
 policy, portamento and output adaptation remain authored. Unit conversion,
 parameter banks, waveform markers, host routing and session/UI integration are
 our implementation. Original reader fixtures remain unchanged as a regression.
+
+## Sampler modulation (0.37.0)
+
+Independently authored sampler region arithmetic and host integration are checked
+against 4096 Value and 4096 Random rev246 callback observations, including coupled
+coarse/fine boundaries, signed stress and all state/display/target/RNG/tempo outputs.
+GNU BF524 uses the three documented writeback patches. Fixtures contain synthetic
+inputs/numerical observations only. Control clock, Reverse button mapping, RNG
+schedule, voice/Tremolo composition and output are authored policies, not recovered
+full instrument routing. No original instructions, firmware, factory sounds or
+private disassembly are distributed. [Scope](docs/sampler246-modulation.md).
