@@ -1,0 +1,65 @@
+{
+  "version": "0.38.0",
+  "date": "2026-11-03",
+  "implementation_commit": "pending verified push",
+  "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 117,
+    "total": 117,
+    "elapsed_seconds": 120.94
+  },
+  "independent_suites": "5/5 passed, 9.13 s",
+  "original_callbacks": {
+    "count": 16384,
+    "types": [
+      8,
+      9
+    ],
+    "scope": "4096 Value and 4096 Random calls per type; full state/display/RNG/eight targets/return/tempo, range descriptors, accepted/rejected Instrument/ENV and kind cases",
+    "repetition": "identical numerical fixtures in two new private directories",
+    "evidence": "../firmware/drum-modulation246-validation.json"
+  },
+  "sanitizers": "success: ASan/UBSan both original callback corpora/types and full held/audio adapter; leak detection disabled due to managed ptrace restrictions",
+  "realtime": {
+    "status": "success",
+    "extra_drum_dbox_lfo_workloads": 48,
+    "scope": "Eight new cases x two rates x three buffers; eight controls/banks/Value/Random/ENV rejection, pad automation, events and bus FX",
+    "workloads": 630,
+    "heap_calls": 0,
+    "timing": "Shared-cloud diagnostic timings, not deadline/dropout certification"
+  },
+  "host_integration": "success: ten engine/LFO/bank/ENV cases, closed-editor proxies, projects with audio, slots/clipboard, exact 64/257 frame audio invariance, timestamp 37, original rejection and conservative host tail",
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugin_package_ci": {
+    "status": "pending push"
+  },
+  "previous_ci": {
+    "version": "0.37.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942691",
+    "status": "success on Linux/Windows/macOS universal; runtime Intel"
+  },
+  "estimated_progress": "Approximately 67% +/-10 planning points, not acoustic fidelity",
+  "limits": [
+    "Gain producer remains unreconstructed; region dynamics retained as authored",
+    "Pitch/normalized-region/mode/direction conversions, clock, allocator/events/RNG ordering and output are authored",
+    "Original shared 12-second drum source, voice/routing/scheduler, other modulators, Pulse/L1, acoustic/Live/arm64 and full original presets pending"
+  ],
+  "visual": {
+    "status": "reviewed representative views for both engines, bank I/II and rejected Value/Random ADSR; final button contrast and plugin smoke rechecked after full suite, DSP unchanged",
+    "sha256": {
+      "drum-lfo-8-4.png": "a11b7971ffcdbaf05efe8b57cf6a7b2d30dcaf179e4bdc5ccb89bb1d704471e0",
+      "drum-lfo-9-3.png": "1e5a2394145f51c09bb544112aca57a53eac5d4978b01a8296a0dfc7274f39b0",
+      "drum-lfo-8-1.png": "3d1636d5f061168680afbc50961b557fdab338bddd07d15b364f2167ad6f03cb",
+      "drum-lfo-8-2.png": "fa61e18e19bb49d25426b133a4c43ef9f6b90c5c0f387d3a85d1492a7ed54909",
+      "drum-lfo-9-0.png": "17027234398aadfb7d16b435f5f3732b2836477631a4bdf52302b8b4a6a3c74f",
+      "drum-lfo-9-4.png": "67892b73e12d2535f5611d6518a7a06b1218979f43e8a2f3c47ee8568d8ace6f",
+      "drum-lfo-8-3.png": "ac23be550965a76d385bc8e9ea88b0a4c28a69b3e6a5317e36d79d34eec5874a",
+      "drum-lfo-9-1.png": "72ef09f5caade07262d8aa7d8225f33ad91a93e98bf066570608fa3038958ab8",
+      "drum-lfo-8-0.png": "d59f9a001ed8b65e97e6d34d0bfad4e34f0e20fb33573bcbdd9f71ff61056c81",
+      "drum-lfo-9-2.png": "8487a2055d5fd672a70a8846c957d2c6a5e499c5860ce96a96298d0bf70c0534"
+    }
+  }
+}

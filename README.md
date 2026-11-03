@@ -1,8 +1,8 @@
-# Pocket One 0.37.0
+# Pocket One 0.38.0
 
-Modulación del sampler: **Value de ocho destinos, Random y ADSR** con reglas
-coarse/fine contrastadas, más Tremolo y estado/mandos integrados. Reloj/voz propios.
-[Alcance](docs/sampler246-modulation.md) · [validación](docs/releases/v0.37.0-validation.json).
+Batería y D-box: **Value/Random de ocho destinos**, bancos y estado/mandos/UI.
+16.384 callbacks contrastados; ADSR rechazado. Dinámica, afinación y reloj propios.
+[Alcance](docs/drum246-modulation.md) · [validación](docs/releases/v0.38.0-validation.json).
 
 **Sampler melódico 246**: lector FIR reconstruido de seis voces, reverse y loop.
 Reloj y composición de voz propios; ADSR 246 opcional; [alcance](docs/sampler246-hybrid.md) · [validación](docs/releases/v0.35.0-validation.json).
@@ -30,7 +30,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.37.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.38.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

@@ -85,3 +85,13 @@ está medida**. Siguen pendientes el llamador/ruteo original, modulación espec�
 de batería, sampler/envolvente dinámica original, Ableton Live real, ejecución
 macOS arm64 y los presets completos. No se necesita otra captura privada para
 reproducir este bloque con los materiales ya disponibles.
+
+## Modulación en 0.38.0
+
+[Value/Random drum](drum246-modulation.md) añade ocho destinos por golpe,
+dos bancos Value, Random directo y persistencia/mandos/UI. Ambos callbacks y sus
+descriptores están contrastados para tipo 9; ADSR se rechaza. Los estados de LFO,
+clock, orden RNG, afinación y salida se integran con políticas propias. El pitch
+modulado puede usar la parte negativa del descriptor, con afinación logarítmica
+propia. El tail de Instrument no nulo es conservadoramente infinito. No equivale
+a recuperar el ruteo completo del aparato ni sus presets/acústica.

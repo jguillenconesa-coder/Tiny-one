@@ -1,8 +1,8 @@
-# Pocket One 0.37.0
+# Pocket One 0.38.0
 
-Sampler modulation: **eight-target Value, Random and ADSR** with verified coupled
-coarse/fine rules, plus Tremolo and integrated state/control routing. Own clock/voice.
-[Scope](docs/sampler246-modulation.md) · [validation](docs/releases/v0.37.0-validation.json).
+Drum and D-box: **eight-target Value/Random**, banks, state, control routing and UI.
+16,384 verified callback cases; ADSR rejected. Own dynamics, tuning and clock.
+[Scope](docs/drum246-modulation.md) · [validation](docs/releases/v0.38.0-validation.json).
 
 **Melodic sampler 246**: reconstructed six-voice FIR reader, reverse and loops.
 Clock and voice composition remain authored; optional ADSR 246; [scope](docs/sampler246-hybrid.md) · [validation](docs/releases/v0.35.0-validation.json).

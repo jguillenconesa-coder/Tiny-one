@@ -95,6 +95,15 @@ convertido cuando está activa la opción, y el audio completo en el lector ante
 La coincidencia numérica del callback está condicionada a PCM, padding, pitch,
 ganancia y eventos suministrados. **La fidelidad acústica del instrumento completo
 no está medida**. Quedan la envolvente dinámica original, el productor de pitch,
-ruteo/cadencia y modulación drum, fuente compartida original, sampler synth,
+ruteo/cadencia, fuente compartida original,
 Pulse/L1, validación en Ableton Live real y ejecución macOS arm64. Presets completos
 al final. Los materiales disponibles bastan para reproducir esta entrega.
+
+## Modulación en 0.38.0
+
+[Value/Random drum](drum246-modulation.md) integra ocho destinos por golpe,
+reglas coarse/fine propias de este helper, dos bancos Value y estado/mandos/UI.
+Los callbacks originales rechazan ADSR; la dinámica propia anterior se conserva.
+El mapa del host a pitch/modos/dirección y su reloj/asignación siguen propios.
+Se reporta tail infinito con modulación Instrument no nula, porque los límites,
+dirección y modo pueden variar después del release. No prueba fidelidad acústica.

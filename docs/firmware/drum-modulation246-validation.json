@@ -1,0 +1,85 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "model": "GNU 13.1 BF524 with three verified writeback patches, not hardware",
+  "callbacks": {
+    "value": "0x019cfdac",
+    "value_reset": "0x019cff16",
+    "random": "0x019cedc0",
+    "random_reset": "0x019cef66",
+    "helper": "0x01a1e57c"
+  },
+  "types": [
+    8,
+    9
+  ],
+  "calls_per_callback_and_type": 4096,
+  "total_calls": 16384,
+  "counts": {
+    "value-drum8-246": {
+      "accepted": 2048,
+      "rejected": 2048
+    },
+    "value-drum9-246": {
+      "accepted": 2048,
+      "rejected": 2048
+    },
+    "random-drum8-246": {
+      "accepted": 1987,
+      "rejected": 2109
+    },
+    "random-drum9-246": {
+      "accepted": 1987,
+      "rejected": 2109
+    }
+  },
+  "range_prefix": [
+    "0x01de5a90",
+    "0x01de5ad0"
+  ],
+  "artifacts": {
+    "value-drum8-246-input.bin": {
+      "bytes": 393216,
+      "sha256": "e5d88afb313b6282d8e89432992e1a22f371f4d4a0206a1165c668c3887cf246"
+    },
+    "value-drum8-246-output.bin": {
+      "bytes": 278680,
+      "sha256": "7279b4d49a5928b253267f6b488cf10238206ac6cc4c80eac0eb590e63f3220e"
+    },
+    "value-drum9-246-input.bin": {
+      "bytes": 393216,
+      "sha256": "48e7dcbd420ec3f5dedcdef4892ecf8d2fa6d92f9d20920e61df09936e3895d7"
+    },
+    "value-drum9-246-output.bin": {
+      "bytes": 278680,
+      "sha256": "0c9327434b9f37298e50e22e47a7bf67188b33fdd033435201aca13763bc8277"
+    },
+    "random-drum8-246-input.bin": {
+      "bytes": 360448,
+      "sha256": "2e74286e2c2d95a01cf1474c7defe4090c93a33a80e668fdb67ba8669a615a2d"
+    },
+    "random-drum8-246-output.bin": {
+      "bytes": 294912,
+      "sha256": "91117e06ba7cb8c3c401952aa633ff0317af73b96592cabadbd0fc0223d0d1b4"
+    },
+    "random-drum9-246-input.bin": {
+      "bytes": 360448,
+      "sha256": "ddfd8f985ff9d478fd713b7aa38cea310f5f59f09a39b15f0290fbf7ec6412e5"
+    },
+    "random-drum9-246-output.bin": {
+      "bytes": 294912,
+      "sha256": "6791b1b3ede4b39c002b3b803b326ecbc1fc95514ae74f03de2d382055046416"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Isolated drum dispatch under supplied globals, target words, clock and state.",
+    "No original gain producer, scheduler, PCM source mapping, complete voice or acoustic fidelity claim."
+  ],
+  "cpp_comparison": "PASS: all 16384 callback records, complete states, displays, RNG, targets, return and Value tempo; both descriptor tables",
+  "independent_repetition": "Separate new private directories oracle-a and oracle-repeat produced identical fixture bytes",
+  "input_scope": "2048 independent and 2048 retained cases per callback/type; alternating correlated boundary/fraction cases and arbitrary signed words, Instrument/ENV and mismatched kinds"
+}

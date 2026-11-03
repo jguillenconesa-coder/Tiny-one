@@ -849,3 +849,17 @@ with 2048 independent and 2048 retained cases. Reproduce with the corresponding
 All inputs are synthetic; outputs are isolated numerical observations, not original
 instructions, firmware, presets or audio. GNU BF524 requires the three documented
 writeback patches; full instrument timing/acoustics remain unverified.
+
+## Drum / D-box Value and Random (0.38.0)
+
+`value-drum{8,9}-246-{input,output}.bin`: four files using the Value voice layout
+(4096 x 96 input bytes; 152-byte prefix plus 4096 x 68 output bytes). The first
+two 64-byte prefix tables are type 8 and type 9 ranges, followed by the common
+24-byte ADSR range dump; this does not imply accepted ADSR dispatch.
+`random-drum{8,9}-246-{input,output}.bin`: four files using Random voice records
+(4096 x 88 input bytes and 4096 x 72 output bytes). Drum callbacks ignore kind
+and accept Instrument only. Each corpus has 2048 independent and 2048 retained
+cases; alternating correlated boundaries/fractions and arbitrary signed words.
+Reproduce with `scripts/verify-drum-modulation246.py`; both type selectors are
+explicitly supplied in drum globals. Fixtures contain synthetic/numerical data,
+not firmware, instructions, original presets/audio or a private RAM capture.

@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 66 % del objetivo completo
+## Avance estimado: aproximadamente 67 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 93 % | 18,6 puntos |
-| Voz, modos de ejecución y ruteo original | 15 % | 32 % | 4,8 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 69 % | 10,35 puntos |
+| Efectos, envolventes y moduladores | 20 % | 95 % | 19 puntos |
+| Voz, modos de ejecución y ruteo original | 15 % | 34 % | 5,1 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 71 % | 10,65 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈66 %** (65,55 antes de redondear) |
+| Total | 100 % | | **≈67 %** (66,55 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: moduladores del sampler (0.37.0)
+## Entrega actual: Value y Random de batería (0.38.0)
+
+[Modulación drum/D-box](drum246-modulation.md): ocho destinos de Instrument por
+voz, dos bancos de Value, Random directo, estado/proyectos/slots/clipboard y proxies
+sin editor. **16384 callbacks originales** coinciden con todos los estados,
+displays, destinos, RNG, retornos y tempo; se repiten con fixtures idénticos.
+
+El destino ADSR de esta ruta **se rechaza** y se indica OFF. No se usa el ADSR
+común como sustituto de la dinámica drum. Helper propio contrastado de Start/End y
+fracciones, descriptores de ambos tipos y secuencia Random compartida como aritmética.
+Reloj, mapa de pitch/modos/dirección, asignación, cache, dinámica y salida propios.
+
+Linux: **117/117 suites**, cinco suites independientes, ASan/UBSan y **630 cargas
+sin heap rastreado** (48 nuevas de LFO drum/D-box). Estado/audio/proxies, 64/257
+frames y vistas revisados. CI nuevo pendiente del push:
+[evidencia](releases/v0.38.0-validation.json). El CI completo
+de 0.37.0 pasó las tres plataformas (macOS universal, runtime Intel). La carga de
+`0xff801d50` en L1 sigue sin un productor recuperado; el dispatch nuevo no lo genera.
+Continúan productores de pitch/ganancia, voz/ruteo/scheduler originales, fuente única
+drum de 12 s/24 regiones, moduladores pendientes, Pulse/L1, acústica/Live/arm64 y
+presets completos al final. Estimación **≈67 % ±10 de planificación**.
+
+## Entrega anterior: moduladores del sampler (0.37.0)
 
 [Value/Random/Tremolo en sampler](sampler246-modulation.md): ocho destinos de
 Instrument con reglas coarse/fine acopladas, ADSR, automatización, estado y proxies
@@ -54,7 +76,7 @@ ya contrastada; su composición con esta voz y el reloj/allocator siguen propios
 Linux: **114/114 suites**, cinco suites independientes, ASan/UBSan, **582 cargas
 sin heap rastreado** (60 sampler), estado/audio y cinco vistas revisados. Las cinco
 suites del sampler pasan en Linux, Windows/MSVC y macOS Intel; plugins/instaladores
-completos en curso: [evidencia](releases/v0.37.0-validation.json). No se reclama
+completos aprobados: [evidencia](releases/v0.37.0-validation.json). No se reclama
 fidelidad acústica. Random drum tiene callback/helper legibles y 4096 observaciones
 originales aisladas, aún sin port C++ contrastado: no se habilita ni se confunde
 con la dinámica. Siguen dispatch Value/Random drum/D-box, productor de ganancia,

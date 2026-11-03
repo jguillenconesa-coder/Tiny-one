@@ -620,3 +620,15 @@ inputs/numerical observations only. Control clock, Reverse button mapping, RNG
 schedule, voice/Tremolo composition and output are authored policies, not recovered
 full instrument routing. No original instructions, firmware, factory sounds or
 private disassembly are distributed. [Scope](docs/sampler246-modulation.md).
+
+## Drum / D-box modulation (0.38.0)
+
+Independently authored drum region arithmetic, separate Value/Random dispatch and
+host integration are checked against 16384 isolated rev246 callback observations
+for types 8/9, including full states, displays, RNG, destinations, returns, tempo
+and both initialized descriptors. GNU BF524 uses all three documented writeback
+fixes, checked by probes. Only synthetic inputs/numerical observations are recorded.
+The original gain producer is not reconstructed; authored dynamics/tuning/clock,
+allocator/events/RNG order, PCM mapping and output remain explicit adaptations.
+No firmware, original instructions, factory patches/audio or private disassembly
+are redistributed. [Scope and reproduction](docs/drum246-modulation.md).

@@ -579,3 +579,19 @@ vtable de Random drum y 4096 observaciones originales delimitan una ruta ejecuta
 no un port contrastado ni un productor de dinámica. El gain stream y su referencia
 L1 siguen abiertos por separado; no etiquetar todo el dispatcher como cifrado.
 Voz/ruteo/clock original, Pulse/L1, acústica/Live/arm64 y presets completos pendientes.
+
+## Value / Random de batería (0.38.0)
+
+[Contrato y adaptación](drum246-modulation.md): Value `0x019cfdac`, Random
+`0x019cedc0` y helper `0x01a1e57c` contrastados para tipos 8/9 en 16384 llamadas,
+con estado/display/RNG/destinos/retornos/tempo y descriptores completos; repetición
+idéntica. Se integran ocho destinos por golpe, bancos de Value, Random, proxies,
+estado y UI de drum y D-box. El destino ADSR es rechazado por el callback; no se
+conecta el ADSR común a la dinámica. La secuencia Random comparte aritmética,
+con dispatch de synth y drum separados.
+
+El contorno de ganancia drum sigue propio. La referencia L1 a `0xff801d50` no es
+su productor recuperado; estas rutas solo ajustan palabras de Instrument. Próximo
+frente: productores originales de pitch/ganancia, ruteo/eventos y moduladores
+Element/MIDI/Bend/Crank según la matriz, sin inferir ejecución de bytes protegidos.
+Fuente drum compartida, calibración, Live/arm64, Pulse/L1 y presets finales pendientes.

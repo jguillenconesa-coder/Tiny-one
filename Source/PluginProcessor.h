@@ -65,12 +65,13 @@ public:
     bool random246Enabled() const {return phaseAudio[61]->load()>.5f&&valueVoice246Available();}
     bool tremolo246Enabled() const {return !random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
     bool value246Enabled() const {return !random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
-    bool valueVoice246Available() const {return sampler246Enabled()||dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
+    bool valueVoice246Available() const {return drum246Enabled()||dbox246Enabled()||sampler246Enabled()||dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
     bool valueVoice246Enabled() const {return !random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
     bool sampler246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==3&&samplerAudio[0]->load()>.5f;}
+    bool drum246LfoSecondary() const {return drumLfoBankAudio->load()>.5f;}
     bool sampler246Secondary() const {return samplerAudio[2]->load()>.5f;}
     bool sampler246EnvelopeEnabled() const {return sampler246Enabled()&&samplerAudio[3]->load()>.5f;}
     std::array<int16_t,8> sampler246ControlValues() const {std::array<int16_t,8> c{};for(size_t i=0;i<8;++i)c[i]=int16_t(i==4?8192+samplerAudio[4+i]->load()*16384:samplerAudio[4+i]->load());return c;}
@@ -146,7 +147,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
-    std::array<std::atomic<float>*,16> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
+    std::atomic<float>* drumLfoBankAudio=nullptr;std::array<std::atomic<float>*,16> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
     std::array<std::array<std::atomic<float>*,8>,24> dboxAudio{};std::atomic<float>* dboxPadSelection=nullptr;
     std::array<std::atomic<float>*,146> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;
