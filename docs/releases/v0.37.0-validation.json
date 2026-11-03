@@ -1,7 +1,7 @@
 {
   "version": "0.37.0",
   "date": "2026-11-03",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "e6da88f49b0a92e3f3c4253c5ebe9907a28370d6",
   "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -31,10 +31,15 @@
   },
   "host_integration": "success: five LFO modes, all closed-editor proxy reads/writes, slots/clipboard/project with source audio, MIDI timestamp 37, exact 64/257 frame audio equality, audible on/off effect, modulated-release host tail, Tremolo voice-phase display",
   "native_ci": {
-    "status": "pending push"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942697",
+    "scope": "Five suites on Linux, Windows/MSVC and macOS Intel",
+    "tests": "5/5 on each platform"
   },
   "plugin_package_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942691",
+    "scope": "Full Standalone/VST3 and installers on Linux, Windows and macOS universal (runtime Intel)"
   },
   "previous_ci": {
     "version": "0.36.0",
@@ -68,6 +73,36 @@
       "sampler246-lfo-4.png": "c22f7b07cd8728acd7d9e6befcb5822522637f9ef580a1bc2811df27862b643e",
       "sampler246-lfo-1.png": "f1730adaf73ca14fa5a7dcb14fa67a23f2a5f6a46d918ab3be8b01ed72a5a281",
       "sampler246-lfo-3.png": "4dea3637e55ec969e741c6d8bb917e151912a05ac8c565edf5271a29efdce5c4"
+    }
+  },
+  "regression_ci": {
+    "drum": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942225"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942157"
+    },
+    "string": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942241"
+    },
+    "voltage": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942173"
+    },
+    "fm": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942366"
+    },
+    "dsynth": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942463"
+    },
+    "dna": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942353"
     }
   }
 }

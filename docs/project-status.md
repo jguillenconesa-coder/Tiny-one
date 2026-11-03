@@ -52,8 +52,9 @@ igualdades y palabras con signo. Repetición idéntica. Tremolo reutiliza aritm�
 ya contrastada; su composición con esta voz y el reloj/allocator siguen propios.
 
 Linux: **114/114 suites**, cinco suites independientes, ASan/UBSan, **582 cargas
-sin heap rastreado** (60 sampler), estado/audio y cinco vistas revisados. CI nativo
-pendiente del push: [evidencia](releases/v0.37.0-validation.json). No se reclama
+sin heap rastreado** (60 sampler), estado/audio y cinco vistas revisados. Las cinco
+suites del sampler pasan en Linux, Windows/MSVC y macOS Intel; plugins/instaladores
+completos en curso: [evidencia](releases/v0.37.0-validation.json). No se reclama
 fidelidad acústica. Random drum tiene callback/helper legibles y 4096 observaciones
 originales aisladas, aún sin port C++ contrastado: no se habilita ni se confunde
 con la dinámica. Siguen dispatch Value/Random drum/D-box, productor de ganancia,
