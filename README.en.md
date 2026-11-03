@@ -1,4 +1,9 @@
-# Pocket One 0.38.0
+# Pocket One 0.39.0
+
+**MIDI LFO**: four incoming CC streams targeting Instrument, ADSR and FX, with
+automation, persistence and contextual encoders. 6,144 original callback cases
+verified under supplied inputs; authored receiver and host timing.
+[Scope](docs/midi246-hybrid.md) · [validation](docs/releases/v0.39.0-validation.json).
 
 Drum and D-box: **eight-target Value/Random**, banks, state, control routing and UI.
 16,384 verified callback cases; ADSR rejected. Own dynamics, tuning and clock.

@@ -1,0 +1,33 @@
+name: Validate MIDI LFO callbacks and host adapter
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/midi-modulation/**'
+      - 'research/blackfin/midi-*'
+      - 'Source/Midi246*.h'
+      - 'Source/Drum246Modulation*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Sampler246Modulation.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Engine.h'
+      - 'Tests/Midi246*.cpp'
+      - 'Tests/RunMidi246Tests.py'
+      - 'Tests/ReferenceVectors/midi246-*'
+      - 'scripts/verify-midi246.py'
+      - '.github/workflows/midi246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/midi-modulation -B build-midi -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-midi --config Release --parallel 2
+      - run: ctest --test-dir build-midi -C Release --output-on-failure

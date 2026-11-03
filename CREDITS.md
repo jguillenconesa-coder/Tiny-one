@@ -632,3 +632,22 @@ The original gain producer is not reconstructed; authored dynamics/tuning/clock,
 allocator/events/RNG order, PCM mapping and output remain explicit adaptations.
 No firmware, original instructions, factory patches/audio or private disassembly
 are redistributed. [Scope and reproduction](docs/drum246-modulation.md).
+
+
+## MIDI LFO 246 (0.39.0)
+
+`Source/Midi246.h` is an independently written reconstruction of the readable
+rev246 synth/drum/FX MIDI modulation dispatch, tested against numerical execution
+observations. The supplied inputs, complete affected/unchanged buffers and return
+values match for 6,144 isolated callback cases. The previously tested range and
+coupled-region arithmetic is reused. No physical MIDI receiver, protected memory,
+original scheduler, complete voice or acoustic equivalence is claimed.
+
+`research/blackfin/midi-lfo-stream.s.in` is our test harness. The compressed
+fixtures contain synthetic inputs and numerical observations only, not firmware
+or disassembled code. Private binaries remain outside the repository. The host
+route choices, fixed CC1–4 mapping, merged channels, event latch, UI, persistence
+and audio integration are authored adaptations. Gain/pitch/FX audio modification
+is verified only with supplied buffers and remains outside the exposed adapter;
+FX kind 4 and auxiliary ADSR selectors are excluded. See
+[scope](docs/midi246-hybrid.md) and [evidence](docs/firmware/midi246-validation.json).

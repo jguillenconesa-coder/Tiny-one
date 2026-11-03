@@ -23,6 +23,7 @@ on:
       - 'Source/Sampler246*.h'
       - 'Source/SampleData.h'
       - 'Source/Engine.h'
+      - 'Source/Midi246*.h'
       - 'Source/Drum246*.h'
       - 'Source/Phase246.h'
       - 'Source/ReferenceDsp.h'

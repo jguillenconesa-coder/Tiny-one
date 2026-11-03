@@ -1,4 +1,9 @@
-# Pocket One 0.38.0
+# Pocket One 0.39.0
+
+**MIDI LFO**: cuatro CC hacia Instrument, ADSR y FX, con destinos automatizables,
+estado y mandos contextuales. 6.144 callbacks originales contrastados bajo entradas
+suministradas; receptor y reloj del host propios. [Alcance](docs/midi246-hybrid.md) ·
+[validación](docs/releases/v0.39.0-validation.json).
 
 Batería y D-box: **Value/Random de ocho destinos**, bancos y estado/mandos/UI.
 16.384 callbacks contrastados; ADSR rechazado. Dinámica, afinación y reloj propios.
@@ -30,7 +35,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.38.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.39.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

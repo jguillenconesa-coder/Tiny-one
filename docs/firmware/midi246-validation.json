@@ -1,0 +1,33 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "callbacks": {
+    "synth": "0x019cce68",
+    "drum": "0x019cd048",
+    "fx": "0x019cd104"
+  },
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 6144,
+  "calls_per_family": 2048,
+  "artifacts": {
+    "midi246-input.bin.gz": {
+      "bytes": 6612906,
+      "raw_bytes": 6733824,
+      "sha256": "ee479efba9a2b130554b6b0cf565dedafb72c72baeb948103c45e40f68341b06"
+    },
+    "midi246-output.bin.gz": {
+      "bytes": 6533582,
+      "raw_bytes": 6586368,
+      "sha256": "0db5b548153d3db35aa09194e35dc32218b1b16543d2a88881b8c8ce20c64b3d"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Supplied globals, controls, CC, targets, pitch, gain and FX audio; independent calls, not receiver or scheduler.",
+    "FX kinds 2/5 only; no kind-4 auxiliary envelope path.",
+    "No complete voice, protected gain producer or acoustic equivalence claim."
+  ]
+}

@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Value y Random de batería (0.38.0)
+## Entrega actual: MIDI LFO (0.39.0)
+
+[Contrato y límites](midi246-hybrid.md): cuatro CC entrantes y destinos independientes
+Instrument/ADSR/FX, automatización contextual, estado y OLED. **6.144 callbacks
+originales** contrastados, 2.048 por synth/drum/FX, con entradas y buffers explícitos.
+El receptor, asignación CC1–4, combinación de canales y scheduling por timestamp
+son propios. Las rutas de modificación gain/pitch/audio se contrastan en el núcleo,
+pero no se exponen todavía en la integración ni recuperan sus productores.
+
+**119/119 suites Linux**, ASan/UBSan, 678 cargas sin heap rastreado, estado,
+proxies sin editor, timestamps y los ocho FX aprobados; vista MIDI revisada.
+
+La estimación se mantiene en **≈67 % ±10**: se cierra una parte acotada de modulación,
+sin nueva medición acústica, recuperación de L1 ni validación Live. Véase la
+[evidencia de entrega](releases/v0.39.0-validation.json) para pruebas y CI actuales.
+El CI completo de 0.38.0 pasó en Linux, Windows/MSVC y macOS universal (runtime Intel),
+y también terminaron correctamente sus regresiones FM y D-synth.
+
+Sigue el estudio de productores/ruteo original y las entradas Element/Bend/Crank,
+fuente drum compartida, Pulse/L1, calibración con el material disponible, Ableton
+real, ejecución arm64 y presets originales al final.
+
+## Entrega anterior: Value y Random de batería (0.38.0)
 
 [Modulación drum/D-box](drum246-modulation.md): ocho destinos de Instrument por
 voz, dos bancos de Value, Random directo, estado/proyectos/slots/clipboard y proxies

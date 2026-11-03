@@ -595,3 +595,20 @@ su productor recuperado; estas rutas solo ajustan palabras de Instrument. Próxi
 frente: productores originales de pitch/ganancia, ruteo/eventos y moduladores
 Element/MIDI/Bend/Crank según la matriz, sin inferir ejecución de bytes protegidos.
 Fuente drum compartida, calibración, Live/arm64, Pulse/L1 y presets finales pendientes.
+
+
+## Bloque MIDI LFO — 0.39.0
+
+Se resolvió el dispatch tipo 5 de synth, drum y FX: **6.144 callbacks originales**
+con globals/entradas explícitas, comparación completa y repetición independiente.
+La [integración](midi246-hybrid.md) añade cuatro CC a Instrument/ADSR/FX; el receptor,
+combinación de canales y hold a timestamp son propios. El núcleo contrasta también
+modificaciones de buffers gain/pitch/audio, sin exponerlas aún como rutas de producto.
+El proceso no recupera sus productores. Drum rechaza ADSR. FX kind 4 queda fuera.
+
+Antes de ampliar las rutas de audio/pitch hay que integrar sus buffers y documentar
+su composición con envolvente, velocidad y bend; no llamar productor a una rutina
+que solo modifica datos suministrados. Element, Bend y Crank requieren estudiar
+primero sus entradas físicas. Bend es el accesorio manual del §15.8, no el MIDI
+pitch wheel. Continúan fuente drum compartida, ruteo original, Pulse/L1 y calibración;
+los presets originales completos siguen al final.

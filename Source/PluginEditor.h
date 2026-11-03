@@ -68,6 +68,7 @@ private:
     juce::ComboBox outputFx;
     void syncOutputFx();
     juce::TextButton value246{"VALUE 246 FX"},valueFree{"FREE PHASE"};
+    bool lastMidi246=false;juce::TextButton midi246{"MIDI LFO"};std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> midiAttachment;
     bool lastRandom246=false;juce::TextButton random246{"RANDOM 246"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> randomAttachment;
     bool lastTremolo246=false;

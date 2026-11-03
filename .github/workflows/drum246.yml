@@ -21,6 +21,7 @@ on:
       - 'scripts/verify-drum-modulation246.py'
       - 'Source/SampleData.h'
       - 'Source/Engine.h'
+      - 'Source/Midi246*.h'
       - 'Source/Phase246.h'
       - 'Source/ReferenceDsp.h'
       - 'Source/Envelope246*.h'

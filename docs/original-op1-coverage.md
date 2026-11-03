@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.38.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.39.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -98,7 +98,8 @@ las referencias candidatas del relevo están en L1 parcialmente cifrada.
 | Value LFO y destino parámetro/color | FX: 4.096 llamadas contrastadas. Voice: 8.192 llamadas instrument/primeros cuatro ADSR para Digital/Phase/Dr. Wave/Cluster; estado independiente por voz y wrap/clamp contrastados. [Integración híbrida](value-hybrid246-native.md). Sampler tipo 6: ocho destinos/reglas acopladas y ADSR, otros 4096 callbacks contrastados e integrados. Drum/D-box añaden 8192 callbacks Value de ocho destinos, ENV rechazado. Otros auxiliares pendientes; reloj/allocator propios. |
 | Tremolo | [Callback completo contrastado e integrado en Phase/Digital/Dr. Wave/Cluster](tremolo246-native.md): 2048 llamadas, 262144 muestras de amplitud y palabras de pitch, 28 bytes de estado / 32 de display, cinco formas, reset y 24 coeficientes. Clock, display por voz y ruteo propios; resto de motores y comparación con hardware pendientes. |
 | Random | [Callback synth reconstruido e integrado](random246-native.md) en Digital/Phase/Dr. Wave/Cluster: 4096 llamadas, self44/RNG/display/destinos completos, Instrument en dos pasadas y ADSR. Sampler tipo 6: ocho destinos directos con reglas acopladas y ADSR, otros 4096 callbacks contrastados e integrados. Drum/D-box añaden 8192 callbacks Random de ocho destinos, ENV rechazado. Reloj, seed y scheduling propios; FX y comparación con hardware pendientes. |
-| Element / MIDI / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Recibir notas/CC normales no implementa estos LFO. |
+| MIDI LFO | [0.39.0](midi246-hybrid.md): 6.144 callbacks synth/drum/FX con entradas explícitas contrastados; Instrument/primeros cuatro ADSR y cuatro parámetros por FX integrados. CC1–4 fijos, combinación de canales y reloj por timestamp propios. Rutas de gain/pitch/audio verificadas numéricamente sobre buffers suministrados, todavía sin conexión de producto. Kind-4 FX y receptor/IPC originales pendientes. |
+| Element / Bend / Crank | Pendientes algoritmos y ruteo originales. Las fuentes físicas necesitarán una integración definida para un plugin. Bend es el accesorio físico manual (§15.8), no el pitch wheel MIDI existente. |
 | Tremolo en batería | D-box y [sampler 246](drum246-native.md) reutilizan la aritmética mono contrastada con reloj/composición propios. No valida el dispatcher completo de batería ni convierte Value/Random synth en drum. |
 | Retrigger / free | Callbacks Value FX y synth/ENV contrastados; integración por voz conserva fase al reutilizar, pausa voces inactivas. Resto de LFO/rutas y allocator originales pendientes. |
 | Poly / mono / legato / unison / portamento | [Mono/Legato y glide propios para Dr. Wave/Cluster](hybrid-performance.md), con prioridad de última nota y sustain/bend por canal. No implementan los modos originales ni unison. Polifonía propia: seis voces Dr. Wave/Cluster, ocho en los demás motores. [Cadena original acotada de selectores 0–4](voice246-instrument-lifecycle.md): 3.072 eventos con voces libres/ocupadas, pitch explícito/lookup y arranque frío; consumidor L1, reloj e integración de esos modos pendientes. |

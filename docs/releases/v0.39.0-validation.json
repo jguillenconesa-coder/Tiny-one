@@ -1,0 +1,74 @@
+{
+  "version": "0.39.0",
+  "date": "2026-11-03",
+  "implementation_commit": "To be recorded with CI URLs after validated push",
+  "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 119,
+    "total": 119,
+    "first_pass": {
+      "passed": 118,
+      "failed": 1,
+      "elapsed_seconds": 84.0
+    },
+    "corrected_rerun": {
+      "suite": "realtime",
+      "passed": 1,
+      "elapsed_seconds": 58.0,
+      "reason": "Old D-box workload assertion matched all later negative case IDs; bounded the historical range and included the new D-box MIDI case. Test harness correction only."
+    }
+  },
+  "original_callbacks": {
+    "count": 6144,
+    "per_family": 2048,
+    "families": [
+      "synth",
+      "drum",
+      "FX"
+    ],
+    "scope": "Independent calls with supplied globals/CC/controls/targets/pitch/gain/FX audio; full self/CC/display/eight targets/128 pitch/128 gain/128 FX audio/returns. FX modifies first 64 audio halfwords only. ADSR first four colours; FX kinds 2/5.",
+    "repetition": "Identical observations in fresh private oracle-d and oracle-repeat directories",
+    "evidence": "../firmware/midi246-validation.json"
+  },
+  "native_suites": {
+    "status": "success locally, 2/2 without JUCE/firmware",
+    "elapsed_seconds": 11.81,
+    "audio_cases": 252,
+    "scope": "Twelve native profiles x three destinations x seven rates, exact 64/257 buffer partition, rejected drum ENV and panic; eight FX parameter adapters"
+  },
+  "sanitizers": "success: ASan/UBSan numerical callback comparison and complete audio adapter; detect_leaks=0 due managed ptrace restrictions",
+  "host_integration": "success: timestamp 1537 before/after audio and exact 64/257 buffers, all eight FX audible and buffer-invariant, four CC channels merged, closed-editor proxies, projects, slots/clipboard, unavailable targets, preset reset, CC panic, conservative release tail",
+  "realtime": {
+    "status": "success",
+    "workloads": 678,
+    "new_midi_workloads": 48,
+    "heap_calls": 0,
+    "timing": "Shared cloud, diagnostic only; no dropout/deadline certification"
+  },
+  "visual": {
+    "status": "reviewed MIDI LFO view, four CC values/destinations, selector layout and active-button contrast",
+    "sha256": {
+      "midi246-native.png": "823fb2ba6c2a5378fc3ddace71867f5c3660c170efd5a6216b992425359c9f9d"
+    }
+  },
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugin_package_ci": {
+    "status": "pending push"
+  },
+  "previous_plugin_ci": {
+    "version": "0.38.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41697540881",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "Approximately 67% +/-10 planning points, unchanged; not acoustic fidelity",
+  "limits": [
+    "Fixed CC1\u20134 mapping, merged channels, event latch, routing choices and composition are authored.",
+    "Gain/pitch/FX-audio stream modifiers verified only with supplied buffers and not exposed in the product adapter. They do not recover original producers, protected L1 or OTP.",
+    "FX kind-4 auxiliary ENV, auxiliary ADSR colours, original MIDI receiver/scheduler and complete voice/routing remain outside scope.",
+    "Element/Bend/Crank physical sources, shared drum source, Pulse/L1, acoustic calibration, real Ableton Live, native arm64 execution and complete original presets remain pending.",
+    "No release/tag or cloud environment configuration change."
+  ]
+}

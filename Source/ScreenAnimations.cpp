@@ -39,6 +39,9 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(auto point:{juce::Point<float>{a,top},{d,sustain},{s,sustain}})dot(g,point.x,point.y,2);
         float x=f.stage==1?12+f.envelope*(a-12):f.stage==2?a+(1-f.envelope)/std::max(.001f,1-f.sustain)*(d-a):f.stage==4?s+(1-f.envelope/std::max(.001f,f.sustain))*(end-s):s;
         g.setColour(colors[3]);if(f.voices>0)dot(g,std::clamp(x,12.f,end),y-f.envelope*56,3.2f);
+    } else if(f.page==2&&f.midi246) {
+        label(g,"MIDI LFO / CC 1-4",{15,25,220,12},9,colors[0]);
+        for(size_t i=0;i<4;++i){const float x=29.f+float(i)*56.f,y=75.f-f.midiCC[i]*.3f;g.setColour(colors[i]);g.drawLine(x,75.f,x,y,12.f);label(g,juce::String(int(f.midiCC[i])),{int(x)-15,83,30,12},9,colors[i]);}
     } else if(f.page==2&&f.random246) {
         label(g,juce::String("RANDOM 246 / ")+(f.randomEnvelope?((f.engine==11||f.drum246)?"OFF / ADSR":"ADSR"):"INSTRUMENT"),{15,25,220,12},9,colors[0]);
         for(size_t i=0;i<4;++i){const float x=29.f+float(i)*56.f,y=61.f-std::clamp(f.random[i],-1.f,1.f)*20.f;g.setColour(colors[i]);g.drawLine(x,61.f,x,y,12.f);g.drawHorizontalLine(61,int(x-10),int(x+10));}
@@ -138,6 +141,7 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
     for(int i=0;i<4;++i){label(g,f.sampler246&&f.page==0?(f.samplerSecondary?juce::StringArray{"DIR","IN","OUT","GAIN"}:juce::StringArray{"START","IN","OUT","END"})[i]:f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);juce::String value;
         if(f.sampler246&&f.page==0){if(!f.samplerSecondary)value=juce::String(sampler246Seconds(f.samplerControls[size_t(i)])*1000,2)+" ms";else if(i==0)value=f.samplerControls[4]?"REV":"FWD";else if(i<3)value=juce::String(sampler246Seconds(0,f.samplerControls[size_t(i)+4])*1000000,2)+" us";else value=juce::String(std::pow(f.samplerControls[7]/16384.,2)*100,1)+" %";}
+        else if(f.page==2&&f.midi246)value=f.midiTargets[size_t(i)];
         else value=juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||((f.page==1&&f.drum246)||(f.page==0&&f.drum246&&i==3)||(f.page<2&&f.engine==11)||(f.page==0&&(f.engine==0||f.engine==2||f.engine==8||f.engine==9||f.engine==10||f.cluster246||f.drWave246||f.phase246||f.digital246)))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2);label(g,value,{10+i*59,111,58,11},9,colors[size_t(i)]);}
 
 }
