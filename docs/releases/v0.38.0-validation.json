@@ -9,7 +9,7 @@
     "total": 117,
     "elapsed_seconds": 120.94
   },
-  "independent_suites": "5/5 passed, 9.13 s",
+  "independent_suites": "5/5 passed after verifier include fix, 5.16 s",
   "original_callbacks": {
     "count": 16384,
     "types": [
@@ -31,15 +31,18 @@
   },
   "host_integration": "success: ten engine/LFO/bank/ENV cases, closed-editor proxies, projects with audio, slots/clipboard, exact 64/257 frame audio invariance, timestamp 37, original rejection and conservative host tail",
   "native_ci": {
-    "status": "Linux/macOS Intel passed; MSVC verifier include failure corrected, new CI pending push",
-    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404240",
+    "status": "success on Linux, Windows/MSVC and macOS Intel after explicit verifier include fix",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41697540805",
     "scope": "Five suites: original reader, adapter, type-8/type-9 modulation and held/audio integration; Linux/Windows/MSVC/macOS Intel",
-    "initial_run_failure": "MSVC required explicit <string> in the standalone test for std::stoi/std::to_string; DSP targets compiled; no DSP change"
+    "initial_run_failure": "MSVC required explicit <string> in the standalone test for std::stoi/std::to_string; DSP targets compiled; no DSP change",
+    "initial_run": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404240",
+    "tests": "5/5 per platform"
   },
   "plugin_package_ci": {
     "status": "in_progress",
-    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404628",
-    "scope": "Full Standalone/VST3 and installers, macOS universal (runtime Intel)"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41697540881",
+    "scope": "Full Standalone/VST3 and installers, macOS universal (runtime Intel)",
+    "supersedes_cancelled_run": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404628"
   },
   "previous_ci": {
     "version": "0.37.0",
@@ -50,7 +53,8 @@
   "limits": [
     "Gain producer remains unreconstructed; region dynamics retained as authored",
     "Pitch/normalized-region/mode/direction conversions, clock, allocator/events/RNG ordering and output are authored",
-    "Original shared 12-second drum source, voice/routing/scheduler, other modulators, Pulse/L1, acoustic/Live/arm64 and full original presets pending"
+    "Original shared 12-second drum source, voice/routing/scheduler, other modulators, Pulse/L1, acoustic/Live/arm64 and full original presets pending",
+    "Parameter/audio persistence does not capture a running hit LFO/RNG trajectory"
   ],
   "visual": {
     "status": "reviewed representative views for both engines, bank I/II and rejected Value/Random ADSR; final button contrast and plugin smoke rechecked after full suite, DSP unchanged",
@@ -69,33 +73,34 @@
   },
   "regression_ci": {
     "dbox": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404185"
     },
     "sampler": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404241"
     },
     "fm": {
-      "status": "in_progress",
+      "status": "in_progress; Linux/macOS Intel passed, Windows running",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404461"
     },
     "string": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404318"
     },
     "dna": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404359"
     },
     "voltage": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404602"
     },
     "dsynth": {
-      "status": "in_progress",
+      "status": "in_progress; Windows/macOS Intel passed, Linux running",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404316"
     }
   },
-  "validation_fix_commit": "pending verified push"
+  "validation_fix_commit": "38f01a61244e522b579630cf6be2033b6b32ede6",
+  "regression_commit": "0b5d155a846fa27f473ad535b2080b589a6ceaf6 (DSP unchanged by verifier-only fix)"
 }

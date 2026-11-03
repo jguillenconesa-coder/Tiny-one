@@ -20,7 +20,8 @@ destino ADSR elegido por blanco.
 | D-box I | Pitch I | Wave I | Envelope I | Cross Mod |
 | D-box II | Pitch II | Wave II | Envelope II | Filter |
 
-Los resultados de modulación no sobrescriben las bases del pad. Cada golpe tiene
+Los resultados de modulación no sobrescriben las bases del pad. Los proyectos
+guardan parámetros y audio, no la fase/RNG de un golpe en ejecución. Cada golpe tiene
 su estado y los pads siguen independientes. Las doce voces y el banco propio de
 24 muestras/pads mantienen el mapa, asignación, sustain, stealing y salida propios.
 No se añaden kits ni presets originales. Tremolo mantiene la adaptación anterior.

@@ -53,7 +53,9 @@ Reloj, mapa de pitch/modos/dirección, asignación, cache, dinámica y salida pr
 
 Linux: **117/117 suites**, cinco suites independientes, ASan/UBSan y **630 cargas
 sin heap rastreado** (48 nuevas de LFO drum/D-box). Estado/audio/proxies, 64/257
-frames y vistas revisados. CI nativo y paquetes nuevos en curso:
+frames y vistas revisados. Las cinco suites nativas pasan en Linux, Windows/MSVC
+y macOS Intel sobre `38f01a6` (include explícito del verificador, sin cambios DSP).
+Plugins/instaladores completos y últimas regresiones aún en curso:
 [evidencia](releases/v0.38.0-validation.json). El CI completo
 de 0.37.0 pasó las tres plataformas (macOS universal, runtime Intel). La carga de
 `0xff801d50` en L1 sigue sin un productor recuperado; el dispatch nuevo no lo genera.
