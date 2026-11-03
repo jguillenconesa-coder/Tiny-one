@@ -1,7 +1,7 @@
 {
   "version": "0.35.0",
   "date": "2026-11-03",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "16d5738be06976788a38efad99a1e50bb41e5d25",
   "linux_build": "Release Standalone and VST3 passed; final incremental build after visual playhead change passed",
   "linux_ctest": "111/111 suites passed, 98.65 s",
   "standalone_tests": "2/2 reader/adapter suites passed, 0.54 s",
@@ -14,10 +14,12 @@
   },
   "sanitizers": "ASan/UBSan reader and adapter passed; LeakSanitizer disabled under managed ptrace",
   "native_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637570902",
+    "status": "success on Linux, Windows/MSVC and macOS Intel; reader and adapter suites passed on each system"
   },
   "plugin_package_ci": {
-    "status": "pending implementation push"
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637571007",
+    "status": "in_progress; not yet validated"
   },
   "evidence": "../firmware/sampler246-render-validation.json",
   "previous_ci": {
@@ -36,5 +38,11 @@
     "status": "Passed; SAMPLER 246 and REVERSE controls, six-voice waveform display and source-root controls inspected",
     "sha256": "53ce883b42f35faef9f54245633f6714be9f75161f1974251212d50de7ddb911"
   },
-  "plugin_smoke": "Passed: option/direction state, audio source restoration, slots, clipboard, finite/nonzero audio, reverse effect and native/legacy difference, 64/257 frame block invariance"
+  "plugin_smoke": "Passed: option/direction state, audio source restoration, slots, clipboard, finite/nonzero audio, reverse effect and native/legacy difference, 64/257 frame block invariance",
+  "regression_ci": {
+    "drum": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637571008",
+    "dbox": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637571009",
+    "dbox_status": "success on all three systems",
+    "drum_status": "success on Linux, Windows/MSVC and macOS Intel"
+  }
 }

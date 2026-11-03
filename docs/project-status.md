@@ -54,7 +54,8 @@ no se han expuesto todos sus controles secundarios. La voz original completa y
 la equivalencia acústica siguen pendientes. [Validación](releases/v0.35.0-validation.json).
 Release Standalone/VST3 y 111/111 suites Linux aprobadas; 534 cargas sin heap
 rastreado, estado/slots/clipboard, 64/257 frames y revisión visual aprobados.
-CI nativo y plugins/instaladores pendientes del push verificado.
+CI lector/adaptador aprobado en Linux, Windows/MSVC y macOS Intel sobre
+`16d5738`; plugins/instaladores completos en curso.
 
 El CI completo de 0.34.0 pasó las tres plataformas (macOS runtime Intel). La
 preparación drum tiene una referencia candidata en L1 parcialmente protegida;
