@@ -47,7 +47,9 @@ vista de regiones. Un PCM compartido; conversiones y división inicial igual son
 propias. Reutiliza el lector contrastado, sin nuevo oracle de firmware ni nueva
 medición acústica. **120/120 suites Linux**, ASan/UBSan y **702 cargas sin heap
 rastreado**, importación/captura/estado/slots/clipboard y vista final aprobados.
-[Pruebas y CI](releases/v0.40.0-validation.json).
+[Pruebas y CI](releases/v0.40.0-validation.json). [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336295):
+**6/6 suites en Linux, Windows/MSVC y macOS Intel**. MIDI/D-box/sampler también verdes;
+plugins/instaladores completos en curso sobre `ddb76e2`.
 
 La estimación sube a **≈68 % ±10 de planificación** por completar el layout y el
 flujo de datos/captura/edición/guardado compartidos. La tabla refleja ese cambio;

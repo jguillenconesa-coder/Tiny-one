@@ -1,7 +1,7 @@
 {
   "version": "0.40.0",
   "date": "2026-11-04",
-  "implementation_commit": "Recorded after validated push",
+  "implementation_commit": "ddb76e25f46bb2ad4716d7e6b6f2b51454fb075d",
   "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -61,11 +61,15 @@
     }
   },
   "native_ci": {
-    "status": "pending push",
-    "scope": "Six independent drum suites, including shared-source composition; Linux, Windows/MSVC, macOS Intel"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "scope": "Six independent drum suites, including shared-source composition; Linux, Windows/MSVC, macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336295",
+    "tests": "6/6 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336245",
+    "scope": "Full Standalone/VST3 and installers on Linux/Windows/macOS universal; runtime Intel on macOS"
   },
   "previous_plugin_ci": {
     "version": "0.39.0",
@@ -79,5 +83,19 @@
     "Original gain/pitch producers, segmentation/layout, voice/routing/clock, physical LFO inputs and Pulse/L1 remain pending.",
     "Real Ableton Live validation, native macOS arm64 execution and complete original presets remain pending.",
     "No release/tag or cloud environment configuration change."
-  ]
+  ],
+  "regression_ci": {
+    "midi": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336263"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336182"
+    },
+    "sampler": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336209"
+    }
+  }
 }

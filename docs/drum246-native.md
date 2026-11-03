@@ -96,7 +96,7 @@ convertido cuando está activa la opción, y el audio completo en el lector ante
 La coincidencia numérica del callback está condicionada a PCM, padding, pitch,
 ganancia y eventos suministrados. **La fidelidad acústica del instrumento completo
 no está medida**. Quedan la envolvente dinámica original, el productor de pitch,
-ruteo/cadencia, fuente compartida original,
+ruteo/cadencia, algoritmo original de layout/segmentación,
 Pulse/L1, validación en Ableton Live real y ejecución macOS arm64. Presets completos
 al final. Los materiales disponibles bastan para reproducir esta entrega.
 
