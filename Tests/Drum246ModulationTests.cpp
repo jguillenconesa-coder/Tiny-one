@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 static void check(bool ok,const char* why){if(!ok)throw std::runtime_error(why);}
 static std::vector<unsigned char> read(const std::filesystem::path& p){std::ifstream f(p,std::ios::binary);check(bool(f),"Missing instrument modulation fixture");return {std::istreambuf_iterator<char>(f),{}};}
@@ -19,7 +20,7 @@ int main(int argc,char** argv){try{
         const auto in=read(root/("value-"+family+"-input.bin")),out=read(root/("value-"+family+"-output.bin"));
         check(in.size()==4096*96&&out.size()==152+4096*68,"Wrong drum Value fixtures");
         for(size_t i=0;i<8;++i)for(size_t j=0;j<4;++j)check(drum246ModulationRanges[size_t(type-8)][i][j]==half(out.data()+size_t(type-8)*64+i*8+j*2),"Drum ranges differ from original initializer");
-        
+
         for(size_t i=0;i<4;++i)for(size_t j=0;j<3;++j)check(valueVoice246EnvelopeRanges[i][j]==half(out.data()+128+i*6+j*2),"Common dumped ADSR range mismatch");
         Value246State state;std::array<uint32_t,8> display{};
         for(size_t n=0;n<4096;++n){const auto* x=in.data()+n*96;const auto* y=out.data()+152+n*68;

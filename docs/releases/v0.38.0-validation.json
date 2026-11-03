@@ -1,7 +1,7 @@
 {
   "version": "0.38.0",
   "date": "2026-11-03",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "0b5d155a846fa27f473ad535b2080b589a6ceaf6",
   "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -31,10 +31,15 @@
   },
   "host_integration": "success: ten engine/LFO/bank/ENV cases, closed-editor proxies, projects with audio, slots/clipboard, exact 64/257 frame audio invariance, timestamp 37, original rejection and conservative host tail",
   "native_ci": {
-    "status": "pending push"
+    "status": "Linux/macOS Intel passed; MSVC verifier include failure corrected, new CI pending push",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404240",
+    "scope": "Five suites: original reader, adapter, type-8/type-9 modulation and held/audio integration; Linux/Windows/MSVC/macOS Intel",
+    "initial_run_failure": "MSVC required explicit <string> in the standalone test for std::stoi/std::to_string; DSP targets compiled; no DSP change"
   },
   "plugin_package_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404628",
+    "scope": "Full Standalone/VST3 and installers, macOS universal (runtime Intel)"
   },
   "previous_ci": {
     "version": "0.37.0",
@@ -61,5 +66,36 @@
       "drum-lfo-8-0.png": "d59f9a001ed8b65e97e6d34d0bfad4e34f0e20fb33573bcbdd9f71ff61056c81",
       "drum-lfo-9-2.png": "8487a2055d5fd672a70a8846c957d2c6a5e499c5860ce96a96298d0bf70c0534"
     }
-  }
+  },
+  "regression_ci": {
+    "dbox": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404185"
+    },
+    "sampler": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404241"
+    },
+    "fm": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404461"
+    },
+    "string": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404318"
+    },
+    "dna": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404359"
+    },
+    "voltage": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404602"
+    },
+    "dsynth": {
+      "status": "in_progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41696404316"
+    }
+  },
+  "validation_fix_commit": "pending verified push"
 }
