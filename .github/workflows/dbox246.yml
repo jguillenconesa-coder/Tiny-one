@@ -16,6 +16,7 @@ on:
       - 'Source/ValueVoice246*.h'
       - 'Source/Dsynth246*.h'
       - 'Source/Engine.h'
+      - 'Source/SharedDrum246.h'
       - 'Source/Midi246*.h'
       - 'Source/Phase246.h'
       - 'Source/ReferenceDsp.h'

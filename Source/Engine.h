@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <vector>
 #include "Phase246.h"
+#include "SharedDrum246.h"
 #include "Fm246Voice.h"
 #include "Digital246Voice.h"
 #include "DrWave246Voice.h"
@@ -95,11 +96,12 @@ public:
     }
     void setSample(Sample data) {if(data.drumPcm.empty()&&!data.frames.empty())data.prepareDrumPcm(); sample=std::move(data); voices={}; }
     void swapSample(Sample& data) {std::swap(sample,data);voices={};}
-    void swapKit(Kit& data,int count=8) {drumBank.reset();kit.swap(data);kitCount=count==24?24:8;voices={};}
+    bool isSharedKit() const noexcept {return sharedKit;}
+    void swapKit(Kit& data,int count=8,bool shared=false) {sharedKit=shared;drumBank.reset();kit.swap(data);kitCount=sharedKit||count==24?24:8;voices={};}
     void swapKitPad(int pad,Sample& data){drumBank.reset();if(pad>=0&&pad<kitCapacity){std::swap(kit[size_t(pad)],data);if(pad>=kitCount)kitCount=24;voices={};}}
     int getKitCount() const{return kitCount;}
     const Sample& getSample() const { return sample; }
-    void setKit(Kit data,int count=8) {for(auto& s:data)if(s.drumPcm.empty()&&!s.frames.empty())s.prepareDrumPcm();drumBank.reset();kit=std::move(data);kitCount=count==24?24:8;voices={};}
+    void setKit(Kit data,int count=8,bool shared=false) {sharedKit=shared;for(auto& s:data)if(s.drumPcm.empty()&&!s.frames.empty())s.prepareDrumPcm();drumBank.reset();kit=std::move(data);kitCount=sharedKit||count==24?24:8;voices={};}
     const Kit& getKit() const { return kit; }
     static int kitSlot(int note,int count=8) {
         if(note>=60) return (note-60)%(count==24?24:8);
@@ -162,7 +164,7 @@ public:
                 for(size_t i=0;i<4;++i)out.random[i]=v.randomLfo.active?v.randomLfo.modulation[i]/32768.f:0;
                 if(valueVoiceActive)out.lfo=v.valueVoice.phase();
                 if(tremoloActive)out.lfo=(selectedSampler?v.sampler246.output:nativeDsynthActive?v.dsynth246.output:nativeVoltageActive?v.voltage246.output:nativeDnaActive?v.dna246.output:nativeStringActive?v.string246.output:nativeFmActive?v.fm246.output:nativeClusterActive?v.cluster246.output:nativeDrWaveActive?v.drWave246.output:nativeDigitalActive?v.digital246.output:v.phase246).tremolo.phase();
-                const size_t length=mode==5?kit[size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
+                const size_t length=mode==5?kit[sharedKit?0:size_t(kitSlot(v.note,kitCount))].frames.size():sample.frames.size();
                 if(mode==3&&selectedSampler){const auto frames=Sampler246Voice::frames(sample);out.progress=frames?std::clamp(float(v.sampler246.state.position/(4096.*frames)),0.f,1.f):0;}
                 else if(length) out.progress=std::clamp(float(v.samplePosition/double(length))+(mode==3?current.tone*.9f:0.f),0.f,1.f);
             }
@@ -232,7 +234,7 @@ public:
 
         if(target.engine==5)for(size_t i=0;i<padPitch.size();++i)if(target.pads[i].pitch!=cachedPadPitch[i]){cachedPadPitch[i]=target.pads[i].pitch;padPitch[i]=std::exp2(std::clamp(double(target.pads[i].pitch),-24.,24.)/12);}
         Drum246ModulationConfig drumModulation;drumModulation.midi=nativeMidi;drumModulation.midiRoutes=target.midi246Routes;drumModulation.midiCC=midiCC;drumModulation.value=nativeValueVoice;drumModulation.random=nativeRandom;drumModulation.free=target.valueVoice246Free;drumModulation.secondary=target.drum246LfoBank;drumModulation.speed=target.valueVoice246Speed;drumModulation.amount=target.valueVoice246Amount;drumModulation.colour=target.valueVoice246Colour;drumModulation.envelope=target.valueVoice246Envelope;drumModulation.randomControls=target.random246Controls;drumModulation.tempo=target.value246Tempo;drumModulation.step=44100./(64*sampleRate);drumModulation.rng=&randomRng;
-        float sum=nativeDbox?dboxBank.next(target.dbox246Controls,bends,smoothing,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation):nativeDrum?drumBank.next(kit,target.pads,target.drum246Dynamics,bends,kitPitch*pitchFactor,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation):0;
+        float sum=nativeDbox?dboxBank.next(target.dbox246Controls,bends,smoothing,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation):nativeDrum?drumBank.next(kit,target.pads,target.drum246Dynamics,bends,kitPitch*pitchFactor,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation,sharedKit):0;
         for(auto& v:voices) {
             if(!v.active) continue;
             if(nativeEnvelopeActive){}
@@ -318,7 +320,7 @@ public:
                 s=sample.frames[a]+fraction*(sample.frames[b]-sample.frames[a]);
                 v.samplePosition+=sample.rate/sampleRate*v.frequency/rootFrequency*bend;
             } else if(target.engine==5) {
-                const auto slot=size_t(kitSlot(v.note,kitCount));const auto& hit=kit[slot];const auto& pad=target.pads[slot];
+                const auto slot=size_t(kitSlot(v.note,kitCount));const auto& hit=kit[sharedKit?0:slot];const auto& pad=target.pads[slot];
                 if(hit.frames.empty()){v.active=false;continue;}
                 const double start=std::clamp(double(pad.start),0.,1.)*double(hit.frames.size());
                 const double end=std::clamp(double(pad.end),0.,1.)*double(hit.frames.size());
@@ -443,7 +445,7 @@ private:
     std::array<reference::String246Memory,polyphony> stringBuffers{};
     std::array<Voice,polyphony> voices{}; std::array<float,192000> delay{};
     std::array<float,17> bends{}; std::array<bool,17> pedals{};
-    Sample sample;Kit kit;int kitCount=8;
+    Sample sample;Kit kit;bool sharedKit=false;int kitCount=8;
     std::array<float,kitCapacity> cachedPadPitch{};
     std::array<double,kitCapacity> padPitch{{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
     size_t write=0,delayValid=0; uint64_t age=0; uint32_t random=0x12345678; float filter=0;

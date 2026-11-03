@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 3 de noviembre de 2026
+# Estado y entregas del proyecto — 4 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 67 % del objetivo completo
+## Avance estimado: aproximadamente 68 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -19,11 +19,11 @@ prototipo tocable con una réplica completa:
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
 | Efectos, envolventes y moduladores | 20 % | 95 % | 19 puntos |
-| Voz, modos de ejecución y ruteo original | 15 % | 34 % | 5,1 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 71 % | 10,65 puntos |
+| Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 75 % | 11,25 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈67 %** (66,55 antes de redondear) |
+| Total | 100 % | | **≈68 %** (67,6 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,25 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: MIDI LFO (0.39.0)
+## Entrega actual: fuente drum compartida (0.40.0)
+
+[Una fuente de 12 segundos y 24 regiones](shared-drum246.md): importación WAV/AIFF,
+captura, límites editables, doce voces, proyectos, slots portables, clipboard y
+vista de regiones. Un PCM compartido; conversiones y división inicial igual son
+propias. Reutiliza el lector contrastado, sin nuevo oracle de firmware ni nueva
+medición acústica. **120/120 suites Linux**, ASan/UBSan y **702 cargas sin heap
+rastreado**, importación/captura/estado/slots/clipboard y vista final aprobados.
+[Pruebas y CI](releases/v0.40.0-validation.json).
+
+La estimación sube a **≈68 % ±10 de planificación** por completar el layout y el
+flujo de datos/captura/edición/guardado compartidos. La tabla refleja ese cambio;
+no asigna un porcentaje de fidelidad sonora. El CI completo de 0.39.0 terminó bien
+en Linux, Windows/MSVC y macOS universal, runtime Intel, y sus regresiones también.
+
+Siguen pendientes productores de pitch/ganancia y ruteo original, layout/segmentación
+originales, Element/Bend/Crank, Pulse/L1, calibración, Live/arm64 y presets completos.
+
+## Entrega anterior: MIDI LFO (0.39.0)
 
 [Contrato y límites](midi246-hybrid.md): cuatro CC entrantes y destinos independientes
 Instrument/ADSR/FX, automatización contextual, estado y OLED. **6.144 callbacks
@@ -52,7 +70,7 @@ pero no se exponen todavía en la integración ni recuperan sus productores.
 proxies sin editor, timestamps y los ocho FX aprobados; vista MIDI revisada.
 [CI MIDI](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705154163):
 **2/2 suites en Linux, Windows/MSVC y macOS Intel**. Plugins/instaladores completos
-y algunas regresiones siguen en curso sobre `2f5657f`, sin release publicada.
+y regresiones aprobados sobre `2f5657f`, sin release publicada.
 
 La estimación se mantiene en **≈67 % ±10**: se cierra una parte acotada de modulación,
 sin nueva medición acústica, recuperación de L1 ni validación Live. Véase la

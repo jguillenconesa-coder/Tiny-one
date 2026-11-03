@@ -11,6 +11,7 @@ public:
 private:
     void select(int);
     void chooseSample();
+    void chooseSource();
     void timerCallback() override;
     PocketProcessor& processor;
     int selected=0,auditionNote=-1;
@@ -20,6 +21,7 @@ private:
     std::array<juce::Label,4> labels;
     juce::Label title;
     bool nativeMode=false;juce::ComboBox playMode;std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeAttachment;
+    juce::TextButton source{"LOAD SOURCE"};
     juce::TextButton reverse{"REVERSE"},gated{"GATED"},load{"LOAD PAD"},reset{"RESET PAD"};
     std::array<std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>,4> attachments;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> reverseAttachment,gatedAttachment;

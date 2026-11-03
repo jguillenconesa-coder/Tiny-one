@@ -3,8 +3,7 @@
 #include "PluginEditor.h"
 #include "FactoryPresets.h"
 #include "FactoryData.h"
-namespace {
-juce::String encodeAudio(const juce::AudioBuffer<float>& audio,double rate) {
+juce::String PocketProcessor::encodeAudio(const juce::AudioBuffer<float>& audio,double rate) {
     juce::MemoryBlock data;
     auto stream=std::make_unique<juce::MemoryOutputStream>(data,false);
     juce::WavAudioFormat wav;
@@ -17,7 +16,7 @@ juce::String encodeAudio(const juce::AudioBuffer<float>& audio,double rate) {
     {juce::GZIPCompressorOutputStream gzip(&compressed,6,false); gzip.write(data.getData(),data.getSize());}
     return compressed.getMemoryBlock().toBase64Encoding();
 }
-bool decodeAudio(const juce::String& encoded,juce::AudioBuffer<float>& audio,double& rate,int maxChannels) {
+bool PocketProcessor::decodeAudio(const juce::String& encoded,juce::AudioBuffer<float>& audio,double& rate,int maxChannels) {
     if(encoded.isEmpty()||encoded.length()>140000000) return false;
     juce::MemoryBlock block; if(!block.fromBase64Encoding(encoded)) return false;
     juce::MemoryInputStream compressed(block,false); juce::GZIPDecompressorInputStream unzip(compressed);
@@ -28,7 +27,6 @@ bool decodeAudio(const juce::String& encoded,juce::AudioBuffer<float>& audio,dou
     if(!reader||reader->sampleRate<8000||reader->sampleRate>192000||reader->numChannels<1||reader->numChannels>unsigned(maxChannels)||reader->lengthInSamples<1||reader->lengthInSamples>reader->sampleRate*16) return false;
     audio.setSize(int(reader->numChannels),int(reader->lengthInSamples)); rate=reader->sampleRate;
     return reader->read(&audio,0,audio.getNumSamples(),0,true,true);
-}
 }
 PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(BusesProperties().withInput("Input",juce::AudioChannelSet::stereo(),true).withOutput("Output",juce::AudioChannelSet::stereo(),true)),state(*this,nullptr,"PocketOne",layout()) {
     libraryDirectory=soundsDirectory==juce::File{}?juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory).getChildFile("Pocket Instruments/Pocket One/Banks"):soundsDirectory;
@@ -746,7 +744,7 @@ void PocketProcessor::getStateInformation(juce::MemoryBlock& dest) {
     {const juce::ScopedLock lock(libraryStateLock);for(int pad=0;pad<pocket::kitCapacity;++pad)tree.setProperty("kitName"+juce::String(pad),kitNames[size_t(pad)],nullptr);}
     pocket::Kit kitCopy;
     juce::AudioBuffer<float> sampleAudio,tapeAudio; double sampleRate=48000,tapeRate=48000;
-    {const juce::ScopedLock lock(getCallbackLock()); kitCopy=engine.getKit();tree.setProperty("kitCount",engine.getKitCount(),nullptr);const auto& sample=engine.getSample(); sampleRate=sample.rate;
+    {const juce::ScopedLock lock(getCallbackLock()); kitCopy=engine.getKit();tree.setProperty("kitCount",engine.getKitCount(),nullptr);tree.setProperty("kitSharedSource",engine.isSharedKit(),nullptr);const auto& sample=engine.getSample(); sampleRate=sample.rate;
         if(!sample.frames.empty()) {sampleAudio.setSize(1,int(sample.frames.size())); sampleAudio.copyFrom(0,0,sample.frames.data(),sampleAudio.getNumSamples());}
         const auto& tracks=tape.getTracks(); tapeRate=tape.getRate();
         if(!tracks[0].empty()) {tapeAudio.setSize(4,int(tracks[0].size())); for(int c=0;c<4;++c) tapeAudio.copyFrom(c,0,tracks[size_t(c)].data(),tapeAudio.getNumSamples());}
@@ -794,7 +792,9 @@ void PocketProcessor::setStateInformation(const void* data,int size) {
         for(const char* id:{"seqMode","seqLength","seqRate","seqGate","seqSwing","arpOctaves","seqVelocity","seqEuclidean","seqPulses","seqRotation","sampleClean"})
             if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree parameter("PARAM");parameter.setProperty("id",id,nullptr);auto* p=state.getParameter(id);parameter.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(parameter,-1,nullptr);}
         {const juce::ScopedLock lock(libraryStateLock);for(int pad=0;pad<pocket::kitCapacity;++pad)kitNames[size_t(pad)]=tree.getProperty("kitName"+juce::String(pad),"Pad "+juce::String(pad+1)).toString().substring(0,160);}
-        for(int pad=0;pad<pocket::kitCapacity;++pad){restoredKit[size_t(pad)].prepareDrumPcm();publishPadPreview(pad,restoredKit[size_t(pad)]);}
+        const bool sharedSource=bool(tree.getProperty("kitSharedSource",false))&&hasKit&&pocket::prepareSharedDrum246(restoredKit[0]);
+        if(sharedSource){for(size_t i=1;i<restoredKit.size();++i)restoredKit[i]={};publishSharedDrumPreview(restoredKit[0]);}
+        else for(int pad=0;pad<pocket::kitCapacity;++pad){restoredKit[size_t(pad)].prepareDrumPcm();publishPadPreview(pad,restoredKit[size_t(pad)]);}
         const int selected=int(tree.getProperty("factoryPreset",-1));
         currentFactoryPreset.store(selected>=0&&selected<int(pocket::factoryPresets.size())?selected:-1);
         tree.removeProperty("factoryPreset",nullptr);
@@ -804,7 +804,7 @@ void PocketProcessor::setStateInformation(const void* data,int size) {
         sample.prepareDrumPcm();publishSamplePreview(sample);
         std::array<std::vector<float>,4> tracks;
         if(hasTape) for(int c=0;c<4;++c) tracks[size_t(c)].assign(tapeAudio.getReadPointer(c),tapeAudio.getReadPointer(c)+tapeAudio.getNumSamples());
-        {const juce::ScopedLock lock(getCallbackLock()); if(hasKit) engine.swapKit(restoredKit,int(tree.getProperty("kitCount",8)));kitPads.store(engine.getKitCount());engine.swapSample(sample); sampleFrames.store(hasSample?sampleAudio.getNumSamples():0);
+        {const juce::ScopedLock lock(getCallbackLock()); if(hasKit) engine.swapKit(restoredKit,int(tree.getProperty("kitCount",8)),sharedSource);kitPads.store(engine.getKitCount());engine.swapSample(sample); sampleFrames.store(hasSample?sampleAudio.getNumSamples():0);
             if(hasTape) {tape.restore(std::move(tracks),tapeRate); tape.prepare(rate);} else {tape.prepare(rate); for(int c=0;c<4;++c) tape.clear(c);}
             for(int i=0;i<16;++i) steps[size_t(i)].store(juce::jlimit(-1,127,int(tree.getProperty("step"+juce::String(i),-1))));
             for(int pad=0;pad<pocket::kitCapacity;++pad)for(const auto* field:{"start","end","gain","pitch","reverse","gated"}){const auto id=padParameterId(pad,field);if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree parameter("PARAM");parameter.setProperty("id",id,nullptr);auto* p=state.getParameter(id);parameter.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(parameter,-1,nullptr);}}
@@ -819,7 +819,7 @@ juce::AudioProcessorEditor* PocketProcessor::createEditor() {return new PocketEd
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {return new PocketProcessor();}
 
 juce::String PocketProcessor::padParameterId(int pad,const char* field){return "pad"+juce::String(pad+1)+"_"+field;}
-bool PocketProcessor::loadKitPad(int pad,const juce::File& file,juce::String& error){if(pad<0||pad>=pocket::kitCapacity)return false;auto sample=readSample(file,error);if(sample.frames.empty())return false;publishPadPreview(pad,sample);{const juce::ScopedLock lock(libraryStateLock);kitNames[size_t(pad)]=file.getFileName();}{const juce::ScopedLock lock(getCallbackLock());engine.swapKitPad(pad,sample);kitPads.store(engine.getKitCount());}setSelectedSound({});currentFactoryPreset.store(-1);currentUserPreset.store(-1);return true;}
+bool PocketProcessor::loadKitPad(int pad,const juce::File& file,juce::String& error){if(pad<0||pad>=pocket::kitCapacity)return false;if(drum246SharedSource()){error="This kit uses one shared source. Use LOAD SOURCE to replace it, or select another kit before loading individual pads.";return false;}auto sample=readSample(file,error);if(sample.frames.empty())return false;publishPadPreview(pad,sample);{const juce::ScopedLock lock(libraryStateLock);kitNames[size_t(pad)]=file.getFileName();}{const juce::ScopedLock lock(getCallbackLock());engine.swapKitPad(pad,sample);kitPads.store(engine.getKitCount());}setSelectedSound({});currentFactoryPreset.store(-1);currentUserPreset.store(-1);return true;}
 void PocketProcessor::publishPadPreview(int pad,const pocket::Sample& sample){
     auto& preview=padPreviews[size_t(pad)];auto& native=drumPreviews[size_t(pad)];drumFrames[size_t(pad)].store(int(sample.drumPcm.size()),std::memory_order_relaxed);
     for(size_t bin=0;bin<preview.size();++bin){float peak=0,nativePeak=0;for(size_t i=sample.frames.size()*bin/preview.size();i<sample.frames.size()*(bin+1)/preview.size();++i)peak=std::max(peak,std::abs(sample.frames[i]));for(size_t i=sample.drumPcm.size()*bin/native.size();i<sample.drumPcm.size()*(bin+1)/native.size();++i)nativePeak=std::max(nativePeak,std::abs(sample.drumPcm[i]/32768.f));preview[bin].store(peak,std::memory_order_relaxed);native[bin].store(nativePeak,std::memory_order_relaxed);}
@@ -827,3 +827,18 @@ void PocketProcessor::publishPadPreview(int pad,const pocket::Sample& sample){
 std::array<float,128> PocketProcessor::kitPadPreview(int pad){std::array<float,128> out{};if(pad>=0&&pad<pocket::kitCapacity)for(size_t i=0;i<out.size();++i)out[i]=(drum246Enabled()?drumPreviews[size_t(pad)][i]:padPreviews[size_t(pad)][i]).load(std::memory_order_relaxed);return out;}
 
 juce::String PocketProcessor::kitPadName(int pad) const{if(pad<0||pad>=pocket::kitCapacity)return {};const juce::ScopedLock lock(libraryStateLock);return kitNames[size_t(pad)];}
+
+// Shared asset installation is an offline edit. Destruction of the replaced
+// vectors, PCM conversion, serialization and UI previews stay off the callback.
+bool PocketProcessor::loadSharedDrumSource(const juce::File& file,juce::String& error){auto data=readSample(file,error);if(data.frames.empty())return false;return installSharedDrumSource(std::move(data),file.getFileName(),error);}
+void PocketProcessor::resetSharedDrumRegion(int pad){if(pad<0||pad>=24)return;const auto region=pocket::sharedDrum246Region(pad);for(const char* field:{"start","end","gain","pitch","reverse","gated"}){auto* p=state.getParameter(padParameterId(pad,field));const float value=juce::String(field)=="start"?region.start:juce::String(field)=="end"?region.end:p->convertFrom0to1(p->getDefaultValue());p->setValueNotifyingHost(p->convertTo0to1(value));}auto* mode=phaseState->getParameter(drum246ModeId(pad));mode->setValueNotifyingHost(mode->getDefaultValue());}
+bool PocketProcessor::installSharedDrumSource(pocket::Sample data,const juce::String& name,juce::String& error){
+ if(!pocket::prepareSharedDrum246(data)){error="The source needs nonempty audio at 8–192 kHz.";return false;}
+ pocket::Kit replacement;replacement[0]=std::move(data);publishSharedDrumPreview(replacement[0]);
+ for(int pad=0;pad<24;++pad)resetSharedDrumRegion(pad);
+ {const juce::ScopedLock lock(libraryStateLock);for(int pad=0;pad<24;++pad)kitNames[size_t(pad)]=name.substring(0,120)+" / region "+juce::String(pad+1);}
+ {const juce::ScopedLock lock(getCallbackLock());engine.swapKit(replacement,24,true);kitPads.store(24);}
+ auto* selected=state.getParameter("engine");selected->setValueNotifyingHost(selected->convertTo0to1(5));phaseState->getParameter("drum246Enabled")->setValueNotifyingHost(1);phaseState->getParameter("drum246EditPad")->setValueNotifyingHost(0);
+ setSelectedSound("shared-drum:embedded");currentFactoryPreset.store(-1);currentUserPreset.store(-1);requestPanic(false);return true;
+}
+void PocketProcessor::publishSharedDrumPreview(const pocket::Sample& sample){publishPadPreview(0,sample);for(size_t pad=1;pad<24;++pad){drumFrames[pad].store(int(sample.drumPcm.size()),std::memory_order_relaxed);for(size_t i=0;i<128;++i){padPreviews[pad][i].store(padPreviews[0][i].load(std::memory_order_relaxed),std::memory_order_relaxed);drumPreviews[pad][i].store(drumPreviews[0][i].load(std::memory_order_relaxed),std::memory_order_relaxed);}}}

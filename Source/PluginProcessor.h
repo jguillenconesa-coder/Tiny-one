@@ -128,6 +128,10 @@ public:
     std::atomic<int> inputCaptureFrames{0};
     bool exportMix(const juce::File&,juce::String& error);
     std::atomic<int> kitPads{8};
+    bool drum246SharedSource() const {const juce::ScopedLock lock(getCallbackLock());return engine.isSharedKit();}
+    bool loadSharedDrumSource(const juce::File&,juce::String&);
+    bool installSharedDrumSource(pocket::Sample, const juce::String&,juce::String&);
+    void resetSharedDrumRegion(int);
     bool loadKitPad(int,const juce::File&,juce::String&);
     std::array<float,128> kitPadPreview(int);
     juce::String kitPadName(int) const;
@@ -158,6 +162,7 @@ private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
     std::array<std::atomic<float>*,5> midiAudio{};
+    bool captureAsSharedDrum=false;
     std::atomic<float>* drumLfoBankAudio=nullptr;std::array<std::atomic<float>*,16> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
     std::array<std::array<std::atomic<float>*,8>,24> dboxAudio{};std::atomic<float>* dboxPadSelection=nullptr;
     std::array<std::atomic<float>*,146> phaseAudio{};
@@ -194,6 +199,9 @@ private:
     std::atomic<bool> visibleTape{false};
     void refreshUserPresets();
     std::array<std::array<std::atomic<float>,128>,pocket::kitCapacity> padPreviews{},drumPreviews{};std::array<std::atomic<int>,pocket::kitCapacity> drumFrames{};
+    static juce::String encodeAudio(const juce::AudioBuffer<float>&,double);
+    static bool decodeAudio(const juce::String&,juce::AudioBuffer<float>&,double&,int);
+    void publishSharedDrumPreview(const pocket::Sample&);
     void publishPadPreview(int,const pocket::Sample&);
     void publishSamplePreview(const pocket::Sample&);
     double processedTime=0;

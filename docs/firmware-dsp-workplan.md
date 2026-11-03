@@ -612,3 +612,14 @@ que solo modifica datos suministrados. Element, Bend y Crank requieren estudiar
 primero sus entradas físicas. Bend es el accesorio manual del §15.8, no el MIDI
 pitch wheel. Continúan fuente drum compartida, ruteo original, Pulse/L1 y calibración;
 los presets originales completos siguen al final.
+
+
+## Fuente compartida drum — 0.40.0
+
+Se integra el layout funcional de una fuente de 12 segundos y 24 regiones, con
+carga/captura/edición/estado/slots/clipboard y doce lectores vinculados al mismo PCM.
+105 combinaciones comparan esta composición con copias explícitas del PCM completo;
+no son ejecuciones nuevas del firmware. Preparación/división inicial y ruteo siguen
+propios. [Contrato](shared-drum246.md). Se mantiene pendiente el algoritmo original
+de layout/segmentación, además de productores, voz/ruteo/clock, LFO físicos, Pulse/L1,
+acústica/Live/arm64 y presets finales.

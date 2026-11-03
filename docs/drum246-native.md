@@ -77,8 +77,9 @@ Usa interpolación lineal para convertir otras tasas; no se atribuye ese convers
 al aparato ni se ha calibrado acústicamente. El camino de audio solo lee el cache,
 sin crear ni liberar vectores. El lector anterior conserva el float audio completo.
 
-El plugin conserva su banco de 24 muestras independientes. El flujo original de
-un único archivo de 12 segundos con 24 regiones compartidas no se completa aquí.
+Desde 0.40.0 puede usar [una fuente compartida de 12 segundos con 24 regiones](shared-drum246.md),
+además del banco independiente. La preparación y división inicial son propias;
+el layout/segmentación del firmware y la dinámica original siguen pendientes.
 Tampoco se replica automáticamente el layout de fábrica ni se incluyen sus kits.
 
 El adaptador aporta reloj de 88,2 kHz, pitch según la tasa de 44,1 kHz y afinación del

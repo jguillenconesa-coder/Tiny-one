@@ -651,3 +651,14 @@ and audio integration are authored adaptations. Gain/pitch/FX audio modification
 is verified only with supplied buffers and remains outside the exposed adapter;
 FX kind 4 and auxiliary ADSR selectors are excluded. See
 [scope](docs/midi246-hybrid.md) and [evidence](docs/firmware/midi246-validation.json).
+
+
+## Shared drum source (0.40.0)
+
+`SharedDrum246.h` and the source ownership, import/capture, region UI and portable
+snapshot adaptations are authored work informed by manual sections 6.2–6.3. The
+initial equal partition and offline conversion are not recovered OP-1 algorithms.
+The verified drum reader is reused. The 105 composition cases compare one shared
+asset against copies of the same complete PCM with identical absolute regions;
+these are host-adapter tests, not new original-firmware or acoustic comparisons.
+No new firmware or proprietary assets are distributed. See [scope](docs/shared-drum246.md).

@@ -1,4 +1,9 @@
-# Pocket One 0.39.0
+# Pocket One 0.40.0
+
+**Shared drum source**: one recording up to 12 seconds, 24 editable regions,
+input capture, twelve voices and portable project/slot/clipboard audio. Authored
+initial layout and preparation; reconstructed reader. [Scope](docs/shared-drum246.md) ·
+[validation](docs/releases/v0.40.0-validation.json).
 
 **MIDI LFO**: four incoming CC streams targeting Instrument, ADSR and FX, with
 automation, persistence and contextual encoders. 6,144 original callback cases
