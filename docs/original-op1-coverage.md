@@ -1,7 +1,7 @@
 # Objetivo: OP-1 original completo
 
 La meta es cubrir motores, filtros, efectos, envolventes, modulación, modos de
-ejecución y sonidos documentados. La versión 0.34.0 **todavía no es una réplica
+ejecución y sonidos documentados. La versión 0.35.0 **todavía no es una réplica
 completa**. Esta matriz distingue un núcleo contrastado de una aproximación
 propia o una función pendiente; cambiar el nombre de un modelo no completa un port.
 
@@ -18,7 +18,7 @@ DB ni instrucciones originales. REA verifica el inventario SQLite; GNU BF524
 ejecuta rutinas aisladas para los oráculos de DSP.
 
 [Estado de proyecto y estimación ponderada](project-status.md): aproximadamente
-63 % del objetivo completo, con incertidumbre explícita; no es una medición
+64 % del objetivo completo, con incertidumbre explícita; no es una medición
 de equivalencia sonora.
 
 ## Motores
@@ -34,7 +34,7 @@ del plugin. El plugin añade Dr. Wave, Cluster y DNA Hybrid como séptima, octav
 | 3 | String | **[String 246 tocable](string246-native.md)**: waveguide mono, excitación/ruido filtrados, dos lecturas de siete pasos, constructor/reset/release y tablas legibles sin sustitución. 4096 bloques / 524288 muestras, estados/RNG y 16 memorias completas contrastados. Cuatro controles raw, ADSR, seis voces, Mono/Legato/glide y Value/Random/Tremolo integrados; reloj, pitch/cursor, scheduler, asignación/salida propios. Calibración acústica/Live y presets originales pendientes. |
 | 4 | Cluster | **Motor híbrido tocable de seis voces**, ocho osciladores por voz y tres normalizaciones aproximadas explícitamente; [guía](cluster246-hybrid.md). Núcleo aislado: 262.144 muestras con coeficientes de prueba y 81.920 con cinco normalizaciones legibles convertidas por el helper original. 24 coeficientes de amortiguación y 60 casos de factoría/reset de seis slots contrastados. Faltan tres normalizaciones originales y la ruta completa del hardware; [avance](cluster246-normalization.md). |
 | 5 | Pulse | Render localizado en L1 cifrada (`0xffa04b88`), sin imagen descifrada validada. Port pendiente; [bloqueo](firmware/pulse246-l1-blocker.json). |
-| 6 | Synth sampler | Reproductor propio con CLEAN, raíz/loop/trim; banco de audio importable. No es el render original completo con sus cuatro controles secundarios. |
+| 6 | Synth sampler | **[Lector 246 integrado](sampler246-hybrid.md)**: seis estados, lifecycle y callback completo coincidentes en 4096 bloques/524288 muestras bajo PCM/padding/pitch/factor explícitos. FIR original sin sustitución. Opción, seis voces, reverse, trim/loop/raíz, proyectos/slots/UI. Cache/conversión, reloj, mapa de región, ADSR/velocidad/allocator y salida propios. Controles secundarios completos, voz/ruteo y acústica pendientes. |
 | 7 | Phase | Núcleo Pd y ADSR contrastados; NCO, salida, mezcla y asignación propios. 16 presets CORE. |
 | 8 | Drum sampler | **[Lector 246 integrado](drum246-native.md)**: 4096 bloques/524288 muestras, doce estados, FIR original, ciclo, buffers y guardas contrastados bajo PCM/padding/pitch/ganancia suministrados. Opción sobre el kit, doce voces, trim fino, Gated/One Shot/Loop, estado/mandos/UI y Tremolo. Dinámica de región propia inspirada en el manual; productor original pendiente. Cache/conversión, reloj/pitch/asignación, banco de 24 muestras independientes, alineación/salida propios; fuente única original, ruteo, modulación drum y acústica pendientes. |
 | 9 | D-box | **[D-box 246 tocable](dbox246-native.md)**: 4096 bloques / 524288 muestras, doce estados, contexto y todos los buffers contrastados, bajo pitch/ganancia explícitos y CPU corregida. Dos envolventes internas, ocho mezclas y tablas legibles sin sustituciones. 24 pads con ocho controles independientes, doce voces, Tremolo, automatización/estado/UI. Afinación/mapa de pads/cadencias/allocator/eventos/salida propios; Value/Random drum, ruta completa y calibración acústica pendientes. Drum synth anterior conserva su modelo propio. |

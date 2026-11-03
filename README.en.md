@@ -1,4 +1,7 @@
-# Pocket One 0.34.0
+# Pocket One 0.35.0
+
+**Melodic sampler 246**: reconstructed six-voice FIR reader, reverse and loops.
+Host trims/clock/ADSR remain authored; [scope](docs/sampler246-hybrid.md) · [validation](docs/releases/v0.35.0-validation.json).
 
 **Drum sampler 246**: reconstructed FIR reader, twelve voices and Gated/One Shot/Loop.
 Dynamics remains an authored model; [controls and limits](docs/drum246-native.md) · [validation](docs/releases/v0.34.0-validation.json).

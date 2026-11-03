@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 2 de noviembre de 2026
+# Estado y entregas del proyecto — 3 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 63 % del objetivo completo
+## Avance estimado: aproximadamente 64 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -17,13 +17,13 @@ prototipo tocable con una réplica completa:
 
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
-| Motores originales y sus filtros | 30 % | 84 % | 25,2 puntos |
+| Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
 | Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 64 % | 9,6 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 65 % | 9,75 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈63 %** (63,3 antes de redondear) |
+| Total | 100 % | | **≈64 %** (64,05 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,32 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: sampler de batería 246 (0.34.0)
+## Entrega actual: sampler melódico 246 (0.35.0)
+
+[Sampler melódico](sampler246-hybrid.md): callback original `0x01a51a7c`, seis
+estados de 16 bytes, lifecycle, FIR, pitch escalado y regiones de loop/reverse.
+4096 bloques / 524288 muestras coincidentes bajo PCM/padding/pitch/factor y eventos
+suministrados; coeficientes legibles sin sustitución. Repetición independiente
+idéntica; núcleo/adaptador ASan/UBSan y dos suites independientes aprobados.
+
+Opción sobre 04 / SAMPLER con seis voces, reverse, Root/Loop/Start/Length, proyectos,
+slots y clipboard. Mapa de trims/loop, cache 44,1 kHz (primeros ~6 s), reloj, pitch,
+ADSR/velocidad/allocator y salida son propios. El núcleo contrasta ocho campos;
+no se han expuesto todos sus controles secundarios. La voz original completa y
+la equivalencia acústica siguen pendientes. [Validación](releases/v0.35.0-validation.json).
+Release Standalone/VST3 y 111/111 suites Linux aprobadas; 534 cargas sin heap
+rastreado, estado/slots/clipboard, 64/257 frames y revisión visual aprobados.
+CI nativo y plugins/instaladores pendientes del push verificado.
+
+El CI completo de 0.34.0 pasó las tres plataformas (macOS runtime Intel). La
+preparación drum tiene una referencia candidata en L1 parcialmente protegida;
+no recupera por sí misma el productor de ganancia ni cambia su curva propia.
+
+Estimación **≈64 % ±10 puntos de planificación**, no de fidelidad sonora. Siguen
+los controles secundarios del sampler/voz, dinámica y dispatch drum, ruteo original,
+Pulse/L1, calibración, Ableton real, runtime arm64 y presets completos al final.
+
+## Entrega anterior: sampler de batería 246 (0.34.0)
 
 [Sampler 246](drum246-native.md) añade el lector reconstruido al kit existente:
 doce voces, FIR original, trims finos y modos Gated/One Shot/Loop. Callback completo
@@ -55,7 +80,7 @@ son adaptaciones, sin equivalencia acústica medida. [Validación](releases/v0.3
 109 suites Linux, 522 cargas sin heap rastreado, núcleo/adaptador ASan/UBSan y dos
 suites independientes aprobadas. Vista de onda, cola reportada y regresiones de
 ruteo/tiempo real verificadas. CI del lector/adaptador aprobado en Linux,
-Windows/MSVC y macOS Intel; plugins/instaladores completos en curso. D-box 0.33 pasó su CI completo en las tres plataformas.
+Windows/MSVC y macOS Intel; plugins/instaladores completos también aprobados. D-box 0.33 pasó su CI completo en las tres plataformas.
 
 Estimación **≈63 % ±10 puntos de planificación**. Siguen el productor de ganancia
 dinámica y modulación drum, sampler synth, fuente compartida/voz/ruteo, calibración,

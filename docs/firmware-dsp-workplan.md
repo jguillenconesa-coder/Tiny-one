@@ -532,3 +532,20 @@ El gain stream `0xff801d50` es entrada del lector: no dar por recuperado su
 productor por coincidir el consumidor. No atribuir a L1 un bloqueo sin seguir sus
 dependencias. Voz/ruteo original, Pulse/L1, acústica/Live/arm64 y presets completos
 mantienen sus pendientes y límites anteriores.
+
+## Sampler melódico 246 integrado (0.35.0)
+
+[Callback y límites](sampler246-hybrid.md): `0x01a51a7c` es el renderer completo;
+`0x01a51a66` era un helper y no debe citarse como callback. Seis estados de 16
+bytes, bind/reset/release, FIR original, cursores Q12, loop independiente/reverse
+contrastados en 4096 bloques/524288 muestras con pitch signed32 y padding explícito.
+Las dos ejecuciones originales son idénticas; no hay sustituciones de coeficientes.
+
+Integración opt-in con Start/Length/Root/Loop y Reverse, seis voces y estado/slots/UI.
+El mapa de región, cache/clock/tuning, ADSR/velocity/allocation y salida son propios;
+la integración no expone aún todos los límites/fine de loop que contrasta el núcleo.
+Siguiente entrega: completar controles secundarios y composición de voz del sampler,
+y seguir el productor de dinámica/dispatch drum sin inventar la parte protegida.
+La referencia de preparación de ganancia en `0xffa00700` delimita una candidatura
+L1 parcialmente protegida; no es una función completa recuperada ni prueba de
+ruteo de los cuatro controles. La curva drum propia continúa identificada como tal.

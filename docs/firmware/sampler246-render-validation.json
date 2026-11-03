@@ -1,0 +1,38 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "blocks": 4096,
+  "samples": 524288,
+  "render": "0x01a51a7c",
+  "factory": "0x01a51e34",
+  "reset": "0x01a518f4",
+  "release": "0x01a51964",
+  "bind": "0x01a519a0",
+  "voices": 6,
+  "state_bytes": 16,
+  "input_record_bytes": 636,
+  "output_record_bytes": 968,
+  "artifacts": {
+    "sampler246-input.bin": {
+      "bytes": 2638080,
+      "sha256": "74219fb25592fdd287ec318b70f56a44e7fea977de07b8ca9112ca720a56bf8d"
+    },
+    "sampler246-output.bin": {
+      "bytes": 4000004,
+      "sha256": "ce15d9632af04a7d2b712238cde46943f17d56969c36aad811be9b99aaeac884"
+    }
+  },
+  "model": "GNU BF524 with three writeback patches",
+  "dependencies": "Caller-supplied synthetic PCM with explicit zero padding, pitch stream, scalar pitch factor and lifecycle order; all 1025 legible FIR coefficients converted by original helper. No acoustic equivalence claim.",
+  "cpp_comparison": {
+    "status": "passed",
+    "blocks": 4096,
+    "samples": 524288,
+    "state_pool_bytes": 96,
+    "poststate_handoff": false,
+    "independent_repeat": "Input and output byte-identical in a separate private directory"
+  },
+  "fir_coefficients": 1025,
+  "coefficient_substitutions": [],
+  "pcm_profile": "Four synthetic 4096-frame banks in explicit zero-filled signed-address views of 0x200100 bytes each; PCM begins at view+0x100020. This is a harness dependency, not physical recovered RAM.",
+  "provenance": "Independently authored functional implementation/harness and numerical observations. No firmware, original instructions, decompiled code or factory audio/patches."
+}

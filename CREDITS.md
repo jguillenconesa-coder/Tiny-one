@@ -583,3 +583,17 @@ v2.2 §6.4, not a recovered or numerically validated original envelope producer.
 Tremolo is composed with that supplied gain using our host policy. Original
 shared-source kit layout, dynamics producer, drum LFO dispatch and hardware
 acoustics remain pending. Original source audio is retained for sessions/legacy use.
+
+### Melodic sampler 246
+
+Sampler246.h independently reconstructs the complete isolated six-state reader,
+restart/release and FIR/loop/direction/pitch arithmetic. Existing 1025 numeric FIR
+observations are reused without substitution. Synthetic source/control/state and
+signed-pitch observations compare full pools, audio, unchanged pitch and guards
+under the documented GNU BF524 profile. Explicit zero-filled address views are
+harness inputs, not recovered physical RAM. No firmware, original instructions,
+factory material or decompiled code is distributed. Ghidra/Blackfin assisted private
+inspection, with simulation/comparison bounding the claim. Sampler246Voice.h and
+host integration supply our cache/clock, trim-to-loop map, alignment, output
+adaptation, ADSR/velocity/allocation policies and UI. Original secondary controls,
+full voice/routing, acoustic calibration and drum dynamics remain pending.

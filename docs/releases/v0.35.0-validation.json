@@ -1,0 +1,40 @@
+{
+  "version": "0.35.0",
+  "date": "2026-11-03",
+  "implementation_commit": "pending verified push",
+  "linux_build": "Release Standalone and VST3 passed; final incremental build after visual playhead change passed",
+  "linux_ctest": "111/111 suites passed, 98.65 s",
+  "standalone_tests": "2/2 reader/adapter suites passed, 0.54 s",
+  "realtime": {
+    "workloads": 534,
+    "native_melodic_sampler_workloads": 12,
+    "tracked_callback_heap_calls": 0,
+    "scope": "Forward/reverse, six voices, source cache, trim/direction automation, pitch/filter LFO, sequencer, bus FX and capture stress",
+    "timing": "Shared-host diagnostic; not a driver/Ableton dropout guarantee"
+  },
+  "sanitizers": "ASan/UBSan reader and adapter passed; LeakSanitizer disabled under managed ptrace",
+  "native_ci": {
+    "status": "pending implementation push"
+  },
+  "plugin_package_ci": {
+    "status": "pending implementation push"
+  },
+  "evidence": "../firmware/sampler246-render-validation.json",
+  "previous_ci": {
+    "version": "0.34.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41542068689",
+    "status": "success on all three systems; macOS runtime Intel"
+  },
+  "estimated_progress": "Approximately 64% +/-10 planning points; not acoustic fidelity",
+  "limits": [
+    "Original full voice/ADSR/routing and all secondary sampler controls pending",
+    "Drum gain producer not recovered; existing authored dynamics retained",
+    "Own import/clock/tuning/trim map/velocity/allocator/output policies not acoustically calibrated",
+    "Ableton real, macOS arm64 runtime and full original presets pending"
+  ],
+  "visual": {
+    "status": "Passed; SAMPLER 246 and REVERSE controls, six-voice waveform display and source-root controls inspected",
+    "sha256": "53ce883b42f35faef9f54245633f6714be9f75161f1974251212d50de7ddb911"
+  },
+  "plugin_smoke": "Passed: option/direction state, audio source restoration, slots, clipboard, finite/nonzero audio, reverse effect and native/legacy difference, 64/257 frame block invariance"
+}

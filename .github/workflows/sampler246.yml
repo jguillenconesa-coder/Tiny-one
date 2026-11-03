@@ -1,0 +1,31 @@
+name: Validate melodic sampler reader and host adapter
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/sampler-render/**'
+      - 'research/blackfin/sampler-*'
+      - 'scripts/verify-sampler246.py'
+      - 'scripts/verify-drum246.py'
+      - 'Tests/Sampler246IntegrationTests.cpp'
+      - 'Source/Sampler246*.h'
+      - 'Source/SampleData.h'
+      - 'Source/Engine.h'
+      - 'Source/Drum246*.h'
+      - 'Source/Phase246.h'
+      - 'Source/ReferenceDsp.h'
+      - '.github/workflows/sampler246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/sampler-render -B build-sampler -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-sampler --config Release --parallel 2
+      - run: ctest --test-dir build-sampler -C Release --output-on-failure

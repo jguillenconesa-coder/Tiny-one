@@ -1,0 +1,230 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored harness; proprietary executable bytes remain private.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+SP += -24;
+@SETUP@
+P1.H = samples;
+P1.L = samples;
+imm32 P0,0
+P1 = P1 + P0;
+imm32 P2,68157440
+imm32 P0,2064
+LSETUP(copy0,copy0end) LC0 = P0;
+copy0: R0 = [P1++];
+copy0end: [P2++] = R0;
+P1.H = samples;
+P1.L = samples;
+imm32 P0,8256
+P1 = P1 + P0;
+imm32 P2,70254848
+imm32 P0,2064
+LSETUP(copy1,copy1end) LC0 = P0;
+copy1: R0 = [P1++];
+copy1end: [P2++] = R0;
+P1.H = samples;
+P1.L = samples;
+imm32 P0,16512
+P1 = P1 + P0;
+imm32 P2,72352256
+imm32 P0,2064
+LSETUP(copy2,copy2end) LC0 = P0;
+copy2: R0 = [P1++];
+copy2end: [P2++] = R0;
+P1.H = samples;
+P1.L = samples;
+imm32 P0,24768
+P1 = P1 + P0;
+imm32 P2,74449664
+imm32 P0,2064
+LSETUP(copy3,copy3end) LC0 = P0;
+copy3: R0 = [P1++];
+copy3end: [P2++] = R0;
+
+P4.H = inputs;
+P4.L = inputs;
+P5.H = results;
+P5.L = results;
+next_case:
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,0);
+IF !CC JUMP actions;
+P1 = P4;
+imm32 P2,0xffb00000
+P0 = 24;
+LSETUP(pool,pool_end) LC0 = P0;
+pool: R0 = [P1++];
+pool_end: [P2++] = R0;
+actions:
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,1);
+IF !CC JUMP factory_end;
+R0 = [P0 + 4];
+imm32 P0,0x1a51e34
+CALL (P0);
+imm32 R1,0x02010000
+imm32 P0,0x1a519a0
+CALL (P0);
+factory_end:
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,2);
+IF !CC JUMP reset_end;
+R0 = [P0 + 4];
+R1 = 16;
+R0 *= R1;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 R1,96
+R3 = P4;
+R1 = R1 + R3;
+imm32 P0,0x1a518f4
+CALL (P0);
+reset_end:
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,3);
+IF !CC JUMP release_end;
+R0 = [P0 + 4];
+R1 = 16;
+R0 *= R1;
+imm32 R1,0xffb00000
+R0 = R0 + R1;
+imm32 R1,96
+R3 = P4;
+R1 = R1 + R3;
+imm32 P0,0x1a51964
+CALL (P0);
+release_end:
+imm32 P1,0xffb00000
+P0 = 24;
+LSETUP(before,before_end) LC0 = P0;
+before: R0 = [P1++];
+before_end: [P5++] = R0;
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+R0 >>= 8;
+imm32 R2,0x200100
+R0 *= R2;
+imm32 R1,0x04100020
+R0 = R0 + R1;
+imm32 P0,0x02010008
+[P0] = R0;
+P1 = P4;
+imm32 P0,120
+P1 = P1 + P0;
+R0 = [P1];
+imm32 P0,0x02010004
+[P0] = R0;
+P1 = P4;
+imm32 P0,124
+P1 = P1 + P0;
+imm32 P2,0xff801950
+P0 = 128;
+LSETUP(pitch,pitch_end) LC0 = P0;
+pitch: R0 = [P1++];
+pitch_end: [P2++] = R0;
+imm32 P0,0xffb00060
+imm32 R0,0x13579bdf
+[P0] = R0;
+imm32 P0,0xff802958
+imm32 R0,0x2468ace0
+[P0] = R0;
+P0.H = samples_end;
+P0.L = samples_end;
+imm32 R0,0x789abcde
+[P0] = R0;
+imm32 P0,0xff802bc8
+imm32 R0,0x89abcdef
+[P0] = R0;
+imm32 P0,112
+P0 = P4 + P0;
+R0 = [P0];
+CC = BITTST(R0,5);
+R1.H = audio;
+R1.L = audio;
+IF !CC JUMP aligned;
+R1 += 2;
+aligned:
+P0.H = audio_pointer;
+P0.L = audio_pointer;
+[P0] = R1;
+imm32 P0,116
+P0 = P4 + P0;
+R0 = [P0];
+R2 = 16;
+R0 *= R2;
+imm32 R2,0xffb00000
+R0 = R0 + R2;
+imm32 R2,96
+R3 = P4;
+R2 = R3 + R2;
+imm32 P0,0x1a51a7c
+CALL (P0);
+imm32 P1,0xffb00000
+P0 = 24;
+LSETUP(after,after_end) LC0 = P0;
+after: R0 = [P1++];
+after_end: [P5++] = R0;
+P0.H = audio_pointer;
+P0.L = audio_pointer;
+P1 = [P0];
+P0 = 128;
+LSETUP(audio_save,audio_save_end) LC0 = P0;
+audio_save: R0 = W[P1++] (X);
+audio_save_end: W[P5++] = R0;
+imm32 P1,0xff801950
+P0 = 128;
+LSETUP(pitch_save,pitch_save_end) LC0 = P0;
+pitch_save: R0 = [P1++];
+pitch_save_end: [P5++] = R0;
+imm32 P0,0xffb00060
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,0xff802958
+R0 = [P0];
+[P5++] = R0;
+imm32 P0,636
+P4 = P4 + P0;
+P0.H = inputs_end;
+P0.L = inputs_end;
+CC = P4 == P0;
+IF !CC JUMP next_case;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+R0.H = pcm_args;
+R0.L = pcm_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+coeff_args: .long 1,0xff802154,2052
+io_args: .long 1,results,@BYTES@
+pcm_args: .long 1,samples,33024
+audio_pointer: .long 0
+audio: .space 260
+.align 4
+samples: .incbin "@WORK@/inputs.bin",0,33024
+samples_end: .long 0
+inputs: .incbin "@WORK@/inputs.bin",33024
+inputs_end:
+.section .handles,"aw"
+.long 0x02010008,0,0
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"
+
+.section .pcm,"aw"
+.space 0x800400
