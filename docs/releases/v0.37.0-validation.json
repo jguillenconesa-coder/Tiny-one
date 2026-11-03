@@ -85,7 +85,7 @@
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942157"
     },
     "string": {
-      "status": "in_progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41649942241"
     },
     "voltage": {
