@@ -19,7 +19,7 @@
   },
   "plugin_package_ci": {
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637571007",
-    "status": "in_progress; not yet validated"
+    "status": "success on Linux, Windows and macOS universal; macOS runtime Intel"
   },
   "evidence": "../firmware/sampler246-render-validation.json",
   "previous_ci": {

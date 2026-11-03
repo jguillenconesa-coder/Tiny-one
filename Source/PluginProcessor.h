@@ -70,7 +70,11 @@ public:
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
-    bool sampler246Enabled() const {return int(state.getRawParameterValue("engine")->load())==3&&samplerAudio[0]->load()>.5f;}
+    bool sampler246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==3&&samplerAudio[0]->load()>.5f;}
+    bool sampler246Secondary() const {return samplerAudio[2]->load()>.5f;}
+    bool sampler246EnvelopeEnabled() const {return sampler246Enabled()&&samplerAudio[3]->load()>.5f;}
+    std::array<int16_t,8> sampler246ControlValues() const {std::array<int16_t,8> c{};for(size_t i=0;i<8;++i)c[i]=int16_t(samplerAudio[4+i]->load()*(i==4?16384:1));return c;}
+    void resetSampler246Controls(const pocket::Sample&);
     bool drum246Enabled() const {return int(audioParameters[size_t(Param::engine)]->load())==5&&drumAudio[0]->load()>.5f;}
     int drum246SelectedPad() const {return std::clamp(int(drumAudio[5]->load()),0,23);}
     static juce::String drum246ModeId(int pad){return "drum246Pad"+juce::String(pad+1)+"Mode";}
@@ -133,7 +137,7 @@ public:
     std::atomic<int> playhead{-1},lastNote{60},sequenceNote{-1};
     std::atomic<float> tapePosition{0};
     std::atomic<int> sampleFrames{0};
-    std::array<std::atomic<float>,128> samplePreview{},samplerPreview{};
+    std::array<std::atomic<float>,128> samplePreview{},samplerPreview{};std::atomic<int> samplerFrames{0};
     std::array<std::atomic<float>,4> visualRandom{};
     std::atomic<float> visualEnvelope{0},visualSamplePosition{0},visualLfoPhase{0},visualTime{0},visualLevel{0};
     std::atomic<int> visualVoices{0},visualEnvelopeStage{0},visualFmAlgorithm{0};
@@ -142,7 +146,7 @@ public:
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
-    std::array<std::atomic<float>*,2> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
+    std::array<std::atomic<float>*,16> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
     std::array<std::array<std::atomic<float>*,8>,24> dboxAudio{};std::atomic<float>* dboxPadSelection=nullptr;
     std::array<std::atomic<float>*,146> phaseAudio{};
     juce::ValueTree normalizedPhaseState(juce::ValueTree) const;

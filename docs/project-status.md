@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 64 % del objetivo completo
+## Avance estimado: aproximadamente 65 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 90 % | 18 puntos |
-| Voz, modos de ejecución y ruteo original | 15 % | 30 % | 4,5 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 65 % | 9,75 puntos |
+| Efectos, envolventes y moduladores | 20 % | 91 % | 18,2 puntos |
+| Voz, modos de ejecución y ruteo original | 15 % | 31 % | 4,65 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 68 % | 10,2 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈64 %** (64,05 antes de redondear) |
+| Total | 100 % | | **≈65 %** (64,85 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,27 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: sampler melódico 246 (0.35.0)
+## Entrega actual: controles y voz del sampler (0.36.0)
+
+[Sampler 246](sampler246-hybrid.md) expone ocho campos, incluidos límites de loop
+independientes y fine, dirección y volumen. Dos bancos de mandos, unidades ms/us/%,
+cuatro marcadores, automatización, estado/slots/clipboard y proxies sin editor.
+Añade ADSR 246 opcional y Poly/Mono/Legato/glide con sustain/bend por canal.
+
+El lector y ADSR conservan sus verificaciones originales; la unión, clock,
+allocator, eventos, dither/seed, LOOP gate y salida son propios. Se compara la
+composición explícita en 32768 muestras, estados/dither, y se prueba interpretación
+a seis tasas con ambas envolventes. No es prueba de la voz completa original.
+
+El CI completo de 0.35.0 pasó Linux, Windows y macOS universal (runtime Intel).
+Validación local: **112/112 suites**, tres suites independientes, ASan/UBSan y
+**546 cargas sin heap rastreado** (24 del sampler). Interfaz revisada y estado/audio
+verificados. CI nativo pendiente del push: [evidencia y CI](releases/v0.36.0-validation.json).
+Estimación **≈65 % ±10 puntos de planificación**. Pendientes: ruteo/voz original,
+moduladores del sampler y drum, dinámica de batería, Pulse/L1, acústica/Live/arm64
+y presets completos al final. No hacen falta grabaciones nuevas para este bloque.
+
+## Entrega anterior: sampler melódico 246 (0.35.0)
 
 [Sampler melódico](sampler246-hybrid.md): callback original `0x01a51a7c`, seis
 estados de 16 bytes, lifecycle, FIR, pitch escalado y regiones de loop/reverse.
@@ -55,7 +75,7 @@ la equivalencia acústica siguen pendientes. [Validación](releases/v0.35.0-vali
 Release Standalone/VST3 y 111/111 suites Linux aprobadas; 534 cargas sin heap
 rastreado, estado/slots/clipboard, 64/257 frames y revisión visual aprobados.
 CI lector/adaptador aprobado en Linux, Windows/MSVC y macOS Intel sobre
-`16d5738`; plugins/instaladores completos en curso.
+`16d5738`; plugins/instaladores completos también aprobados.
 
 El CI completo de 0.34.0 pasó las tres plataformas (macOS runtime Intel). La
 preparación drum tiene una referencia candidata en L1 parcialmente protegida;

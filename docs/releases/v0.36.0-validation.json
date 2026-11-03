@@ -1,0 +1,55 @@
+{
+  "version": "0.36.0",
+  "date": "2026-11-03",
+  "implementation_commit": "pending verified push",
+  "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 112,
+    "total": 112,
+    "elapsed_seconds": 125.66
+  },
+  "standalone_tests": "3/3 reader, adapter and performance suites passed, 1.45 s",
+  "explicit_composition": {
+    "samples": 32768,
+    "cases": "Forward/reverse x loop/no loop x 64 blocks of 128 frames; volume/fine/release, full reader state and ADSR state/dither",
+    "scope": "Authored composition of separately verified kernels; not original full voice routing"
+  },
+  "realtime": {
+    "status": "success",
+    "scope": "24 sampler workloads: eight controls, raw ADSR, bank/ADSR selection, direction, Poly/Legato/glide, MIDI, sequencer and bus FX",
+    "workloads": 546,
+    "heap_calls": 0,
+    "sampler_workloads": 24,
+    "timing": "Diagnostic shared-cloud timings; no deadline/dropout guarantee"
+  },
+  "sanitizers": "success: ASan/UBSan integration and performance; leak detection disabled due to managed ptrace restrictions",
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugin_package_ci": {
+    "status": "pending push"
+  },
+  "existing_reader_evidence": "../firmware/sampler246-render-validation.json",
+  "existing_adsr_evidence": "../firmware/adsr246-validation.json",
+  "previous_ci": {
+    "version": "0.35.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41637571007",
+    "status": "success on Linux/Windows/macOS universal; macOS runtime Intel"
+  },
+  "estimated_progress": "Approximately 65% +/-10 planning points; not acoustic fidelity",
+  "limits": [
+    "Reader/ADSR composition, clock, dither seed/cadence, loop permission, velocity/event/allocator/portamento/output remain authored",
+    "Original sampler/drum LFO dispatch and drum gain producer pending",
+    "Acoustic comparison, Ableton real, macOS arm64 runtime and full original presets pending"
+  ],
+  "host_integration": "success: closed-editor proxy routing; all eight controls and ADSR affect audio; host block sizes 64/257; slots, clipboard, project/audio restore; native/own ADSR and performance modes",
+  "visual": {
+    "status": "reviewed: primary, fine/gain and ADSR/performance pages",
+    "images": {
+      "sampler246-native.png": "ff79dbe7c57bffcd4fcaab3ef0cbb6eb9b05a6c6bc7d08d3c751122334748748",
+      "sampler246-envelope.png": "a89f465ca4b6ef70357b37981db748529e78c6c8941c66d351433135a71bd40c",
+      "sampler246-fine.png": "fe4422c9d366ca9dea7e28dffa050d6fddf32cfdd3e80da9cdb348f55c700392"
+    }
+  }
+}

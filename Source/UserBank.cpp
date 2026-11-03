@@ -131,7 +131,7 @@ bool PocketProcessor::applyUserPreset(int index,juce::String& error) {
     if(p.isKit) {for(size_t i=0;i<size_t(p.kitCount);++i) {kit[i]=readSample(p.kit[i],error);if(kit[i].frames.empty()) return false;}}
     else {sample=readSample(p.sample,error);if(sample.frames.empty()) return false;}
     applyPreset(p.isKit?22:18);
-    if(!p.isKit) publishSamplePreview(sample);
+    if(!p.isKit) {resetSampler246Controls(sample);publishSamplePreview(sample);}
     if(p.isKit){const juce::ScopedLock lock(libraryStateLock);for(int pad=0;pad<pocket::kitCapacity;++pad)kitNames[size_t(pad)]=pad<p.kitCount?p.kit[size_t(pad)].getFileName():"Empty pad";}
     if(p.isKit)for(int pad=0;pad<pocket::kitCapacity;++pad)publishPadPreview(pad,kit[size_t(pad)]);
     {const juce::ScopedLock lock(getCallbackLock());if(p.isKit){engine.swapKit(kit,p.kitCount);kitPads.store(p.kitCount);}else {sampleFrames.store(int(sample.frames.size()));engine.swapSample(sample);}}

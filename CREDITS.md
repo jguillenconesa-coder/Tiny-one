@@ -597,3 +597,15 @@ inspection, with simulation/comparison bounding the claim. Sampler246Voice.h and
 host integration supply our cache/clock, trim-to-loop map, alignment, output
 adaptation, ADSR/velocity/allocation policies and UI. Original secondary controls,
 full voice/routing, acoustic calibration and drum dynamics remain pending.
+
+### Sampler controls and explicit voice composition (0.36)
+
+Sampler246Controls.h names/exposes the eight previously reconstructed reader
+fields and reuses the shared verified ADSR kernel/tables. No new firmware bytes
+or factory patches are included. The independent 32768-sample composition test
+compares reader pool/state, envelope state/dither and audio, with a supplied call
+order; it does not validate the original full voice composer. Physical source
+loading/clock, loop permission gate, dither seed/cadence, event/velocity/allocation
+policy, portamento and output adaptation remain authored. Unit conversion,
+parameter banks, waveform markers, host routing and session/UI integration are
+our implementation. Original reader fixtures remain unchanged as a regression.

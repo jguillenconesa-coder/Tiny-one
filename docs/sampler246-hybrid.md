@@ -1,15 +1,43 @@
 # Sampler melódico 246 — lector reconstruido y adaptador propio
 
-En 0.35.0, carga un sonido SAMPLE o tu WAV/AIFF en **04 / SAMPLER** y activa
-**SAMPLER 246**. Se conservan los controles Start/Length del set 1, ADSR del set 2,
-Root Note del host y LOOP. **REVERSE** invierte la lectura. La opción desactivada
-mantiene el reproductor anterior. Cambiar la opción reinicia las voces activas. El material de fábrica del OP-1 no se distribuye.
+En 0.36.0, carga un sonido SAMPLE o tu WAV/AIFF en **04 / SAMPLER** y activa
+**SAMPLER 246**. El lector y sus ocho campos proceden del callback contrastado;
+la composición de voz mantiene adaptaciones propias explícitas. La opción apagada
+vuelve al reproductor anterior. Cambiarla reinicia las voces activas.
 
-Hay seis voces, sustain/bend por canal, robo de la más antigua con fundido propio,
-FX del bus, automatización y conservación de opción/dirección/audio en proyectos,
-slots synth y clipboard. Los mandos contextuales mantienen sus destinos actuales.
-El LFO propio de pitch/filter sigue disponible. Value/Random/Tremolo nativos de
-este motor requieren su dispatch antes de habilitarlos.
+## Controles e interpretación
+
+| Página / banco | Azul | Verde | Blanco | Naranja |
+| --- | --- | --- | --- | --- |
+| Set 1 | Start | Loop In | Loop Out | End |
+| Set 1, FINE / GAIN | Reverse | Loop In Fine | Loop Out Fine | Volume |
+| Set 2, 246 ENVELOPE | Attack | Decay | Sustain | Release |
+
+Start/In/Out/End muestran milisegundos; los ajustes finos, microsegundos; Volume,
+porcentaje de ganancia cuadrática (100 % en el init propio). El host conserva las
+palabras de control, con texto/unidades para editarlas. Reverse también tiene un
+botón directo. La pantalla representa los cuatro límites sobre el audio convertido;
+los marcadores de loop se atenúan cuando LOOP está apagado.
+
+Los límites de loop y sus fracciones son independientes de Start/End. Sitúa In y
+Out dentro de la región para repetir; un End no posterior a Start deja una región
+vacía. El botón LOOP aporta un permiso propio del host: apagado deshabilita el
+loop sin borrar sus puntos. La detección final de repetición y la retirada de nota
+siguen la rutina contrastada. El importador inicializa los puntos con la longitud
+cuantizada del clip; no los reajusta automáticamente al editar otro punto.
+
+**246 ENVELOPE** activa el núcleo ADSR reconstruido compartido. Apagado conserva la
+envolvente propia anterior y sus mandos. En set 2, Poly/Mono/Legato y Glide de
+0–2000 ms usan el adaptador de interpretación del proyecto: prioridad de última
+nota, sustain/bend por canal, vuelta a la tecla anterior y seis voces en Poly.
+Mono reinicia lector/envolvente; Legato conserva la voz mientras las notas solapan.
+Ese allocator, mapa de eventos y portamento no se presentan como el original.
+
+Parámetros, banco de mandos, ADSR y modo de voz se automatizan y guardan en
+proyectos, slots synth y clipboard. Los proxies MIDI cambian de banco y de
+envolvente con el editor cerrado. Root Note y los FX del bus siguen disponibles;
+LFO propio de pitch/filter también. Value/Random/Tremolo nativos del sampler
+requieren su dispatch antes de habilitarlos. No se incluyen presets/audio originales.
 
 ## Contrato reconstruido
 
@@ -47,16 +75,31 @@ cache común puede contener más audio para otros usos; no se borran los origina
 
 El adaptador aporta reloj de 88,2 kHz, afinación relativa a Root Note, cuantización
 de pitch, alineación PCM de ocho frames, filtros/interpolación de salida y drenaje
-de 512 muestras internas. La ADSR, velocidad, allocator y mapa MIDI siguen siendo
-propios; esta entrega no reconstruye la voz completa original. La cola reportada
-incluye la envolvente propia y los efectos del bus.
+de 512 muestras internas. Desde 0.36 se pasan los ocho campos al lector, con el
+permiso LOOP propio descrito arriba. Las palabras coarse/fine mantienen el cálculo
+y sus límites originales; no se convierten en un trim relativo a la longitud del
+archivo. El máximo coarse representa aproximadamente seis segundos, aunque el
+clip importado sea más corto. La zona fuera del audio suministrado contiene ceros.
 
-**El mapa de controles es propio**: Start/Length define una región, y LOOP repite
-esa misma región hasta note-off. El núcleo sí contrasta límites de loop
-independientes y sus fracciones, pero todavía no se exponen todos esos ocho campos
-en el editor/host. La compatibilidad con antiguos proyectos no implica identidad
-sonora entre ambos reproductores. No se ha medido equivalencia acústica ni se ha
-probado esta entrega en Ableton Live real o ejecutado nativamente en macOS arm64.
+La ADSR 246 reutiliza el [núcleo y tablas contrastados](envelope246-research.md).
+**Su composición con este lector, cadencia, dither/seed por voz y mapa de eventos
+son decisiones del adaptador**; no se ha recuperado el mezclador original del
+sampler. La envolvente se aplica a la señal del lector antes de los filtros de
+salida. Volumen del lector, velocidad y mezcla del host conservan sus funciones.
+La cola reportada utiliza el polo de release elegido más el drenaje de salida.
+
+Un nuevo ensayo compone independientemente ambos núcleos en **32768 muestras**:
+forward/reverse, loop/no loop, fracciones, volumen variable y release, comparando
+audio, los 16 bytes del lector, estado ADSR y dither. Es una prueba de esta
+composición explícita; no una ejecución de la voz completa original. La prueba de
+interpretación cubre seis tasas, las dos envolventes, Mono/Legato/glide, afinación
+audible, canales, sustain, cambios de modo y pánico. Los 4096 bloques originales
+del lector de 0.35 se mantienen como regresión sin regenerar sus fixtures.
+
+No se priorizan migraciones de sesiones antiguas. No se ha medido equivalencia
+acústica ni probado esta entrega en Ableton Live real o ejecutado en macOS arm64.
+Quedan el pitch/clock/allocator/ruteo originales, dispatch LFO del sampler y de
+batería, dinámica drum, Pulse/L1 y presets completos al final.
 
 ## Dinámica de batería: investigación de este bloque
 
@@ -70,4 +113,4 @@ reset/release drum y VoiceCtl son rutas de eventos, no prueba de ese productor.
 Se mantiene el contorno propio de batería de 0.34.0. No se adjudica a L1 todo el
 problema por una referencia, ni se sustituye la curva por una hipótesis presentada
 como original. Siguen el productor de dinámica, voz/ruteo, dispatch drum,
-controles secundarios del sampler, Pulse/L1 y calibración. Presets completos al final.
+Pulse/L1 y calibración. Presets completos al final.

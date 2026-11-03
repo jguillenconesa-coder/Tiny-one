@@ -10,7 +10,7 @@ void dot(juce::Graphics& g,float x,float y,float radius) {g.fillEllipse(x-radius
 }
 void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     g.fillAll(juce::Colour(0xff070b10));
-    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?(f.drum246?"DYNAMICS":f.engine==11?"D-BOX II":"ENVELOPE"):f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM HYBRID / 4 OP",f.phase246?"PHASE 246 CORE":"PHASE","STRING 246",f.sampler246?"SAMPLER 246":"SAMPLER","DRUM",f.drum246?"SAMPLER 246":"SAMPLE KIT","DR. WAVE","CLUSTER","DNA HYBRID","VOLTAGE",f.dsynthSecondary?"D-SYNTH II":"D-SYNTH I","D-BOX I"}[std::clamp(f.engine,0,11)];
+    const auto title=f.page>=5?juce::StringArray{"MASTER EQ","MASTER FX","MASTER OUT"}[std::clamp(f.page-5,0,2)]:f.page==4?(f.mode==3?"MIX":"TAPE"):f.page==1?(f.sampler246&&f.phaseEnvelope?"ADSR 246":f.drum246?"DYNAMICS":f.engine==11?"D-BOX II":"ENVELOPE"):f.page==2?"LFO":f.page==3?(f.cwo246?"CWO HYBRID":f.spring246?"SPRING 246":f.phone246?"PHONE 246":f.grid246?"GRID 246":f.delay246?"DELAY 246":f.nitro246?"NITRO HYBRID":f.filter246?"FILTER 246":f.punch246?"PUNCH 246":"ECHO / DRIVE"):juce::StringArray{f.digital246?"DIGITAL 246 CORE":"FM HYBRID / 4 OP",f.phase246?"PHASE 246 CORE":"PHASE","STRING 246",f.sampler246?"SAMPLER 246":"SAMPLER","DRUM",f.drum246?"SAMPLER 246":"SAMPLE KIT","DR. WAVE","CLUSTER","DNA HYBRID","VOLTAGE",f.dsynthSecondary?"D-SYNTH II":"D-SYNTH I","D-BOX I"}[std::clamp(f.engine,0,11)];
     label(g,title,{10,4,172,14},10,colors[2]);label(g,juce::String(f.voices)+" VOICES",{183,5,63,12},8,colors[0]);
     const float activity=std::clamp(f.level*6,0.f,1.f),phase=f.time*.7f;
     juce::Path curve;
@@ -84,8 +84,8 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         label(g,"DRIVE",{17,75,45,11},8,colors[0]);label(g,"ECHO",{111,75,45,11},8,colors[1]);label(g,"OUT",{210,75,35,11},8,colors[2]);
     } else if(f.engine==3) {
         for(size_t i=0;i<f.sample.size();++i){const float x=13+float(i)*224/127,amplitude=f.sample[i]*26;g.setColour(colors[2].withAlpha(.7f));g.drawLine(x,56-amplitude,x,56+amplitude,1);}
-        const float start=f.tone*.9f,end=start+(1-start)*f.color;
-        g.setColour(colors[0]);g.drawVerticalLine(int(13+start*224),27,86);g.setColour(colors[1]);g.drawVerticalLine(int(13+end*224),27,86);
+        if(f.sampler246){for(size_t i=0;i<4;++i){const int16_t fine=i==1?f.samplerControls[5]:i==2?f.samplerControls[6]:0;const float position=std::clamp(float(reference::sampler246Position(f.samplerControls[i],fine)/(4096.*std::max(1,f.samplerFrames))),0.f,1.f);g.setColour(colors[i].withAlpha((i==1||i==2)&&!f.samplerLoop?.35f:1.f));g.drawVerticalLine(int(13+position*224),i==1||i==2?35:27,86);}}
+        else {const float start=f.tone*.9f,end=start+(1-start)*f.color;g.setColour(colors[0]);g.drawVerticalLine(int(13+start*224),27,86);g.setColour(colors[1]);g.drawVerticalLine(int(13+end*224),27,86);}
         if(f.voices>0){g.setColour(colors[3]);g.drawVerticalLine(int(13+f.samplePosition*224),24,89);}
     } else if(isDrumEngine(f.engine)) {
         const int pad=f.engine==5?Engine::kitSlot(f.note,f.kitPads):f.note%12==0||f.note%12==7?0:f.note%12==2||f.note%12==4?1:2;
@@ -136,6 +136,9 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         label(g,"ROUTE "+juce::String(algorithm+1)+" / 9",{91,89,125,10},8,colors[2]);
     }
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
-    for(int i=0;i<4;++i){label(g,f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);label(g,juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||((f.page==1&&f.drum246)||(f.page==0&&f.drum246&&i==3)||(f.page<2&&f.engine==11)||(f.page==0&&(f.engine==0||f.engine==2||f.engine==8||f.engine==9||f.engine==10||f.cluster246||f.drWave246||f.phase246||f.digital246)))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2),{10+i*59,111,58,11},9,colors[size_t(i)]);}
+    for(int i=0;i<4;++i){label(g,f.sampler246&&f.page==0?(f.samplerSecondary?juce::StringArray{"DIR","IN","OUT","GAIN"}:juce::StringArray{"START","IN","OUT","END"})[i]:f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);juce::String value;
+        if(f.sampler246&&f.page==0){if(!f.samplerSecondary)value=juce::String(sampler246Seconds(f.samplerControls[size_t(i)])*1000,2)+" ms";else if(i==0)value=f.samplerControls[4]?"REV":"FWD";else if(i<3)value=juce::String(sampler246Seconds(0,f.samplerControls[size_t(i)+4])*1000000,2)+" us";else value=juce::String(std::pow(f.samplerControls[7]/16384.,2)*100,1)+" %";}
+        else value=juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||((f.page==1&&f.drum246)||(f.page==0&&f.drum246&&i==3)||(f.page<2&&f.engine==11)||(f.page==0&&(f.engine==0||f.engine==2||f.engine==8||f.engine==9||f.engine==10||f.cluster246||f.drWave246||f.phase246||f.digital246)))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2);label(g,value,{10+i*59,111,58,11},9,colors[size_t(i)]);}
+
 }
 }

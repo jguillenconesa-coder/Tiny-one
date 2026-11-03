@@ -549,3 +549,18 @@ y seguir el productor de dinámica/dispatch drum sin inventar la parte protegida
 La referencia de preparación de ganancia en `0xffa00700` delimita una candidatura
 L1 parcialmente protegida; no es una función completa recuperada ni prueba de
 ruteo de los cuatro controles. La curva drum propia continúa identificada como tal.
+
+## Controles y composición del sampler (0.36.0)
+
+Se exponen los ocho campos del lector contrastado, sin normalizar sus posiciones
+a un trim relativo: Start, Loop In/Out, End, Reverse, fine In/Out y volumen.
+LOOP conserva un gate propio. ADSR 246 opcional reutiliza el núcleo compartido;
+32768 muestras de composición independiente comparan lector, ADSR y dither.
+Mono/Legato/glide usa el adaptador propio, con canales, sustain y vuelta de nota.
+No se ha recuperado el compositor de voz original ni el reloj/allocator físico.
+
+Los campos secundarios ya no bloquean el sampler tocable. Próximo frente:
+delimitar el dispatch de moduladores del sampler antes de habilitar destinos,
+y continuar dinámica/dispatch drum. Conservar el rastro L1 concreto y evitar
+presentar la referencia aislada al gain buffer como su productor recuperado.
+Calibración, voz/ruteo original, Pulse/L1, Live/arm64 y presets siguen pendientes.
