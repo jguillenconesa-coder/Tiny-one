@@ -1,7 +1,7 @@
 {
   "version": "0.39.0",
   "date": "2026-11-03",
-  "implementation_commit": "To be recorded with CI URLs after validated push",
+  "implementation_commit": "2f5657f0a09d135545c38cdf04898ae3cac0f415",
   "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -53,10 +53,20 @@
     }
   },
   "native_ci": {
-    "status": "pending push"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705154163",
+    "scope": "Two independent C++ suites on Linux, Windows/MSVC and macOS Intel; no JUCE/private firmware required",
+    "platforms": {
+      "windows-msvc": "success, 2/2 suites",
+      "macos-intel": "success, 2/2 suites",
+      "linux-ci": "success, 2/2 suites",
+      "linux-local": "success, 2/2 suites"
+    }
   },
   "plugin_package_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705153881",
+    "scope": "Full Standalone/VST3 and installers, Linux/Windows/macOS universal; no release publication"
   },
   "previous_plugin_ci": {
     "version": "0.38.0",
@@ -70,5 +80,19 @@
     "FX kind-4 auxiliary ENV, auxiliary ADSR colours, original MIDI receiver/scheduler and complete voice/routing remain outside scope.",
     "Element/Bend/Crank physical sources, shared drum source, Pulse/L1, acoustic calibration, real Ableton Live, native arm64 execution and complete original presets remain pending.",
     "No release/tag or cloud environment configuration change."
-  ]
+  ],
+  "regression_ci": {
+    "drum": {
+      "status": "in_progress; macOS Intel passed, Linux compiling, Windows checkout",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705154095"
+    },
+    "dbox": {
+      "status": "in_progress; Windows/MSVC and Linux passed, macOS Intel checkout",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705154058"
+    },
+    "sampler": {
+      "status": "in_progress; macOS Intel passed, Windows/Linux checkout",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705153977"
+    }
+  }
 }

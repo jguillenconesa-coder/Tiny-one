@@ -50,6 +50,9 @@ pero no se exponen todavía en la integración ni recuperan sus productores.
 
 **119/119 suites Linux**, ASan/UBSan, 678 cargas sin heap rastreado, estado,
 proxies sin editor, timestamps y los ocho FX aprobados; vista MIDI revisada.
+[CI MIDI](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41705154163):
+**2/2 suites en Linux, Windows/MSVC y macOS Intel**. Plugins/instaladores completos
+y algunas regresiones siguen en curso sobre `2f5657f`, sin release publicada.
 
 La estimación se mantiene en **≈67 % ±10**: se cierra una parte acotada de modulación,
 sin nueva medición acústica, recuperación de L1 ni validación Live. Véase la
@@ -77,9 +80,9 @@ Linux: **117/117 suites**, cinco suites independientes, ASan/UBSan y **630 carga
 sin heap rastreado** (48 nuevas de LFO drum/D-box). Estado/audio/proxies, 64/257
 frames y vistas revisados. Las cinco suites nativas pasan en Linux, Windows/MSVC
 y macOS Intel sobre `38f01a6` (include explícito del verificador, sin cambios DSP).
-Plugins/instaladores completos y últimas regresiones aún en curso:
-[evidencia](releases/v0.38.0-validation.json). El CI completo
-de 0.37.0 pasó las tres plataformas (macOS universal, runtime Intel). La carga de
+Plugins/instaladores completos y todas las regresiones aprobados en las tres
+plataformas: [evidencia](releases/v0.38.0-validation.json), macOS universal con
+runtime Intel. La carga de
 `0xff801d50` en L1 sigue sin un productor recuperado; el dispatch nuevo no lo genera.
 Continúan productores de pitch/ganancia, voz/ruteo/scheduler originales, fuente única
 drum de 12 s/24 regiones, moduladores pendientes, Pulse/L1, acústica/Live/arm64 y
