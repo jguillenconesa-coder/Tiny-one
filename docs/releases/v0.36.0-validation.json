@@ -1,7 +1,7 @@
 {
   "version": "0.36.0",
   "date": "2026-11-03",
-  "implementation_commit": "pending verified push",
+  "implementation_commit": "4f7f3a6ed99521ba456ef0b8bb5383f469d99f7c",
   "linux_build": "success: Release Standalone and VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -25,10 +25,15 @@
   },
   "sanitizers": "success: ASan/UBSan integration and performance; leak detection disabled due to managed ptrace restrictions",
   "native_ci": {
-    "status": "pending push"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644457902",
+    "matrix": "Linux, Windows/MSVC, macOS Intel; three reader/adapter/performance suites per platform",
+    "tests": "3/3 per platform"
   },
   "plugin_package_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644458033",
+    "scope": "Standalone/VST3 and installers; Linux, Windows, macOS universal (runtime Intel)"
   },
   "existing_reader_evidence": "../firmware/sampler246-render-validation.json",
   "existing_adsr_evidence": "../firmware/adsr246-validation.json",
@@ -50,6 +55,16 @@
       "sampler246-native.png": "ff79dbe7c57bffcd4fcaab3ef0cbb6eb9b05a6c6bc7d08d3c751122334748748",
       "sampler246-envelope.png": "a89f465ca4b6ef70357b37981db748529e78c6c8941c66d351433135a71bd40c",
       "sampler246-fine.png": "fe4422c9d366ca9dea7e28dffa050d6fddf32cfdd3e80da9cdb348f55c700392"
+    }
+  },
+  "regression_ci": {
+    "drum": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644458036"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41644457495"
     }
   }
 }

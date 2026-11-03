@@ -54,7 +54,9 @@ a seis tasas con ambas envolventes. No es prueba de la voz completa original.
 El CI completo de 0.35.0 pasó Linux, Windows y macOS universal (runtime Intel).
 Validación local: **112/112 suites**, tres suites independientes, ASan/UBSan y
 **546 cargas sin heap rastreado** (24 del sampler). Interfaz revisada y estado/audio
-verificados. CI nativo pendiente del push: [evidencia y CI](releases/v0.36.0-validation.json).
+verificados. El verificador del sampler y las regresiones drum/D-box pasan en
+Linux, Windows/MSVC y macOS Intel. Plugins/instaladores completos en curso:
+[evidencia y CI](releases/v0.36.0-validation.json).
 Estimación **≈65 % ±10 puntos de planificación**. Pendientes: ruteo/voz original,
 moduladores del sampler y drum, dinámica de batería, Pulse/L1, acústica/Live/arm64
 y presets completos al final. No hacen falta grabaciones nuevas para este bloque.
