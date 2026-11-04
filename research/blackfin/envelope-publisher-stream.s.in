@@ -1,0 +1,153 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP,0x03000000
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = output_ptr;
+P1.L = output_ptr;
+[P1] = P0;
+next_case:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P5 = [P0];
+R0 = [P5];
+R1 = R0;
+R2 = 3;
+R1 >>= 2;
+R1 = R1 & R2;
+R1 <<= 3;
+P4.H = state;
+P4.L = state;
+R2 = P4;
+R1 = R1 + R2;
+P4 = R1;
+CC = BITTST (R0,0);
+IF !CC JUMP no_load;
+P1 = P5;
+P1 += 4;
+P2 = P4;
+R0 = [P1++];
+[P2++] = R0;
+R0 = [P1++];
+[P2] = R0;
+imm32 P2,0x01dfc80c
+R0 = [P1];
+[P2] = R0;
+no_load:
+R0 = [P5];
+CC = BITTST (R0,1);
+IF !CC JUMP no_reset;
+imm32 P0,0x01a66bd8
+CALL (P0);
+no_reset:
+P1 = P5;
+P1 += 16;
+P2.H = controls;
+P2.L = controls;
+R0 = [P1++];
+[P2++] = R0;
+R0 = [P1++];
+[P2] = R0;
+P2.H = audio;
+P2.L = audio;
+P3 = 64;
+LSETUP(load_audio,load_audio_end) LC0 = P3;
+load_audio: R0 = [P1++];
+load_audio_end: [P2++] = R0;
+P0.H = guard;
+P0.L = guard;
+imm32 R0,0x2468ace0
+[P0] = R0;
+R0 = P4;
+R1.H = audio;
+R1.L = audio;
+R2.H = controls;
+R2.L = controls;
+imm32 P0,0x01a66922
+CALL (P0);
+P0.H = getter;
+P0.L = getter;
+imm32 R0,0xa5b6c7d8
+[P0] = R0;
+R0 = P0;
+imm32 P0,0x01a66912
+CALL (P0);
+P0.H = output_ptr;
+P0.L = output_ptr;
+P2 = [P0];
+P1.H = state;
+P1.L = state;
+P3 = 8;
+LSETUP(save_state,save_state_end) LC0 = P3;
+save_state: R0 = [P1++];
+save_state_end: [P2++] = R0;
+imm32 P1,0x1dfc80c
+P3 = 1;
+LSETUP(save_published,save_published_end) LC0 = P3;
+save_published: R0 = [P1++];
+save_published_end: [P2++] = R0;
+P1.H = getter;
+P1.L = getter;
+P3 = 1;
+LSETUP(save_getter,save_getter_end) LC0 = P3;
+save_getter: R0 = [P1++];
+save_getter_end: [P2++] = R0;
+P1.H = controls;
+P1.L = controls;
+P3 = 2;
+LSETUP(save_controls,save_controls_end) LC0 = P3;
+save_controls: R0 = [P1++];
+save_controls_end: [P2++] = R0;
+P1.H = audio;
+P1.L = audio;
+P3 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P3;
+save_audio: R0 = [P1++];
+save_audio_end: [P2++] = R0;
+P1.H = guard;
+P1.L = guard;
+P3 = 1;
+LSETUP(save_guard,save_guard_end) LC0 = P3;
+save_guard: R0 = [P1++];
+save_guard_end: [P2++] = R0;
+R0 = [P5];
+[P2++] = R0;
+P0.H = output_ptr;
+P0.L = output_ptr;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+R1 = 280;
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP next_case;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+input_ptr: .long 0
+output_ptr: .long 0
+state: .space 32
+guard: .long 0
+getter: .long 0
+controls: .space 8
+audio: .space 256
+io_args: .long 1,results,@BYTES@
+results: .space @BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .sdram,"aw"
+.incbin "@WORK@/sdram.bin"

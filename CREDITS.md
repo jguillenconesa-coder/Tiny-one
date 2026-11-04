@@ -702,3 +702,14 @@ Fixtures contain synthetic inputs and numeric observations, never firmware or
 decompiled source. Manual section 15.2 informed the four source choices. Virtual
 sensor, host input windows, max voice ADSR and pre-FX level mapping are authored
 adaptations, not recovered original producers. [Scope](docs/element246-hybrid.md).
+
+
+## Envelope publication research (after 0.43.0)
+
+The independent research-only `EnvelopePublisher246` model and its own Blackfin
+probe compare 4,096 complete original rev246 blocks / 524,288 audio halfwords,
+shared publication and reset/getter without patching original code. Ghidra 12.2
+and the corrected GNU BF524 simulator were research tools; no firmware or
+decompiled source is distributed. Fixtures are synthetic inputs and numerical
+observations. The active caller, control semantics and product routing remain
+unvalidated; this model is not linked into Pocket One. [Scope](docs/element246-producers.md).

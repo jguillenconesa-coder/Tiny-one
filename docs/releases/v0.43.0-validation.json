@@ -51,7 +51,7 @@
     "tests": "2/2 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "in progress",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
     "scope": "Full plugins/installers; macOS universal build, runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711621"
   },

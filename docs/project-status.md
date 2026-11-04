@@ -39,6 +39,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación contrastado: publicador de Envelope
+
+[Escritor, reset y getter](element246-producers.md): 4.096 bloques originales /
+524.288 halfwords, estado completo de cuatro llamadores de prueba y palabra
+compartida, con repetición idéntica y ASan/UBSan aprobados. Se observa un getter
+positivo con audio silencioso; no se confunde esa publicación con una ADSR.
+La aplicación continúa en **0.43.0**. El módulo de investigación no se enlaza al
+plugin mientras falte el contrato de llamada activa y sus controles/ruteo/cadencia.
+La estimación sigue en **≈69 % ±10 de planificación**, sin nueva calibración.
+[Evidencia de este bloque](element246-producers-validation.json).
+
 ## Entrega actual: Element (0.43.0)
 
 [Cuatro fuentes Element](element246-hybrid.md): 18.432 callbacks originales de
@@ -48,7 +59,8 @@ saturación de Envelope y el offset directo de FX. Sensor virtual, input sin
 monitorización, máximo ADSR y nivel pre-FX se integran con adaptadores propios;
 ventanas, agregación y normalización no se presentan como productores recuperados.
 Estado, automatización, mandos contextuales con editor cerrado y UI integrados.
-[Evidencia](releases/v0.43.0-validation.json).
+[Evidencia](releases/v0.43.0-validation.json). Los plugins e instaladores completos
+pasan Linux, Windows/MSVC y macOS universal; runtime macOS Intel.
 
 Validación Linux Release: **126/126 suites**, **894 cargas de tiempo real sin
 llamadas al heap rastreadas**, ASan/UBSan del núcleo y adaptador aprobados.

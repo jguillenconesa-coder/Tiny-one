@@ -676,3 +676,18 @@ Siguiente prioridad: trazar los productores de `0xff801056`, `0xff80108c`,
 sustituir sus adaptadores. `0x01a66912` solo lee una palabra suministrada; no
 es su productor validado. Siguen voz/allocator/clock, gain/pitch drum, rutas
 especiales de LFO, layout, Pulse/L1, acústica/Live/arm64 y presets completos.
+
+
+## Publicador de Envelope — investigación posterior a 0.43.0
+
+Se reconstruye y contrasta el escritor `0x01a66922` de `0x01dfc80c`, su getter
+`0x01a66912` y reset `0x01a66bd8`: 4.096 bloques/524.288 halfwords de audio,
+cuatro estados de prueba intercalados y palabra compartida, repetición idéntica.
+El getter es positivo en 1.684 bloques silenciosos: no equivale sin más a una
+ADSR o un detector de amplitud. [Contrato y pendientes](element246-producers.md).
+
+El núcleo queda en research, sin enlace al plugin ni nueva versión/build de
+producto. Antes de integrarlo hay que localizar la llamada activa, entrada de
+audio, controles/defaults, propiedad de los dos estados y orden/cadencia respecto
+a Element. No atribuirle compresión maestra ni bloqueos L1 sin demostrar su ruteo.
+Los otros tres productores siguen pendientes.

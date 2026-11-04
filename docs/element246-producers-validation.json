@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-04",
+  "application_version": "0.43.0",
+  "implementation_commit": "pending verified commit",
+  "production_integration": false,
+  "original_oracle": {
+    "status": "success; independent repeat identical",
+    "blocks": 4096,
+    "audio_samples": 524288,
+    "caller_states": 4,
+    "shared_publisher_words": 1,
+    "published_reset_calls": 111,
+    "getter_calls": 4096,
+    "positive_getter_blocks_on_silence": 1684,
+    "evidence": "firmware/envelope-publisher246-validation.json"
+  },
+  "linux_native": {
+    "status": "success",
+    "passed": 1,
+    "total": 1
+  },
+  "sanitizers": "success: ASan/UBSan whole original fixture suite and publication/reset properties; managed ptrace requires detect_leaks=0",
+  "native_ci": {
+    "status": "pending push",
+    "scope": "one original/contract suite on Linux, Windows/MSVC and macOS Intel"
+  },
+  "product_ci": {
+    "version": "0.43.0",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711621"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
+  "limits": [
+    "Whole original routine compared under explicit inputs; no patches to original code. Four caller identities are synthetic test ownership, not original allocation.",
+    "Active caller, audio routing, control semantics/defaults, lifecycle and cadence remain unvalidated.",
+    "Other Element scalar producers remain pending. No original scheduler, encrypted L1/OTP or physical/acoustic equivalence recovered.",
+    "Research module is not linked into the plugin. No product version change, plugin/installer rebuild, release/tag publication or cloud configuration edit."
+  ]
+}

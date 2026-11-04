@@ -1,0 +1,24 @@
+name: Validate recovered Envelope publisher
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/element-producers/**'
+      - 'research/blackfin/envelope-publisher-*'
+      - 'scripts/verify-envelope-publisher246.py'
+      - 'Source/ReferenceDsp.h'
+      - '.github/workflows/envelope-publisher246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/element-producers -B build-publisher -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-publisher --config Release --parallel 2
+      - run: ctest --test-dir build-publisher -C Release --output-on-failure

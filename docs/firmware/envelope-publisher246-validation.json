@@ -1,0 +1,36 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "callback": "0x01a66922",
+  "published_word": "0x01dfc80c",
+  "reset_published": "0x01a66bd8",
+  "getter": "0x01a66912",
+  "model": "BF524 simulator with three verified writeback patches; not hardware",
+  "blocks": 4096,
+  "samples": 524288,
+  "caller_states": 4,
+  "getter_calls": 4096,
+  "published_reset_calls": 111,
+  "silent_positive_blocks": 1695,
+  "silent_positive_getter_blocks": 1684,
+  "artifacts": {
+    "envelope-publisher246-input.bin.gz": {
+      "bytes": 71419,
+      "raw_bytes": 1146880,
+      "sha256": "7818483ca04f7e3f203ed698d39dd8fee38a7288b11398ac822b017bac05fef8"
+    },
+    "envelope-publisher246-output.bin.gz": {
+      "bytes": 447040,
+      "raw_bytes": 1277952,
+      "sha256": "07afd1225dc7a496ee0796a19c39bf150292ff1c12a1c6c7065b63e94cd91341"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Explicit four two-word caller states sharing one publisher word, four signed controls and 128 audio halfwords. Full original routine, reset and getter executed without patching original code.",
+    "No recovered active caller, input routing, clock, control semantics or hardware acoustic equivalence. No production integration."
+  ]
+}
