@@ -148,7 +148,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::sampler246EnvelopeIds[i],1},juce::String("Sampler ADSR 246: ")+juce::StringArray{"Attack","Decay","Sustain","Release"}[int(i)],0,i==2?32767:16383,pocket::sampler246EnvelopeDefaults[i]));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"drum246LfoBank",1},"Drum LFO: Secondary Target Bank",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"midi246Enabled",1},"MIDI LFO: Enabled",false));
-    const juce::StringArray midiRoutes{"Off","Instrument Blue","Instrument Green","Instrument White","Instrument Orange","Instrument 5","Instrument 6","Instrument 7","Instrument 8","ADSR Attack","ADSR Decay","ADSR Sustain","ADSR Release","FX Blue","FX Green","FX White","FX Orange"};
+    const juce::StringArray midiRoutes{"Off","Instrument Blue","Instrument Green","Instrument White","Instrument Orange","Instrument 5","Instrument 6","Instrument 7","Instrument 8","ADSR Attack","ADSR Decay","ADSR Sustain","ADSR Release","FX Blue","FX Green","FX White","FX Orange","FX Input Bipolar","FX Input Bipolar Steep"};
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::midi246Ids[i],1},"MIDI LFO: CC "+juce::String(int(i+1))+" Destination",midiRoutes,int(i+1)));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Enabled",1},"Bend LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[0],1},"Bend LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
@@ -553,7 +553,8 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
         outputGain+=outputSmoothing*(outputTarget-outputGain);
         // Master gain follows the complete FX bus so it also controls retained tails.
         if(std::abs(outputTarget-outputGain)<(outputTarget==0?1.e-7f:1.e-5f))outputGain=outputTarget;
-        const float value=outputGain*outputFilter.next(mixed,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246||p.spring246||p.cwo246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246,p.spring246,p.cwo246);blockPeak=std::max(blockPeak,std::abs(value));
+        const auto midiFxAudio=p.midi246?pocket::Midi246FxAudio(p.midi246Routes,engine.midiControllers()):pocket::Midi246FxAudio{};
+        const float value=outputGain*outputFilter.next(mixed,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246||p.spring246||p.cwo246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246,p.spring246,p.cwo246,&midiFxAudio);blockPeak=std::max(blockPeak,std::abs(value));
         for(int ch=0;ch<buffer.getNumChannels();++ch) buffer.setSample(ch,i,value);
         if(++scopeCounter>=8) {scopeCounter=0; scope[size_t(scopeIndex)].store(value,std::memory_order_relaxed); scopeIndex=(scopeIndex+1)%256;}
     }

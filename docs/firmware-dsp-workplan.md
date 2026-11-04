@@ -720,3 +720,17 @@ mismos barridos o la composición sintética sin una nueva candidata; continuar
 con dependencias legibles y rutas de voz/modulación de la matriz que permitan un
 bloque verificable independiente. No hacen falta nuevas grabaciones para ese
 trabajo.
+
+
+## MIDI FX Input — integración híbrida 0.44.0
+
+Las curvas de audio del callback MIDI FX `0x019cd104` (kinds 2/5, destino 3,
+colores 2/3) se conectan como destinos FX Input Bipolar/Steep de CC1–4. El
+puente coincide con 21.568 muestras de los fixtures originales existentes y se
+conservan los 6.144 callbacks completos. No son nuevas ejecuciones del firmware.
+La posición antes del núcleo FX, la lectura por muestra interna, mezcla y reloj
+son propios del host. [Alcance](midi246-fx-input.md). Punch/bypass no se modifican.
+
+Siguiente prioridad verificable: adaptadores de gain/pitch de voz ya contrastados,
+con definición explícita de sus buffers y ciclo de vida antes de conectarlos.
+No reutilizar esta entrada como Envelope original ni afirmar scheduler recuperado.

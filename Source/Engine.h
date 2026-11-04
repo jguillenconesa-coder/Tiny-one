@@ -77,6 +77,7 @@ class Engine {
 public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
+    const std::array<uint32_t,4>& midiControllers() const noexcept {return midiCC;}
     void midiController(int number,int value) noexcept {if(number>=1&&number<=4)midiCC[size_t(number-1)]=uint32_t(std::clamp(value,0,127));}
     float element246Level() const noexcept {return elementControl.level();}
     float crank246Phase() const noexcept {return crankControl.phase();}

@@ -69,3 +69,18 @@ propias. No se recuperan sus productores originales ni su composición por voz.
 Solo se conectan parámetros Instrument/ADSR/FX; especiales gain/pitch/audio y FX
 kind 4 siguen excluidos. El PDC/volumen maestro se mantienen y los LFO manuales
 tienen prioridad sobre el filtro implícito del LFO propio. [Alcance](element246-hybrid.md).
+
+
+## MIDI LFO: entrada de FX — 0.44.0
+
+Los destinos FX Input Bipolar/Steep multiplican la muestra interna Q15 después
+del filtro/remuestreo de entrada y antes del núcleo Filter/Nitro/Delay/Grid/Phone/
+Spring/CWO. Se leen los CC retenidos en cada muestra interna, con los cuatro
+streams en orden. Esta posición y su reloj son decisiones del host; las curvas
+y multiplicaciones están contrastadas con la rama original de audio FX MIDI.
+
+El camino seco de bypass/transición permanece intacto. Punch no recibe esta ruta.
+La señal ya mezclada puede incluir instrumento, entrada monitorizada, cinta,
+metrónomo, EQ y eco maestro según los controles previos. El volumen maestro sigue
+después del bus y escala también sus colas. CC64 cierra la entrada, sin borrar las
+memorias del efecto; pánico sí las borra. [Alcance](midi246-fx-input.md).

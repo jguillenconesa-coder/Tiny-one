@@ -7,9 +7,38 @@
 #include <memory>
 #include <stdexcept>
 void check(bool ok,const char* message) { if(!ok) throw std::runtime_error(message); }
+static void testMidiFxInputAudio(const char* screenshot){
+ const char* effects[]={"filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled","cwo246Enabled"};
+ auto render=[&](int fx,int route,double rate,int block,bool withCC){
+  auto p=std::make_unique<PocketProcessor>();p->applyDrWave246Init();auto& raw=p->phaseParameters();raw.getParameter(effects[fx])->setValueNotifyingHost(1);raw.getParameter("midi246Enabled")->setValueNotifyingHost(1);
+  for(size_t i=0;i<4;++i){auto* target=raw.getParameter(pocket::midi246Ids[i]);target->setValueNotifyingHost(target->convertTo0to1(i==0?float(route):0));}
+  auto* monitor=p->state.getParameter("inputMonitor");monitor->setValueNotifyingHost(1);p->prepareToPlay(rate,block);
+  check(p->midi246RouteAvailable(route),"MIDI FX audio route not available on output FX");const int latency=p->getLatencySamples();std::vector<float> result;result.reserve(9216);
+  for(int start=0;start<9216;start+=block){const int n=std::min(block,9216-start);juce::AudioBuffer<float> audio(2,n);for(int j=0;j<n;++j){const float x=float(.2*std::sin((start+j)*.071));audio.setSample(0,j,x);audio.setSample(1,j,x*.5f);}
+   juce::MidiBuffer midi;if(start==0)midi.addEvent(juce::MidiMessage::noteOn(1,60,.8f),37);
+   if(withCC)for(const auto& event:std::array<std::pair<int,int>,3>{{{1537,96},{4099,0},{6145,127}}})if(event.first>=start&&event.first<start+n)midi.addEvent(juce::MidiMessage::controllerEvent(7,1,event.second),event.first-start);
+   if(8193>=start&&8193<start+n)midi.addEvent(juce::MidiMessage::allSoundOff(1),8193-start);
+   p->processBlock(audio,midi);for(int j=0;j<n;++j){const float v=audio.getSample(0,j);check(v==audio.getSample(1,j)&&std::isfinite(v)&&std::abs(v)<8,"MIDI FX audio output invalid");result.push_back(v);}
+  }
+  check(p->getLatencySamples()==latency,"MIDI FX audio changed plugin latency");for(size_t i=8193;i<result.size();++i)check(result[i]==0,"MIDI FX audio panic retains history/latch");return result;
+ };
+ for(double rate:{44100.,96000.})for(int fx=0;fx<7;++fx)for(int route:{17,18}){
+  const auto a=render(fx,route,rate,64,true),b=render(fx,route,rate,257,true),neutral=render(fx,route,rate,64,false);
+  check(a==b,"MIDI FX audio event timing depends on host buffers");check(std::equal(a.begin(),a.begin()+1537,neutral.begin()),"MIDI FX audio CC takes effect before timestamp");check(a!=neutral,"MIDI FX audio CC does not change plugin audio");
+ }
+ auto p=std::make_unique<PocketProcessor>();p->applyDrWave246Init();auto& raw=p->phaseParameters();raw.getParameter("midi246Enabled")->setValueNotifyingHost(1);p->setScreenPage(2);
+ check(!p->midi246RouteAvailable(17),"MIDI audio route available without an output FX");raw.getParameter("punch246Enabled")->setValueNotifyingHost(1);check(!p->midi246RouteAvailable(18),"MIDI input route incorrectly targets synth Punch");raw.getParameter("filter246Enabled")->setValueNotifyingHost(1);
+ for(size_t i=0;i<4;++i){const int route=i%2?18:17;auto& proxy=p->screenKnob(int(i));proxy.setValueNotifyingHost(float(route)/18);check(p->midi246Routes()[i]==route,"FX audio proxy needs an editor");}
+ if(screenshot){std::unique_ptr<juce::AudioProcessorEditor> ui(p->createEditor());juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream file(juce::File(juce::String::fromUTF8(screenshot)).getSiblingFile("midi-fx-input-native.png"));check(png.writeImageToStream(shot,file),"MIDI FX input screenshot failed");}
+ juce::MemoryBlock saved;p->getStateInformation(saved);auto q=std::make_unique<PocketProcessor>();q->setStateInformation(saved.getData(),int(saved.getSize()));check(q->midi246Routes()==p->midi246Routes(),"FX audio routes lost in project");
+ juce::String error;check(p->assignSoundSlot(false,1),"FX audio slot save failed");p->applyPreset(0);check(p->recallSoundSlot(false,1,error)&&p->midi246Routes()==q->midi246Routes(),"FX audio routes lost in slot");check(p->copySound(error),"FX audio clipboard copy failed");p->applyPreset(0);check(p->pasteSound(error)&&p->midi246Routes()==q->midi246Routes(),"FX audio routes lost in clipboard");
+ std::cout<<"PASS: MIDI FX input audio on seven FX/two curves/two rates, CC timestamps, exact 64/257 audio, PDC, panic, availability, editor-free proxies, projects/slots/clipboard\n";
+}
+
 int main(int argc,char** argv) {
  try {
   juce::ScopedJuceInitialiser_GUI init;
+  testMidiFxInputAudio(argc>1?argv[1]:nullptr);
   auto p=std::make_unique<PocketProcessor>(); p->prepareToPlay(48000,256);
   juce::StringArray parameterNames;
   for(auto* parameter:p->getParameters()){const auto name=parameter->getName(100);check(!name.isEmpty()&&name.contains(":"),"Host parameter lacks a descriptive category");check(!parameterNames.contains(name),"Ambiguous duplicate MIDI mapping names");parameterNames.add(name);}
@@ -17,13 +46,13 @@ int main(int argc,char** argv) {
   {
    auto synth=std::make_unique<PocketProcessor>();synth->applyPreset(0);auto& raw=synth->phaseParameters();raw.getParameter("midi246Enabled")->setValueNotifyingHost(1);synth->setScreenPage(2);
    check(synth->midi246Enabled(),"MIDI LFO unavailable on FM");
-   for(size_t i=0;i<4;++i){check(synth->screenKnob(int(i)).followedParameter()==raw.getParameter(pocket::midi246Ids[i]),"MIDI proxy requires an editor");synth->screenKnob(int(i)).setValueNotifyingHost(float(9+i)/16);check(synth->midi246Routes()[i]==int(9+i),"MIDI proxy destination write failed");}
+   for(size_t i=0;i<4;++i){check(synth->screenKnob(int(i)).followedParameter()==raw.getParameter(pocket::midi246Ids[i]),"MIDI proxy requires an editor");synth->screenKnob(int(i)).setValueNotifyingHost(float(9+i)/18);check(synth->midi246Routes()[i]==int(9+i),"MIDI proxy destination write failed");}
    check(std::isinf(synth->getTailLengthSeconds()),"MIDI Release route under-reports possible tail");
    juce::MemoryBlock saved;synth->getStateInformation(saved);auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));check(restored->midi246Enabled()&&restored->midi246Routes()==synth->midi246Routes(),"MIDI project persistence failed");
    juce::String error;check(synth->copySound(error),"MIDI clipboard copy failed");raw.getParameter("midi246Enabled")->setValueNotifyingHost(0);check(synth->pasteSound(error),"MIDI clipboard paste failed");check(synth->midi246Enabled()&&synth->midi246Routes()[3]==12,"MIDI clipboard lost routes");
    check(synth->assignSoundSlot(false,0),"MIDI slot assignment failed");synth->applyPreset(2);check(!synth->midi246Enabled(),"Preset leaves MIDI LFO enabled");check(synth->recallSoundSlot(false,0,error),"MIDI slot recall failed");check(synth->midi246Enabled()&&synth->midi246Routes()[3]==12,"MIDI slot lost routes");
    auto* engine=synth->state.getParameter("engine");engine->setValueNotifyingHost(engine->convertTo0to1(3));raw.getParameter("sampler246Enabled")->setValueNotifyingHost(0);check(!synth->midi246Enabled(),"Legacy sampler falsely advertises original Instrument routes");check(synth->screenKnob(0).followedParameter()!=raw.getParameter(pocket::midi246Ids[0]),"Unavailable MIDI proxy retained without editor");raw.getParameter("filter246Enabled")->setValueNotifyingHost(1);check(synth->midi246Enabled()&&synth->screenKnob(0).followedParameter()==raw.getParameter(pocket::midi246Ids[0]),"FX-only MIDI proxy requires editor");check(!synth->midi246RouteAvailable(1)&&synth->midi246RouteAvailable(13),"FX-only MIDI availability is wrong");
-   auto render=[&](int block,bool withCC,int fx=-1){auto instrument=std::make_unique<PocketProcessor>();instrument->applyPreset(0);auto& r=instrument->phaseParameters();r.getParameter("midi246Enabled")->setValueNotifyingHost(1);for(size_t i=0;i<4;++i)r.getParameter(pocket::midi246Ids[i])->setValueNotifyingHost(float(i+1+(fx>=0?12:0))/16);if(fx>=0){const char* ids[]={"punch246Enabled","filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled","cwo246Enabled"};r.getParameter(ids[fx])->setValueNotifyingHost(1);}for(const char* id:{"effect","drive","masterEcho","lfoDepth","sequencer"})instrument->state.getParameter(id)->setValueNotifyingHost(0);instrument->prepareToPlay(48000,block);std::vector<float> result;
+   auto render=[&](int block,bool withCC,int fx=-1){auto instrument=std::make_unique<PocketProcessor>();instrument->applyPreset(0);auto& r=instrument->phaseParameters();r.getParameter("midi246Enabled")->setValueNotifyingHost(1);for(size_t i=0;i<4;++i)r.getParameter(pocket::midi246Ids[i])->setValueNotifyingHost(float(i+1+(fx>=0?12:0))/18);if(fx>=0){const char* ids[]={"punch246Enabled","filter246Enabled","nitro246Enabled","delay246Enabled","grid246Enabled","phone246Enabled","spring246Enabled","cwo246Enabled"};r.getParameter(ids[fx])->setValueNotifyingHost(1);}for(const char* id:{"effect","drive","masterEcho","lfoDepth","sequencer"})instrument->state.getParameter(id)->setValueNotifyingHost(0);instrument->prepareToPlay(48000,block);std::vector<float> result;
     for(int offset=0;offset<8192;offset+=block){const int count=std::min(block,8192-offset);juce::AudioBuffer<float> buffer(2,count);buffer.clear();juce::MidiBuffer midi;if(!offset)midi.addEvent(juce::MidiMessage::noteOn(1,60,.8f),0);if(withCC&&offset<=1537&&offset+count>1537){midi.addEvent(juce::MidiMessage::controllerEvent(2,1,80),1537-offset);midi.addEvent(juce::MidiMessage::controllerEvent(7,2,48),1537-offset);midi.addEvent(juce::MidiMessage::controllerEvent(3,3,70),1537-offset);midi.addEvent(juce::MidiMessage::controllerEvent(9,4,58),1537-offset);}instrument->processBlock(buffer,midi);for(int i=0;i<count;++i)result.push_back(buffer.getSample(0,i));}
     if(withCC){check(instrument->visualMidiCC[0].load()==80&&instrument->visualMidiCC[3].load()==58,"Four-channel MIDI latch failed");juce::AudioBuffer<float> buffer(2,64);buffer.clear();juce::MidiBuffer midi;midi.addEvent(juce::MidiMessage::allSoundOff(1),0);instrument->processBlock(buffer,midi);for(auto& value:instrument->visualMidiCC)check(value.load()==64,"MIDI panic failed to neutralize CC latch");}
     return result;};

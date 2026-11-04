@@ -1,4 +1,9 @@
-# Pocket One 0.43.0
+# Pocket One 0.44.0
+
+**MIDI LFO hacia la entrada de FX**: dos curvas bipolares para los siete efectos
+del bus mono, con automatización, CC por timestamp, estado y mandos contextuales.
+Multiplicadores originales contrastados; ruteo y reloj del host propios.
+[Uso y límites](docs/midi246-fx-input.md) · [validación](docs/releases/v0.44.0-validation.json).
 
 **Element**: sensor virtual, entrada de audio, envolvente y nivel con destinos
 Instrument/ADSR/FX, automatización y estado. 18.432 callbacks originales contrastados

@@ -39,6 +39,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega actual: MIDI LFO hacia la entrada de FX (0.44.0)
+
+[Dos curvas de entrada](midi246-fx-input.md) para Filter/Nitro/Delay/Grid/Phone/
+Spring/CWO, con orden secuencial de CC, automatización, mandos sin editor y
+persistencia. El puente coincide con 21.568 muestras de los fixtures MIDI
+originales existentes; se conserva la comparación completa de 6.144 callbacks.
+La ubicación antes del FX mono y el muestreo de los CC por muestra interna son
+adaptaciones propias. No modifica bypass/PDC/volumen maestro ni borra colas.
+[Pruebas y CI](releases/v0.44.0-validation.json). La estimación sigue en
+**≈69 % ±10 de planificación**, sin nueva medición acústica.
+
+El contrato activo de Envelope de Element, gain/pitch de voz, rutas especiales
+restantes, ruteo/scheduler original, Pulse/L1, layout, acústica, Ableton real,
+firma/notarización y presets originales completos siguen pendientes. La evidencia
+ARM64 anterior corresponde a su revisión concreta; validar la nueva antes de
+extenderle el resultado. No hacen falta nuevas grabaciones para este bloque.
+
 ## Ejecución nativa Apple Silicon verificada
 
 [macOS 26 ARM64](native-macos-arm64.md): **126/126 suites del producto y 2/2 de
@@ -76,7 +93,7 @@ plugin mientras falte el contrato de llamada activa y sus controles/ruteo/cadenc
 La estimación sigue en **≈69 % ±10 de planificación**, sin nueva calibración.
 [Evidencia de este bloque](element246-producers-validation.json).
 
-## Entrega actual: Element (0.43.0)
+## Entrega anterior: Element (0.43.0)
 
 [Cuatro fuentes Element](element246-hybrid.md): 18.432 callbacks originales de
 LfoReRoute, comparación completa de entradas/controles/targets/retornos/buffers y

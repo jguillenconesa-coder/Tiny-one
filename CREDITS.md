@@ -729,3 +729,13 @@ the actual standalone process. They distribute no Apple SDK or firmware code.
 The native CI architecture guard, full product suite and Envelope research suites
 complement the existing universal packaging checks; no Live/audio-device or
 acoustic equivalence is inferred. [Scope](docs/native-macos-arm64.md).
+
+
+## MIDI FX input audio — 0.44.0
+
+The two original MIDI FX audio curves retain their wrapping/saturating Q15
+arithmetic and stream order. The per-sample host bridge is compared against 21,568
+audio observations from the existing 6,144-call oracle, not a new firmware run.
+Placement before the mono FX bus, sample clock and CC receiver policy are authored
+adaptations; no original audio routing or acoustic equivalence is inferred.
+[Scope](docs/midi246-fx-input.md).

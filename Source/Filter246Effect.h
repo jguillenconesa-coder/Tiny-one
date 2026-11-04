@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
 #include "Filter246.h"
+#include "Midi246.h"
 #include "Filter246Tables.h"
 #include "Filter246Controls.h"
 #include "Nitro246.h"
@@ -51,7 +52,7 @@ struct Filter246Effect {
         reset();
     }
     void reset() noexcept {cwoState={};cwoMemory.fill(0);springState={};springMemory.fill(0);springPending=0;state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);phoneState={};phoneMemory.fill(0);wasNitro=wasDelay=wasGrid=wasPhone=wasSpring=wasCwo=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
-    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false) noexcept {
+    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false,const Midi246FxAudio* midiAudio=nullptr) noexcept {
         if(dry.empty())return input;
         if(!initialized){mix=enabled?1.f:0.f;initialized=true;}
         if(enabled&&(!wasEnabled||nitro!=wasNitro||delay!=wasDelay||grid!=wasGrid||phone!=wasPhone||spring!=wasSpring||cwo!=wasCwo)){cwoState={};if(cwo)cwoMemory.fill(0);springState={};springPending=0;if(spring)springMemory.fill(0);phoneState={};if(phone)phoneMemory.fill(0);state={};nitroState={};delayState={};gridState={};if(delay)delayMemory.fill(0);if(grid)gridMemory.fill(0);awake=false;firstSignal=firstSignalHost=~uint64_t(0);dcInput=dcOutput=0;}wasEnabled=enabled;wasNitro=nitro;wasDelay=delay;wasGrid=grid;wasPhone=phone;wasSpring=spring;wasCwo=cwo;if(input!=0){awake=true;if(enabled&&firstSignalHost==~uint64_t(0))firstSignalHost=hostPosition;}
@@ -62,6 +63,7 @@ struct Filter246Effect {
             const double fraction=hostPosition==0?1:std::clamp(double(inputPosition)*ratio-(double(hostPosition)-1),0.,1.);
             const auto sample=previous+(filtered-previous)*fraction;
             block[cursor++]=int16_t(std::clamp(std::lround(sample*32768),-32768l,32767l));
+            if(enabled&&midiAudio)block[cursor-1]=midiAudio->apply(block[cursor-1]);
             if(enabled&&block[cursor-1]!=0&&firstSignal==~uint64_t(0))firstSignal=inputPosition;
             if(cursor==64){
                 if(enabled&&awake){std::array<int16_t,4> bounded;for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),cwo?cwo246Min[i]:spring?spring246Min[i]:phone?phone246Min[i]:grid?grid246Min[i]:delay?delay246Min[i]:nitro?nitro246Min[i]:filter246Min[i],cwo?cwo246Max[i]:spring?spring246Max[i]:phone?phone246Max[i]:grid?grid246Max[i]:delay?delay246Max[i]:nitro?nitro246Max[i]:filter246Max[i]));if(cwo)reference::cwo246HybridBlock(cwoState,bounded,cwoMemory,block,meters);else if(spring)reference::spring246Block(springState,bounded,reference::filter246Frequency,reference::spring246Low,reference::spring246Constants,springMemory,springPending,block,meters);else if(phone)reference::phone246Block(phoneState,bounded,reference::delay246Interpolation,reference::saturate32(int64_t(2147483647)-reference::filter246Frequency[0]),reference::phone246LowCoefficient,phoneMemory,block,meters);else if(grid){if(!gridState.scanFits(2*(bounded[0]/128),2*(bounded[1]/128)))gridState.reset();reference::grid246Block(gridState,bounded,sine,gridMemory,block,meters);}else if(delay)reference::delay246Block(delayState,bounded,reference::delay246Interpolation,delayMemory,block,meters);else if(nitro)reference::nitro246HybridBlock(nitroState,bounded,reference::nitro246HybridMix,reference::filter246Frequency,sine,block,meters);else reference::filter246Block(state,bounded,reference::filter246Mix,reference::filter246Frequency,sine,block,meters);}

@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-04",
+  "version": "0.44.0",
+  "implementation_commit": "pending verified commit",
+  "original_reference": {
+    "calls": 6144,
+    "fx_audio_samples_through_bridge": 21568,
+    "scope": "Existing original MIDI fixtures; no new firmware executions. Complete supplied state/buffers/returns still compared."
+  },
+  "linux_release": {
+    "status": "success across all 127 unique suites; full clean repeat pending",
+    "passed": 127,
+    "total": 127,
+    "scope": "Initial full run followed by passing focused plugin_smoke/realtime/midi246_audio after corrections to new test setup; product source unchanged."
+  },
+  "native_midi": {
+    "passed": 3,
+    "total": 3,
+    "bus_cases": 112,
+    "engine_parameter_cases": 252
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 978,
+    "new_fx_input_workloads": 84,
+    "heap_calls": 0,
+    "scope": "Linux C++ new/delete and wrapped C allocation/free calls tracked inside callback; shared-CI/cloud timing is diagnostic, not dropout certification."
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": "ASan/UBSan: original MIDI fixtures, engine parameter integration and FX audio adapter; final retained-tail test repeated under sanitizers. detect_leaks=0 under managed ptrace."
+  },
+  "visual": {
+    "status": "reviewed final FX IN +/- and FX IN STEEP labels, four CCs and LFO selection",
+    "sha256": {
+      "midi-fx-input-native.png": "c271956566f3b91a389f605f076bd6751c0a0bf5592d93ef5c062296fd86a143"
+    }
+  },
+  "plugin_integration": {
+    "status": "success",
+    "scope": "Seven native output FX x two curves x two rates, 64/257 exact output, CC timestamps, PDC, stereo, panic, disabled/Punch availability, editor-free proxies, project/slot/clipboard persistence."
+  },
+  "native_midi_ci": {
+    "status": "pending push"
+  },
+  "plugins_installers_ci": {
+    "status": "pending push"
+  },
+  "native_macos_arm64_ci": {
+    "status": "pending dispatch"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
+  "limits": [
+    "FX audio arithmetic and stream order are recovered; per-internal-sample CC sampling and placement before mono FX kernel are authored host adapters.",
+    "CC64 closes the FX input, not the whole output. Stored tails and dry bypass/transition retain the existing behavior.",
+    "No recovered voice gain/pitch buffer producer, complete original scheduling/routing, FX kind 4, Element active publisher caller, L1 or OTP.",
+    "No Ableton Live, physical audio-device/dropout, signing/notarization or acoustic-equivalence claim. No release/tag publication or cloud configuration change."
+  ]
+}

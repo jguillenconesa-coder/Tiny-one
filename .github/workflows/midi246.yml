@@ -16,6 +16,7 @@ on:
       - 'Source/Sampler246Modulation.h'
       - 'Source/ReferenceDsp.h'
       - 'Source/Engine.h'
+      - 'Source/Filter246Effect.h'
       - 'Source/SharedDrum246.h'
       - 'Tests/Midi246*.cpp'
       - 'Tests/RunMidi246Tests.py'
