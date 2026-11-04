@@ -703,3 +703,20 @@ destinos diferentes en 250 bloques; el orden del hardware sigue sin validarse.
 Estado/audio completos, repetición idéntica y sanitizadores aprobados. La búsqueda
 acotada de CALL/literales/inmediatos no localiza el llamador; no atribuir a L1 ni
 a compresión maestra. Sigue pendiente el contrato activo antes de integrar.
+
+
+## Validación nativa ARM64 y estado del rastreo
+
+Se verifica el producto 0.43.0 en macOS 26 ARM64: 126/126 suites, más las dos de
+publicador/composición Envelope, carga real del VST3 y arranque del standalone.
+[Alcance y evidencia](native-macos-arm64.md). No equivale a validación en Ableton,
+dispositivos de audio, instalador o todos los macOS anteriores.
+
+La revisión adicional de alias con base/desplazamiento no localiza un nuevo
+productor activo verificable de Element. El llamador del publicador, controles,
+audio y cadencia siguen sin resolverse; no se atribuyen automáticamente a L1.
+Mantener el núcleo fuera del plugin hasta tener ese contrato. Evitar repetir los
+mismos barridos o la composición sintética sin una nueva candidata; continuar
+con dependencias legibles y rutas de voz/modulación de la matriz que permitan un
+bloque verificable independiente. No hacen falta nuevas grabaciones para ese
+trabajo.

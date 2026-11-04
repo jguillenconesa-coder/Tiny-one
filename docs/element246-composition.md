@@ -71,6 +71,11 @@ no identifica otra llamada al reset. Tampoco la coincidencia baja `0x108a` en
 `0xffa04932` demuestra un acceso al vecino de los escalares de Element: la carga
 siguiente completa `0x92b1108a` en la imagen disponible.
 
+Una revisión posterior de accesos con base/desplazamiento en SDRAM y L1 tampoco
+ha localizado un escritor activo verificable de las otras tres palabras. El
+análisis de constantes fue conservador: invalida información en ramas, llamadas,
+loops e instrucciones no interpretadas; no prueba ausencia de escritores.
+
 Esta búsqueda **no localiza la llamada activa** y no demuestra que no exista.
 No cubre todas las construcciones por offsets, tablas o alias ni ejecución que
 no pueda interpretarse en estas imágenes. No se atribuye por ello el llamador a

@@ -719,3 +719,13 @@ Element consumer callbacks under explicit before/after scheduling, without
 replacing the shared word between them. The scheduling is synthetic, not original
 voice/audio routing. Only numerical fixture observations are distributed.
 [Composition scope](docs/element246-composition.md).
+
+
+## Native Apple Silicon validation
+
+The authored macOS probes use CoreFoundation to load the actual VST3 bundle and
+check its factory lifecycle, and Foundation/CoreGraphics to observe startup of
+the actual standalone process. They distribute no Apple SDK or firmware code.
+The native CI architecture guard, full product suite and Envelope research suites
+complement the existing universal packaging checks; no Live/audio-device or
+acoustic equivalence is inferred. [Scope](docs/native-macos-arm64.md).

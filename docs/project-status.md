@@ -21,9 +21,9 @@ prototipo tocable con una réplica completa:
 | Efectos, envolventes y moduladores | 20 % | 98 % | 19,6 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 78 % | 11,7 puntos |
-| Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
+| Distribución macOS/Windows y validación Live | 10 % | 65 % | 6,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈69 %** (68,65 antes de redondear) |
+| Total | 100 % | | **≈69 %** (69,15 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -38,6 +38,19 @@ Hay instalador Windows y builds multiplataforma en CI. El CI 0.19 pasó también
 Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
+
+## Ejecución nativa Apple Silicon verificada
+
+[macOS 26 ARM64](native-macos-arm64.md): **126/126 suites del producto y 2/2 de
+Envelope**, sin Rosetta; binarios VST3/standalone comprobados como arm64. Carga real
+del bundle VST3, ciclo de factoría de tres clases y arranque del standalone con
+ventanas aprobados. La suite realtime pasa sus 894 cargas con el alcance de
+reservas C++ documentado; no se extiende a macOS la intercepción C de Linux.
+[Evidencia](native-macos-arm64-validation.json). La estimación permanece redondeada
+en **≈69 % ±10** (69,15 puntos), sin nueva calibración acústica.
+La evidencia nativa corresponde a esta revisión y macOS 26; Live, dispositivos,
+macOS anteriores, firma/notarización y ejecución del instalador siguen aparte.
+La aplicación permanece en **0.43.0**.
 
 ## Composición de Envelope y Element contrastada
 
@@ -80,10 +93,10 @@ llamadas al heap rastreadas**, ASan/UBSan del núcleo y adaptador aprobados.
 La integración cubre 1.008 combinaciones nativas y los ocho FX con las cuatro
 fuentes en el plugin, además de estado, proxies y prioridades.
 
-La estimación pasa a **≈69 % ±10** (68,65 antes de redondear), sin nueva calibración
+En la entrega de Element, la estimación fue **≈69 % ±10** (68,65 antes de redondear), sin nueva calibración
 acústica. Los siete LFO tienen opción funcional acotada; siguen productores/ruteo
 por voz/scheduler, especiales de LFO, gain/pitch drum, layout original, Pulse/L1,
-Live/arm64 y presets completos al final. El próximo bloque debe trazar productores
+Live y presets completos al final. El próximo bloque debe trazar productores
 y composición antes de atribuir equivalencia a las fuentes físicas y de voz.
 
 ## Entrega anterior: Crank manual (0.42.0)

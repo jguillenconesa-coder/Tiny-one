@@ -179,6 +179,7 @@ En Windows configura con `cmake -S . -B build -A x64`. `packaging\windows\build.
 
 - [Dependencias y comandos por plataforma](README.en.md#build-from-source)
 - [Compilación cruzada y validación Windows](docs/windows-cross-build.md)
+- [Validación nativa de Apple Silicon y su alcance](docs/native-macos-arm64.md)
 - [Entorno en la nube](docs/cloud.md)
 - [Pruebas realizadas y límites de la validación](docs/validation.md)
 - [Cómo contribuir](CONTRIBUTING.md)

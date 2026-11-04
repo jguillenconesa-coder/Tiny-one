@@ -94,5 +94,17 @@
       "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711598"
     }
+  },
+  "native_macos_arm64": {
+    "status": "success",
+    "tested_commit": "b382b23097c04f3819d9b330d6ef80d70f2b8519",
+    "product_suites": "126/126",
+    "envelope_research_suites": "2/2",
+    "actual_vst3_bundle": "success; three factory classes",
+    "standalone_startup": "success; alive with application windows after eight seconds",
+    "runner": "macos-26 native arm64; no Rosetta",
+    "evidence": "../native-macos-arm64-validation.json",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41831123606",
+    "scope": "Native execution for this revision; not Live, audio-device, installer or older macOS certification."
   }
 }

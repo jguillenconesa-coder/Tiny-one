@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-04",
+  "application_version": "0.43.0",
+  "tested_commit": "b382b23097c04f3819d9b330d6ef80d70f2b8519",
+  "ci": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41831123606",
+    "runner": "macos-26",
+    "status": "success",
+    "job_id": 126578275058
+  },
+  "architecture": {
+    "status": "success",
+    "process": "native arm64",
+    "rosetta": false,
+    "vst3_macho_slices": [
+      "arm64"
+    ],
+    "standalone_macho_slices": [
+      "arm64"
+    ]
+  },
+  "product_suites": {
+    "status": "success",
+    "passed": 126,
+    "total": 126,
+    "seconds": 213.98
+  },
+  "envelope_research_suites": {
+    "status": "success",
+    "passed": 2,
+    "total": 2,
+    "seconds": 0.24
+  },
+  "realtime": {
+    "status": "success as part of product CTest",
+    "workloads": 894,
+    "scope": "Existing C++ allocation/deallocation guards passed; C malloc/calloc/realloc/free wrapping is Linux-only. No shared-CI timing or audio-device dropout certification."
+  },
+  "vst3_bundle_probe": {
+    "status": "success",
+    "factory_classes": 3,
+    "scope": "Actual bundle loaded through CoreFoundation; bundleEntry, GetPluginFactory, class info and bundleExit checked. No Ableton scanner claim."
+  },
+  "standalone_startup_probe": {
+    "status": "success",
+    "observation_seconds": 8,
+    "application_windows": 5,
+    "scope": "Actual arm64 standalone stayed running and exposed normal-layer windows owned by its PID; its own child process was then terminated. No audio-device or acoustic claim."
+  },
+  "artifact": {
+    "name": "native-macos-arm64-evidence",
+    "id": 13323114103,
+    "digest": "sha256:a9146ff93cc7bd05250d5acb21fed3ca75ef66c42eef2b4121a336951e908c80",
+    "expires_at": "2027-02-02T12:39:14Z"
+  },
+  "earlier_attempt": {
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41830739957",
+    "runner": "macos-15",
+    "status": "cancelled while queued; no runner assigned or product build started"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points (69.15 before rounding); not acoustic fidelity",
+  "limits": [
+    "Tested revision on native macOS 26; does not validate all older macOS versions, future commits or physical-device latency/dropouts.",
+    "No Ableton Live scanner/session validation, signing/notarization or native installer execution inferred.",
+    "Existing universal installer inspection on Intel remains separate.",
+    "No product DSP/version change, release/tag or cloud environment configuration change."
+  ]
+}
