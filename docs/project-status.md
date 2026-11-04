@@ -56,6 +56,8 @@ El plugin contrasta los ocho FX, estado/slots/clipboard y proxies sin editor;
 El reloj de host y la activación/pánico son propios. No se recuperan lector físico,
 scheduler/voz completos, rutas especiales gain/pitch/audio, FX kind 4 ni los modos
 Crank de secuenciadores. [Evidencia](releases/v0.42.0-validation.json).
+Los [plugins e instaladores completos](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41747759600)
+pasan en Linux, Windows/MSVC y macOS universal; runtime macOS Intel.
 La estimación sigue en **≈68 % ±10** (68,3 antes de redondear), sin nueva calibración
 acústica. Siguen Element, productores/ruteo/clock, layout, Pulse/L1, Live/arm64 y
 presets completos al final.

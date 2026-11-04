@@ -55,13 +55,13 @@
     "tests": "2/2 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "in progress",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime macOS Intel",
     "scope": "Full plugins and installers; macOS universal build, runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41747759600"
   },
   "previous_plugin_ci": {
     "version": "0.41.0",
-    "status": "success on Linux and Windows/MSVC; macOS universal build in progress",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime macOS Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955851"
   },
   "estimated_progress": "Approximately 68% +/-10 planning points; weighted total 68.3 before rounding, not acoustic fidelity",
