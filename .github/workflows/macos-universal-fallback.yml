@@ -1,0 +1,65 @@
+name: Validate and package macOS universal fallback
+permissions:
+  contents: read
+on:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: macos-26-intel
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require native Intel runtime
+        run: |
+          test "$(uname -m)" = x86_64
+          python3 - <<'PY'
+          import json, platform, subprocess
+          assert platform.machine() == 'x86_64'
+          translated = subprocess.run(['sysctl', '-in', 'sysctl.proc_translated'], capture_output=True, text=True)
+          assert translated.stdout.strip() != '1', 'Rosetta is not native Intel validation'
+          with open('native-macos-intel-runtime.json', 'w') as f:
+              json.dump({'machine': platform.machine(), 'platform': platform.platform(), 'rosetta': False}, f, indent=2)
+          PY
+      - name: Configure universal product and research
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release '-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64'
+          cmake -S research/element-producers -B build-publisher -DCMAKE_BUILD_TYPE=Release '-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64'
+      - name: Build universal binaries
+        run: |
+          cmake --build build --config Release --parallel 3
+          cmake --build build-publisher --config Release --parallel 3
+      - name: Run native Intel suites
+        run: |
+          ctest --test-dir build -C Release --output-on-failure --output-junit ctest-macos-universal.xml
+          ctest --test-dir build-publisher -C Release --output-on-failure --output-junit ctest-macos-publisher.xml
+      - name: Verify both binary slices
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          for kind, suffix in [('VST3', '.vst3'), ('Standalone', '.app')]:
+              path = f'build/PocketOne_artefacts/Release/{kind}/Pocket One{suffix}/Contents/MacOS/Pocket One'
+              assert set(subprocess.check_output(['lipo', '-archs', path], text=True).split()) == {'arm64', 'x86_64'}
+          PY
+      - name: Load universal VST3 and launch standalone on Intel
+        run: |
+          clang++ -std=c++17 -arch x86_64 -Ibuild/_deps/juce-src/modules/juce_audio_processors/format_types/VST3_SDK research/native-macos/ModuleProbe.cpp -framework CoreFoundation -o native-module-probe
+          ./native-module-probe "$PWD/build/PocketOne_artefacts/Release/VST3/Pocket One.vst3"
+          swiftc -target x86_64-apple-macosx11.0 research/native-macos/StandaloneProbe.swift -o native-standalone-probe
+          ./native-standalone-probe "$PWD/build/PocketOne_artefacts/Release/Standalone/Pocket One.app/Contents/MacOS/Pocket One"
+      - name: Package and inspect universal installer
+        run: bash packaging/macos/build-package.sh build dist
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Pocket-One-macOS-fallback
+          path: |
+            build/PocketOne_artefacts/Release/VST3/
+            build/PocketOne_artefacts/Release/Standalone/
+            dist/*-macOS-universal.pkg
+            dist/*-macOS-universal-portable.zip
+            native-macos-intel-runtime.json
+            build/ctest-macos-universal.xml
+            build-publisher/ctest-macos-publisher.xml
+            build/Testing/Temporary/LastTest.log
+            build-publisher/Testing/Temporary/LastTest.log
+            build/realtime-metrics.json
