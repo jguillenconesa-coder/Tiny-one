@@ -1,0 +1,59 @@
+name: Validate native macOS arm64
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - '.github/workflows/native-macos-arm64.yml'
+      - 'research/native-macos/**'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require native Apple Silicon
+        run: |
+          test "$(uname -m)" = arm64
+          python3 - <<'PY'
+          import json, platform, subprocess
+          assert platform.machine() == 'arm64', 'Python is not native arm64'
+          translated = subprocess.run(['sysctl', '-in', 'sysctl.proc_translated'], capture_output=True, text=True)
+          assert translated.stdout.strip() != '1', 'Rosetta execution is not native validation'
+          with open('native-arm64-runtime.json', 'w') as f:
+              json.dump({'machine': platform.machine(), 'platform': platform.platform(), 'rosetta': False}, f, indent=2)
+          PY
+      - name: Configure native product and research
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64
+          cmake -S research/element-producers -B build-publisher -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64
+      - name: Build native binaries once
+        run: |
+          cmake --build build --config Release --parallel 3
+          cmake --build build-publisher --config Release --parallel 3
+      - name: Run product and research suites
+        run: |
+          ctest --test-dir build -C Release --output-on-failure --output-junit ctest-arm64.xml
+          ctest --test-dir build-publisher -C Release --output-on-failure --output-junit ctest-arm64-research.xml
+      - name: Inspect actual binary slices
+        run: |
+          test "$(lipo -archs 'build/PocketOne_artefacts/Release/VST3/Pocket One.vst3/Contents/MacOS/Pocket One')" = arm64
+          test "$(lipo -archs 'build/PocketOne_artefacts/Release/Standalone/Pocket One.app/Contents/MacOS/Pocket One')" = arm64
+      - name: Load actual VST3 bundle and launch standalone
+        run: |
+          clang++ -std=c++17 -arch arm64 -Ibuild/_deps/juce-src/modules/juce_audio_processors/format_types/VST3_SDK research/native-macos/ModuleProbe.cpp -framework CoreFoundation -o native-module-probe
+          ./native-module-probe "$PWD/build/PocketOne_artefacts/Release/VST3/Pocket One.vst3"
+          swiftc -target arm64-apple-macosx11.0 research/native-macos/StandaloneProbe.swift -o native-standalone-probe
+          ./native-standalone-probe "$PWD/build/PocketOne_artefacts/Release/Standalone/Pocket One.app/Contents/MacOS/Pocket One"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-macos-arm64-evidence
+          path: |
+            native-arm64-runtime.json
+            build/ctest-arm64.xml
+            build-publisher/ctest-arm64-research.xml
+            build/Testing/Temporary/LastTest.log
+            build-publisher/Testing/Temporary/LastTest.log
+            build/realtime-metrics.json
