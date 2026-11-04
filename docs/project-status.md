@@ -45,8 +45,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 524.288 muestras y 8.192 callbacks Element, sin inyectar una publicación intermedia.
 Se comparan 2.048 despachos aceptados, controles/destinos/retornos y estado/audio
 completos. En 250 bloques, leer antes o después cambia los destinos: el orden aún
-no recuperado importa. Dos suites Linux y ASan/UBSan aprobados; repetición original
-idéntica. [Evidencia](element246-composition-validation.json).
+no recuperado importa. Las dos suites pasan Linux, Windows/MSVC y macOS Intel; ASan/UBSan
+y repetición original idéntica aprobados. [Evidencia](element246-composition-validation.json).
 La llamada activa sigue sin localizarse en la búsqueda acotada; no se infiere que
 esté en L1. El módulo sigue fuera del plugin, versión **0.43.0**, estimación
 **≈69 % ±10** sin cambios.

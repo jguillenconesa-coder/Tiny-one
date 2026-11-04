@@ -1,7 +1,7 @@
 {
   "date": "2026-11-04",
   "application_version": "0.43.0",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "67dc2201683fbdc6f662d6d1cdf10f64ff507b02",
   "production_integration": false,
   "original_oracle": {
     "status": "success; independent repeat byte-identical",
@@ -19,8 +19,11 @@
   },
   "sanitizers": "success: ASan/UBSan composed original fixture suite; detect_leaks=0 under managed ptrace",
   "native_ci": {
-    "status": "pending push",
-    "scope": "standalone publisher and original composition; Linux, Windows/MSVC and macOS Intel"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "scope": "standalone publisher and original composition; Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41829426290",
+    "passed_per_platform": 2,
+    "total_per_platform": 2
   },
   "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
   "limits": [
