@@ -654,3 +654,9 @@ Siguiente frente: estudiar Element y sus fuentes de entrada antes de delimitar e
 oráculo. Siguen productores/voz/ruteo/clock, layout, Pulse/L1, calibración/Live/arm64
 y presets completos al final. Las rutas especiales de los LFO no se convierten en
 productores de buffers por el hecho de ajustar datos suministrados.
+
+Para Element, el manual §15.2 distingue G-force, entrada externa (radio/line/mic),
+envolvente del motor y nivel del motor. El siguiente estudio debe delimitar esas
+cuatro entradas y sus callbacks antes de elegir el adaptador de host. Un slider
+virtual o un seguidor de audio propio no deben presentarse como recuperación del
+sensor, del detector original ni de sus productores de envolvente/nivel.
