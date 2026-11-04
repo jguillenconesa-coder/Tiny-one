@@ -13,7 +13,8 @@ el bend MIDI por canal existente conserva su función independiente.
 
 ## Reconstrucción contrastada
 
-Las factorías del tipo LFO 6 conducen a estos callbacks legibles; las referencias
+La sexta entrada de las factorías LFO (índice 5 contando desde cero) conduce a
+estos callbacks legibles; las referencias
 de error de sus factorías identifican `LfoBend.cpp`:
 
 | Ruta | Dirección | Contrato contrastado |

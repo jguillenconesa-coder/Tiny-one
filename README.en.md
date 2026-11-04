@@ -1,4 +1,9 @@
-# Pocket One 0.41.0
+# Pocket One 0.42.0
+
+**Manual Crank with inertia**: virtual blue encoder, bipolar amount and
+Instrument/ADSR/FX targets. Triangle phase, braking, state and contextual controls.
+18,432 original callbacks verified with explicit input/RAM; authored host clock.
+[Scope](docs/crank246-hybrid.md) · [validation](docs/releases/v0.42.0-validation.json).
 
 **Manual Bend**: virtual orange encoder, Instrument/ADSR/FX, amount, reverse
 direction, persistence and a shared LFO selector. 6,144 original callbacks verified

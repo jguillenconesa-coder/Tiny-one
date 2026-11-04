@@ -47,3 +47,13 @@ la posición del volumen maestro ni el PDC. Las rutas especiales de audio/pitch
 originales se mantienen fuera del contrato; no se reconstruyen los productores
 de esos buffers. El pitch wheel MIDI por canal sigue independiente.
 [Contrato](bend246-hybrid.md).
+
+
+## Crank 0.42.0
+
+Crank comparte una fuente manual con inercia entre voces y FX; solo se conectan
+parámetros Instrument/ADSR/FX. El encoder y el reloj de 44100/64 del host son propios.
+Una fase detenida conserva su señal bipolar; no se fuerza su salida a cero. No se
+conectan las rutas originales de ganancia/pitch/audio ni se añade ganancia maestra.
+Se mantienen el bus de salida y su PDC; Release/drum prolongables anuncian una cola
+conservadora. [Alcance](crank246-hybrid.md).

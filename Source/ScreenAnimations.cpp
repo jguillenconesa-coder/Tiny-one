@@ -39,6 +39,8 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         for(auto point:{juce::Point<float>{a,top},{d,sustain},{s,sustain}})dot(g,point.x,point.y,2);
         float x=f.stage==1?12+f.envelope*(a-12):f.stage==2?a+(1-f.envelope)/std::max(.001f,1-f.sustain)*(d-a):f.stage==4?s+(1-f.envelope/std::max(.001f,f.sustain))*(end-s):s;
         g.setColour(colors[3]);if(f.voices>0)dot(g,std::clamp(x,12.f,end),y-f.envelope*56,3.2f);
+    } else if(f.page==2&&f.crank246) {
+        label(g,"CRANK / MANUAL",{15,25,220,12},9,colors[0]);g.setColour(colors[0]);g.drawEllipse(96,42,50,50,1);const float a=f.crankPhase*juce::MathConstants<float>::twoPi;g.drawLine(121,67,121+22*std::sin(a),67-22*std::cos(a),2);dot(g,121+22*std::sin(a),67-22*std::cos(a),4);label(g,"TURN BLUE",{15,82,220,12},8,colors[0]);
     } else if(f.page==2&&f.bend246) {
         label(g,"BEND / MANUAL",{15,25,220,12},9,colors[0]);g.setColour(colors[3]);g.drawLine(20,60,225,60,1);dot(g,20+205*std::clamp(f.bendLevel,0.f,1.f),60,7);label(g,"TURN ORANGE",{15,82,220,12},8,colors[3]);
     } else if(f.page==2&&f.midi246) {
@@ -143,6 +145,7 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
     if(f.page!=4)for(int step=0;step<16;++step){g.setColour(step==f.step?colors[3]:juce::Colour(0xff27394a));dot(g,14.f+step*14.7f,95,step==f.step?2.f:1.f);}
     for(int i=0;i<4;++i){label(g,f.sampler246&&f.page==0?(f.samplerSecondary?juce::StringArray{"DIR","IN","OUT","GAIN"}:juce::StringArray{"START","IN","OUT","END"})[i]:f.labels[size_t(i)].substring(0,5),{10+i*59,102,58,9},7,colors[size_t(i)]);juce::String value;
         if(f.sampler246&&f.page==0){if(!f.samplerSecondary)value=juce::String(sampler246Seconds(f.samplerControls[size_t(i)])*1000,2)+" ms";else if(i==0)value=f.samplerControls[4]?"REV":"FWD";else if(i<3)value=juce::String(sampler246Seconds(0,f.samplerControls[size_t(i)+4])*1000000,2)+" us";else value=juce::String(std::pow(f.samplerControls[7]/16384.,2)*100,1)+" %";}
+        else if(f.page==2&&f.crank246){if(i==3)value=f.crankTargetAvailable?juce::StringArray{"BLUE","GREEN","WHITE","ORANGE","5","6","7","8"}[std::clamp(int(f.values[3]),0,7)]:"OFF";else if(i==2)value=juce::StringArray{"INST","ADSR","FX"}[std::clamp(int(f.values[2]),0,2)];else value=juce::String(f.values[size_t(i)],0);}
         else if(f.page==2&&f.bend246){if(i==0)value=f.bendTargetAvailable?juce::StringArray{"BLUE","GREEN","WHITE","ORANGE","5","6","7","8"}[std::clamp(int(f.values[0]),0,7)]:"OFF";else if(i==1)value=juce::StringArray{"INST","ADSR","FX"}[std::clamp(int(f.values[1]),0,2)];else value=juce::String(f.values[size_t(i)],0);}
         else if(f.page==2&&f.midi246)value=f.midiTargets[size_t(i)];
         else value=juce::String(f.values[size_t(i)],(f.page==2&&(i>=2||f.tremolo246||f.random246))||((f.page==1&&f.drum246)||(f.page==0&&f.drum246&&i==3)||(f.page<2&&f.engine==11)||(f.page==0&&(f.engine==0||f.engine==2||f.engine==8||f.engine==9||f.engine==10||f.cluster246||f.drWave246||f.phase246||f.digital246)))||(f.page==1&&f.phaseEnvelope)||(f.page==3&&(f.cwo246||f.spring246||f.phone246||f.grid246||f.delay246||f.nitro246||f.filter246||f.punch246))?0:2);label(g,value,{10+i*59,111,58,11},9,colors[size_t(i)]);}

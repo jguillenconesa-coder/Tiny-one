@@ -627,7 +627,7 @@ acústica/Live/arm64 y presets finales.
 
 ## Bend manual — 0.41.0
 
-Se contrastan 6.144 callbacks originales intercalados de Bend tipo 6: procesador
+Se contrastan 6.144 callbacks originales intercalados de Bend (sexta entrada LFO, índice 5): procesador
 compartido de entrada, historial/flags/contador, wrap, dirección, reposo y dispatch
 Instrument/primeros cuatro ADSR/FX kinds 2/5, con buffers suministrados intactos.
 Matriz aceptada completa para los tipos soportados y repetición exacta.
@@ -638,3 +638,19 @@ kind 4 y rutas especiales de audio/pitch no forman parte de este port.
 Continúan Element/Crank, productores de voz y ruteo/clock, layout original, Pulse/L1,
 calibración/Live/arm64 y presets finales. La entrada manual no es el pitch wheel
 MIDI, y no se atribuye su adaptación de host a un lector físico recuperado.
+
+
+## Crank manual — 0.42.0
+
+Se contrastan 18.432 callbacks de la séptima entrada LFO (índice 6) synth/drum/FX, incluida su fuente compartida
+`0x019cae26`: contador/flags, historial de diez deltas, ángulo, velocidad, target,
+pasos fraccionarios, fase/triángulo y dispatch de Instrument/primeros cuatro ADSR/FX
+kinds 2/5. Comparación completa y repetición independiente bajo entradas acotadas.
+[Contrato](crank246-hybrid.md). El encoder azul y reloj/lifecycle son propios; se
+integran estado, proxies, UI y destinos. No se atribuye recuperación de scheduler,
+lectura del accesorio, productor gain/pitch ni secuenciadores Crank.
+
+Siguiente frente: estudiar Element y sus fuentes de entrada antes de delimitar el
+oráculo. Siguen productores/voz/ruteo/clock, layout, Pulse/L1, calibración/Live/arm64
+y presets completos al final. Las rutas especiales de los LFO no se convierten en
+productores de buffers por el hecho de ajustar datos suministrados.

@@ -679,3 +679,15 @@ explicit prepare/reset actions do not establish the physical input path or
 original scheduler. No firmware, decompiled source, OTP or private memory dump is
 distributed. The gzip fixtures contain synthetic inputs and numerical observations.
 See [scope](docs/bend246-hybrid.md) and [evidence](docs/firmware/bend246-validation.json).
+
+
+## Crank LFO 246 (0.42.0)
+
+`Crank246.h`, its host adapter, native tests and assembler probe driver are
+independently authored. Ghidra 12.2/Blackfin and the corrected GNU BF524 simulator
+were used privately to study the user-supplied rev246 and compare 18,432 bounded
+interleaved callbacks plus an independent repeat. Fixtures contain synthetic
+inputs and numerical observations, not firmware or decompiled source. Manual
+section 15.7 informed the virtual blue encoder; host clock/lifecycle and UI are
+authored. Physical accessory input and sequencer Crank remain unvalidated. See
+[scope and reproducibility](docs/crank246-hybrid.md).

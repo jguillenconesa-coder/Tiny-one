@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.41.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.42.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -397,3 +397,5 @@ if(POCKET_BUILD_PLUGIN AND BUILD_TESTING)
     add_test(NAME windows_standalone_manifest COMMAND windows_module_probe --manifest-exe "$<TARGET_FILE:PocketOne_Standalone>")
   endif()
 endif()
+
+add_subdirectory(research/crank-modulation)

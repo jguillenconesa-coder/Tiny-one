@@ -43,6 +43,7 @@ struct Parameters {
     std::array<int16_t,4> dna246Controls=dna246Defaults,dna246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,4> voltage246Controls=voltage246Defaults,voltage246Adsr{{64,8064,32767,8192}};
     std::array<int16_t,8> dsynth246Controls=dsynth246Defaults;std::array<int16_t,4> dsynth246Adsr{{64,8064,32767,8192}};bool dsynth246Secondary=false;
+    bool crank246=false;int crank246Angle=0,crank246Amount=16000,crank246Destination=0,crank246Colour=0;
     bool bend246=false,bend246Reverse=false;int bend246Colour=0,bend246Destination=0,bend246Amount=16000,bend246Angle=8192;
     bool midi246=false;std::array<int,4> midi246Routes{{1,2,3,4}};
     int hybridVoiceMode=0;float hybridGlideMs=0;
@@ -76,8 +77,9 @@ public:
     static constexpr int polyphony=8;
     void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
     void midiController(int number,int value) noexcept {if(number>=1&&number<=4)midiCC[size_t(number-1)]=uint32_t(std::clamp(value,0,127));}
+    float crank246Phase() const noexcept {return crankControl.phase();}
     float bend246Level() const noexcept {return bendControl.level();}
-    void reset() {bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void reset() {crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false,bool drum=false,bool sampler=false) noexcept {
         sampler=mode==3&&sampler;
         if(selectionInitialized&&sampler!=selectedSampler){voices={};held.clear();}
@@ -190,13 +192,15 @@ public:
         const bool nativeDigital=target.engine==0&&target.digital246;
         const bool nativeSampler=target.engine==3&&target.sampler246;
         const bool nativeCore=nativeSampler||nativeDrum||nativeDbox||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativePhase||nativeDigital||nativeDrWave||nativeCluster;
-        const bool nativeBend=target.bend246;
+        const bool nativeCrank=target.crank246;
+        crankControl.next(nativeCrank,target.crank246Angle,target.crank246Amount,target.crank246Destination,target.crank246Colour,44100./(64*sampleRate));
+        const bool nativeBend=target.bend246&&!nativeCrank;
         bendControl.next(nativeBend,target.bend246Colour,target.bend246Destination,target.bend246Amount,target.bend246Angle,target.bend246Reverse,44100./(64*sampleRate));
-        const bool nativeMidi=target.midi246&&!nativeBend;
-        const bool nativeRandom=target.random246&&nativeCore&&!nativeMidi&&!nativeBend;
+        const bool nativeMidi=target.midi246&&!nativeBend&&!nativeCrank;
+        const bool nativeRandom=target.random246&&nativeCore&&!nativeMidi&&!nativeBend&&!nativeCrank;
         const bool modEnvelope=nativeRandom?target.random246Controls[2]>=2048:target.valueVoice246Envelope;
-        const bool nativeTremolo=target.tremolo246&&nativeCore&&!nativeRandom&&!nativeMidi&&!nativeBend;tremoloActive=nativeTremolo;
-        const bool nativeValueVoice=target.valueVoice246&&nativeCore&&!nativeTremolo&&!nativeRandom&&!nativeMidi&&!nativeBend;
+        const bool nativeTremolo=target.tremolo246&&nativeCore&&!nativeRandom&&!nativeMidi&&!nativeBend&&!nativeCrank;tremoloActive=nativeTremolo;
+        const bool nativeValueVoice=target.valueVoice246&&nativeCore&&!nativeTremolo&&!nativeRandom&&!nativeMidi&&!nativeBend&&!nativeCrank;
         valueVoiceActive=nativeValueVoice;nativeFmActive=nativeFm;
         nativeClusterActive=nativeCluster;nativeDrWaveActive=nativeDrWave;nativeDigitalActive=nativeDigital;nativeVoltageActive=nativeVoltage;nativeDnaActive=nativeDna;nativeStringActive=nativeString;nativeDsynthActive=nativeDsynth;nativeSamplerEnvelopeActive=nativeSampler&&target.sampler246Envelope;nativeEnvelopeActive=nativeSamplerEnvelopeActive||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave||(nativePhase&&target.phase246Envelope)||(nativeDigital&&target.digital246Envelope);
         if(nativePhase){for(size_t i=0;i<4;++i){if(!phaseControlsInitialized)phaseWords[i]=target.phase246Controls[i];else phaseWords[i]+=smoothing*(target.phase246Controls[i]-phaseWords[i]);phaseRaw[i]=int16_t(std::clamp(phaseWords[i],0.f,32767.f)+.5f);}phaseControlsInitialized=true;}
@@ -213,8 +217,8 @@ public:
         const int midiType=nativeSampler?6:nativeDsynth?12:nativeVoltage?13:nativeDna?11:nativeString?3:nativeFm?0:nativeCluster?4:nativeDrWave?2:nativeDigital?1:7;
         auto midiSampler=target.sampler246Controls;
         const auto& adsrBase=nativeSampler?target.sampler246Adsr:nativeDsynth?target.dsynth246Adsr:nativeVoltage?target.voltage246Adsr:nativeDna?target.dna246Adsr:nativeString?target.string246Adsr:nativeFm?target.fm246Adsr:nativeCluster?target.cluster246Adsr:nativeDrWave?target.drWave246Adsr:nativeDigital?target.digital246Adsr:target.phase246Adsr;
-        const auto midiAdsr=nativeBend&&nativeCore?bendControl.apply(adsrBase,1,midiType):nativeMidi&&nativeCore?midi246Apply(adsrBase,1,midiType,target.midi246Routes,midiCC):adsrBase;
-        if(nativeMidi||nativeBend){auto apply=[&](auto& raw){if(nativeBend){raw=bendControl.apply(raw,0,midiType);return;}raw=midi246Apply(raw,0,midiType,target.midi246Routes,midiCC);};
+        const auto midiAdsr=nativeCrank&&nativeCore?crankControl.apply(adsrBase,1,midiType):nativeBend&&nativeCore?bendControl.apply(adsrBase,1,midiType):nativeMidi&&nativeCore?midi246Apply(adsrBase,1,midiType,target.midi246Routes,midiCC):adsrBase;
+        if(nativeMidi||nativeBend||nativeCrank){auto apply=[&](auto& raw){if(nativeCrank){raw=crankControl.apply(raw,0,midiType);return;}if(nativeBend){raw=bendControl.apply(raw,0,midiType);return;}raw=midi246Apply(raw,0,midiType,target.midi246Routes,midiCC);};
          if(nativeSampler)apply(midiSampler);else if(nativeDsynth)apply(dsynthRaw);else if(nativeVoltage)apply(voltageRaw);else if(nativeDna)apply(dnaRaw);else if(nativeString)apply(stringRaw);else if(nativeFm)apply(fmRaw);else if(nativeCluster)apply(clusterRaw);else if(nativeDrWave)apply(drWaveRaw);else if(nativeDigital)apply(digitalRaw);else if(nativePhase)apply(phaseRaw);
         }
         const reference::PdCoefficients phaseCoefficients(phaseRaw);
@@ -226,7 +230,7 @@ public:
         follow(current.delayTime,target.delayTime); follow(current.feedback,target.feedback);
         const auto& p=current;currentSustain=target.sustain;
         lfoPhase+=std::clamp(double(target.lfoRate),.05,20.0)/sampleRate; lfoPhase-=std::floor(lfoPhase);
-        const double lfo=(target.value246||nativeValueVoice||nativeTremolo||nativeRandom||nativeMidi||nativeBend?0:target.lfoDepth)*(target.lfoShape==1 ? 1-4*std::abs(lfoPhase-.5) : target.lfoShape==2 ? (lfoPhase<.5?1:-1) : std::sin(2*pi*lfoPhase));
+        const double lfo=(target.value246||nativeValueVoice||nativeTremolo||nativeRandom||nativeMidi||nativeBend||nativeCrank?0:target.lfoDepth)*(target.lfoShape==1 ? 1-4*std::abs(lfoPhase-.5) : target.lfoShape==2 ? (lfoPhase<.5?1:-1) : std::sin(2*pi*lfoPhase));
         const double pitchMod=target.lfoDestination==0?lfo*2:0;
         const double pitchFactor=pitchMod==0?1:std::exp2(pitchMod/12);
         const double kitPitch=target.engine==5?std::exp2((p.tone-.5)*2):1;
@@ -237,7 +241,7 @@ public:
         if(cachedRoot!=target.sampleRoot) {cachedRoot=target.sampleRoot;rootFrequency=440*std::exp2((cachedRoot-69)/12);}
 
         if(target.engine==5)for(size_t i=0;i<padPitch.size();++i)if(target.pads[i].pitch!=cachedPadPitch[i]){cachedPadPitch[i]=target.pads[i].pitch;padPitch[i]=std::exp2(std::clamp(double(target.pads[i].pitch),-24.,24.)/12);}
-        Drum246ModulationConfig drumModulation;drumModulation.bend=nativeBend?&bendControl:nullptr;drumModulation.midi=nativeMidi;drumModulation.midiRoutes=target.midi246Routes;drumModulation.midiCC=midiCC;drumModulation.value=nativeValueVoice;drumModulation.random=nativeRandom;drumModulation.free=target.valueVoice246Free;drumModulation.secondary=target.drum246LfoBank;drumModulation.speed=target.valueVoice246Speed;drumModulation.amount=target.valueVoice246Amount;drumModulation.colour=target.valueVoice246Colour;drumModulation.envelope=target.valueVoice246Envelope;drumModulation.randomControls=target.random246Controls;drumModulation.tempo=target.value246Tempo;drumModulation.step=44100./(64*sampleRate);drumModulation.rng=&randomRng;
+        Drum246ModulationConfig drumModulation;drumModulation.crank=nativeCrank?&crankControl:nullptr;drumModulation.bend=nativeBend?&bendControl:nullptr;drumModulation.midi=nativeMidi;drumModulation.midiRoutes=target.midi246Routes;drumModulation.midiCC=midiCC;drumModulation.value=nativeValueVoice;drumModulation.random=nativeRandom;drumModulation.free=target.valueVoice246Free;drumModulation.secondary=target.drum246LfoBank;drumModulation.speed=target.valueVoice246Speed;drumModulation.amount=target.valueVoice246Amount;drumModulation.colour=target.valueVoice246Colour;drumModulation.envelope=target.valueVoice246Envelope;drumModulation.randomControls=target.random246Controls;drumModulation.tempo=target.value246Tempo;drumModulation.step=44100./(64*sampleRate);drumModulation.rng=&randomRng;
         float sum=nativeDbox?dboxBank.next(target.dbox246Controls,bends,smoothing,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation):nativeDrum?drumBank.next(kit,target.pads,target.drum246Dynamics,bends,kitPitch*pitchFactor,phaseConfig,nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,drumModulation,sharedKit):0;
         for(auto& v:voices) {
             if(!v.active) continue;
@@ -363,12 +367,13 @@ public:
         const float legacyDriven=std::tanh(filter*(1+p.drive*12))/(1+p.drive*2);
         const float cleanDriven=p.drive<.000001f?cleanInput:std::tanh(cleanInput*(1+p.drive*12))/(1+p.drive*2);
         float driven=legacyDriven+(cleanDriven-legacyDriven)*cleanMix;
-        valueActive=target.value246&&!nativeValueVoice&&!nativeTremolo&&!nativeRandom&&!nativeMidi&&!nativeBend;
+        valueActive=target.value246&&!nativeValueVoice&&!nativeTremolo&&!nativeRandom&&!nativeMidi&&!nativeBend&&!nativeCrank;
         const bool outputFx=target.filter246||target.nitro246||target.delay246||target.grid246||target.phone246||target.spring246||target.cwo246;const auto& outputControls=target.cwo246?target.cwo246Controls:target.spring246?target.spring246Controls:target.phone246?target.phone246Controls:target.grid246?target.grid246Controls:target.delay246?target.delay246Controls:target.nitro246?target.nitro246Controls:target.filter246Controls;const auto& outputMin=target.cwo246?cwo246Min:target.spring246?spring246Min:target.phone246?phone246Min:target.grid246?grid246Min:target.delay246?delay246Min:target.nitro246?nitro246Min:filter246Min;const auto& outputMax=target.cwo246?cwo246Max:target.spring246?spring246Max:target.phone246?phone246Max:target.grid246?grid246Max:target.delay246?delay246Max:target.nitro246?nitro246Max:filter246Max;
         const bool punchSelected=target.punch246&&!outputFx;
         if(punchSelected||punchActive){for(size_t i=0;i<4;++i){if(!punchActive)punchWords[i]=target.punch246Controls[i];else punchWords[i]+=smoothing*(target.punch246Controls[i]-punchWords[i]);punchRaw[i]=int16_t(std::lround(std::clamp(punchWords[i],0.f,32767.f)));}punchActive=true;follow(punchMix,punchSelected?1.f:0.f);}
         if(outputFx){for(size_t i=0;i<4;++i){if(!filterControlsInitialized)filterWords[i]=outputControls[i];else filterWords[i]+=smoothing*(outputControls[i]-filterWords[i]);filterRaw[i]=int16_t(std::lround(std::clamp(filterWords[i],float(outputMin[i]),float(outputMax[i]))));}filterControlsInitialized=true;}else filterControlsInitialized=false;
         auto modulated=valueEffect.next(valueActive,target.value246Destination&&(outputFx||punchSelected),target.value246Free,target.value246Speed,target.value246Amount,target.value246Colour,target.value246Tempo,outputFx?filterRaw:punchActive?punchRaw:target.punch246Controls,phaseConfig.table,target.cwo246?7:target.spring246?4:target.phone246?3:target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2);
+        if(nativeCrank&&(outputFx||punchSelected))modulated=crankControl.apply(modulated,2,target.cwo246?7:target.spring246?4:target.phone246?3:target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2);
         if(nativeBend&&(outputFx||punchSelected))modulated=bendControl.apply(modulated,2,target.cwo246?7:target.spring246?4:target.phone246?3:target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2);
         if(nativeMidi&&(outputFx||punchSelected))modulated=midi246Apply(modulated,2,target.cwo246?7:target.spring246?4:target.phone246?3:target.grid246?1:target.delay246?0:target.nitro246?6:target.filter246?5:2,target.midi246Routes,midiCC);
         filterModulated=outputFx?modulated:outputControls;
@@ -436,6 +441,7 @@ private:
     std::array<float,4> filterWords{};std::array<int16_t,4> filterRaw{},filterModulated{{8000,0,0,24576}};bool filterControlsInitialized=false;
     Punch246Effect punchEffect;float punchMix=0;bool punchActive=false;
     uint32_t randomRng=0x52414e44u;
+    Crank246Control crankControl;
     Bend246Control bendControl;
     std::array<uint32_t,4> midiCC{{64,64,64,64}};
     Value246Fx valueEffect;bool valueActive=false,valueVoiceActive=false;

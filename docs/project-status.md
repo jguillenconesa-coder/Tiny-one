@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 96 % | 19,2 puntos |
+| Efectos, envolventes y moduladores | 20 % | 97 % | 19,4 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 76 % | 11,4 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 77 % | 11,55 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈68 %** (67,95 antes de redondear) |
+| Total | 100 % | | **≈68 %** (68,3 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,28 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Bend manual (0.41.0)
+## Entrega actual: Crank manual (0.42.0)
+
+[Crank con inercia](crank246-hybrid.md): 18.432 callbacks originales intercalados
+con controles/RAM explícitos contrastan historial, flags, contador, velocidad,
+fase/triángulo y dispatch Instrument/ADSR/FX; repetición independiente idéntica.
+Encoder azul virtual, cantidad bipolar, destinos y targets, automatización,
+proyectos/slots/clipboard, mandos contextuales y animación integrados. Una entrada
+inmóvil puede mantener señal: se frena y conserva la fase alcanzada.
+
+Validación Linux Release: **124/124 suites**, **798 cargas de tiempo real sin
+llamadas al heap rastreadas**, ASan/UBSan del núcleo y adaptador aprobados.
+El plugin contrasta los ocho FX, estado/slots/clipboard y proxies sin editor;
+252 combinaciones nativas verifican los destinos y la partición de buffers.
+
+El reloj de host y la activación/pánico son propios. No se recuperan lector físico,
+scheduler/voz completos, rutas especiales gain/pitch/audio, FX kind 4 ni los modos
+Crank de secuenciadores. [Evidencia](releases/v0.42.0-validation.json).
+La estimación sigue en **≈68 % ±10** (68,3 antes de redondear), sin nueva calibración
+acústica. Siguen Element, productores/ruteo/clock, layout, Pulse/L1, Live/arm64 y
+presets completos al final.
+
+## Entrega anterior: Bend manual (0.41.0)
 
 [Entrada y dispatch Bend](bend246-hybrid.md): 6.144 llamadas originales
 intercaladas synth/drum/FX, estado compartido completo, historial, flags, contador,

@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/bend-modulation/**'
       - 'research/blackfin/bend-*'
+      - 'Source/Crank246*.h'
       - 'Source/Bend246*.h'
       - 'Source/Midi246.h'
       - 'Source/Drum246Modulation*.h'

@@ -55,7 +55,7 @@
     "tests": "2/2 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "in progress",
+    "status": "success on Linux and Windows/MSVC; macOS universal build in progress",
     "scope": "Full plugins and installers; macOS universal build, runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955851"
   },
@@ -81,7 +81,7 @@
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955910"
     },
     "drum": {
-      "status": "success on Linux and Windows/MSVC; macOS Intel in progress",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744956081"
     },
     "dbox": {

@@ -24,6 +24,7 @@ on:
       - 'Source/Engine.h'
       - 'Source/SharedDrum246.h'
       - 'Source/Midi246*.h'
+      - 'Source/Crank246*.h'
       - 'Source/Bend246*.h'
       - 'Source/Phase246.h'
       - 'Source/ReferenceDsp.h'

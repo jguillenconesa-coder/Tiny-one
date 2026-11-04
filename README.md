@@ -1,4 +1,9 @@
-# Pocket One 0.41.0
+# Pocket One 0.42.0
+
+**Crank manual con inercia**: encoder azul virtual, cantidad bipolar y destinos
+Instrument/ADSR/FX. Fase triangular, frenado, estado y mandos contextuales.
+18.432 callbacks originales contrastados bajo entradas/RAM explícitas; reloj propio.
+[Guía](docs/crank246-hybrid.md) · [validación](docs/releases/v0.42.0-validation.json).
 
 **Bend manual**: entrada virtual del encoder naranja, Instrument/ADSR/FX, cantidad
 y dirección inversa, guardado y selector LFO común. 6.144 callbacks originales

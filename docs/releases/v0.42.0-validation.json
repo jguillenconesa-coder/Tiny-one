@@ -1,0 +1,73 @@
+{
+  "version": "0.42.0",
+  "date": "2026-11-04",
+  "implementation_commit": "pending verified commit",
+  "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 124,
+    "total": 124,
+    "elapsed_seconds": 154.3
+  },
+  "original_callbacks": {
+    "status": "success; identical independent repeat",
+    "calls": 18432,
+    "calls_per_family": 6144,
+    "evidence": "../firmware/crank246-validation.json",
+    "scope": "Bounded parameter dispatch under explicit manual input/RAM/prepare. Seven state words, ten history entries, previous angle, controls/targets/tag/return and unchanged complete pitch/gain/FX buffers. No physical input, scheduler or special audio/pitch/gain route equivalence."
+  },
+  "host_integration": {
+    "status": "success: native adapter and complete plugin smoke",
+    "cases": 252,
+    "rates": [
+      32000,
+      44100,
+      48000,
+      88200,
+      96000,
+      176400,
+      192000
+    ],
+    "scope": "Twelve native profiles x three destinations x seven rates; drum ADSR rejected. Exact 64/257 audio, priority and panic; source clock compared at seven rates plus motion in both directions, inertia, quiet settling and stopped phase hold. Plugin smoke passes all eight FX, proxies without editor, mode priority, conservative Release tail, projects/slots/clipboard, presets, legacy FX-only availability and selector Configure mapping."
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan original callback fixtures",
+    "adapter": "success: ASan/UBSan source clock, inertia and 252 native audio cases",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "realtime": {
+    "status": "success",
+    "new_crank_workloads": 48,
+    "scope": "Eight Crank cases x two rates x three buffers plus retained workloads; shared cloud timing is diagnostic, not dropout certification",
+    "workloads": 798,
+    "heap_calls": 0
+  },
+  "visual": {
+    "status": "reviewed final Crank selector, contextual targets and blue phase animation; TURN BLUE label separated from values",
+    "sha256": {
+      "crank246-native.png": "cba43fd1bf27618a41c8dcb15fd88fa5e5ff21b8c10b51c4381474756ea464c9"
+    }
+  },
+  "native_ci": {
+    "status": "pending push",
+    "scope": "Two Crank suites on Linux, Windows/MSVC and macOS Intel"
+  },
+  "plugin_package_ci": {
+    "status": "pending push",
+    "scope": "Full plugins and installers; macOS universal build, runtime Intel"
+  },
+  "previous_plugin_ci": {
+    "version": "0.41.0",
+    "status": "success on Linux and Windows/MSVC; macOS universal build in progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955851"
+  },
+  "estimated_progress": "Approximately 68% +/-10 planning points; weighted total 68.3 before rounding, not acoustic fidelity",
+  "limits": [
+    "Manual encoder input, 44100/64 host clock and activation/panic lifecycle are authored. Physical accessory/encoder reader not recovered.",
+    "Only bounded parameter routes; special gain/pitch/audio and FX kind 4 excluded. Existing MIDI pitch wheel remains independent.",
+    "Sequencer Crank for Endless/Tombola is not implemented by this LFO.",
+    "No new decrypted L1/OTP, hardware acoustic calibration, real Ableton validation, native arm64 execution or original presets.",
+    "No release/tag publication or cloud configuration change."
+  ],
+  "final_ui_validation": "success: all Release targets rebuilt and complete plugin smoke repeated after the label-position adjustment; audio/core sources unchanged since full 124-suite run"
+}
