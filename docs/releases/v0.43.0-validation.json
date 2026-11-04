@@ -1,7 +1,7 @@
 {
   "version": "0.43.0",
   "date": "2026-11-04",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "1f50b3ccfc6d7c5d94be630f3c15f60526953689",
   "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -45,12 +45,15 @@
     }
   },
   "native_ci": {
-    "status": "pending push",
-    "scope": "Two Element suites on Linux, Windows/MSVC and macOS Intel"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "scope": "Two Element suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711701",
+    "tests": "2/2 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "pending push",
-    "scope": "Full plugins/installers; macOS universal build, runtime Intel"
+    "status": "in progress",
+    "scope": "Full plugins/installers; macOS universal build, runtime Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711621"
   },
   "previous_plugin_ci": {
     "version": "0.42.0",
@@ -65,5 +68,31 @@
     "No new decrypted L1/OTP, hardware acoustic calibration, real Ableton validation, native arm64 execution or original presets.",
     "No release/tag publication or cloud configuration change."
   ],
-  "final_ui_validation": "success: all Release targets rebuilt and complete plugin smoke repeated after sensor text-contrast adjustment; audio/core sources unchanged since full 126-suite run"
+  "final_ui_validation": "success: all Release targets rebuilt and complete plugin smoke repeated after sensor text-contrast adjustment; audio/core sources unchanged since full 126-suite run",
+  "regression_ci": {
+    "crank": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711624"
+    },
+    "bend": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711847"
+    },
+    "midi": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711797"
+    },
+    "sampler": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711637"
+    },
+    "drum": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711821"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41820711598"
+    }
+  }
 }
