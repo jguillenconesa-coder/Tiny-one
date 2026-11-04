@@ -1,7 +1,7 @@
 {
   "date": "2026-11-04",
   "application_version": "0.43.0",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "b54b8b8805741daeae53d1e1c073190da34e394d",
   "production_integration": false,
   "original_oracle": {
     "status": "success; independent repeat identical",
@@ -21,8 +21,11 @@
   },
   "sanitizers": "success: ASan/UBSan whole original fixture suite and publication/reset properties; managed ptrace requires detect_leaks=0",
   "native_ci": {
-    "status": "pending push",
-    "scope": "one original/contract suite on Linux, Windows/MSVC and macOS Intel"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "scope": "one original/contract suite on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41826388058",
+    "passed_per_platform": 1,
+    "total_per_platform": 1
   },
   "product_ci": {
     "version": "0.43.0",

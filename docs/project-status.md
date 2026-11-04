@@ -43,7 +43,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
 [Escritor, reset y getter](element246-producers.md): 4.096 bloques originales /
 524.288 halfwords, estado completo de cuatro llamadores de prueba y palabra
-compartida, con repetición idéntica y ASan/UBSan aprobados. Se observa un getter
+compartida, con repetición idéntica, ASan/UBSan y la suite nativa aprobada en Linux,
+Windows/MSVC y macOS Intel. Se observa un getter
 positivo con audio silencioso; no se confunde esa publicación con una ADSR.
 La aplicación continúa en **0.43.0**. El módulo de investigación no se enlaza al
 plugin mientras falte el contrato de llamada activa y sus controles/ruteo/cadencia.
