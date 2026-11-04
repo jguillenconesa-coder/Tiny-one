@@ -50,6 +50,10 @@ inicialización, límites y composición con ADSR son propios del host.
 Linux Release: **128/128 suites**, **1.098 cargas de tiempo real sin llamadas
 al heap rastreadas**, cuatro suites MIDI y ASan/UBSan aprobados; revisión visual
 final aprobada.
+Las cuatro suites MIDI pasan en Linux, Windows/MSVC y macOS Intel. El CI completo
+confirma Linux; al registrar la evidencia, Windows había pasado CTest y estaba
+empaquetando, macOS compilaba el producto universal y ARM64 seguía en cola sin
+ejecutar pruebas. No se extiende la aprobación a esos trabajos pendientes.
 [Pruebas y CI](releases/v0.45.0-validation.json). Estimación **≈69 % ±10**, sin
 nueva medición acústica. La evidencia ARM64 anterior sigue limitada a su revisión.
 
@@ -70,8 +74,9 @@ el segundo intento tampoco obtuvo runner y no ejecutó pruebas.
 [Pruebas y CI](releases/v0.44.0-validation.json). La estimación sigue en
 **≈69 % ±10 de planificación**, sin nueva medición acústica.
 
-El contrato activo de Envelope de Element, gain/pitch de voz, rutas especiales
-restantes, ruteo/scheduler original, Pulse/L1, layout, acústica, Ableton real,
+El contrato activo de Envelope de Element, los productores originales de buffers
+de gain/pitch, otras rutas especiales, ruteo/scheduler original, Pulse/L1, layout,
+acústica, Ableton real,
 firma/notarización y presets originales completos siguen pendientes. La evidencia
 ARM64 anterior corresponde a su revisión concreta; validar la nueva antes de
 extenderle el resultado. No hacen falta nuevas grabaciones para este bloque.

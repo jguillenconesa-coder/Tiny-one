@@ -750,3 +750,6 @@ Siguiente prioridad: estudiar las otras rutas especiales de modulación y el
 contrato de productores/ruteo legibles; mantener Envelope de Element fuera del
 plugin hasta localizar una llamada activa validable. Calibración acústica,
 Live, firma/notarización, Pulse/L1 y presets completos siguen pendientes.
+Antes de otro cambio del producto, consultar los trabajos aún pendientes en la
+[evidencia 0.45.0](releases/v0.45.0-validation.json) y resolver cualquier fallo
+real; no repetir compilaciones que ya hayan concluido correctamente.
