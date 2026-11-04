@@ -7,3 +7,7 @@ find_package(Python3 3.11 COMPONENTS Interpreter REQUIRED)
 add_executable(envelope_publisher246_tests Tests.cpp)
 target_include_directories(envelope_publisher246_tests PRIVATE ../../Source)
 add_test(NAME envelope_publisher246_original COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/RunTests.py" "$<TARGET_FILE:envelope_publisher246_tests>" "${CMAKE_CURRENT_SOURCE_DIR}/vectors")
+
+add_executable(envelope_publisher246_composition_tests CompositionTests.cpp)
+target_include_directories(envelope_publisher246_composition_tests PRIVATE ../../Source)
+add_test(NAME envelope_publisher246_element_composition COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/RunTests.py" "$<TARGET_FILE:envelope_publisher246_composition_tests>" "${CMAKE_CURRENT_SOURCE_DIR}/vectors" envelope-publisher246-element)

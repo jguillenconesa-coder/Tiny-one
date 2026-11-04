@@ -39,6 +39,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Composición de Envelope y Element contrastada
+
+[Productor → consumidor](element246-composition.md): 4.096 bloques originales /
+524.288 muestras y 8.192 callbacks Element, sin inyectar una publicación intermedia.
+Se comparan 2.048 despachos aceptados, controles/destinos/retornos y estado/audio
+completos. En 250 bloques, leer antes o después cambia los destinos: el orden aún
+no recuperado importa. Dos suites Linux y ASan/UBSan aprobados; repetición original
+idéntica. [Evidencia](element246-composition-validation.json).
+La llamada activa sigue sin localizarse en la búsqueda acotada; no se infiere que
+esté en L1. El módulo sigue fuera del plugin, versión **0.43.0**, estimación
+**≈69 % ±10** sin cambios.
+
 ## Bloque de investigación contrastado: publicador de Envelope
 
 [Escritor, reset y getter](element246-producers.md): 4.096 bloques originales /

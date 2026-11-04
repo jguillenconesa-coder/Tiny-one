@@ -17,3 +17,10 @@ ctest --test-dir build-publisher -C Release --output-on-failure
 The actual call context and control semantics remain unvalidated. Do not use
 the published value as a voice ADSR or identify it as master compression solely
 from this isolated numerical correspondence.
+
+The second suite composes the original writer with 8,192 original Element drum/FX
+callbacks, without injecting the publication between them. Synthetic before/after
+scheduling changes targets in 250 blocks; it is not a recovered original clock.
+See [composition scope](../../docs/element246-composition.md). Regeneration uses
+`--composition` on the same private oracle script; fixtures contain numeric
+observations only.

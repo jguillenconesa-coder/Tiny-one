@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-04",
+  "application_version": "0.43.0",
+  "implementation_commit": "pending verified commit",
+  "production_integration": false,
+  "original_oracle": {
+    "status": "success; independent repeat byte-identical",
+    "blocks": 4096,
+    "audio_samples": 524288,
+    "consumer_calls": 8192,
+    "accepted_dispatches": 2048,
+    "blocks_with_different_before_after_targets": 250,
+    "evidence": "firmware/envelope-publisher246-element-validation.json"
+  },
+  "linux_native": {
+    "status": "success",
+    "passed": 2,
+    "total": 2
+  },
+  "sanitizers": "success: ASan/UBSan composed original fixture suite; detect_leaks=0 under managed ptrace",
+  "native_ci": {
+    "status": "pending push",
+    "scope": "standalone publisher and original composition; Linux, Windows/MSVC and macOS Intel"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
+  "limits": [
+    "Before/after order is explicitly supplied by the harness, not recovered hardware scheduling.",
+    "Source 2 drum and FX kind 5 only. No injected publication between producer and consumers; explicit audio, controls, caller states and initial consumer targets.",
+    "Active producer caller, state/control ownership, cadence and audio routing remain unknown. No acoustic equivalence or recovered physical source claim.",
+    "Research-only change. Product stays 0.43.0; no plugin/installer rebuild, release/tag or cloud configuration changes."
+  ]
+}

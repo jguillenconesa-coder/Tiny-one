@@ -691,3 +691,15 @@ producto. Antes de integrarlo hay que localizar la llamada activa, entrada de
 audio, controles/defaults, propiedad de los dos estados y orden/cadencia respecto
 a Element. No atribuirle compresión maestra ni bloqueos L1 sin demostrar su ruteo.
 Los otros tres productores siguen pendientes.
+
+
+## Composición de publicador y Element — investigación posterior a 0.43.0
+
+[Composición original contrastada](element246-composition.md): 4.096 bloques /
+524.288 muestras y 8.192 consumidores, con la publicación generada por el escritor,
+sin reemplazo entre ambas rutinas. Dos puntos de lectura sintéticos producen
+destinos diferentes en 250 bloques; el orden del hardware sigue sin validarse.
+2.048 despachos aceptados cubren drum 8/9, kinds 0–3 y los ocho FX kind 5.
+Estado/audio completos, repetición idéntica y sanitizadores aprobados. La búsqueda
+acotada de CALL/literales/inmediatos no localiza el llamador; no atribuir a L1 ni
+a compresión maestra. Sigue pendiente el contrato activo antes de integrar.

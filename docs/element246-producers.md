@@ -63,6 +63,10 @@ el núcleo contrastado, su API con publicación compartida explícita y sus prue
 la integración audible espera ese contrato de llamada. Los adaptadores actuales
 continúan identificados como propios en [Element 0.43.0](element246-hybrid.md).
 
+La [composición posterior con Element](element246-composition.md) contrasta ambos
+cuerpos originales sin inyectar la publicación intermedia; su orden de lectura
+sigue siendo sintético y no resuelve la llamada activa.
+
 ## Resto de entradas
 
 | Palabra | Resultado de este bloque |

@@ -713,3 +713,9 @@ and the corrected GNU BF524 simulator were research tools; no firmware or
 decompiled source is distributed. Fixtures are synthetic inputs and numerical
 observations. The active caller, control semantics and product routing remain
 unvalidated; this model is not linked into Pocket One. [Scope](docs/element246-producers.md).
+
+The follow-up authored composition probe executes the full publisher and 8,192
+Element consumer callbacks under explicit before/after scheduling, without
+replacing the shared word between them. The scheduling is synthetic, not original
+voice/audio routing. Only numerical fixture observations are distributed.
+[Composition scope](docs/element246-composition.md).
