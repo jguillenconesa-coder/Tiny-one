@@ -1,7 +1,7 @@
 {
   "date": "2026-11-04",
   "version": "0.46.0",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "34cd351e86e786db0a78035f07933bf32801a792",
   "original_reference": {
     "cases": 4096,
     "accepted": 3799,
@@ -73,13 +73,39 @@
     }
   },
   "native_random_ci": {
-    "status": "pending push"
+    "status": "success: 4/4 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905480371",
+    "suites_per_platform": 4,
+    "platforms": {
+      "linux": {
+        "passed": 4,
+        "total": 4,
+        "seconds": 66.06
+      },
+      "windows_msvc": {
+        "passed": 4,
+        "total": 4,
+        "seconds": 27.75
+      },
+      "macos_intel": {
+        "passed": 4,
+        "total": 4,
+        "seconds": 31.4
+      }
+    }
   },
   "plugins_installers_ci": {
-    "status": "pending push"
+    "status": "in progress; not yet approved",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905480335",
+    "platforms": {
+      "linux": "building",
+      "windows_msvc": "integer DSP precheck in progress",
+      "macos_universal": "configuring; runtime validation on Intel pending"
+    }
   },
   "native_macos_arm64_ci": {
-    "status": "not dispatched for this revision yet"
+    "status": "queued; no tests executed and no result inherited from previous revisions",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905535595"
   },
   "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
   "limits": [
@@ -88,5 +114,26 @@
     "Random FX shares the authored Engine RNG with voice/excitation consumers. Its advancing clock can change String/DNA noise sequences even without an active FX; no dry bit-identity claim on activation.",
     "No new Ableton Live, physical-device/dropout, signing/notarization or acoustic-equivalence claim. Original presets remain a final stage.",
     "No release/tag publication or cloud environment configuration modification."
-  ]
+  ],
+  "ci_snapshot_utc": "2026-11-04 20:22 UTC",
+  "validation_source_commit": "25a26bc11e7d2c50c03c89bdcd458503a2d885dd",
+  "portability_fix": {
+    "commit": "25a26bc11e7d2c50c03c89bdcd458503a2d885dd",
+    "change": "Explicit <string> include in the test verifier; no product DSP change",
+    "local_recheck": "FX integration target rebuilt and passed, 1/1, 0.75 seconds"
+  },
+  "superseded_ci": {
+    "native_random": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905053589",
+      "reason": "MSVC verifier compilation failed: std::to_string declaration unavailable without explicit <string>; fixed in validation_source_commit"
+    },
+    "product": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905053814",
+      "status": "cancelled to validate corrected verifier and avoid packaging superseded revision"
+    },
+    "arm64": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905080529",
+      "status": "cancelled while unassigned to validate corrected revision"
+    }
+  }
 }

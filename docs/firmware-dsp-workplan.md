@@ -771,3 +771,9 @@ parámetros. Mantener Envelope de Element fuera del plugin mientras no exista
 una llamada activa validable. Pulse/L1, calibración acústica, Live real,
 firma/notarización y presets completos siguen pendientes; no repetir búsquedas
 acotadas agotadas ni presentar más fixtures como mayor fidelidad acústica.
+
+Antes de otra entrega, revisar el CI completo y ARM64 enlazados en la evidencia
+0.46.0, todavía en curso al registrar este bloque. La corrección `25a26bc` añade
+`<string>` al verificador MSVC sin cambiar DSP; usar sus trabajos nuevos, no los
+cancelados de `34cd351`. El CI completo 0.45.0 ya terminó aprobado en Linux,
+Windows/MSVC y macOS universal (runtime Intel).

@@ -48,7 +48,9 @@ con estado/RNG/display/ocho destinos/retornos completos y repetición idéntica.
 El estado global del bus, reloj, seed y lifecycle son adaptaciones propias.
 Linux Release: **130/130 suites**, **1.146 cargas de tiempo real sin llamadas
 al heap rastreadas**, cuatro suites Random y tres suites ASan/UBSan del núcleo/FX
-aprobadas; revisión visual aprobada.
+aprobadas; revisión visual aprobada. Las cuatro suites Random pasan también en
+Windows/MSVC y macOS Intel. El CI completo de plugins/instaladores sigue en curso;
+ARM64 continúa en cola sin pruebas ejecutadas.
 [Pruebas y CI](releases/v0.46.0-validation.json). La estimación sigue en **≈69 % ±10**:
 se cierra una ruta ausente, sin medir nueva equivalencia acústica ni recuperar
 el scheduler original. No hacen falta nuevas grabaciones para este bloque.
