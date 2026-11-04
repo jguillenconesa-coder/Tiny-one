@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-04",
+  "version": "0.46.0",
+  "implementation_commit": "pending verified commit",
+  "original_reference": {
+    "cases": 4096,
+    "accepted": 3799,
+    "rejected": 297,
+    "independent_cases": 2048,
+    "retained_cases": 2048,
+    "state_bytes": 44,
+    "target_words": 8,
+    "fx_types": 8,
+    "kinds": [
+      2,
+      5
+    ],
+    "complete_state_rng_meter_targets_return": true,
+    "private_repetition": "identical original observations in a second output directory",
+    "evidence": "../firmware/random-fx246-validation.json",
+    "scope": "Isolated supplied original callback/reset and FX ranges, GNU BF524 with documented simulator writeback corrections; no hardware/caller/scheduler claim"
+  },
+  "native_random": {
+    "status": "success",
+    "passed": 4,
+    "total": 4,
+    "seconds": 16.58,
+    "scope": "Four Random suites passed within the final product regression: original voice/FX fixtures, FX bridge and both Engine integrations"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 130,
+    "total": 130,
+    "seconds": 274.61,
+    "runs": [
+      {
+        "scope": "Complete plugin smoke with new Random FX and legacy availability/UI selection tests",
+        "passed": 1,
+        "total": 1,
+        "seconds": 42.45
+      },
+      {
+        "scope": "Remaining product regression, no duplicate smoke execution",
+        "passed": 129,
+        "total": 129,
+        "seconds": 232.16
+      }
+    ]
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": "ASan/UBSan original Random voice fixtures, complete original FX fixtures and four-control bridge, and FX host/Engine integration; previous broad voice host regression covered in Release. detect_leaks=0 under managed ptrace.",
+    "passed": 3,
+    "total": 3,
+    "seconds": 33.83
+  },
+  "realtime": {
+    "status": "success",
+    "new_workloads": 48,
+    "scope": "Linux C++ and wrapped C heap calls tracked in audio callback; shared-cloud timing is diagnostic",
+    "workloads": 1146,
+    "heap_calls": 0
+  },
+  "plugin_integration": {
+    "status": "success",
+    "scope": "Eight FX/two rates, exact 64/257 stereo audio with timestamped amount/destination automation, release/panic, PDC, editor-free proxy and project/slot/clipboard",
+    "seconds": 42.45
+  },
+  "visual": {
+    "status": "reviewed readable Random FX heading, four controls and destination",
+    "sha256": {
+      "random-fx-native.png": "790f4fbd1c5efa59b914aeb0b322df2fb3bc1fcfbd9010b1c1e82dd86d61f484"
+    }
+  },
+  "native_random_ci": {
+    "status": "pending push"
+  },
+  "plugins_installers_ci": {
+    "status": "pending push"
+  },
+  "native_macos_arm64_ci": {
+    "status": "not dispatched for this revision yet"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
+  "limits": [
+    "FX kinds 2/5 only; kind 4/destination 1 branch excluded. Eight original target words verified, first four connected to existing host FX controls.",
+    "Shared-bus ownership, seed, control clock, sample-and-hold, parameter capture, note/reset and lifecycle are authored host policy. No recovered original caller, scheduler, allocator, L1 or OTP.",
+    "Random FX shares the authored Engine RNG with voice/excitation consumers. Its advancing clock can change String/DNA noise sequences even without an active FX; no dry bit-identity claim on activation.",
+    "No new Ableton Live, physical-device/dropout, signing/notarization or acoustic-equivalence claim. Original presets remain a final stage.",
+    "No release/tag publication or cloud environment configuration modification."
+  ]
+}

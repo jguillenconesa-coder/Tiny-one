@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+cmake_minimum_required(VERSION 3.22)
+project(Random246Validation LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+enable_testing()
+foreach(suite IN ITEMS Random246Fx Random246FxIntegration Random246 Random246Integration)
+  add_executable(${suite}Tests ../../Tests/${suite}Tests.cpp)
+  target_include_directories(${suite}Tests PRIVATE ../../Source)
+endforeach()
+add_test(NAME random246_fx COMMAND Random246FxTests "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/ReferenceVectors")
+add_test(NAME random246_fx_integration COMMAND Random246FxIntegrationTests)
+add_test(NAME random246 COMMAND Random246Tests "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/ReferenceVectors")
+add_test(NAME random246_integration COMMAND Random246IntegrationTests)

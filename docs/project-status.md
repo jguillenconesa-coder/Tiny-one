@@ -39,7 +39,21 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: MIDI LFO hacia la voz (0.45.0)
+## Entrega actual: Random hacia los ocho FX (0.46.0)
+
+[Random FX](random246-fx.md) modula simultáneamente los cuatro controles de cada
+efecto, con cantidad bipolar, velocidad, envolvente, automatización, mandos sin
+editor y proyectos/slots/clipboard. Callback contrastado en 4096 llamadas originales
+con estado/RNG/display/ocho destinos/retornos completos y repetición idéntica.
+El estado global del bus, reloj, seed y lifecycle son adaptaciones propias.
+Linux Release: **130/130 suites**, **1.146 cargas de tiempo real sin llamadas
+al heap rastreadas**, cuatro suites Random y tres suites ASan/UBSan del núcleo/FX
+aprobadas; revisión visual aprobada.
+[Pruebas y CI](releases/v0.46.0-validation.json). La estimación sigue en **≈69 % ±10**:
+se cierra una ruta ausente, sin medir nueva equivalencia acústica ni recuperar
+el scheduler original. No hacen falta nuevas grabaciones para este bloque.
+
+## Entrega anterior: MIDI LFO hacia la voz (0.45.0)
 
 [Voice Level/Pitch](midi246-voice.md) se conectan a los diez motores melódicos
 nativos con control por CC1–4, ganancia suavizada, automatización, mandos sin editor,
@@ -51,9 +65,10 @@ Linux Release: **128/128 suites**, **1.098 cargas de tiempo real sin llamadas
 al heap rastreadas**, cuatro suites MIDI y ASan/UBSan aprobados; revisión visual
 final aprobada.
 Las cuatro suites MIDI pasan en Linux, Windows/MSVC y macOS Intel. El CI completo
-confirma Linux; al registrar la evidencia, Windows había pasado CTest y estaba
-empaquetando, macOS compilaba el producto universal y ARM64 seguía en cola sin
-ejecutar pruebas. No se extiende la aprobación a esos trabajos pendientes.
+confirma Linux y Windows/MSVC (130/130 suites, arranque, instalador y
+desinstalación), y macOS universal con 128/128 suites en Intel y su instalador.
+El intento ARM64 cerró sin adquirir runner ni ejecutar pruebas; no se le
+atribuye un resultado del producto.
 [Pruebas y CI](releases/v0.45.0-validation.json). Estimación **≈69 % ±10**, sin
 nueva medición acústica. La evidencia ARM64 anterior sigue limitada a su revisión.
 

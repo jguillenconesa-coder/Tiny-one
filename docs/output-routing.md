@@ -97,3 +97,17 @@ orden de streams están contrastados con el callback original MIDI synth.
 No se conectan estos destinos a drum/D-box ni al volumen maestro. La mezcla,
 entrada de FX, PDC y volumen de salida mantienen el orden anterior. El pitch wheel
 por canal sigue aplicándose a la frecuencia base. [Alcance](midi246-voice.md).
+
+
+## Random LFO: parámetros del FX — 0.46.0
+
+El destino FX retira Random de Instrument/ADSR y aplica las primeras cuatro de
+sus ocho señales al FX seleccionado, después de la suavización de sus controles
+base. Punch conserva su inserción anterior a la mezcla; Filter/Nitro/Delay/Grid/
+Phone/Spring/CWO reciben los controles en el bus mono existente. No se modifican
+las posiciones de volumen maestro, audio seco ni PDC.
+
+Estado global, reloj de 689,0625 callbacks/s y aplicación sobre bases frescas son
+adaptaciones propias. La secuencia continúa sin notas y con el FX en bypass;
+retirar Random no vacía las memorias del efecto. Pánico reinicia la secuencia y
+conserva su política existente de borrar audio/colas. [Alcance](random246-fx.md).

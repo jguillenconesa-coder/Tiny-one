@@ -13,7 +13,7 @@ struct ScreenFrame {
     bool crank246=false,crankTargetAvailable=false;float crankPhase=0;
     bool bend246=false,bendTargetAvailable=false;float bendLevel=0;
     bool midi246=false;std::array<float,4> midiCC{{64,64,64,64}};std::array<juce::String,4> midiTargets{};
-    bool random246=false,randomEnvelope=false;std::array<float,4> random{};
+    bool random246=false,randomEnvelope=false,randomFx=false,randomVoiceAvailable=true,randomFxAvailable=false;std::array<float,4> random{};
     bool valueVoice=false,valueEnvelope=false,tremolo246=false;
     int kitPads=8,fmAlgorithm=0;
     int page=0,engine=0,note=60,voices=0,stage=0,step=-1,mode=0,track=0;

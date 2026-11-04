@@ -84,7 +84,8 @@ public:
     }
     std::array<int,4> midi246Routes() const {std::array<int,4> out{};for(size_t i=0;i<4;++i)out[i]=int(midiAudio[i+1]->load());return out;}
     std::array<std::atomic<float>,4> visualMidiCC{{64,64,64,64}};
-    bool random246Enabled() const {return !element246Enabled()&&!crank246Enabled()&&!bend246Enabled()&&!midi246Enabled()&&phaseAudio[61]->load()>.5f&&valueVoice246Available();}
+    bool random246Available() const {return int(phaseAudio[64]->load())==2||valueVoice246Available();}
+    bool random246Enabled() const {return !element246Enabled()&&!crank246Enabled()&&!bend246Enabled()&&!midi246Enabled()&&phaseAudio[61]->load()>.5f&&random246Available();}
     bool tremolo246Enabled() const {return !element246Enabled()&&!crank246Enabled()&&!bend246Enabled()&&!midi246Enabled()&&!random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
     bool value246Enabled() const {return !element246Enabled()&&!crank246Enabled()&&!bend246Enabled()&&!midi246Enabled()&&!random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
     bool valueVoice246Available() const {return drum246Enabled()||dbox246Enabled()||sampler246Enabled()||dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}

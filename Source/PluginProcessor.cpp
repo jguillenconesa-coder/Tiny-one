@@ -86,10 +86,10 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     const int tremoloDefaults[]={16000,0,0,16000};
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::tremolo246Ids[i],1},tremoloNames[i],i==1?-32768:0,32767,tremoloDefaults[i]));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"tremolo246Shape",1},"Tremolo 246: Waveform",juce::StringArray{"Sine","Ramp","Curve","Square","Pulse"},0));
-    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"random246Enabled",1},"Random 246: Instrument / ADSR LFO",false));
+    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"random246Enabled",1},"Random 246: Instrument / ADSR / FX LFO",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::random246Ids[0],1},"Random 246: Blue Amount",-32768,32767,2000));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::random246Ids[1],1},"Random 246: Green Speed",0,32767,4000));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::random246Ids[2],1},"Random 246: White Destination",juce::StringArray{"Instrument","ADSR"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::random246Ids[2],1},"Random 246: White Destination",juce::StringArray{"Instrument","ADSR","FX"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::random246Ids[3],1},"Random 246: Orange LFO Envelope",0,32767,24000));
 
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"filter246Enabled",1},"Filter 246: Output Bus",false));
@@ -275,7 +275,7 @@ void PocketProcessor::setScreenPage(int page,bool tapeMode) {
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followString(phaseState->getParameter(visiblePage.load()==0?pocket::string246Ids[size_t(i)]:pocket::string246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followFm(phaseState->getParameter(visiblePage.load()==0?pocket::fm246Ids[size_t(i)]:pocket::fm246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)],*phaseAudio[10]);
         if(visiblePage.load()==2)screenKnobs[size_t(i)]->followTremolo(phaseState->getParameter(pocket::tremolo246Ids[size_t(i)]),*phaseAudio[55],*audioParameters[size_t(Param::engine)],*phaseAudio[0],*phaseAudio[10]);
-        if(visiblePage.load()==2)screenKnobs[size_t(i)]->followRandom(phaseState->getParameter(pocket::random246Ids[size_t(i)]),*phaseAudio[61],*audioParameters[size_t(Param::engine)],*phaseAudio[0],*phaseAudio[10]);
+        if(visiblePage.load()==2)screenKnobs[size_t(i)]->followRandom(phaseState->getParameter(pocket::random246Ids[size_t(i)]),*phaseAudio[61],[](const void* context){return static_cast<const PocketProcessor*>(context)->random246Available();},this);
         if(visiblePage.load()==3)screenKnobs[size_t(i)]->followFilter(phaseState->getParameter(pocket::filter246Ids[size_t(i)]),*phaseAudio[66]);
         if(visiblePage.load()==3)screenKnobs[size_t(i)]->followNitro(phaseState->getParameter(pocket::nitro246Ids[size_t(i)]),*phaseAudio[71]);
         if(visiblePage.load()==3)screenKnobs[size_t(i)]->followDelay(phaseState->getParameter(pocket::delay246Ids[size_t(i)]),*phaseAudio[76]);
@@ -407,15 +407,15 @@ double PocketProcessor::getTailLengthSeconds() const {
     const double masterTail=state.getRawParameterValue("masterEcho")->load()>0?state.getRawParameterValue("masterDelayTime")->load()*std::log(.00001)/std::log(masterFeedback):0;
     double envelopeTail=(.008+release*release*5*(.5+macro))*12;
     if(dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||cluster246Enabled()||drWave246Enabled()||phase246EnvelopeEnabled()||digital246EnvelopeEnabled()){
-        const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&phaseAudio[64]->load()>.5f&&phaseAudio[62]->load()!=0);
+        const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&int(phaseAudio[64]->load())==1&&phaseAudio[62]->load()!=0);
         const int index=127-std::clamp(modulatedRelease?0:int(phaseAudio[dsynth246Enabled()?144:voltage246Enabled()?132:dna246Enabled()?124:string246Enabled()?116:fm246Enabled()?108:cluster246Enabled()?52:drWave246Enabled()?44:digital246EnvelopeEnabled()?19:9]->load())/128,0,127);
         const double coefficient=pocket::reference::adsr246Decay[size_t(index)]/2147483648.;
         envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+128./88200.;
     }
-    if(sampler246EnvelopeEnabled()){const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&phaseAudio[64]->load()>.5f&&phaseAudio[62]->load()!=0);const auto index=size_t(127-std::clamp(modulatedRelease?0:int(samplerAudio[15]->load())/128,0,127));const double coefficient=pocket::reference::adsr246Decay[index]/2147483648.;envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+640./88200.;}
+    if(sampler246EnvelopeEnabled()){const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&int(phaseAudio[64]->load())==1&&phaseAudio[62]->load()!=0);const auto index=size_t(127-std::clamp(modulatedRelease?0:int(samplerAudio[15]->load())/128,0,127));const double coefficient=pocket::reference::adsr246Decay[index]/2147483648.;envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+640./88200.;}
     // Instrument modulation can keep changing pitch, region and decay while
     // released. Report a conservative unbounded tail, not the static-pad bound.
-    if((dbox246Enabled()||drum246Enabled())&&((valueVoice246Enabled()&&phaseAudio[34]->load()<=.5f&&phaseAudio[33]->load()!=0)||(random246Enabled()&&phaseAudio[64]->load()<=.5f&&phaseAudio[62]->load()!=0)))return std::numeric_limits<double>::infinity();
+    if((dbox246Enabled()||drum246Enabled())&&((valueVoice246Enabled()&&phaseAudio[34]->load()<=.5f&&phaseAudio[33]->load()!=0)||(random246Enabled()&&int(phaseAudio[64]->load())==0&&phaseAudio[62]->load()!=0)))return std::numeric_limits<double>::infinity();
     if(dbox246Enabled()){envelopeTail=0;for(size_t pad=0;pad<24;++pad)for(size_t oscillator=0;oscillator<2;++oscillator){const int v=int(dboxAudio[pad][2+4*oscillator]->load()),centre=oscillator?94:96;const int index=std::max(0,centre-std::abs(centre-int(pocket::reference::multiplyQ15(int16_t(v),192))));const double pole=pocket::reference::adsr246Decay[size_t(index)]/2147483648.;envelopeTail=std::max(envelopeTail,std::log(16./2147483648.)/std::log(pole*pole)/88200.);}envelopeTail+=.25;}
     if(drum246Enabled()){
         if(tremolo246Enabled()&&phaseAudio[57]->load()!=0)return std::numeric_limits<double>::infinity();

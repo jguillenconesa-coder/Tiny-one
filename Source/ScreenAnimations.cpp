@@ -49,7 +49,7 @@ void drawScreen(juce::Graphics& g,const ScreenFrame& f) {
         label(g,"MIDI LFO / CC 1-4",{15,25,220,12},9,colors[0]);
         for(size_t i=0;i<4;++i){const float x=29.f+float(i)*56.f,y=75.f-f.midiCC[i]*.3f;g.setColour(colors[i]);g.drawLine(x,75.f,x,y,12.f);label(g,juce::String(int(f.midiCC[i])),{int(x)-15,83,30,12},9,colors[i]);}
     } else if(f.page==2&&f.random246) {
-        label(g,juce::String("RANDOM 246 / ")+(f.randomEnvelope?((f.engine==11||f.drum246)?"OFF / ADSR":"ADSR"):"INSTRUMENT"),{15,25,220,12},9,colors[0]);
+        label(g,juce::String("RANDOM 246 / ")+(f.randomFx?(f.randomFxAvailable?"FX":"OFF / FX"):!f.randomVoiceAvailable?"OFF / VOICE":f.randomEnvelope?((f.engine==11||f.drum246)?"OFF / ADSR":"ADSR"):"INSTRUMENT"),{15,25,220,12},9,colors[0]);
         for(size_t i=0;i<4;++i){const float x=29.f+float(i)*56.f,y=61.f-std::clamp(f.random[i],-1.f,1.f)*20.f;g.setColour(colors[i]);g.drawLine(x,61.f,x,y,12.f);g.drawHorizontalLine(61,int(x-10),int(x+10));}
         label(g,juce::String(f.lfoRate,2)+" targets/s",{15,86,220,12},8,colors[2]);
     } else if(f.page==2&&f.tremolo246) {

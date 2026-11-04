@@ -1,4 +1,9 @@
-# Pocket One 0.43.0
+# Pocket One 0.46.0
+
+**Random FX**: independent modulation of all four controls on eight effects,
+with bipolar amount, speed, LFO envelope, automation and persistence.
+Original callback verified; authored shared-bus clock, ownership and composition.
+[Scope](docs/random246-fx.md) · [validation](docs/releases/v0.46.0-validation.json).
 
 **Element**: virtual sensor, external audio, envelope and level sources for
 Instrument/ADSR/FX, with automation and persistence. 18,432 original callbacks

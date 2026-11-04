@@ -1,4 +1,9 @@
-# Pocket One 0.45.0
+# Pocket One 0.46.0
+
+**Random hacia los ocho FX**: modulación independiente de sus cuatro controles,
+con cantidad bipolar, velocidad, envolvente, automatización y guardado.
+Callback original contrastado; reloj, estado global y composición del host propios.
+[Uso y límites](docs/random246-fx.md) · [validación](docs/releases/v0.46.0-validation.json).
 
 **MIDI LFO hacia la voz**: ganancia suavizada y pitch en diez motores melódicos,
 con destinos automatizables, estado y mandos contextuales. Aritmética original
@@ -65,7 +70,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.41.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.46.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

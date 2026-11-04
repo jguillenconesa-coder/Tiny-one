@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #include "PluginProcessor.h"
 #include "Midi246PluginSupport.h"
+#include "Random246FxPluginSupport.h"
 #include "ScreenAnimations.h"
 #include "SoundBrowser.h"
 #include "KitEditor.h"
 #include <iostream>
+#include <cstdlib>
 #include <memory>
 #include <stdexcept>
 void check(bool ok,const char* message) { if(!ok) throw std::runtime_error(message); }
@@ -62,9 +64,34 @@ static void testMidiVoiceRoutes(const char* screenshot){
  std::cout<<"PASS: ten melodic engines x voice gain/pitch x two rates, CC timestamps, exact 64/257 stereo audio, release/panic, PDC, availability, editor-free proxies and project/slot/clipboard persistence\n";
 }
 
+static void testRandomFx(const char* screenshot){
+ auto render=[](int fx,double rate,int block,bool automation){
+  auto p=std::make_unique<PocketProcessor>();configureRandomFxTest(*p,fx);auto& raw=p->phaseParameters();auto* amount=raw.getParameter("random246Amount");amount->setValueNotifyingHost(amount->convertTo0to1(0));p->prepareToPlay(rate,block);const int latency=p->getLatencySamples();std::vector<float> result;
+  for(int start=0;start<8192;){
+   if(start==1537&&automation)amount->setValueNotifyingHost(amount->convertTo0to1(24000));
+   if(start==3073||start==4099)raw.getParameter("random246Destination")->setValueNotifyingHost(start==3073?.5f:1.f);
+   if(start==5121&&automation)amount->setValueNotifyingHost(amount->convertTo0to1(-24000));
+   int stop=8192;for(int boundary:{1537,3073,4099,5121})if(boundary>start)stop=std::min(stop,boundary);
+   const int n=std::min(block,stop-start);juce::AudioBuffer<float> audio(2,n);audio.clear();juce::MidiBuffer midi;
+   for(auto event:std::array<std::pair<int,int>,3>{{{37,0},{6145,1},{7681,2}}})if(event.first>=start&&event.first<start+n)midi.addEvent(event.second==0?juce::MidiMessage::noteOn(1,60,.8f):event.second==1?juce::MidiMessage::allNotesOff(1):juce::MidiMessage::allSoundOff(1),event.first-start);
+   p->processBlock(audio,midi);for(int j=0;j<n;++j){const auto v=audio.getSample(0,j);check(std::isfinite(v)&&std::abs(v)<8&&v==audio.getSample(1,j),"Random FX stereo output invalid");result.push_back(v);}start+=n;
+  }
+  check(p->getLatencySamples()==latency,"Random FX changed PDC");for(size_t i=7681;i<result.size();++i)check(result[i]==0,"Random FX panic retains output");return result;
+ };
+ for(double rate:{44100.,96000.})for(int fx=0;fx<8;++fx){const auto a=render(fx,rate,64,true),b=render(fx,rate,257,true),neutral=render(fx,rate,64,false);check(a==b,"Random FX depends on host buffers");check(std::equal(a.begin(),a.begin()+1537,neutral.begin()),"Random FX automation affected earlier audio");check(a!=neutral,"Random FX automation is inaudible");}
+ auto p=std::make_unique<PocketProcessor>();configureRandomFxTest(*p,7);p->setScreenPage(2);p->screenKnob(2).setValueNotifyingHost(1);check(p->phaseParameters().getRawParameterValue("random246Destination")->load()==2,"Random FX proxy requires editor");
+ p->state.getParameter("engine")->setValueNotifyingHost(p->state.getParameter("engine")->convertTo0to1(4));check(p->random246Enabled()&&p->screenKnob(0).followedParameter()==p->phaseParameters().getParameter("random246Amount"),"Legacy Random FX unavailable without editor");p->phaseParameters().getParameter("random246Destination")->setValueNotifyingHost(.5f);check(!p->random246Enabled(),"Random voice destination available on legacy engine");p->phaseParameters().getParameter("random246Destination")->setValueNotifyingHost(1);
+ {p->phaseParameters().getParameter("random246Destination")->setValueNotifyingHost(.5f);std::unique_ptr<juce::AudioProcessorEditor> ui(p->createEditor());bool selected=false;for(auto* child:ui->getChildren())if(child->getComponentID()=="lfo-selector")if(auto* menu=dynamic_cast<juce::ComboBox*>(child)){menu->setSelectedId(2,juce::sendNotificationSync);selected=true;}check(selected&&p->random246Enabled()&&p->phaseParameters().getRawParameterValue("random246Destination")->load()==2,"Selecting Random on legacy engine did not choose FX");}
+ juce::MemoryBlock saved;p->getStateInformation(saved);auto q=std::make_unique<PocketProcessor>();q->setStateInformation(saved.getData(),int(saved.getSize()));auto verify=[](PocketProcessor& x){check(x.random246Enabled()&&x.cwo246Enabled()&&x.phaseParameters().getRawParameterValue("random246Destination")->load()==2,"Random FX project/slot/clipboard lost routing");};verify(*q);
+ juce::String error;check(p->assignSoundSlot(false,3)&&p->copySound(error),"Random FX slot/clipboard save failed");p->applyPreset(4);check(p->recallSoundSlot(false,3,error),"Random FX slot recall failed");verify(*p);p->applyPreset(4);check(p->pasteSound(error),"Random FX paste failed");verify(*p);
+ if(screenshot){std::unique_ptr<juce::AudioProcessorEditor> ui(p->createEditor());juce::PNGImageFormat png;auto image=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream file(juce::File(juce::String::fromUTF8(screenshot)).getSiblingFile("random-fx-native.png"));check(png.writeImageToStream(image,file),"Random FX screenshot failed");}
+ std::cout<<"PASS: Random on eight FX/two rates, exact 64/257 stereo audio, timed amount/destination automation, release/panic, PDC, editor-free proxy and project/slot/clipboard\n";
+}
+
 int main(int argc,char** argv) {
  try {
   juce::ScopedJuceInitialiser_GUI init;
+  testRandomFx(argc>1?argv[1]:std::getenv("POCKET_SMOKE_SCREENSHOT"));
   testMidiFxInputAudio(argc>1?argv[1]:nullptr);
   testMidiVoiceRoutes(argc>1?argv[1]:nullptr);
   auto p=std::make_unique<PocketProcessor>(); p->prepareToPlay(48000,256);
@@ -481,7 +508,7 @@ check(shared->drum246SharedSource()&&shared->kitPads.load()==24,"Shared source l
    check(synth->random246Enabled()&&!synth->valueVoice246Enabled()&&!synth->value246Enabled()&&!synth->tremolo246Enabled(),"Random priority failed");
    for(int i=0;i<4;++i){auto* target=raw.getParameter(pocket::random246Ids[size_t(i)]);check(synth->screenKnob(i).followedParameter()==target,"Random proxy target failed");synth->screenKnob(i).setValueNotifyingHost(.3f+float(i)*.1f);check(std::abs(target->getValue()-synth->screenKnob(i).getValue())<.0001,"Random closed-editor proxy write failed");}
    raw.getParameter("random246Enabled")->setValueNotifyingHost(0);check(synth->screenKnob(0).followedParameter()==raw.getParameter("tremolo246Speed"),"Random off did not restore Tremolo routing without editor");raw.getParameter("random246Enabled")->setValueNotifyingHost(1);
-   raw.getParameter("random246Destination")->setValueNotifyingHost(1);juce::String error;check(synth->assignSoundSlot(false,6)&&synth->copySound(error),"Random slot/copy failed");juce::MemoryBlock saved;synth->getStateInformation(saved);
+   raw.getParameter("random246Destination")->setValueNotifyingHost(.5f);juce::String error;check(synth->assignSoundSlot(false,6)&&synth->copySound(error),"Random slot/copy failed");juce::MemoryBlock saved;synth->getStateInformation(saved);
    std::array<float,4> randomExpected{};for(size_t i=0;i<4;++i)randomExpected[i]=raw.getRawParameterValue(pocket::random246Ids[i])->load();
    auto verify=[&](PocketProcessor& instance){check(instance.random246Enabled()&&instance.phaseParameters().getRawParameterValue("random246Destination")->load()==1,"Random state lost enable/destination");for(int i=0;i<4;++i)check(instance.phaseParameters().getRawParameterValue(pocket::random246Ids[size_t(i)])->load()==randomExpected[size_t(i)],"Random state lost control");};
    auto restored=std::make_unique<PocketProcessor>();restored->setStateInformation(saved.getData(),int(saved.getSize()));verify(*restored);synth->applyPreset(0);check(synth->recallSoundSlot(false,6,error)&&synth->random246Enabled(),"Random slot recall failed");verify(*synth);synth->applyPreset(0);check(synth->pasteSound(error)&&synth->random246Enabled(),"Random clipboard failed");verify(*synth);

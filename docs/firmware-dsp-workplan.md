@@ -753,3 +753,21 @@ Live, firma/notarización, Pulse/L1 y presets completos siguen pendientes.
 Antes de otro cambio del producto, consultar los trabajos aún pendientes en la
 [evidencia 0.45.0](releases/v0.45.0-validation.json) y resolver cualquier fallo
 real; no repetir compilaciones que ya hayan concluido correctamente.
+
+
+## Random FX — integración 0.46.0
+
+El callback `0x019cefb0` y reset `0x019cf2f4` se contrastan en 4096 llamadas,
+2048 independientes y 2048 retenidas, con los ocho FX, kinds 2/5, estado de
+44 bytes, RNG, display, ocho targets y retorno completos. La repetición privada
+es idéntica. Se integra el destino FX, cuatro controles simultáneos, UI,
+automatización, proxies y estado. Ownership global del bus, reloj, seed y
+lifecycle son propios. No se integra la rama kind 4 ni se infiere el caller.
+[Contrato](random246-fx.md) · [Resultados](releases/v0.46.0-validation.json).
+
+Siguiente frente: delimitar el consumidor original de las rutas especiales que
+faltan y revisar la matriz para priorizar voz/ruteo frente a más adaptadores de
+parámetros. Mantener Envelope de Element fuera del plugin mientras no exista
+una llamada activa validable. Pulse/L1, calibración acústica, Live real,
+firma/notarización y presets completos siguen pendientes; no repetir búsquedas
+acotadas agotadas ni presentar más fixtures como mayor fidelidad acústica.

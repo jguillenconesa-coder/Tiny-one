@@ -64,7 +64,9 @@ Desactivar la ruta retira su estado; pánico retira las voces.
 Ese seed, orden de llamadas entre voces, asignación y reloj son **adaptadores
 propios**: no se ha recuperado el scheduler L1 ni la inicialización completa del
 instrumento. Guardar un sonido conserva parámetros, no una captura de la secuencia
-aleatoria en ejecución. No se implementan aquí Random FX/drum ni otros motores.
+aleatoria en ejecución. Este bloque histórico no implementaba Random FX/drum ni otros motores. Las
+entregas posteriores amplían los motores y [drum/D-box](drum246-modulation.md);
+[0.46.0 integra Random FX](random246-fx.md) con su propia evidencia.
 La coincidencia bajo GNU BF524 con ambos parches documentados no demuestra
 fidelidad acústica completa, temporización física ni validación en Ableton real.
 

@@ -750,3 +750,12 @@ original observations; the complete 6,144-call oracle is retained. No new firmwa
 execution count, original display initialization/ownership, buffer producer or
 scheduler is inferred. Per-voice zero initialization, clock, routing, lifecycle
 and existing engine bounds are authored adaptations. [Scope](docs/midi246-voice.md).
+
+## Random FX modulation (0.46.0)
+
+The independently written Random FX parameter callback and its four-control host
+adapter were compared with 4,096 isolated rev246 callbacks using the same credited
+GNU Blackfin tooling and supplied firmware. Numeric synthetic fixtures and a
+reproducible harness are included; firmware, instruction bytes, disassembly and
+private ELF files are not. Shared-bus ownership, clock, seed and lifecycle are
+host policy, not recovered original scheduling. See [scope](docs/random246-fx.md).

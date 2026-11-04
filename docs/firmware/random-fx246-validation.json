@@ -1,0 +1,48 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "process": "0x019cefb0",
+  "note_reset": "0x019cf2f4",
+  "range_initializer": "0x01a1e914",
+  "range_helper": "0x01a1de68",
+  "cases": 4096,
+  "independent_cases": 2048,
+  "retained_cases": 2048,
+  "fx_types": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "kinds": [
+    2,
+    5
+  ],
+  "state_bytes": 44,
+  "target_words": 8,
+  "artifacts": {
+    "random-fx246-input.bin": {
+      "bytes": 360448,
+      "sha256": "0e1f7d2386ef1543433f85b76394afa9fc0e806d65a5cb11915e648c32ad7ca4",
+      "matches_committed_fixture": true
+    },
+    "random-fx246-output.bin": {
+      "bytes": 294912,
+      "sha256": "228a480fd9abc080781dffc4233183477463a6c9363e495558a3c210c11fe92a",
+      "matches_committed_fixture": true
+    }
+  },
+  "tools": {
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "/workspace/blackfin-note-argument-validated/bin/bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "/workspace/work/dsynth246/fp-model/run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "scope": "Complete self, RNG, 32-bit meter, eight targets and return. FX kinds 2/5 parameter dispatch only; kind 4 excluded.",
+  "limits": [
+    "Original caller, clock, initialization/ownership and acoustic equivalence not established.",
+    "GNU BF524 with documented D-register and halfword writeback patches; not hardware."
+  ]
+}

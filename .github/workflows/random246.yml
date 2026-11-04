@@ -1,0 +1,25 @@
+name: Validate Random voice and FX modulation
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'Source/Random246*.h'
+      - 'Tests/Random246*.cpp'
+      - 'Tests/ReferenceVectors/random-*'
+      - 'scripts/verify-random-fx246.py'
+      - 'research/random-modulation/**'
+      - '.github/workflows/random246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/random-modulation -B build-random -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-random --config Release --parallel 2
+      - run: ctest --test-dir build-random -C Release --output-on-failure

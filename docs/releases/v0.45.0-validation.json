@@ -56,20 +56,20 @@
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793998"
   },
   "plugins_installers_ci": {
-    "status": "in progress; Linux success, Windows tests passed/installer running, macOS universal build running",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793982",
     "jobs": [
       {
         "job_id": 126808347177,
         "name": "build (windows-2022)",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job_id": 126808347646,
         "name": "build (macos-latest)",
-        "status": "in_progress",
-        "conclusion": null
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "job_id": 126808347723,
@@ -84,14 +84,30 @@
       "seconds": 554.35,
       "artifact_id": 13356184021
     },
-    "windows_scope": "Product CTest step completed successfully; packaging/startup/install/uninstall validation not yet complete at snapshot",
-    "macos_scope": "Universal arm64+x86_64 compilation; runtime tests on macOS 15 Intel not yet complete at snapshot"
+    "windows_scope": "Complete product tests, standalone startup, installer build/hash/registration/uninstall and artifact upload approved",
+    "macos_scope": "Universal arm64+x86_64 compilation, Intel runtime product CTest and universal packaging approved; not native arm64 execution",
+    "windows": {
+      "passed": 130,
+      "total": 130,
+      "seconds": 379.57,
+      "standalone_startup": "success, created window",
+      "installer": "success: file hashes, registration and uninstall",
+      "artifact_id": 13357433560
+    },
+    "macos": {
+      "passed": 128,
+      "total": 128,
+      "seconds": 552.31,
+      "artifact_id": 13358897793,
+      "scope": "Universal arm64+x86_64 product compiled, tests executed on Intel, universal installer built and inspected"
+    }
   },
   "native_macos_arm64_ci": {
-    "status": "queued; no runner acquired and no tests executed at snapshot",
+    "status": "not executed; job acquired no hosted runner",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896792952",
     "implementation_commit": "63591efb42b3913a8b06a379a8bf8b1e26bd6f15",
-    "scope": "No result inherited from 0.43.0 or unexecuted 0.44.0 runs"
+    "scope": "No result inherited from 0.43.0 or unexecuted 0.44.0 runs",
+    "reason": "The job was not acquired by Runner of type hosted even after multiple attempts; macOS arm64 capacity constraints"
   },
   "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
   "limits": [
@@ -101,7 +117,7 @@
   ],
   "regression_ci": {
     "fm": {
-      "status": "Linux and Windows success; macOS Intel pending",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793560",
       "jobs": [
         {
@@ -116,8 +132,8 @@
         },
         {
           "name": "validate (macos-15-intel)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success"
         }
       ]
     },
@@ -143,13 +159,13 @@
       ]
     },
     "dna": {
-      "status": "Linux and Windows success; macOS Intel pending",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793928",
       "jobs": [
         {
           "name": "validate (macos-15-intel)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (ubuntu-latest)",
@@ -185,13 +201,13 @@
       ]
     },
     "dsynth": {
-      "status": "Linux and Windows success; macOS Intel pending",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793621",
       "jobs": [
         {
           "name": "validate (macos-15-intel)",
-          "status": "queued",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (windows-2022)",
@@ -227,7 +243,7 @@
       ]
     },
     "drum": {
-      "status": "Linux and Windows success; macOS Intel pending",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793799",
       "jobs": [
         {
@@ -237,8 +253,8 @@
         },
         {
           "name": "validate (macos-15-intel)",
-          "status": "in_progress",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success"
         },
         {
           "name": "validate (windows-2022)",
@@ -269,7 +285,7 @@
       ]
     },
     "element": {
-      "status": "Linux and Windows success; macOS Intel pending",
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41896793727",
       "jobs": [
         {
@@ -284,8 +300,8 @@
         },
         {
           "name": "validate (macos-15-intel)",
-          "status": "queued",
-          "conclusion": null
+          "status": "completed",
+          "conclusion": "success"
         }
       ]
     },
@@ -358,5 +374,6 @@
     "workflow_commit": "3aed09a2a632a56f06cffef8156035631bd24180",
     "status": "manual workflow available, no execution started; main macOS runner acquired, avoiding duplicate builds",
     "scope": "Workflow-only addition after implementation; no DSP changes or results claimed"
-  }
+  },
+  "followup_checked_utc": "2026-11-04 20:11 UTC"
 }
