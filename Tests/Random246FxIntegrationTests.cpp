@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
+#include <string>
 #include <vector>
 using namespace pocket;
 static void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
