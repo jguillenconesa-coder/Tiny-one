@@ -20,7 +20,7 @@ struct Dna246Voice {
         if(released&&!releaseSent){state.release();releaseSent=true;}
         if(cursor==128){
             auto pitch=uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5);
-            if(output.tremolo.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);pitch=values[0];}
+            if(output.tremolo.enabled||output.midi.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);output.midi.pitchBlock(values);pitch=values[0];}
             pitch=uint32_t(std::clamp(reference::signedPhase(pitch),int32_t(0x50000),int32_t(0x7fffffff)));
             const auto period=reference::dna246Period(pitch);state.phaseA%=period;state.phaseB%=period;
             if(state.counter>=0x7ffffe00u)state.counter=0;

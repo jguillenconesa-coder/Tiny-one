@@ -739,3 +739,14 @@ audio observations from the existing 6,144-call oracle, not a new firmware run.
 Placement before the mono FX bus, sample clock and CC receiver policy are authored
 adaptations; no original audio routing or acoustic equivalence is inferred.
 [Scope](docs/midi246-fx-input.md).
+
+
+## MIDI voice gain and pitch — 0.45.0
+
+Recovered gain smoothing, sequential saturated Q15 scaling and cubic/Q31 pitch
+arithmetic are kept in the independent MIDI special helpers. Both streaming and
+blocked host bridges match 11,392 pitch/gain pairs and display words from existing
+original observations; the complete 6,144-call oracle is retained. No new firmware
+execution count, original display initialization/ownership, buffer producer or
+scheduler is inferred. Per-voice zero initialization, clock, routing, lifecycle
+and existing engine bounds are authored adaptations. [Scope](docs/midi246-voice.md).

@@ -37,7 +37,7 @@ struct DrWave246Voice {
             for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),0,drWave246Max[i]));
             std::array<uint32_t,128> pitch{};
             pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));
-            output.tremolo.pitchBlock(pitch,rate.table);
+            output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);
             const auto result=reference::drWave246Block(state,waves,runtime,config.bank,rate.table,bounded,pitch,int(counter),block);
             if(result!=reference::DrWave246ReadResult::rendered)block.fill(0);
             counter=(counter+1)%6;cursor=0;

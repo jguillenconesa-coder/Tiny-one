@@ -39,7 +39,21 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: MIDI LFO hacia la entrada de FX (0.44.0)
+## Entrega actual: MIDI LFO hacia la voz (0.45.0)
+
+[Voice Level/Pitch](midi246-voice.md) se conectan a los diez motores melódicos
+nativos con control por CC1–4, ganancia suavizada, automatización, mandos sin editor,
+proyectos, slots y clipboard. Los puentes stream/bloque coinciden con 11.392 pares
+de pitch/ganancia de los fixtures originales MIDI existentes; siguen las 6.144
+comparaciones completas. Captura por 128 muestras internas, estado por voz,
+inicialización, límites y composición con ADSR son propios del host.
+Linux Release: **128/128 suites**, **1.098 cargas de tiempo real sin llamadas
+al heap rastreadas**, cuatro suites MIDI y ASan/UBSan aprobados; revisión visual
+final aprobada.
+[Pruebas y CI](releases/v0.45.0-validation.json). Estimación **≈69 % ±10**, sin
+nueva medición acústica. La evidencia ARM64 anterior sigue limitada a su revisión.
+
+## Entrega anterior: MIDI LFO hacia la entrada de FX (0.44.0)
 
 [Dos curvas de entrada](midi246-fx-input.md) para Filter/Nitro/Delay/Grid/Phone/
 Spring/CWO, con orden secuencial de CC, automatización, mandos sin editor y
@@ -52,7 +66,7 @@ al heap rastreadas**, ASan/UBSan y revisión visual aprobados. MIDI: **3/3 suite
 en Linux, Windows/MSVC y macOS Intel**. Plugins e instaladores completos
 aprobados en Linux, Windows/MSVC y macOS universal (runtime Intel). El intento
 ARM64 de esta revisión no obtuvo runner ni ejecutó pruebas por falta de capacidad;
-el segundo intento está en cola.
+el segundo intento tampoco obtuvo runner y no ejecutó pruebas.
 [Pruebas y CI](releases/v0.44.0-validation.json). La estimación sigue en
 **≈69 % ±10 de planificación**, sin nueva medición acústica.
 

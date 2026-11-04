@@ -1,4 +1,9 @@
-# Pocket One 0.44.0
+# Pocket One 0.45.0
+
+**MIDI LFO hacia la voz**: ganancia suavizada y pitch en diez motores melódicos,
+con destinos automatizables, estado y mandos contextuales. Aritmética original
+contrastada; ownership, reloj y composición del host propios.
+[Uso y límites](docs/midi246-voice.md) · [validación](docs/releases/v0.45.0-validation.json).
 
 **MIDI LFO hacia la entrada de FX**: dos curvas bipolares para los siete efectos
 del bus mono, con automatización, CC por timestamp, estado y mandos contextuales.

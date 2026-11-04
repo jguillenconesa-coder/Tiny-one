@@ -22,7 +22,7 @@ struct Sampler246Voice {
             if(!initialized){state.construct();state.bind(1);state.reset(c);initialized=true;}
             if(released&&!releaseSent){state.release();releaseSent=true;}
             std::array<uint32_t,128> pitch{};pitch.fill(uint32_t(std::clamp(std::llround(std::max(0.,ratio)*262144.)+int64_t(ratio>0),0ll,2147483647ll)));
-            output.tremolo.pitchBlock(pitch,config.table);
+            output.tremolo.pitchBlock(pitch,config.table);output.midi.pitchBlock(pitch);
             reference::sampler246Block(state,c,pitch,0x7fffffff,{sample.drumPcm.data(),count,-8},reference::drum246FirCoefficients,block);
             const bool ended=!loop||c[0]>=c[2]||released;
             if(ended&&(reverse?state.position<reference::sampler246Position(c[0]):state.position>=reference::sampler246Position(c[3]))){if(tail==0)tail=512;}

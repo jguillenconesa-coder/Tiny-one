@@ -9,7 +9,7 @@ struct Digital246Voice {
     Phase246Voice output;
     float source(uint32_t increment,const reference::Digital246Coefficients& controls,const Phase246Config& config,
                  const std::array<int16_t,4>* adsr,bool released) noexcept {
-        return output.shapeSample(reference::digital246Sample(state,controls,output.tremolo.pitch(increment,config.table),config.table)/32768.,config,adsr,released);
+        return output.shapeSample(reference::digital246Sample(state,controls,output.midi.pitch(output.tremolo.pitch(increment,config.table)),config.table)/32768.,config,adsr,released);
     }
     float next(double frequency,const reference::Digital246Coefficients& controls,const Phase246Config& config,
                const std::array<int16_t,4>* adsr=nullptr,bool released=false) noexcept {

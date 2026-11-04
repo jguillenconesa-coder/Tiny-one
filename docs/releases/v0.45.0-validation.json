@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-04",
+  "version": "0.45.0",
+  "implementation_commit": "pending verified commit",
+  "original_reference": {
+    "callback_cases": 6144,
+    "voice_pitch_gain_observation_pairs": 11392,
+    "voice_bridges": [
+      "streaming",
+      "blocked"
+    ],
+    "retained_fx_audio_observations": 21568,
+    "scope": "Reused original MIDI fixtures, including complete display/state/targets/buffers/returns. No new original firmware executions or original scheduler/initialization inference."
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 128,
+    "total": 128,
+    "seconds": 303.59
+  },
+  "native_midi": {
+    "status": "success",
+    "passed": 4,
+    "total": 4,
+    "voice_engine_rate_route_cases": 182,
+    "additional_mono_legato_glide_combinations": 32,
+    "retained_parameter_cases": 252,
+    "retained_fx_audio_cases": 112
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1098,
+    "new_voice_workloads": 120,
+    "heap_calls": 0,
+    "scope": "Linux C++ new/delete and wrapped C allocation/free calls tracked within the callback; shared-cloud timing is diagnostic, not dropout certification."
+  },
+  "sanitizers": {
+    "status": "success",
+    "passed": 4,
+    "total": 4,
+    "seconds": 230.79,
+    "scope": "ASan/UBSan original MIDI fixtures, engine parameter integration, FX audio and voice gain/pitch adapters; detect_leaks=0 under managed ptrace."
+  },
+  "visual": {
+    "status": "reviewed readable Voice Level/Voice Pitch destination labels and retained FX input labels",
+    "sha256": {
+      "midi-voice-native.png": "68cfd0bed9800c7f4a399748aaa516d98afea60886a316cb4f62817925d369a7"
+    }
+  },
+  "plugin_integration": {
+    "status": "success",
+    "scope": "Ten melodic engines x gain/pitch x two rates; exact 64/257 stereo output, CC timestamps, release/panic, unchanged PDC, drum/D-box/legacy rejection, editor-free proxies and projects/slots/clipboard. Full plugin smoke repeated with visual capture."
+  },
+  "native_midi_ci": {
+    "status": "pending push"
+  },
+  "plugins_installers_ci": {
+    "status": "pending push"
+  },
+  "native_macos_arm64_ci": {
+    "status": "pending dispatch; no result inherited from 0.43.0 or unexecuted 0.44.0 runs"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
+  "limits": [
+    "Gain smoothing and Q15/Q31 pitch/gain arithmetic match supplied original observations; per-voice ownership, zero initialization, lifecycle and 128-sample 88.2kHz capture clock are authored host policy.",
+    "Existing engine pitch bounds and scalar/vector read contracts remain; no recovered original buffer producers, complete voice allocator/scheduler, Element publisher caller, L1 or OTP.",
+    "No new acoustic equivalence, Ableton Live, physical-device/dropout or signing/notarization claim. No release/tag publication or cloud environment configuration edit."
+  ]
+}

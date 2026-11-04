@@ -67,7 +67,9 @@ del display usado en la ruta de ganancia suministrada.
 
 En 0.39.0 no se exponían las rutas numéricamente contrastadas de ganancia, pitch
 y audio FX. [0.44.0](midi246-fx-input.md) conecta las dos curvas de audio a la entrada
-del bus mono con ruteo/reloj propios. Ganancia y pitch de voz siguen pendientes. Modifican buffers suministrados; no son los productores
+del bus mono con ruteo/reloj propios. [0.45.0](midi246-voice.md) conecta ganancia y pitch en los diez motores melódicos
+con buffers, estado por voz y reloj propios. Sus productores originales siguen
+pendientes. Modifican buffers suministrados; no son los productores
 originales de esos buffers y no desbloquean el contorno de ganancia drum, L1 u OTP.
 Tampoco recuperan el receptor físico, el ruteo global, Element, Bend ni Crank.
 Bend (§15.8) es el accesorio físico manual: el pitch wheel MIDI existente no lo

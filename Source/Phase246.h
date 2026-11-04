@@ -3,6 +3,7 @@
 #include "ReferenceDsp.h"
 #include "Envelope246.h"
 #include "Tremolo246Voice.h"
+#include "Midi246Voice.h"
 #include <cmath>
 namespace pocket {
 // Experimental native Pd voice and optional reconstructed rev246 envelope.
@@ -26,7 +27,7 @@ struct Phase246Config {
     }
 };
 struct Phase246Voice {
-    Tremolo246Voice tremolo;
+    Tremolo246Voice tremolo;Midi246Voice midi;
     reference::PdState state;
     reference::Adsr246State envelope;
     reference::Adsr246Noise envelopeNoise;
@@ -38,7 +39,7 @@ struct Phase246Voice {
     std::array<std::array<double,2>,2> memory{};
     double position=0,cachedFrequency=-1;uint32_t increment=0;float first=0,second=0;bool started=false;
     float source(uint32_t increment,const reference::PdCoefficients& controls,const Phase246Config& config,const std::array<int16_t,4>* adsr=nullptr,bool released=false) noexcept {
-        double sample=reference::pdSample(state,tremolo.pitch(increment,config.table),controls,config.table)/32768.;
+        double sample=reference::pdSample(state,midi.pitch(tremolo.pitch(increment,config.table)),controls,config.table)/32768.;
         return shapeSample(sample,config,adsr,released);
     }
     float shapeSample(double sample,const Phase246Config& config,const std::array<int16_t,4>* adsr=nullptr,bool released=false) noexcept {
@@ -50,9 +51,9 @@ struct Phase246Voice {
             const auto noise=envelopeNoise.next();const auto level=envelope.advance(envelopeParameters);
             const auto gain=reference::multiplyQ31(level,int32_t(0x7ffe0000));
             const auto quantized=reference::floorDivide(reference::saturate32(int64_t(gain)+noise),65536);
-            sample*=active?tremolo.amplitude(int16_t(quantized),config.table)/16384.:0;
-            if(!active)tremolo.amplitude(0,config.table);
-        }else {envelopeStarted=false;sample*=tremolo.amplitude(16384,config.table)/16384.;}
+            sample*=active?midi.amplitude(tremolo.amplitude(int16_t(quantized),config.table))/16384.:0;
+            if(!active)midi.amplitude(tremolo.amplitude(0,config.table));
+        }else {envelopeStarted=false;sample*=midi.amplitude(tremolo.amplitude(16384,config.table))/16384.;}
         for(size_t i=0;i<2;++i){const auto& c=config.filters[i];auto& m=memory[i];const double out=c.b0*sample+m[0];m[0]=c.b1*sample-c.a1*out+m[1];m[1]=c.b2*sample-c.a2*out;sample=out;}
         return float(sample);
     }

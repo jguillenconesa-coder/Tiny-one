@@ -49,10 +49,11 @@
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351249"
   },
   "native_macos_arm64_ci": {
-    "status": "queued; retry attempt 2 after hosted-runner capacity failure before execution",
+    "status": "not executed; both attempts acquired no hosted runner",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837352216",
     "first_attempt_reason": "The job was not acquired by Runner of type hosted even after multiple attempts; macOS arm64 capacity constraints",
-    "attempt": 2
+    "attempt": 2,
+    "second_attempt_reason": "The job was not acquired by Runner of type hosted even after multiple attempts; macOS arm64 capacity constraints"
   },
   "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
   "limits": [

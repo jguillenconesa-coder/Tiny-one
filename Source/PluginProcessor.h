@@ -78,6 +78,7 @@ public:
         if(route>=1&&route<=8)return valueVoice246Available()&&(route<=4||sampler246Enabled()||dsynth246Enabled()||drum246Enabled()||dbox246Enabled());
         if(route>=9&&route<=12)return valueVoice246Available()&&!drum246Enabled()&&!dbox246Enabled()&&(!phase246Enabled()||phase246EnvelopeEnabled())&&(!digital246Enabled()||digital246EnvelopeEnabled())&&(!sampler246Enabled()||sampler246EnvelopeEnabled());
         if(route>=13&&route<=16)return punch246Enabled()||filter246Enabled()||nitro246Enabled()||delay246Enabled()||grid246Enabled()||phone246Enabled()||spring246Enabled()||cwo246Enabled();
+        if(route==19||route==20)return valueVoice246Available()&&!drum246Enabled()&&!dbox246Enabled();
         if(route==17||route==18)return filter246Enabled()||nitro246Enabled()||delay246Enabled()||grid246Enabled()||phone246Enabled()||spring246Enabled()||cwo246Enabled();
         return false;
     }

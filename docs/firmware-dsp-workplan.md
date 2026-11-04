@@ -734,3 +734,19 @@ son propios del host. [Alcance](midi246-fx-input.md). Punch/bypass no se modific
 Siguiente prioridad verificable: adaptadores de gain/pitch de voz ya contrastados,
 con definición explícita de sus buffers y ciclo de vida antes de conectarlos.
 No reutilizar esta entrada como Envelope original ni afirmar scheduler recuperado.
+
+
+## MIDI voice gain/pitch — integración híbrida 0.45.0
+
+Se conectan las operaciones especiales del callback synth MIDI `0x019cce68`,
+kind 0, destino 3, colores 0/1, a diez motores melódicos. Ambos puentes, stream y
+bloque, coinciden con 11.392 pares observados en los fixtures originales; se
+conserva el oráculo completo de 6.144 llamadas. No se ejecutó un nuevo oráculo del firmware.
+[Alcance](midi246-voice.md). Ownership del display, inicialización, callbacks de
+128 muestras internas, integración con ADSR y límites son adaptaciones propias.
+No se recuperan el productor de buffers, allocator ni scheduler originales.
+
+Siguiente prioridad: estudiar las otras rutas especiales de modulación y el
+contrato de productores/ruteo legibles; mantener Envelope de Element fuera del
+plugin hasta localizar una llamada activa validable. Calibración acústica,
+Live, firma/notarización, Pulse/L1 y presets completos siguen pendientes.

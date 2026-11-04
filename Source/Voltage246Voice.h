@@ -21,7 +21,7 @@ struct Voltage246Voice {
         if(cursor==128){
             std::array<uint32_t,128> pitch{};
             pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));
-            output.tremolo.pitchBlock(pitch,rate.table);
+            output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);
             std::array<int16_t,4> bounded{};for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),voltage246Min[i],voltage246Max[i]));
             reference::voltage246Block(state,bounded,pitch,rate.table,block,display);cursor=0;
         }

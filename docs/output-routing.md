@@ -84,3 +84,16 @@ La señal ya mezclada puede incluir instrumento, entrada monitorizada, cinta,
 metrónomo, EQ y eco maestro según los controles previos. El volumen maestro sigue
 después del bus y escala también sus colas. CC64 cierra la entrada, sin borrar las
 memorias del efecto; pánico sí las borra. [Alcance](midi246-fx-input.md).
+
+
+## MIDI LFO: ganancia/pitch de voz — 0.45.0
+
+Voice Level modifica el gain Q15 del adaptador de cada voz antes de sus filtros;
+en D-synth modifica el gain suministrado al núcleo. Voice Pitch transforma sus
+palabras de pitch, con los límites válidos del motor. Captura por bloques de 128
+muestras internas, ownership e inicialización son propios del host; aritmética y
+orden de streams están contrastados con el callback original MIDI synth.
+
+No se conectan estos destinos a drum/D-box ni al volumen maestro. La mezcla,
+entrada de FX, PDC y volumen de salida mantienen el orden anterior. El pitch wheel
+por canal sigue aplicándose a la frecuencia base. [Alcance](midi246-voice.md).

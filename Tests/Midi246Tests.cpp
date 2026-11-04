@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #include "Midi246.h"
+#include "Midi246Voice.h"
 #include <cstring>
 #include <filesystem>
 #include <fstream>
@@ -15,15 +16,21 @@ int main(int argc,char** argv){try{
  check(argc==2,"Provide unpacked fixture directory");using namespace pocket::reference;
  const auto in=read(std::filesystem::path(argv[1])/"midi246-input.bin"),out=read(std::filesystem::path(argv[1])/"midi246-output.bin");
  check(in.size()==6144*1096&&out.size()==6144*1072,"Incomplete MIDI fixtures");
- size_t audioSamples=0;
+ size_t audioSamples=0,voiceSamples=0;
  for(size_t n=0;n<6144;++n){const auto* x=in.data()+n*1096;const auto* y=out.data()+n*1072;
   std::array<int16_t,8> controls{},targets{};std::array<uint32_t,4> cc{};std::array<int16_t,4> display{};std::array<uint32_t,128> pitch{};std::array<int16_t,128> gain{},audio{};
   for(size_t i=0;i<8;++i){controls[i]=half(x+16+i*2);targets[i]=half(x+56+i*2);}
   for(size_t i=0;i<4;++i){cc[i]=word(x+32+i*4);display[i]=half(x+48+i*2);}
   for(size_t i=0;i<128;++i){pitch[i]=word(x+72+i*4);gain[i]=half(x+584+i*2);audio[i]=half(x+840+i*2);}
-  const auto originalAudio=audio;
+  const auto originalAudio=audio;const auto originalPitch=pitch;const auto originalGain=gain;const auto originalDisplay=display;
   const auto family=word(x);const int type=int(word(x+4)),kind=int(word(x+8));
   const uint32_t accepted=family==0?midi246SynthStep(controls,cc,display,kind,type,targets,pitch,gain):family==1?midi246DrumStep(controls,cc,kind,type,targets):midi246FxStep(controls,cc,kind,type,targets,audio);
+  if(family==0&&kind==0&&valueVoice246RangeIndex(type)>=0){
+   std::array<int,4> routes{};for(size_t i=0;i<4;++i){const int dest=int(floorDivide(controls[4+i],2048)),target=uint16_t(controls[i])>>12;if(dest==3&&(target==0||target==1))routes[i]=19+target;}
+   pocket::Midi246Voice stream,blocked;stream.configure(true,routes,cc,false);blocked.configure(true,routes,cc,true);stream.display=blocked.display=originalDisplay;auto prepared=originalPitch;blocked.pitchBlock(prepared);
+   for(size_t i=0;i<128;++i){check(stream.pitch(originalPitch[i])==word(y+44+i*4),"Stream MIDI voice pitch differs from original observations");check(stream.amplitude(originalGain[i])==half(y+556+i*2),"Stream MIDI voice gain differs from original observations");check(prepared[i]==word(y+44+i*4)&&blocked.amplitude(originalGain[i])==half(y+556+i*2),"Blocked MIDI voice bridge differs from original observations");}
+   for(size_t i=0;i<4;++i)check(stream.display[i]==half(y+20+i*2)&&blocked.display[i]==half(y+20+i*2),"MIDI voice display differs from original observations");if(stream.enabled)voiceSamples+=128;
+  }
   if(family==2&&(kind==2||kind==5)&&type>=0&&type<8){
    std::array<int,4> routes{};
    for(size_t i=0;i<4;++i){const int dest=int(floorDivide(controls[4+i],2048)),colour=uint16_t(controls[i])>>12;if(dest==3&&(colour==2||colour==3))routes[i]=15+colour;}
@@ -33,6 +40,7 @@ int main(int argc,char** argv){try{
   std::array<unsigned char,1072> actual{};std::memcpy(actual.data(),x+12,4);std::memcpy(actual.data()+4,cc.data(),16);std::memcpy(actual.data()+20,display.data(),8);std::memcpy(actual.data()+28,targets.data(),16);std::memcpy(actual.data()+44,pitch.data(),512);std::memcpy(actual.data()+556,gain.data(),256);std::memcpy(actual.data()+812,audio.data(),256);std::memcpy(actual.data()+1068,&accepted,4);
   if(std::memcmp(actual.data(),y,1072)){for(size_t i=0;i<1072;++i)if(actual[i]!=y[i]){std::cerr<<"MIDI case "<<n<<" family "<<family<<" type "<<type<<" kind "<<kind<<" byte "<<i<<" expected "<<int(y[i])<<" got "<<int(actual[i])<<'\n';break;}throw std::runtime_error("Original MIDI callback mismatch");}
  }
+ check(voiceSamples>0,"Missing original voice gain/pitch observations");
  check(audioSamples>0,"Missing original FX audio bridge observations");
- std::cout<<"PASS: "<<audioSamples<<" original FX audio samples through host bridge; 6144 MIDI callbacks, all supplied state/CC/display/targets/pitch/gain/FX audio/returns\n";
+ std::cout<<"PASS: "<<voiceSamples<<" original voice pitch/gain sample pairs through stream/block bridges; "<<audioSamples<<" original FX audio samples through host bridge; 6144 MIDI callbacks, all supplied state/CC/display/targets/pitch/gain/FX audio/returns\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
