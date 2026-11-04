@@ -63,7 +63,10 @@ public:
     bool filter246Enabled() const {return !cwo246Enabled()&& !spring246Enabled()&& !phone246Enabled()&&!grid246Enabled()&&!delay246Enabled()&&!nitro246Enabled()&&phaseAudio[66]->load()>.5f;}
     bool punch246Enabled() const {return !cwo246Enabled()&& !spring246Enabled()&& !phone246Enabled()&&!grid246Enabled()&&!delay246Enabled()&&!nitro246Enabled()&&!filter246Enabled()&&phaseAudio[20]->load()>.5f;}
     bool midi246Available() const {return valueVoice246Available()||punch246Enabled()||filter246Enabled()||nitro246Enabled()||delay246Enabled()||grid246Enabled()||phone246Enabled()||spring246Enabled()||cwo246Enabled();}
-    bool midi246Enabled() const {return midiAudio[0]->load()>.5f&&midi246Available();}
+    bool bend246Enabled() const {return bendAudio[0]->load()>.5f&&midi246Available();}
+    bool bend246TargetAvailable() const {const int colour=int(bendAudio[1]->load()),dest=int(bendAudio[2]->load());if(dest&&colour>=4)return false;return midi246RouteAvailable(dest==0?colour+1:dest==1?colour+9:colour+13);}
+    std::atomic<float> visualBend{0};
+    bool midi246Enabled() const {return !bend246Enabled()&&midiAudio[0]->load()>.5f&&midi246Available();}
     bool midi246RouteAvailable(int route) const {
         if(route>=1&&route<=8)return valueVoice246Available()&&(route<=4||sampler246Enabled()||dsynth246Enabled()||drum246Enabled()||dbox246Enabled());
         if(route>=9&&route<=12)return valueVoice246Available()&&!drum246Enabled()&&!dbox246Enabled()&&(!phase246Enabled()||phase246EnvelopeEnabled())&&(!digital246Enabled()||digital246EnvelopeEnabled())&&(!sampler246Enabled()||sampler246EnvelopeEnabled());
@@ -72,11 +75,11 @@ public:
     }
     std::array<int,4> midi246Routes() const {std::array<int,4> out{};for(size_t i=0;i<4;++i)out[i]=int(midiAudio[i+1]->load());return out;}
     std::array<std::atomic<float>,4> visualMidiCC{{64,64,64,64}};
-    bool random246Enabled() const {return !midi246Enabled()&&phaseAudio[61]->load()>.5f&&valueVoice246Available();}
-    bool tremolo246Enabled() const {return !midi246Enabled()&&!random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
-    bool value246Enabled() const {return !midi246Enabled()&&!random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
+    bool random246Enabled() const {return !bend246Enabled()&&!midi246Enabled()&&phaseAudio[61]->load()>.5f&&valueVoice246Available();}
+    bool tremolo246Enabled() const {return !bend246Enabled()&&!midi246Enabled()&&!random246Enabled()&& phaseAudio[55]->load()>.5f&&(valueVoice246Available()||dbox246Enabled()||drum246Enabled());}
+    bool value246Enabled() const {return !bend246Enabled()&&!midi246Enabled()&&!random246Enabled()&&phaseAudio[25]->load()>.5f&&!valueVoice246Enabled()&&!tremolo246Enabled();}
     bool valueVoice246Available() const {return drum246Enabled()||dbox246Enabled()||sampler246Enabled()||dsynth246Enabled()||voltage246Enabled()||dna246Enabled()||string246Enabled()||fm246Enabled()||phase246Enabled()||digital246Enabled()||drWave246Enabled()||cluster246Enabled();}
-    bool valueVoice246Enabled() const {return !midi246Enabled()&&!random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
+    bool valueVoice246Enabled() const {return !bend246Enabled()&&!midi246Enabled()&&!random246Enabled()&&phaseAudio[31]->load()>.5f&&valueVoice246Available()&&!tremolo246Enabled();}
     juce::AudioProcessorValueTreeState& phaseParameters() {return *phaseState;}
     bool phase246Enabled() const {return phaseAudio[0]->load()>.5f&&int(audioParameters[size_t(Param::engine)]->load())==1;}
     bool phase246EnvelopeEnabled() const {return phase246Enabled()&&phaseAudio[5]->load()>.5f;}
@@ -162,6 +165,7 @@ private:
     static juce::AudioProcessorValueTreeState::ParameterLayout layout();
     std::unique_ptr<juce::AudioProcessorValueTreeState> phaseState;
     std::array<std::atomic<float>*,5> midiAudio{};
+    std::array<std::atomic<float>*,6> bendAudio{};
     bool captureAsSharedDrum=false;
     std::atomic<float>* drumLfoBankAudio=nullptr;std::array<std::atomic<float>*,16> samplerAudio{};std::array<std::atomic<float>*,6> drumAudio{};std::array<std::atomic<float>*,24> drumModeAudio{};
     std::array<std::array<std::atomic<float>*,8>,24> dboxAudio{};std::atomic<float>* dboxPadSelection=nullptr;

@@ -9,6 +9,7 @@ struct ScreenFrame {
     bool drumLfoSecondary=false;bool samplerSecondary=false,samplerLoop=false;int samplerFrames=0;std::array<int16_t,8> samplerControls{};
     bool sampler246=false,drum246=false,dsynthSecondary=false,cluster246=false,drWave246=false,phase246=false,phaseEnvelope=false,digital246=false,cwo246=false,spring246=false,phone246=false,grid246=false,delay246=false,nitro246=false,filter246=false,punch246=false,value246=false,valueDestination=false;
     int dboxPad=0;int valueColour=0;
+    bool bend246=false,bendTargetAvailable=false;float bendLevel=0;
     bool midi246=false;std::array<float,4> midiCC{{64,64,64,64}};std::array<juce::String,4> midiTargets{};
     bool random246=false,randomEnvelope=false;std::array<float,4> random{};
     bool valueVoice=false,valueEnvelope=false,tremolo246=false;

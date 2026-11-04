@@ -623,3 +623,18 @@ no son ejecuciones nuevas del firmware. Preparación/división inicial y ruteo s
 propios. [Contrato](shared-drum246.md). Se mantiene pendiente el algoritmo original
 de layout/segmentación, además de productores, voz/ruteo/clock, LFO físicos, Pulse/L1,
 acústica/Live/arm64 y presets finales.
+
+
+## Bend manual — 0.41.0
+
+Se contrastan 6.144 callbacks originales intercalados de Bend tipo 6: procesador
+compartido de entrada, historial/flags/contador, wrap, dirección, reposo y dispatch
+Instrument/primeros cuatro ADSR/FX kinds 2/5, con buffers suministrados intactos.
+Matriz aceptada completa para los tipos soportados y repetición exacta.
+[Contrato](bend246-hybrid.md). Se integra un encoder naranja virtual y Reverse,
+con reloj/activación propios, estado, proxies y selector LFO. Los auxiliares FX
+kind 4 y rutas especiales de audio/pitch no forman parte de este port.
+
+Continúan Element/Crank, productores de voz y ruteo/clock, layout original, Pulse/L1,
+calibración/Live/arm64 y presets finales. La entrada manual no es el pitch wheel
+MIDI, y no se atribuye su adaptación de host a un lector físico recuperado.

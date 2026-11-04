@@ -150,7 +150,14 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"midi246Enabled",1},"MIDI LFO: Enabled",false));
     const juce::StringArray midiRoutes{"Off","Instrument Blue","Instrument Green","Instrument White","Instrument Orange","Instrument 5","Instrument 6","Instrument 7","Instrument 8","ADSR Attack","ADSR Decay","ADSR Sustain","ADSR Release","FX Blue","FX Green","FX White","FX Orange"};
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::midi246Ids[i],1},"MIDI LFO: CC "+juce::String(int(i+1))+" Destination",midiRoutes,int(i+1)));
+    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Enabled",1},"Bend LFO: Enabled",false));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[0],1},"Bend LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[1],1},"Bend LFO: Destination",juce::StringArray{"Instrument","ADSR","FX"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[2],1},"Bend LFO: Amount",-32767,32767,16000));
+    phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[3],1},"Bend LFO: Orange Encoder",0,16383,8192));
+    phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Reverse",1},"Bend LFO: Reverse Direction",false));
     phaseState=std::make_unique<juce::AudioProcessorValueTreeState>(*this,nullptr,"Phase246",std::move(phaseLayout));
+    bendAudio[0]=phaseState->getRawParameterValue("bend246Enabled");for(size_t i=0;i<4;++i)bendAudio[i+1]=phaseState->getRawParameterValue(pocket::bend246Ids[i]);bendAudio[5]=phaseState->getRawParameterValue("bend246Reverse");
     midiAudio[0]=phaseState->getRawParameterValue("midi246Enabled");for(size_t i=0;i<4;++i)midiAudio[i+1]=phaseState->getRawParameterValue(pocket::midi246Ids[i]);
     drumLfoBankAudio=phaseState->getRawParameterValue("drum246LfoBank");
     samplerAudio[0]=phaseState->getRawParameterValue("sampler246Enabled");samplerAudio[1]=phaseState->getRawParameterValue("sampler246Reverse");samplerAudio[2]=phaseState->getRawParameterValue("sampler246Secondary");samplerAudio[3]=phaseState->getRawParameterValue("sampler246Envelope");for(size_t i=0;i<8;++i)samplerAudio[4+i]=phaseState->getRawParameterValue(pocket::sampler246Ids[i]);for(size_t i=0;i<4;++i)samplerAudio[12+i]=phaseState->getRawParameterValue(pocket::sampler246EnvelopeIds[i]);drumAudio[0]=phaseState->getRawParameterValue("drum246Enabled");drumAudio[5]=phaseState->getRawParameterValue("drum246EditPad");for(size_t i=0;i<4;++i)drumAudio[i+1]=phaseState->getRawParameterValue(pocket::drum246EnvelopeIds[i]);for(int pad=0;pad<24;++pad)drumModeAudio[size_t(pad)]=phaseState->getRawParameterValue(drum246ModeId(pad));
@@ -221,6 +228,7 @@ juce::String PocketProcessor::screenParameterId(int index) const {
     if(visiblePage.load()==3&&nitro246Enabled())return pocket::nitro246Ids[size_t(index)];
     if(visiblePage.load()==3&&filter246Enabled())return pocket::filter246Ids[size_t(index)];
     if(visiblePage.load()==3&&punch246Enabled())return pocket::punch246Ids[size_t(index)];
+    if(visiblePage.load()==2&&bend246Enabled())return pocket::bend246Ids[size_t(index)];
     if(visiblePage.load()==2&&midi246Enabled())return pocket::midi246Ids[size_t(index)];
     if(visiblePage.load()==2&&random246Enabled())return pocket::random246Ids[size_t(index)];
     if(visiblePage.load()==2&&value246Enabled())return pocket::value246Ids[size_t(index)];
@@ -241,6 +249,7 @@ void PocketProcessor::setScreenPage(int page,bool tapeMode) {
         if(visiblePage.load()<2){std::array<juce::RangedAudioParameter*,24> targets{};for(int pad=0;pad<24;++pad)targets[size_t(pad)]=visiblePage.load()==1?phaseState->getParameter(pocket::drum246EnvelopeIds[size_t(i)]):i==3?phaseState->getParameter(drum246ModeId(pad)):state.getParameter(padParameterId(pad,i==0?"pitch":i==1?"start":"end"));screenKnobs[size_t(i)]->followDrum(targets,*audioParameters[size_t(Param::engine)],*drumAudio[5],*drumAudio[0]);}
         if(visiblePage.load()<2){std::array<juce::RangedAudioParameter*,24> targets{};for(size_t bank=0;bank<24;++bank)targets[bank]=phaseState->getParameter(visiblePage.load()==1?pocket::sampler246EnvelopeIds[size_t(i)]:pocket::sampler246Ids[size_t(i)+(bank?4:0)]);screenKnobs[size_t(i)]->followSampler(targets,*audioParameters[size_t(Param::engine)],*samplerAudio[2],*samplerAudio[0],visiblePage.load()==1?samplerAudio[3]:nullptr);}
         if(visiblePage.load()==2)screenKnobs[size_t(i)]->followMidi(phaseState->getParameter(pocket::midi246Ids[size_t(i)]),*midiAudio[0],[](const void* context){return static_cast<const PocketProcessor*>(context)->midi246Available();},this);
+        if(visiblePage.load()==2)screenKnobs[size_t(i)]->followBend(phaseState->getParameter(pocket::bend246Ids[size_t(i)]),*bendAudio[0],[](const void* context){return static_cast<const PocketProcessor*>(context)->midi246Available();},this);
         screenKnobs[size_t(i)]->followSamplerModulationAvailability(*samplerAudio[0]);
         screenKnobs[size_t(i)]->followDrumTremoloAvailability(*drumAudio[0]);
         if(visiblePage.load()<2)screenKnobs[size_t(i)]->followDsynth(phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)]:pocket::dsynth246EnvelopeIds[size_t(i)]),phaseState->getParameter(visiblePage.load()==0?pocket::dsynth246Ids[size_t(i)+4]:pocket::dsynth246EnvelopeIds[size_t(i)]),*audioParameters[size_t(Param::engine)],*phaseAudio[145]);
@@ -368,6 +377,7 @@ void PocketProcessor::prepareToPlay(double sr,int) {
     keyboardDisplayReset.store(true);rate=sr;filterConfig.prepare(sr);outputFilter.prepare(sr);setLatencySamples(outputFilter.latency); engine.prepare(sr); tape.prepare(sr); clock=0; step=0; seqNote=-1; sequenceNote.store(-1);heldNotes.clear();previousSeqMode=-1;wasSequencing=false;lastHostStep=INT64_MIN;
 }
 double PocketProcessor::getTailLengthSeconds() const {
+    if(bend246Enabled()&&bendAudio[3]->load()!=0&&((int(bendAudio[2]->load())==1&&int(bendAudio[1]->load())==3)||((drum246Enabled()||dbox246Enabled())&&int(bendAudio[2]->load())==0)))return std::numeric_limits<double>::infinity();
     if(midi246Enabled()){const auto routes=midi246Routes();if(std::any_of(routes.begin(),routes.end(),[](int r){return r==12;}))return std::numeric_limits<double>::infinity();if((drum246Enabled()||dbox246Enabled())&&std::any_of(routes.begin(),routes.end(),[](int r){return r>=1&&r<=8;}))return std::numeric_limits<double>::infinity();}
     // The isolated feedback effect can sustain oscillation after input ends.
     if(punch246Enabled()||filter246Enabled()||nitro246Enabled()||delay246Enabled()||grid246Enabled()||phone246Enabled()||spring246Enabled()||cwo246Enabled())return std::numeric_limits<double>::infinity();
@@ -404,7 +414,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     const int seqMode=int(get(Param::seqMode));
     const bool arp=get(Param::sequencer)>.5f&&seqMode>=4;
     if(previousSeqMode!=seqMode){engine.allNotesOff();seqNote=-1;sequenceNote.store(-1);lastHostStep=INT64_MIN;previousSeqMode=seqMode;}
-    if(panicRequested.exchange(false)) {engine.reset();for(auto& cc:visualMidiCC)cc.store(64);if(panicOutputRequested.exchange(false))resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);}
+    if(panicRequested.exchange(false)) {engine.reset();visualBend.store(0);for(auto& cc:visualMidiCC)cc.store(64);if(panicOutputRequested.exchange(false))resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);}
     engine.selectEngine(int(get(Param::engine)),phaseAudio[10]->load(std::memory_order_relaxed)>.5f,drum246Enabled(),sampler246Enabled());
     const int hybridMode=int(phaseAudio[53]->load(std::memory_order_relaxed));
     const float hybridGlide=phaseAudio[54]->load(std::memory_order_relaxed);
@@ -425,6 +435,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
     p.delay246=delay246Enabled();for(size_t i=0;i<4;++i)p.delay246Controls[i]=int16_t(phaseAudio[77+i]->load(std::memory_order_relaxed));
     p.nitro246=nitro246Enabled();for(size_t i=0;i<4;++i)p.nitro246Controls[i]=int16_t(phaseAudio[72+i]->load(std::memory_order_relaxed));
     p.filter246=filter246Enabled();for(size_t i=0;i<4;++i)p.filter246Controls[i]=int16_t(phaseAudio[67+i]->load(std::memory_order_relaxed));p.hybridVoiceMode=hybridMode;p.hybridGlideMs=hybridGlide;
+    p.bend246=bend246Enabled();p.bend246Colour=int(bendAudio[1]->load());p.bend246Destination=int(bendAudio[2]->load());p.bend246Amount=int(bendAudio[3]->load());p.bend246Angle=int(bendAudio[4]->load());p.bend246Reverse=bendAudio[5]->load()>.5f;
     p.midi246=midi246Enabled();p.midi246Routes=midi246Routes();
     p.random246=phaseAudio[61]->load(std::memory_order_relaxed)>.5f;for(size_t i=0;i<4;++i)p.random246Controls[i]=int16_t(phaseAudio[62+i]->load(std::memory_order_relaxed)*(i==2?2048:1));
     p.tremolo246=phaseAudio[55]->load(std::memory_order_relaxed)>.5f;p.tremolo246Shape=int(phaseAudio[60]->load(std::memory_order_relaxed));
@@ -488,7 +499,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
             else if(m.isPitchWheel()) engine.pitchBend(ch,float(m.getPitchWheelValue()-8192)/8192.f*2);
             else if(m.isController()&&m.getControllerNumber()>=1&&m.getControllerNumber()<=4){engine.midiController(m.getControllerNumber(),m.getControllerValue());visualMidiCC[size_t(m.getControllerNumber()-1)].store(float(m.getControllerValue()));}
             else if(m.isController()&&m.getControllerNumber()==64) engine.sustainPedal(ch,m.getControllerValue()>=64);
-            else if(m.isAllSoundOff()) {engine.reset();for(auto& cc:visualMidiCC)cc.store(64);resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);keyboardDisplayReset.store(true);}
+            else if(m.isAllSoundOff()) {engine.reset();visualBend.store(0);for(auto& cc:visualMidiCC)cc.store(64);resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);keyboardDisplayReset.store(true);}
             else if(m.isAllNotesOff()) {engine.allNotesOff(ch);heldNotes.clear(ch);if(arp&&seqNote>=0){engine.noteOff(seqNote,17);seqNote=-1;sequenceNote.store(-1);}keyboardDisplayReset.store(true);}
             ++it;
         }
@@ -525,6 +536,7 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
         for(int ch=0;ch<buffer.getNumChannels();++ch) buffer.setSample(ch,i,value);
         if(++scopeCounter>=8) {scopeCounter=0; scope[size_t(scopeIndex)].store(value,std::memory_order_relaxed); scopeIndex=(scopeIndex+1)%256;}
     }
+    visualBend.store(engine.bend246Level());
     if(capture)inputCaptureFrames.store(captureWrite);
     const auto visual=engine.visualState(p.engine);
     visualFmAlgorithm.store(visual.fmAlgorithm,std::memory_order_relaxed);
@@ -601,6 +613,7 @@ void PocketProcessor::loadFactoryKit(int index) {
 }
 void PocketProcessor::applyPreset(int index) {
     if(index<0||index>=int(pocket::factoryPresets.size())) return;
+    phaseState->getParameter("bend246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("midi246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("sampler246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("sampler246Reverse")->setValueNotifyingHost(0);phaseState->getParameter("drum246Enabled")->setValueNotifyingHost(0);
     phaseState->getParameter("phase246Enabled")->setValueNotifyingHost(0);phaseState->getParameter("phase246Envelope")->setValueNotifyingHost(0);
@@ -766,7 +779,7 @@ juce::ValueTree PocketProcessor::normalizedPhaseState(juce::ValueTree tree) cons
         child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);
     }
     for(int pad=-1;pad<24;++pad)for(int c=0;c<(pad<0?1:8);++c){const auto id=pad<0?juce::String("dbox246EditPad"):dbox246ParameterId(pad,c);if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);}}
-    juce::StringArray drumIds{"midi246Enabled","midi246CC1","midi246CC2","midi246CC3","midi246CC4","drum246LfoBank","sampler246Secondary","sampler246Envelope","sampler246Enabled","sampler246Reverse","drum246Enabled","drum246EditPad"};for(const auto* id:pocket::drum246EnvelopeIds)drumIds.add(id);for(int pad=0;pad<24;++pad)drumIds.add(drum246ModeId(pad));for(const auto* id:pocket::sampler246Ids)if(!drumIds.contains(id))drumIds.add(id);for(const auto* id:pocket::sampler246EnvelopeIds)drumIds.add(id);for(const auto& id:drumIds)if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);}
+    juce::StringArray drumIds{"bend246Enabled","bend246Colour","bend246Destination","bend246Amount","bend246Angle","bend246Reverse","midi246Enabled","midi246CC1","midi246CC2","midi246CC3","midi246CC4","drum246LfoBank","sampler246Secondary","sampler246Envelope","sampler246Enabled","sampler246Reverse","drum246Enabled","drum246EditPad"};for(const auto* id:pocket::drum246EnvelopeIds)drumIds.add(id);for(int pad=0;pad<24;++pad)drumIds.add(drum246ModeId(pad));for(const auto* id:pocket::sampler246Ids)if(!drumIds.contains(id))drumIds.add(id);for(const auto* id:pocket::sampler246EnvelopeIds)drumIds.add(id);for(const auto& id:drumIds)if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree child("PARAM");child.setProperty("id",id,nullptr);auto* p=phaseState->getParameter(id);child.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(child,-1,nullptr);}
     return tree;
 }
 void PocketProcessor::setStateInformation(const void* data,int size) {
@@ -808,7 +821,7 @@ void PocketProcessor::setStateInformation(const void* data,int size) {
             if(hasTape) {tape.restore(std::move(tracks),tapeRate); tape.prepare(rate);} else {tape.prepare(rate); for(int c=0;c<4;++c) tape.clear(c);}
             for(int i=0;i<16;++i) steps[size_t(i)].store(juce::jlimit(-1,127,int(tree.getProperty("step"+juce::String(i),-1))));
             for(int pad=0;pad<pocket::kitCapacity;++pad)for(const auto* field:{"start","end","gain","pitch","reverse","gated"}){const auto id=padParameterId(pad,field);if(!tree.getChildWithProperty("id",id).isValid()){juce::ValueTree parameter("PARAM");parameter.setProperty("id",id,nullptr);auto* p=state.getParameter(id);parameter.setProperty("value",p->convertFrom0to1(p->getDefaultValue()),nullptr);tree.addChild(parameter,-1,nullptr);}}
-            phaseState->replaceState(phase);state.replaceState(tree);engine.reset();for(auto& cc:visualMidiCC)cc.store(64);resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);wasSequencing=false;lastHostStep=INT64_MIN;
+            phaseState->replaceState(phase);state.replaceState(tree);engine.reset();visualBend.store(0);for(auto& cc:visualMidiCC)cc.store(64);resetOutputHistory();heldNotes.clear();seqNote=-1;sequenceNote.store(-1);wasSequencing=false;lastHostStep=INT64_MIN;
         }
         keyboardOctave.store(juce::jlimit(-4,4,int(tree.getProperty("keyboardOctave",0))));
         restoreTapeEdits(edits);

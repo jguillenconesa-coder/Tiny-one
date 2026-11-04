@@ -1,4 +1,9 @@
-# Pocket One 0.40.0
+# Pocket One 0.41.0
+
+**Bend manual**: entrada virtual del encoder naranja, Instrument/ADSR/FX, cantidad
+y dirección inversa, guardado y selector LFO común. 6.144 callbacks originales
+contrastados bajo entradas y estado explícitos; reloj/adaptador del host propios.
+[Guía](docs/bend246-hybrid.md) · [validación](docs/releases/v0.41.0-validation.json).
 
 **Fuente drum compartida**: una grabación de hasta 12 segundos, 24 regiones editables,
 captura, doce voces y audio portable en proyectos/slots/clipboard. División inicial
@@ -40,7 +45,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.40.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.41.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

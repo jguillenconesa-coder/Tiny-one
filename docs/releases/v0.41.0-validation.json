@@ -1,0 +1,71 @@
+{
+  "version": "0.41.0",
+  "date": "2026-11-04",
+  "implementation_commit": "pending verified commit",
+  "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 122,
+    "total": 122,
+    "elapsed_seconds": 150.01
+  },
+  "original_callbacks": {
+    "status": "success; identical independent repeat",
+    "calls": 6144,
+    "families": [
+      "synth",
+      "drum",
+      "FX"
+    ],
+    "evidence": "../firmware/bend246-validation.json",
+    "scope": "Bounded parameter dispatch, explicit input and shared RAM; state/history/display, controls/targets/return and unchanged pitch/gain/FX buffers. No physical input, scheduler or special audio/pitch route equivalence."
+  },
+  "host_integration": {
+    "status": "success",
+    "cases": 252,
+    "rates": [
+      32000,
+      44100,
+      48000,
+      88200,
+      96000,
+      176400,
+      192000
+    ],
+    "scope": "Twelve native profiles x three destinations x seven rates; drum ADSR rejected. Exact 64/257 block audio, panic, priority. Source clock compared at seven rates. Plugin smoke covers all eight FX, proxies without editor, project/slots/clipboard, preset reset, selector and Reverse."
+  },
+  "sanitizers": "success: ASan/UBSan original callback fixture core and 252 native adapter cases; leak detection disabled due managed ptrace restrictions",
+  "realtime": {
+    "status": "success",
+    "workloads": 750,
+    "new_bend_workloads": 48,
+    "heap_calls": 0,
+    "scope": "Eight Bend cases x two rates x three buffers plus retained workloads; shared cloud timings are diagnostic, not dropout certification"
+  },
+  "visual": {
+    "status": "reviewed native Bend selector, Reverse, contextual controls and source animation",
+    "sha256": {
+      "bend246-native.png": "4ba1cb662ff1aa09eb939e41282e94dd5242239700568bc5c8071b68b05631b6"
+    }
+  },
+  "native_ci": {
+    "status": "pending push",
+    "scope": "Two Bend suites on Linux, Windows/MSVC and macOS Intel"
+  },
+  "plugin_package_ci": {
+    "status": "pending push",
+    "scope": "Full plugins and installers; macOS universal build, runtime Intel"
+  },
+  "previous_plugin_ci": {
+    "version": "0.40.0",
+    "status": "success on all three platforms",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336245"
+  },
+  "estimated_progress": "Approximately 68% +/-10 planning points; weighted total 67.95 before rounding, not acoustic fidelity",
+  "limits": [
+    "Host input, 44100/64 clock and activation/panic lifecycle are authored. Physical accessory/encoder reader not recovered.",
+    "Only bounded parameter routes; special audio/pitch and FX kind 4 excluded. Existing MIDI pitch wheel remains independent.",
+    "No new decrypted L1/OTP, hardware acoustic calibration, real Ableton validation, native arm64 execution or original presets.",
+    "No release/tag publication or cloud configuration change."
+  ]
+}

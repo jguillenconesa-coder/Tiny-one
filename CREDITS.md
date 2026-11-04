@@ -662,3 +662,20 @@ The verified drum reader is reused. The 105 composition cases compare one shared
 asset against copies of the same complete PCM with identical absolute regions;
 these are host-adapter tests, not new original-firmware or acoustic comparisons.
 No new firmware or proprietary assets are distributed. See [scope](docs/shared-drum246.md).
+
+
+## Bend LFO 246 (0.41.0)
+
+`Bend246.h` independently reconstructs the readable shared manual-input arithmetic
+and bounded parameter dispatch, identified through rev246 factory/vtable and
+`LfoBend.cpp` diagnostic references. 6,144 interleaved synth/drum/FX observations
+match complete shared state/history/flags, all controls/targets and returns,
+with synthetic pitch/gain/audio buffers unchanged and independent reproduction.
+The contract excludes special audio/pitch dispatch and FX kind-4 auxiliary ENV.
+
+`Bend246Control.h`, host activation/clock, virtual encoder, contextual controls,
+state and LFO selector are authored adaptations. Supplied encoder controls and
+explicit prepare/reset actions do not establish the physical input path or
+original scheduler. No firmware, decompiled source, OTP or private memory dump is
+distributed. The gzip fixtures contain synthetic inputs and numerical observations.
+See [scope](docs/bend246-hybrid.md) and [evidence](docs/firmware/bend246-validation.json).

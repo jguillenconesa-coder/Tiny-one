@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
-#include "Midi246.h"
+#include "Bend246Control.h"
 namespace pocket {
 struct Drum246ModulationConfig {
+ const Bend246Control* bend=nullptr;
  bool midi=false;std::array<int,4> midiRoutes{{1,2,3,4}};std::array<uint32_t,4> midiCC{{64,64,64,64}};
  bool value=false,random=false,free=false,secondary=false;int speed=1000,amount=4000,colour=0;bool envelope=false;
  std::array<int16_t,4> randomControls{};uint32_t tempo=0;double step=0;uint32_t* rng=nullptr;
@@ -15,8 +16,9 @@ struct Drum246ModulationControl {
  void noteOn() noexcept {pending=true;}
  float phase() const noexcept {return float(double(value.phase^0x80000000u)/4294967296.);}
  std::array<int16_t,8> next(const std::array<int16_t,8>& base,int type,const Drum246ModulationConfig& config,const std::array<int16_t,8192>& sine) noexcept {
-  const int selected=config.midi?3:config.random?2:config.value?1:0;if(selected!=mode){*this={};mode=selected;}
+  const int selected=config.bend?4:config.midi?3:config.random?2:config.value?1:0;if(selected!=mode){*this={};mode=selected;}
   if(!mode)return base;
+  if(mode==4){applied=config.bend->destination==0;return config.bend->apply(base,0,type);}
   if(mode==3){applied=std::any_of(config.midiRoutes.begin(),config.midiRoutes.end(),[](int r){return r>=1&&r<=8;});return midi246Apply(base,0,type,config.midiRoutes,config.midiCC);}
   std::array<int16_t,8> c{};
   if(mode==2){std::copy(config.randomControls.begin(),config.randomControls.end(),c.begin());c[1]=std::max<int16_t>(0,c[1]);c[2]=c[2]>=2048?2048:0;c[3]=std::max<int16_t>(0,c[3]);}

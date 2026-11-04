@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 95 % | 19 puntos |
+| Efectos, envolventes y moduladores | 20 % | 96 % | 19,2 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 75 % | 11,25 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 76 % | 11,4 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈68 %** (67,6 antes de redondear) |
+| Total | 100 % | | **≈68 %** (67,95 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,33 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: fuente drum compartida (0.40.0)
+## Entrega actual: Bend manual (0.41.0)
+
+[Entrada y dispatch Bend](bend246-hybrid.md): 6.144 llamadas originales
+intercaladas synth/drum/FX, estado compartido completo, historial, flags, contador,
+wrap angular, inactividad, prepare/reset, controles/targets/retornos y buffers
+intactos bajo las entradas explícitas. Se repite el resultado. La matriz exige
+despachos aceptados para todos los tipos soportados y ambos kinds FX.
+
+Se integra el encoder naranja virtual, target, Instrument/ADSR/FX, cantidad y
+Reverse, con estado/slots/clipboard y mandos contextuales sin editor. Un selector
+LFO sustituye la fila de botones; conserva los parámetros booleanos existentes.
+El reloj y la activación del host son propios; no se recupera el lector físico,
+ni las rutas especiales audio/pitch, FX kind 4 o el scheduler original. El pitch
+wheel existente sigue separado. [Evidencia de entrega](releases/v0.41.0-validation.json).
+
+Validación Linux Release: **122/122 suites**, **750 cargas de tiempo real sin
+llamadas al heap rastreadas** y ASan/UBSan del núcleo y adaptador aprobados.
+La integración cubre 252 combinaciones de perfil/destino/frecuencia; se revisa
+la interfaz y la persistencia con el plugin real.
+
+La estimación sigue en **≈68 % ±10 de planificación** (67,95 antes de redondear).
+Avanza el módulo manual y su interfaz; no hay nueva calibración acústica ni
+recuperación de L1/OTP. El CI completo de 0.40.0 terminó bien en los tres sistemas.
+Siguen Element/Crank, productores/ruteo originales, layout original, Pulse/L1,
+acústica/Live/arm64 y todos los presets originales al final.
+
+## Entrega anterior: fuente drum compartida (0.40.0)
 
 [Una fuente de 12 segundos y 24 regiones](shared-drum246.md): importación WAV/AIFF,
 captura, límites editables, doce voces, proyectos, slots portables, clipboard y
@@ -49,7 +75,7 @@ medición acústica. **120/120 suites Linux**, ASan/UBSan y **702 cargas sin hea
 rastreado**, importación/captura/estado/slots/clipboard y vista final aprobados.
 [Pruebas y CI](releases/v0.40.0-validation.json). [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41738336295):
 **6/6 suites en Linux, Windows/MSVC y macOS Intel**. MIDI/D-box/sampler también verdes;
-plugins/instaladores completos en curso sobre `ddb76e2`.
+plugins/instaladores completos aprobados sobre `ddb76e2`.
 
 La estimación sube a **≈68 % ±10 de planificación** por completar el layout y el
 flujo de datos/captura/edición/guardado compartidos. La tabla refleja ese cambio;

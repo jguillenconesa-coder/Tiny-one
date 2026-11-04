@@ -37,3 +37,13 @@ síntesis; los otros siete efectos conservan el bus mono anterior. Esto no mueve
 el volumen maestro, cambia el PDC ni implementa el ruteo global original.
 La modificación de buffers de pitch/gain/audio contrastada en el núcleo todavía
 no está conectada a esta cadena. [Contrato](midi246-hybrid.md).
+
+
+## Bend manual 0.41.0
+
+Un controlador compartido avanza con un reloj de host propio y aplica la entrada
+virtual de Orange a Instrument/ADSR o cuatro controles del FX activo. No modifica
+la posición del volumen maestro ni el PDC. Las rutas especiales de audio/pitch
+originales se mantienen fuera del contrato; no se reconstruyen los productores
+de esos buffers. El pitch wheel MIDI por canal sigue independiente.
+[Contrato](bend246-hybrid.md).

@@ -1,4 +1,9 @@
-# Pocket One 0.40.0
+# Pocket One 0.41.0
+
+**Manual Bend**: virtual orange encoder, Instrument/ADSR/FX, amount, reverse
+direction, persistence and a shared LFO selector. 6,144 original callbacks verified
+under explicit input/state; authored host clock and adaptation.
+[Scope](docs/bend246-hybrid.md) · [validation](docs/releases/v0.41.0-validation.json).
 
 **Shared drum source**: one recording up to 12 seconds, 24 editable regions,
 input capture, twelve voices and portable project/slot/clipboard audio. Authored

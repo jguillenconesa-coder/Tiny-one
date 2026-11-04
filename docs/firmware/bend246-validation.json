@@ -1,0 +1,84 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "callbacks": {
+    "synth": "0x019c9d44",
+    "drum": "0x019ca0ec",
+    "fx": "0x019ca328"
+  },
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 6144,
+  "calls_per_family": 2048,
+  "accepted_matrix_counts": {
+    "0:0:0:0": 13,
+    "1:8:0:0": 64,
+    "0:1:0:0": 13,
+    "1:9:0:0": 64,
+    "0:2:0:0": 13,
+    "1:8:1:0": 64,
+    "0:3:0:0": 13,
+    "1:9:1:0": 64,
+    "0:4:0:0": 13,
+    "1:8:2:0": 64,
+    "0:6:0:0": 13,
+    "1:9:2:0": 64,
+    "0:7:0:0": 13,
+    "1:8:3:0": 64,
+    "0:11:0:0": 13,
+    "1:9:3:0": 64,
+    "0:12:0:0": 13,
+    "0:13:0:0": 13,
+    "2:0:2:2": 32,
+    "2:1:2:2": 32,
+    "2:2:2:2": 32,
+    "2:3:2:2": 32,
+    "2:4:2:2": 32,
+    "2:5:2:2": 32,
+    "2:6:2:2": 32,
+    "2:7:2:2": 32,
+    "2:0:5:2": 32,
+    "2:1:5:2": 32,
+    "2:2:5:2": 32,
+    "2:3:5:2": 32,
+    "2:4:5:2": 32,
+    "2:5:5:2": 32,
+    "2:6:5:2": 32,
+    "2:7:5:2": 32,
+    "0:0:1:1": 13,
+    "0:1:1:1": 13,
+    "0:2:1:1": 13,
+    "0:3:1:1": 13,
+    "0:4:1:1": 13,
+    "0:6:1:1": 13,
+    "0:7:1:1": 13,
+    "0:11:1:1": 13,
+    "0:12:1:1": 13,
+    "0:13:1:1": 13
+  },
+  "source_prepare": "0x019c9d04",
+  "source_reset": "0x019c9cf4",
+  "source_state": "0xff907aac",
+  "shared_history": "0x01dd59b4",
+  "shared_display_flag": "0x01dd591c",
+  "artifacts": {
+    "bend246-input.bin.gz": {
+      "bytes": 306589,
+      "raw_bytes": 589824,
+      "sha256": "6599eaf03d6aadfd21ee57e2c98c657761006df44c6824ff6643aab9ef0a5a75"
+    },
+    "bend246-output.bin.gz": {
+      "bytes": 253255,
+      "raw_bytes": 6807552,
+      "sha256": "1a065e27bddc1f89860fe7a8d9e356dae3db41869c1b3fbb32a662eba1943b7c"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Interleaved source state, ring history, flags, counters and control/display words under supplied manual encoder inputs; parameter dispatch and unchanged pitch/gain/FX audio.",
+    "Only parameter destinations 0/1/2 and Off, first four ADSR; no audio/pitch routes or FX kind 4.",
+    "No complete voice, protected gain producer or acoustic equivalence claim."
+  ]
+}
