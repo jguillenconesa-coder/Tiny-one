@@ -1,17 +1,17 @@
 {
   "date": "2026-11-04",
   "version": "0.44.0",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "e0ff62a8fff60b918e9e0ede975ead0b5059f530",
   "original_reference": {
     "calls": 6144,
     "fx_audio_samples_through_bridge": 21568,
     "scope": "Existing original MIDI fixtures; no new firmware executions. Complete supplied state/buffers/returns still compared."
   },
   "linux_release": {
-    "status": "success across all 127 unique suites; full clean repeat pending",
+    "status": "success; clean full run",
     "passed": 127,
     "total": 127,
-    "scope": "Initial full run followed by passing focused plugin_smoke/realtime/midi246_audio after corrections to new test setup; product source unchanged."
+    "seconds": 271.62
   },
   "native_midi": {
     "passed": 3,
@@ -41,13 +41,18 @@
     "scope": "Seven native output FX x two curves x two rates, 64/257 exact output, CC timestamps, PDC, stereo, panic, disabled/Punch availability, editor-free proxies, project/slot/clipboard persistence."
   },
   "native_midi_ci": {
-    "status": "pending push"
+    "status": "success: 3/3 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351052"
   },
   "plugins_installers_ci": {
-    "status": "pending push"
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351249"
   },
   "native_macos_arm64_ci": {
-    "status": "pending dispatch"
+    "status": "queued; retry attempt 2 after hosted-runner capacity failure before execution",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837352216",
+    "first_attempt_reason": "The job was not acquired by Runner of type hosted even after multiple attempts; macOS arm64 capacity constraints",
+    "attempt": 2
   },
   "estimated_progress": "Approximately 69% +/-10 planning points; unchanged, not acoustic fidelity",
   "limits": [
@@ -55,5 +60,35 @@
     "CC64 closes the FX input, not the whole output. Stored tails and dry bypass/transition retain the existing behavior.",
     "No recovered voice gain/pitch buffer producer, complete original scheduling/routing, FX kind 4, Element active publisher caller, L1 or OTP.",
     "No Ableton Live, physical audio-device/dropout, signing/notarization or acoustic-equivalence claim. No release/tag publication or cloud configuration change."
-  ]
+  ],
+  "regression_ci": {
+    "element": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351326"
+    },
+    "crank": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351012"
+    },
+    "bend": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837350965"
+    },
+    "sampler": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351072"
+    },
+    "drum": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351134"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351066"
+    },
+    "publisher": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41837351056"
+    }
+  }
 }

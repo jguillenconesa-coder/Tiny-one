@@ -47,6 +47,12 @@ persistencia. El puente coincide con 21.568 muestras de los fixtures MIDI
 originales existentes; se conserva la comparación completa de 6.144 callbacks.
 La ubicación antes del FX mono y el muestreo de los CC por muestra interna son
 adaptaciones propias. No modifica bypass/PDC/volumen maestro ni borra colas.
+Linux Release: **127/127 suites**, **978 cargas de tiempo real / cero llamadas
+al heap rastreadas**, ASan/UBSan y revisión visual aprobados. MIDI: **3/3 suites
+en Linux, Windows/MSVC y macOS Intel**. Plugins e instaladores completos
+aprobados en Linux, Windows/MSVC y macOS universal (runtime Intel). El intento
+ARM64 de esta revisión no obtuvo runner ni ejecutó pruebas por falta de capacidad;
+el segundo intento está en cola.
 [Pruebas y CI](releases/v0.44.0-validation.json). La estimación sigue en
 **≈69 % ±10 de planificación**, sin nueva medición acústica.
 
