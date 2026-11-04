@@ -691,3 +691,14 @@ inputs and numerical observations, not firmware or decompiled source. Manual
 section 15.7 informed the virtual blue encoder; host clock/lifecycle and UI are
 authored. Physical accessory input and sequencer Crank remain unvalidated. See
 [scope and reproducibility](docs/crank246-hybrid.md).
+
+
+## Element LFO 246 (0.43.0)
+
+`Element246.h`, its host frontend, native tests and Blackfin driver are independently
+authored. Ghidra 12.2 and the corrected GNU BF524 simulator were used privately
+to compare 18,432 bounded LfoReRoute callbacks and an identical independent repeat.
+Fixtures contain synthetic inputs and numeric observations, never firmware or
+decompiled source. Manual section 15.2 informed the four source choices. Virtual
+sensor, host input windows, max voice ADSR and pre-FX level mapping are authored
+adaptations, not recovered original producers. [Scope](docs/element246-hybrid.md).

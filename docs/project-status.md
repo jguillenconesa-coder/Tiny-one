@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 68 % del objetivo completo
+## Avance estimado: aproximadamente 69 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -18,12 +18,12 @@ prototipo tocable con una réplica completa:
 | Área | Peso del objetivo | Avance estimado del área | Aportación |
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
-| Efectos, envolventes y moduladores | 20 % | 97 % | 19,4 puntos |
+| Efectos, envolventes y moduladores | 20 % | 98 % | 19,6 puntos |
 | Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
-| Interfaz, cinta, mezcla y flujo creativo | 15 % | 77 % | 11,55 puntos |
+| Interfaz, cinta, mezcla y flujo creativo | 15 % | 78 % | 11,7 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 60 % | 6 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈68 %** (68,3 antes de redondear) |
+| Total | 100 % | | **≈69 %** (68,65 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Crank manual (0.42.0)
+## Entrega actual: Element (0.43.0)
+
+[Cuatro fuentes Element](element246-hybrid.md): 18.432 callbacks originales de
+LfoReRoute, comparación completa de entradas/controles/targets/retornos/buffers y
+repetición idéntica bajo palabras/buffers suministrados. Se preserva el orden de
+saturación de Envelope y el offset directo de FX. Sensor virtual, input sin
+monitorización, máximo ADSR y nivel pre-FX se integran con adaptadores propios;
+ventanas, agregación y normalización no se presentan como productores recuperados.
+Estado, automatización, mandos contextuales con editor cerrado y UI integrados.
+[Evidencia](releases/v0.43.0-validation.json).
+
+Validación Linux Release: **126/126 suites**, **894 cargas de tiempo real sin
+llamadas al heap rastreadas**, ASan/UBSan del núcleo y adaptador aprobados.
+La integración cubre 1.008 combinaciones nativas y los ocho FX con las cuatro
+fuentes en el plugin, además de estado, proxies y prioridades.
+
+La estimación pasa a **≈69 % ±10** (68,65 antes de redondear), sin nueva calibración
+acústica. Los siete LFO tienen opción funcional acotada; siguen productores/ruteo
+por voz/scheduler, especiales de LFO, gain/pitch drum, layout original, Pulse/L1,
+Live/arm64 y presets completos al final. El próximo bloque debe trazar productores
+y composición antes de atribuir equivalencia a las fuentes físicas y de voz.
+
+## Entrega anterior: Crank manual (0.42.0)
 
 [Crank con inercia](crank246-hybrid.md): 18.432 callbacks originales intercalados
 con controles/RAM explícitos contrastan historial, flags, contador, velocidad,

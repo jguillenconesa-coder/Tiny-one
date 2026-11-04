@@ -660,3 +660,19 @@ envolvente del motor y nivel del motor. El siguiente estudio debe delimitar esas
 cuatro entradas y sus callbacks antes de elegir el adaptador de host. Un slider
 virtual o un seguidor de audio propio no deben presentarse como recuperación del
 sensor, del detector original ni de sus productores de envolvente/nivel.
+
+
+## Element — 0.43.0
+
+La tabla de nombres/factoría identifica Element como LfoReRoute, índice 3; no
+confundir con LfoDual/Tremolo. Se contrastan 18.432 callbacks de synth, drum y FX,
+cuatro fuentes suministradas, helpers/rangos y buffers completos intactos; repetición
+idéntica. [Contrato](element246-hybrid.md). El plugin integra sensor virtual, input
+externo, máximo ADSR global y nivel pre-FX con frontend/ventana propios, estado,
+proxies y UI. Se conservan las diferencias de escala/orden y offset directo de FX.
+
+Siguiente prioridad: trazar los productores de `0xff801056`, `0xff80108c`,
+`0xff80108e` y `0x01dfc80c`, y la composición original de voz/ruteo antes de
+sustituir sus adaptadores. `0x01a66912` solo lee una palabra suministrada; no
+es su productor validado. Siguen voz/allocator/clock, gain/pitch drum, rutas
+especiales de LFO, layout, Pulse/L1, acústica/Live/arm64 y presets completos.

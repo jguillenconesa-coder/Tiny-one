@@ -7,6 +7,7 @@ on:
       - 'research/midi-modulation/**'
       - 'research/blackfin/midi-*'
       - 'Source/Midi246*.h'
+      - 'Source/Element246*.h'
       - 'Source/Crank246*.h'
       - 'Source/Bend246*.h'
       - 'Source/Drum246Modulation*.h'

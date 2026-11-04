@@ -57,3 +57,15 @@ Una fase detenida conserva su señal bipolar; no se fuerza su salida a cero. No 
 conectan las rutas originales de ganancia/pitch/audio ni se añade ganancia maestra.
 Se mantienen el bus de salida y su PDC; Release/drum prolongables anuncian una cola
 conservadora. [Alcance](crank246-hybrid.md).
+
+
+## Element 0.43.0
+
+External Input recibe el promedio estéreo del bus existente tras Input Gain aun
+con monitorización directa apagada; no añade el audio de entrada a la mezcla.
+Envelope usa el máximo ADSR global; Level observa el sum del instrumento previo
+a efectos, cinta y volumen maestro, con una muestra causal y ventana de host
+propias. No se recuperan sus productores originales ni su composición por voz.
+Solo se conectan parámetros Instrument/ADSR/FX; especiales gain/pitch/audio y FX
+kind 4 siguen excluidos. El PDC/volumen maestro se mantienen y los LFO manuales
+tienen prioridad sobre el filtro implícito del LFO propio. [Alcance](element246-hybrid.md).

@@ -68,7 +68,7 @@ private:
     juce::ComboBox outputFx;
     void syncOutputFx();
     juce::TextButton value246{"VALUE 246 FX"},valueFree{"FREE PHASE"};
-    juce::ComboBox lfoSelector;juce::TextButton bendReverse{"REVERSE BEND"};bool lastCrank246=false;bool lastBend246=false;std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> bendReverseAttachment;
+    juce::ComboBox lfoSelector;juce::TextButton bendReverse{"REVERSE BEND"};juce::Slider elementSensor;juce::Label elementSensorLabel;std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> elementSensorAttachment;bool lastElement246=false;bool lastCrank246=false;bool lastBend246=false;std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> bendReverseAttachment;
     bool lastMidi246=false;juce::TextButton midi246{"MIDI LFO"};std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> midiAttachment;
     bool lastRandom246=false;juce::TextButton random246{"RANDOM 246"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> randomAttachment;

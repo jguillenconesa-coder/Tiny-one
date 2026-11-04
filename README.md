@@ -1,4 +1,9 @@
-# Pocket One 0.42.0
+# Pocket One 0.43.0
+
+**Element**: sensor virtual, entrada de audio, envolvente y nivel con destinos
+Instrument/ADSR/FX, automatización y estado. 18.432 callbacks originales contrastados
+bajo palabras/buffers explícitos; frontend y composición del host propios.
+[Guía](docs/element246-hybrid.md) · [validación](docs/releases/v0.43.0-validation.json).
 
 **Crank manual con inercia**: encoder azul virtual, cantidad bipolar y destinos
 Instrument/ADSR/FX. Fase triangular, frenado, estado y mandos contextuales.

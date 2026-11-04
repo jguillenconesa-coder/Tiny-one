@@ -1,4 +1,9 @@
-# Pocket One 0.42.0
+# Pocket One 0.43.0
+
+**Element**: virtual sensor, external audio, envelope and level sources for
+Instrument/ADSR/FX, with automation and persistence. 18,432 original callbacks
+verified under explicit words/buffers; authored host frontend and composition.
+[Scope](docs/element246-hybrid.md) · [validation](docs/releases/v0.43.0-validation.json).
 
 **Manual Crank with inertia**: virtual blue encoder, bipolar amount and
 Instrument/ADSR/FX targets. Triangle phase, braking, state and contextual controls.

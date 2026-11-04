@@ -1,0 +1,81 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "factory_index_zero_based": 3,
+  "factory_wrapper": "0x019c9a88",
+  "callbacks": {
+    "synth": "0x019cda14",
+    "drum": "0x019cde28",
+    "fx": "0x019cdf22"
+  },
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 18432,
+  "calls_per_family": 6144,
+  "accepted_matrix_counts": {
+    "0:0:0:0": 39,
+    "1:8:0:0": 192,
+    "0:1:0:0": 39,
+    "1:9:0:0": 192,
+    "0:2:0:0": 39,
+    "1:8:1:0": 192,
+    "0:3:0:0": 39,
+    "1:9:1:0": 192,
+    "0:4:0:0": 39,
+    "1:8:2:0": 192,
+    "0:6:0:0": 39,
+    "1:9:2:0": 192,
+    "0:7:0:0": 39,
+    "1:8:3:0": 192,
+    "0:11:0:0": 39,
+    "1:9:3:0": 192,
+    "0:12:0:0": 39,
+    "0:13:0:0": 39,
+    "2:0:2:2": 96,
+    "2:1:2:2": 96,
+    "2:2:2:2": 96,
+    "2:3:2:2": 96,
+    "2:4:2:2": 96,
+    "2:5:2:2": 96,
+    "2:6:2:2": 96,
+    "2:7:2:2": 96,
+    "2:0:5:2": 96,
+    "2:1:5:2": 96,
+    "2:2:5:2": 96,
+    "2:3:5:2": 96,
+    "2:4:5:2": 96,
+    "2:5:5:2": 96,
+    "2:6:5:2": 96,
+    "2:7:5:2": 96,
+    "0:0:1:1": 39,
+    "0:1:1:1": 39,
+    "0:2:1:1": 39,
+    "0:3:1:1": 39,
+    "0:4:1:1": 39,
+    "0:6:1:1": 39,
+    "0:7:1:1": 39,
+    "0:11:1:1": 39,
+    "0:12:1:1": 39,
+    "0:13:1:1": 39
+  },
+  "artifacts": {
+    "element246-input.bin.gz": {
+      "bytes": 988962,
+      "raw_bytes": 8183808,
+      "sha256": "51557b3e4892e66848f5e464c31b030e9e4b8d9aabc9c0936c951a36901d48e4"
+    },
+    "element246-output.bin.gz": {
+      "bytes": 5329800,
+      "raw_bytes": 22192128,
+      "sha256": "15994836df912eb8fb753010b862deff911ebe52389d45d89b7c4fafb3fdaf1e"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Explicit sensor/external/gain/envelope/level inputs; bounded parameter dispatch and unchanged complete source/pitch/gain/FX buffers.",
+    "Only parameter destinations 0/1/2 and Off, first four ADSR; no audio/pitch routes or FX kind 4.",
+    "No complete voice, protected gain producer or acoustic equivalence claim."
+  ]
+}

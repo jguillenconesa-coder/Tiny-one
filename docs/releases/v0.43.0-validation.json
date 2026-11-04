@@ -1,0 +1,69 @@
+{
+  "version": "0.43.0",
+  "date": "2026-11-04",
+  "implementation_commit": "pending verified commit",
+  "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
+  "linux_ctest": {
+    "status": "success",
+    "passed": 126,
+    "total": 126,
+    "elapsed_seconds": 174.54
+  },
+  "original_callbacks": {
+    "status": "success; identical independent repeat",
+    "calls": 18432,
+    "calls_per_family": 6144,
+    "evidence": "../firmware/element246-validation.json",
+    "scope": "Explicit sensor/external/gain/envelope/level words and buffers. Bounded parameter dispatch, tag/controls/targets/return, unchanged complete input/pitch/gain/FX buffers; no producer or hardware equivalence."
+  },
+  "host_integration": {
+    "status": "success",
+    "cases": 1008,
+    "rates": [
+      32000,
+      44100,
+      48000,
+      88200,
+      96000,
+      176400,
+      192000
+    ],
+    "scope": "Twelve native profiles x four sources x three destinations x seven rates; drum ADSR rejected. Exact 64/257 audio, own source windows, non-finite guards, mode/filter priority and panic. Dedicated own-filter regression for Element/Crank/Bend/MIDI. Plugin smoke covers all eight FX x four sources, proxies without editor, virtual sensor, projects/slots/clipboard, preset reset and legacy FX-only availability."
+  },
+  "sanitizers": "success: ASan/UBSan original callback core and 1008 native adapter cases/source windows; leak detection disabled due managed ptrace restrictions",
+  "realtime": {
+    "status": "success",
+    "workloads": 894,
+    "new_element_workloads": 96,
+    "heap_calls": 0,
+    "scope": "Sixteen Element cases x two rates x three buffers; distinct source/target/destination automation and explicit synthetic stereo input; retained previous workloads. Shared cloud timings are diagnostic, not dropout certification."
+  },
+  "visual": {
+    "status": "reviewed final Element source/meter, selector and virtual sensor with readable value contrast",
+    "sha256": {
+      "element246-native.png": "8f431611e1905c55c0f74f5a7982212e39230e6f8b6212270b5556b78e3cf95e"
+    }
+  },
+  "native_ci": {
+    "status": "pending push",
+    "scope": "Two Element suites on Linux, Windows/MSVC and macOS Intel"
+  },
+  "plugin_package_ci": {
+    "status": "pending push",
+    "scope": "Full plugins/installers; macOS universal build, runtime Intel"
+  },
+  "previous_plugin_ci": {
+    "version": "0.42.0",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41747759600"
+  },
+  "estimated_progress": "Approximately 69% +/-10 planning points; weighted total 68.65 before rounding, not acoustic fidelity",
+  "limits": [
+    "Virtual sensor, global max ADSR, pre-FX absolute level, Q15 normalization and 44100/64 host windows are authored; original physical/IPC producers and per-voice routing are not recovered.",
+    "Host single FX bus uses kind 2 even in drum mode. Kind 5 is numerically verified only.",
+    "Special gain/pitch/audio routes and FX kind 4 excluded; original scheduler/voice/allocator and protected gain producers remain pending.",
+    "No new decrypted L1/OTP, hardware acoustic calibration, real Ableton validation, native arm64 execution or original presets.",
+    "No release/tag publication or cloud configuration change."
+  ],
+  "final_ui_validation": "success: all Release targets rebuilt and complete plugin smoke repeated after sensor text-contrast adjustment; audio/core sources unchanged since full 126-suite run"
+}

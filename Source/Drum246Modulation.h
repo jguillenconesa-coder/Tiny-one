@@ -2,8 +2,10 @@
 #pragma once
 #include "Bend246Control.h"
 #include "Crank246Control.h"
+#include "Element246Control.h"
 namespace pocket {
 struct Drum246ModulationConfig {
+ const Element246Control* element=nullptr;
  const Crank246Control* crank=nullptr;
  const Bend246Control* bend=nullptr;
  bool midi=false;std::array<int,4> midiRoutes{{1,2,3,4}};std::array<uint32_t,4> midiCC{{64,64,64,64}};
@@ -18,8 +20,9 @@ struct Drum246ModulationControl {
  void noteOn() noexcept {pending=true;}
  float phase() const noexcept {return float(double(value.phase^0x80000000u)/4294967296.);}
  std::array<int16_t,8> next(const std::array<int16_t,8>& base,int type,const Drum246ModulationConfig& config,const std::array<int16_t,8192>& sine) noexcept {
-  const int selected=config.crank?5:config.bend?4:config.midi?3:config.random?2:config.value?1:0;if(selected!=mode){*this={};mode=selected;}
+  const int selected=config.element?6:config.crank?5:config.bend?4:config.midi?3:config.random?2:config.value?1:0;if(selected!=mode){*this={};mode=selected;}
   if(!mode)return base;
+  if(mode==6){applied=config.element->destination==0;return config.element->apply(base,0,type);}
   if(mode==5){applied=config.crank->destination==0;return config.crank->apply(base,0,type);}
   if(mode==4){applied=config.bend->destination==0;return config.bend->apply(base,0,type);}
   if(mode==3){applied=std::any_of(config.midiRoutes.begin(),config.midiRoutes.end(),[](int r){return r>=1&&r<=8;});return midi246Apply(base,0,type,config.midiRoutes,config.midiCC);}
