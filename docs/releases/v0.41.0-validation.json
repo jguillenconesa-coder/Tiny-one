@@ -1,7 +1,7 @@
 {
   "version": "0.41.0",
   "date": "2026-11-04",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "33b44a1f6f08aa4a70964acba1e16a0b42b9812b",
   "linux_build": "success: Release Standalone/VST3, JUCE 8.0.6",
   "linux_ctest": {
     "status": "success",
@@ -49,12 +49,15 @@
     }
   },
   "native_ci": {
-    "status": "pending push",
-    "scope": "Two Bend suites on Linux, Windows/MSVC and macOS Intel"
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "scope": "Two Bend suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955890",
+    "tests": "2/2 suites on each platform"
   },
   "plugin_package_ci": {
-    "status": "pending push",
-    "scope": "Full plugins and installers; macOS universal build, runtime Intel"
+    "status": "in progress",
+    "scope": "Full plugins and installers; macOS universal build, runtime Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955851"
   },
   "previous_plugin_ci": {
     "version": "0.40.0",
@@ -67,5 +70,23 @@
     "Only bounded parameter routes; special audio/pitch and FX kind 4 excluded. Existing MIDI pitch wheel remains independent.",
     "No new decrypted L1/OTP, hardware acoustic calibration, real Ableton validation, native arm64 execution or original presets.",
     "No release/tag publication or cloud configuration change."
-  ]
+  ],
+  "regression_ci": {
+    "midi": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955921"
+    },
+    "sampler": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955910"
+    },
+    "drum": {
+      "status": "success on Linux and Windows/MSVC; macOS Intel in progress",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744956081"
+    },
+    "dbox": {
+      "status": "success on Linux, Windows/MSVC and macOS Intel",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41744955951"
+    }
+  }
 }
