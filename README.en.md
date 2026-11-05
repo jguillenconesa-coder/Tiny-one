@@ -1,4 +1,10 @@
-# Pocket One 0.46.0
+# Pocket One 0.47.0
+
+**Bend voice gain/pitch**: new Voice destination for ten native melodic engines,
+bipolar amount, contextual controls, automation and persistence. 6,144 additional
+original calls and a bridge checked against 89,088 pitch/gain pairs. Shared
+coefficient and authored host capture/clock are explicit.
+[Scope](docs/bend246-voice.md) · [validation](docs/releases/v0.47.0-validation.json).
 
 **Random FX**: independent modulation of all four controls on eight effects,
 with bipolar amount, speed, LFO envelope, automation and persistence.

@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.47.0 — Bend Voice
+
+- Level/Pitch para diez motores melódicos; 6.144 llamadas originales adicionales y 89.088 pares para el puente.
+- Suavizado de gain compartido y pitch asimétrico conservados; composición y reloj del host explícitos.
+- Destino Voice, controles, automatización, estados/slots/clipboard y rechazo de batería/legacy.
+- No recupera los productores, allocator ni scheduler originales.
+
 ## 0.30.0 — DNA Hybrid 246
 
 - Nuevo motor con render/lifecycle contrastados bajo identidad y RAM explícitas: 4096 bloques, seis estados vivos y 16 capturas completas.

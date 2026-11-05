@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.22)
+project(PocketBendVoice246 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(CTest)
+find_package(Python3 3.11 COMPONENTS Interpreter REQUIRED)
+add_executable(bend246_voice_reference_tests ../../Tests/Bend246VoiceReferenceTests.cpp)
+target_include_directories(bend246_voice_reference_tests PRIVATE ../../Source)
+add_test(NAME bend246_voice_reference COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/RunBend246VoiceTests.py" "$<TARGET_FILE:bend246_voice_reference_tests>" "${CMAKE_CURRENT_SOURCE_DIR}/../../Tests/ReferenceVectors")
+
+add_executable(bend246_voice_integration_tests ../../Tests/Bend246VoiceIntegrationTests.cpp)
+target_include_directories(bend246_voice_integration_tests PRIVATE ../../Source)
+add_test(NAME bend246_voice_integration COMMAND bend246_voice_integration_tests)

@@ -26,7 +26,7 @@ struct Fm246Voice {
             auto pitch=uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5);
             // Original Tremolo advances a complete 128-word pitch block. FM's
             // callback reads only word zero; retain that sampling contract.
-            if(output.tremolo.enabled||output.midi.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);output.midi.pitchBlock(values);pitch=values[0];}
+            if(output.tremolo.enabled||output.midi.enabled||output.bend.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);output.midi.pitchBlock(values);output.bend.pitchBlock(values);pitch=values[0];}
             fm246HybridBlock(state,work,controls,pitch,config.table,rate.table,block);cursor=0;
         }
         return output.shapeSample(block[cursor++]/32768.,rate,&adsr,released);

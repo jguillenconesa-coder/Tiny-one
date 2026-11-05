@@ -11,6 +11,9 @@ en Blue/Green y cambio de dirección con Shift + Orange. El plugin ofrece un
 encoder virtual automatizable y un botón de dirección. **No es el pitch wheel**:
 el bend MIDI por canal existente conserva su función independiente.
 
+El destino **Voice** de [0.47.0](bend246-voice.md) añade Level/Pitch para diez
+motores melódicos, con un oráculo adicional y captura de bloques explícita.
+
 ## Reconstrucción contrastada
 
 La sexta entrada de las factorías LFO (índice 5 contando desde cero) conduce a
@@ -90,7 +93,7 @@ y controles drum que puedan prolongar la voz.
 
 ## Límites y reproducción
 
-Audio/pitch especiales, FX kind 4, otros ADSR auxiliares, lectura física y
+Los especiales de audio FX, FX kind 4, otros ADSR auxiliares, lectura física y
 scheduler/voz/ruteo originales siguen pendientes. Los motores/FX híbridos conservan
 sus sustituciones documentadas; este bloque no las elimina. Tampoco recupera L1,
 OTP ni el productor original de ganancia drum. Element y Crank no se habilitan.

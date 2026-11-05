@@ -20,7 +20,7 @@ struct String246Voice {
         if(released&&!releaseSent){state.release();releaseSent=true;}
         if(cursor==128){
             auto pitch=uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5);
-            if(output.tremolo.enabled||output.midi.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);output.midi.pitchBlock(values);pitch=values[0];}
+            if(output.tremolo.enabled||output.midi.enabled||output.bend.enabled){std::array<uint32_t,128> values{};values.fill(pitch);output.tremolo.pitchBlock(values,rate.table);output.midi.pitchBlock(values);output.bend.pitchBlock(values);pitch=values[0];}
             // Own bounds for the original positive-divisor domain (about 5.4 Hz–44.1 kHz).
             pitch=uint32_t(std::clamp(reference::signedPhase(pitch),int32_t(0x40000),int32_t(0x7fffffff)));
             // Own cursor wrapping when the block-rate pitch shortens the loop.

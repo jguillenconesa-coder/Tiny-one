@@ -283,6 +283,7 @@ public:
             auto& nativeOutput=nativeSampler?v.sampler246.output:nativeDsynth?v.dsynth246.output:nativeVoltage?v.voltage246.output:nativeDna?v.dna246.output:nativeString?v.string246.output:nativeFm?v.fm246.output:nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
             nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
             nativeOutput.midi.configure(nativeMidi&&nativeCore&&!nativeDrum&&!nativeDbox,target.midi246Routes,midiCC,nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
+            nativeOutput.bend.configure(nativeBend&&nativeCore&&!nativeDrum&&!nativeDbox&&target.bend246Destination==3,target.bend246Colour,int16_t(bendControl.state.display&65535u),reference::bend246PitchCoefficient(int(int16_t(bendControl.state.words[0])),int16_t(target.bend246Amount)),nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
             if(nativeDsynth){
                 s=v.dsynth246.next(frequency,dsynthModulated,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:midiAdsr,dsynthContext,int(&v-voices.data()),phaseConfig,v.released);
                 amplitude=1;v.level=v.dsynth246.output.envelopeLevel();if(v.dsynth246.done())v.active=false;

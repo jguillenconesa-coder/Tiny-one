@@ -152,7 +152,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::midi246Ids[i],1},"MIDI LFO: CC "+juce::String(int(i+1))+" Destination",midiRoutes,int(i+1)));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Enabled",1},"Bend LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[0],1},"Bend LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[1],1},"Bend LFO: Destination",juce::StringArray{"Instrument","ADSR","FX"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[1],1},"Bend LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[2],1},"Bend LFO: Amount",-32767,32767,16000));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[3],1},"Bend LFO: Orange Encoder",0,16383,8192));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Reverse",1},"Bend LFO: Reverse Direction",false));

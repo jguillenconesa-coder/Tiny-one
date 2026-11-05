@@ -34,7 +34,7 @@ struct Cluster246Voice {
         if(cursor==128){
             std::array<uint32_t,128> pitch{};
             pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));
-            output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);
+            output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);output.bend.pitchBlock(pitch);
             if(!reference::cluster246Block(state,context,bounded,config.tables,pitch,rate.table,block))block.fill(0);
             reference::cluster246DisplayDecay(context);cursor=0;
         }

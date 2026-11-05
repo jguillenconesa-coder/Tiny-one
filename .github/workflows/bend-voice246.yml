@@ -1,0 +1,39 @@
+name: Validate Bend voice gain and pitch
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/bend-voice/**'
+      - 'research/blackfin/bend-*'
+      - 'Source/Element246*.h'
+      - 'Source/Crank246*.h'
+      - 'Source/Bend246*.h'
+      - 'Source/Midi246.h'
+      - 'Source/Drum246Modulation*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Sampler246Modulation.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Engine.h'
+      - 'Source/Phase246.h'
+      - 'Source/*246Voice.h'
+      - 'Source/SharedDrum246.h'
+      - 'Tests/Bend246Voice*.cpp'
+      - 'Tests/RunBend246VoiceTests.py'
+      - 'Tests/ReferenceVectors/bend-voice246-*'
+      - 'scripts/verify-bend-voice246.py'
+      - '.github/workflows/bend-voice246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/bend-voice -B build-bend-voice -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-bend-voice --config Release --parallel 2
+      - run: ctest --test-dir build-bend-voice -C Release --output-on-failure

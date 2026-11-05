@@ -1,0 +1,200 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP,0x03000000
+imm32 P0,0x01a1e914
+CALL (P0);
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = output_ptr;
+P1.L = output_ptr;
+[P1] = P0;
+next_case:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P5 = [P0];
+imm32 P1,0xff801950
+imm32 R0,0x1234567
+imm32 R1,0x1234567
+P2 = 128;
+LSETUP(init_ff801950,init_ff801950_end) LC0 = P2;
+init_ff801950: [P1++] = R0;
+init_ff801950_end: R0 = R0 + R1;
+imm32 P1,0xff801d50
+imm32 R0,0x4030807
+imm32 R1,0x4030807
+P2 = 64;
+LSETUP(init_ff801d50,init_ff801d50_end) LC0 = P2;
+init_ff801d50: [P1++] = R0;
+init_ff801d50_end: R0 = R0 + R1;
+imm32 P1,0xff800bb4
+imm32 R0,0x9020705
+imm32 R1,0x9020705
+P2 = 64;
+LSETUP(init_ff800bb4,init_ff800bb4_end) LC0 = P2;
+init_ff800bb4: [P1++] = R0;
+init_ff800bb4_end: R0 = R0 + R1;
+R0 = [P5 + 4];
+imm32 P1,0xff8016e4
+[P1] = R0;
+imm32 P1,0xff801704
+[P1] = R0;
+imm32 P1,0xff801734
+[P1] = R0;
+imm32 P1,0xff801754
+[P1] = R0;
+R0 = 0;
+imm32 P1,0xff8016d4
+[P1] = R0;
+imm32 P1,0xff8016d8
+[P1] = R0;
+R0 = [P5 + 12];
+CC = BITTST (R0,0);
+IF !CC JUMP no_load;
+P1 = P5;
+P1 += 20;
+imm32 P2,0xff907aac
+P3 = 8;
+LSETUP(load_state,load_state_end) LC0 = P3;
+load_state: R0 = [P1++];
+load_state_end: [P2++] = R0;
+imm32 P2,0x1dd59b4
+P3 = 2;
+LSETUP(load_history,load_history_end) LC0 = P3;
+load_history: R0 = [P1++];
+load_history_end: [P2++] = R0;
+imm32 P2,0x1dd591c
+P3 = 1;
+LSETUP(load_display,load_display_end) LC0 = P3;
+load_display: R0 = [P1++];
+load_display_end: [P2++] = R0;
+no_load:
+R0 = [P5 + 12];
+CC = BITTST (R0,1);
+IF !CC JUMP no_prepare;
+imm32 P0,0x019c9d04
+CALL (P0);
+no_prepare:
+R0 = [P5 + 12];
+CC = BITTST (R0,2);
+IF !CC JUMP no_reset;
+imm32 P0,0x019c9cf4
+CALL (P0);
+no_reset:
+P1 = P5;
+P1 += 32;
+P1 += 32;
+P2.H = controls;
+P2.L = controls;
+P3 = 4;
+LSETUP(copy_controls,copy_controls_end) LC0 = P3;
+copy_controls: R0 = [P1++];
+copy_controls_end: [P2++] = R0;
+imm32 P2,0xff801724
+P3 = 4;
+LSETUP(copy_targets,copy_targets_end) LC0 = P3;
+copy_targets: R0 = [P1++];
+copy_targets_end: [P2++] = R0;
+P0.H = tag;
+P0.L = tag;
+R0 = [P5 + 16];
+[P0] = R0;
+R0 = P0;
+R1.H = controls;
+R1.L = controls;
+R2 = [P5 + 8];
+imm32 P0,0x019c9d44
+R3 = [P5];
+CC = R3 == 0;
+IF CC JUMP invoke;
+imm32 P0,0x019ca0ec
+CC = R3 == 1;
+IF CC JUMP invoke;
+imm32 P0,0x019ca328
+invoke: CALL (P0);
+P0.H = output_ptr;
+P0.L = output_ptr;
+P2 = [P0];
+P1 = P2;
+P1 += 40;
+P1 += 40;
+[P1] = R0;
+P1.H = tag;
+P1.L = tag;
+R0 = [P1];
+[P2++] = R0;
+imm32 P1,0xff907aac
+P3 = 8;
+LSETUP(save_state,save_state_end) LC0 = P3;
+save_state: R0 = [P1++];
+save_state_end: [P2++] = R0;
+imm32 P1,0x1dd59b4
+P3 = 2;
+LSETUP(save_history,save_history_end) LC0 = P3;
+save_history: R0 = [P1++];
+save_history_end: [P2++] = R0;
+imm32 P1,0x1dd591c
+P3 = 1;
+LSETUP(save_display,save_display_end) LC0 = P3;
+save_display: R0 = [P1++];
+save_display_end: [P2++] = R0;
+P1.H = controls;
+P1.L = controls;
+P3 = 4;
+LSETUP(save_controls,save_controls_end) LC0 = P3;
+save_controls: R0 = [P1++];
+save_controls_end: [P2++] = R0;
+imm32 P1,0xff801724
+P3 = 4;
+LSETUP(save_targets,save_targets_end) LC0 = P3;
+save_targets: R0 = [P1++];
+save_targets_end: [P2++] = R0;
+P2 += 4;
+imm32 P1,0xff801950
+P3 = 128;
+LSETUP(save_pitch,save_pitch_end) LC0 = P3;
+save_pitch: R0 = [P1++];
+save_pitch_end: [P2++] = R0;
+imm32 P1,0xff801d50
+P3 = 64;
+LSETUP(save_gain,save_gain_end) LC0 = P3;
+save_gain: R0 = [P1++];
+save_gain_end: [P2++] = R0;
+imm32 P1,0xff800bb4
+P3 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P3;
+save_audio: R0 = [P1++];
+save_audio_end: [P2++] = R0;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+R1 = 96;
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP next_case;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+input_ptr: .long 0
+output_ptr: .long 0
+tag: .long 0
+controls: .space 16
+io_args: .long 1,results,@BYTES@
+results: .space @BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .sdram,"aw"
+.incbin "@WORK@/sdram.bin"

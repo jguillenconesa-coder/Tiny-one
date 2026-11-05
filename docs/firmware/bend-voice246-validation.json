@@ -1,0 +1,92 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "callbacks": {
+    "synth": "0x019c9d44",
+    "drum_rejection": "0x019ca0ec"
+  },
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 6144,
+  "families": "4096 synth and 2048 drum rejection calls",
+  "accepted_matrix_counts": {
+    "0:0:0:3": 70,
+    "0:1:0:3": 70,
+    "0:2:0:3": 70,
+    "0:3:0:3": 70,
+    "0:4:0:3": 70,
+    "0:6:0:3": 70,
+    "0:7:0:3": 70,
+    "0:11:0:3": 70,
+    "0:12:0:3": 68,
+    "0:13:0:3": 68
+  },
+  "source_prepare": "0x019c9d04",
+  "source_reset": "0x019c9cf4",
+  "source_state": "0xff907aac",
+  "shared_history": "0x01dd59b4",
+  "shared_display_flag": "0x01dd591c",
+  "artifacts": {
+    "bend-voice246-input.bin.gz": {
+      "bytes": 303452,
+      "raw_bytes": 589824,
+      "sha256": "25d73fad5f993c8086875fd3dcba383f78022b1c305af9735d7f3d153e6cfc47"
+    },
+    "bend-voice246-output.bin.gz": {
+      "bytes": 446736,
+      "raw_bytes": 6807552,
+      "sha256": "9b9cae9939c2f9025ed7b1e5161eb1a37baa26ded52cc2e62f3faee33204135f"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Interleaved source state, ring history, flags, counters and control/display words under supplied manual encoder inputs; gain/pitch transformations, complete buffers and state; no parameter routes in this oracle.",
+    "Only synth kind 0 destination 3 targets 0/1; drum and wrong kind/target rejection; no FX or physical source reader.",
+    "No complete voice, protected gain producer or acoustic equivalence claim."
+  ],
+  "independent_repeat": "byte-identical input and output in private-bend-voice246-a and private-bend-voice246-b",
+  "accepted_per_type_target": {
+    "0:0": 36,
+    "1:0": 36,
+    "2:0": 36,
+    "3:0": 36,
+    "4:0": 36,
+    "6:0": 36,
+    "7:0": 36,
+    "11:0": 36,
+    "12:0": 34,
+    "13:0": 34,
+    "0:1": 34,
+    "1:1": 34,
+    "2:1": 34,
+    "3:1": 34,
+    "4:1": 34,
+    "6:1": 34,
+    "7:1": 34,
+    "11:1": 34,
+    "12:1": 34,
+    "13:1": 34
+  },
+  "accepted_targets": {
+    "0": 356,
+    "1": 340
+  },
+  "accepted_calls": 696,
+  "rejected_calls": 5448,
+  "bridge_pairs": 89088,
+  "source_sha256": {
+    "Source/Bend246Special.h": "50530a423e2f52006e88ce1f98830dfabbee4534a1b916fddf260984c3343266",
+    "Source/Bend246Voice.h": "33b1d23c50ef938fe4d15e08a53712ea37c2e7e849967240d1e6a9d42aba0036",
+    "Source/Bend246Control.h": "d1a154f366ecd656cbc65cd55745fa69fbf4147d8b4358ae38e818a98b09f423",
+    "scripts/verify-bend-voice246.py": "5c0c0e2475732d8e3de934f9341be0552cbb0e8aca81dea4528847c5cfd69b76",
+    "research/blackfin/bend-voice-stream.s.in": "3c2e139e5ec9ea60053729ed3da258fcdd1db536f8a9cd86d56944e5386a6b43",
+    "Tests/Bend246VoiceReferenceTests.cpp": "0d08bb1fcbbbeee0581fada47f4a77e9dd74cde696bf6f9925b4b9b8e9209c4a"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan original buffers and block bridge",
+    "adapter": "success: ASan/UBSan 26 engine/rate/target cases at 48 kHz plus Mono/Legato/glide, signed amounts and block capture",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  }
+}

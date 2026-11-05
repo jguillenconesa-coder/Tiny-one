@@ -779,3 +779,23 @@ fallo del producto ni validación de esa revisión. No repetir builds aprobados.
 La corrección `25a26bc` añade `<string>` al verificador MSVC sin cambiar DSP;
 usar sus trabajos nuevos, no los cancelados de `34cd351`. El CI completo 0.45.0
 también terminó aprobado en los tres sistemas.
+
+
+## Bend Voice — 0.47.0
+
+[Level/Pitch](bend246-voice.md) amplía el callback synth `0x019c9d44`, kind 0,
+destino 3, colores 0/1. 6.144 llamadas originales comparan estado/historial/display,
+controles/targets/tag/retorno y buffers pitch/gain/FX completos, con retención y
+repetición idéntica. 696 aceptadas producen 89.088 pares comparados también con
+el puente por bloques; no se confunden las 5.448 rechazadas con audio renderizado.
+
+Se integran diez motores melódicos y ambos destinos, con coeficiente compartido,
+UI, estado y automatización. El clock de 44100/64, las capturas de 128 muestras,
+lifecycle y ubicación de gain/pitch en la voz siguen siendo adaptaciones propias.
+El oráculo no proporciona el contrato activo del scheduler ni sus productores.
+Mantener Envelope de Element fuera del plugin, como exige su estudio.
+
+Siguiente frente: contrastar los especiales restantes de Crank/Element y sus
+consumidores, sin reinterpretar buffers explícitos como productores recuperados.
+El productor de ganancia drum, ruteo/voz completos, Pulse/L1, calibración acústica,
+Live real, firma/notarización y presets completos permanecen separados.

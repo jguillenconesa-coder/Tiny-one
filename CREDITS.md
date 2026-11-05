@@ -759,3 +759,11 @@ GNU Blackfin tooling and supplied firmware. Numeric synthetic fixtures and a
 reproducible harness are included; firmware, instruction bytes, disassembly and
 private ELF files are not. Shared-bus ownership, clock, seed and lifecycle are
 host policy, not recovered original scheduling. See [scope](docs/random246-fx.md).
+
+
+Bend Voice 246: independently authored gain/pitch helpers, block capture bridge
+and native melodic integration. Compared with 6144 private original executions
+and 89088 accepted pitch/gain pairs; only synthetic numeric observations are
+bundled. Source/coefficient scheduling and lifecycle are explicit host policies,
+not a recovered physical reader, buffer producer or original voice scheduler.
+See [scope](docs/bend246-voice.md).

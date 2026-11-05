@@ -39,7 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Random hacia los ocho FX (0.46.0)
+## Entrega actual: Bend hacia la voz (0.47.0)
+
+[Bend Voice](bend246-voice.md) incorpora Level/Pitch en diez motores melódicos,
+automatización, estado/slots/clipboard, controles contextuales y rechazo de drum
+/legacy. 6.144 llamadas originales nuevas: 696 aceptadas (356 Level, 340 Pitch)
+y 5.448 rechazadas, con fuente/historial/display/controles/targets/retorno y buffers
+completos. Dos ejecuciones independientes idénticas. El puente coincide con
+89.088 pares de pitch/ganancia de los bloques originales aceptados.
+
+Coeficiente suavizado compartido, curva de pitch asimétrica y saturación conservados.
+Cadencia global del host, captura por voz/bloque de 128 y composición de envolvente,
+límites y lifecycle son propios. No se recuperan por ello el productor de buffers,
+allocator ni scheduler originales. **132 suites verificadas**, **1.194 cargas sin
+heap rastreado**, ASan/UBSan y revisión visual aprobados; la evidencia separa
+la corrección del estímulo de prueba del plugin de los cambios de producto.
+[Evidencia](releases/v0.47.0-validation.json).
+
+Se mantiene **≈69 % ±10 puntos de planificación**, sin nueva medición de fidelidad.
+El CI completo 0.46.0 está aprobado; ARM64 de esa revisión no adquirió runner.
+Siguen especiales de los demás LFO, ruteo/productores, Pulse/L1, acústica/Live,
+firma/notarización y presets completos al final.
+
+## Entrega anterior: Random hacia los ocho FX (0.46.0)
 
 [Random FX](random246-fx.md) modula simultáneamente los cuatro controles de cada
 efecto, con cantidad bipolar, velocidad, envolvente, automatización, mandos sin

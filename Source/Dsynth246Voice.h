@@ -17,8 +17,8 @@ struct Dsynth246Voice {
   if(!initialized){state={};state.construct();state.bind(slot);context.reset(state,controls);output.envelope.noteOn();output.envelopeStarted=true;initialized=true;}
   if(released&&!releaseSent){state.release();output.envelope.noteOff(adsr[2]);releaseSent=true;}
   if(cursor==128){
-   std::array<uint32_t,128> pitch{};pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);
-   gain.fill(0);reference::adsr246Block(output.envelope,adsr,32767,output.envelopeNoise,gain);for(auto& v:gain)v=output.midi.amplitude(output.tremolo.amplitude(v,rate.table));
+   std::array<uint32_t,128> pitch{};pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);output.bend.pitchBlock(pitch);
+   gain.fill(0);reference::adsr246Block(output.envelope,adsr,32767,output.envelopeNoise,gain);for(auto& v:gain)v=output.bend.amplitude(output.midi.amplitude(output.tremolo.amplitude(v,rate.table)));
    auto bounded=controls;for(auto& v:bounded)v=int16_t(std::clamp(int(v),0,32767));
    reference::dsynth246Block(state,context,bounded,pitch,gain,rate.table,block,derived,second);silentBlock=output.envelopeDone()&&std::all_of(block.begin(),block.end(),[](int16_t v){return v>=-1&&v<=1;});cursor=0;
   }

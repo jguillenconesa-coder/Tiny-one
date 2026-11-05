@@ -1,0 +1,54 @@
+{
+  "version": "0.47.0",
+  "date": "2026-11-05",
+  "original_reference": {
+    "calls": 6144,
+    "accepted": 696,
+    "rejected": 5448,
+    "gain_calls": 356,
+    "pitch_calls": 340,
+    "bridge_pairs": 89088,
+    "independent_repeat": "identical numeric input/output",
+    "evidence": "../firmware/bend-voice246-validation.json"
+  },
+  "linux_build": "success: Release Standalone and VST3",
+  "linux_ctest": {
+    "baseline": "131/132 passed, 532.08 seconds; plugin_smoke fixture did not excite Bend because its Reverse movement went in the quiet direction",
+    "correction": "Only the test movement changed from 6000 to 12000, above its initial 8192 value; product DSP unchanged",
+    "targeted_plugin_rerun": "passed complete plugin_smoke binary with screenshot generation after rebuilding the test",
+    "validated_suites": 132
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1194,
+    "tracked_heap_calls": 0,
+    "scope": "48 additional Bend voice workloads; timings diagnostic on shared host, not dropout certification"
+  },
+  "host_integration": {
+    "native": "success: 182 rate/engine/destination cases, seven rates, ten supported melodic engines and drum/legacy rejection; 64/257 exact audio, Mono/Legato/glide and signed amounts",
+    "plugin": "success: ten melodic engines x Level/Pitch, exact stereo 64/257 audio, automation boundary, route availability, editor-free proxies, project/slot/clipboard and screenshot"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan 6144 original fixtures and exact block bridge",
+    "adapter": "success: ASan/UBSan 26 engine/rate/target cases at 48 kHz plus Mono/Legato/glide, signed amounts and block capture",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "native_ci": "pending implementation commit",
+  "plugins_installers_ci": "pending implementation commit",
+  "previous_product": {
+    "version": "0.46.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905480335",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
+  "limits": [
+    "Global host coefficient clock, per-voice capture/lifecycle and composition are authored; original callback arithmetic and supplied buffers are separately checked",
+    "Ten melodic engines only; drum/legacy rejected; FX audio and auxiliary ENV excluded",
+    "Original buffer producers, allocator and scheduler not recovered",
+    "No new real Ableton, native ARM64, signing/notarization, acoustic-equivalence, L1/OTP or complete original preset claim"
+  ],
+  "visual": {
+    "status": "reviewed Bend / Voice caption, Pitch target, Voice destination, Amount, Orange and Reverse controls",
+    "sha256": "465f6fffbf35a81d2209fcd14dc81adea5acdfd5c6de08adfb806b5cfa3ebfee"
+  }
+}
