@@ -1,4 +1,10 @@
-# Pocket One 0.50.0
+# Pocket One 0.51.0
+
+**Element hacia la ganancia de voz**: cuatro fuentes y diez motores melódicos,
+con audio externo firmado por parejas de gains, automatización y guardado.
+8192 callbacks originales y 197120 gains del puente contrastados. Frontend,
+remuestreo y composición del host propios. [Guía](docs/element246-voice-gain.md) ·
+[Validación](docs/releases/v0.51.0-validation.json).
 
 **Element hacia la entrada FX**: Multiply/Subtract con cuatro fuentes y siete
 FX mono; audio externo firmado por muestra, automatización y guardado. 8.192
@@ -93,7 +99,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.50.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.51.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

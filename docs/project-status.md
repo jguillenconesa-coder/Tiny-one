@@ -39,34 +39,27 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Element hacia la entrada FX (0.50.0)
+## Entrega actual: Element hacia la ganancia de voz (0.51.0)
 
-[Multiply/Subtract](element246-fx-input.md) conecta cuatro fuentes a los siete
-FX mono: sensor virtual, entrada externa firmada por muestra, envolvente del
-host y Self sobre el audio. Automatización, controles, proyectos/slots/clipboard;
-Punch/bypass y targets inválidos rechazados.
+[Gain](element246-voice-gain.md) conecta cuatro fuentes a diez motores melódicos:
+sensor virtual, audio externo firmado, gain self y Level. Automatización,
+controles, proyectos/slots/clipboard y rechazo de batería/legacy. Pitch pendiente.
+8192 callbacks originales: 1540 procesados, 6652 rechazados; 385 Level con retorno
+cero preservado. 197120 gains contrastan el puente. Dos extracciones idénticas.
 
-8192 callbacks originales adicionales: 3494 procesados, 4698 rechazados y
-874 Self con retorno cero conservado. 223616 muestras transformadas comparadas;
-el puente kind 2 coincide con otras 111936 muestras de esos mismos fixtures.
-Dos extracciones independientes idénticas. Kind 5 está contrastado en el modelo,
-sin otro bus drum en el host. Frontend, remuestreo alineado, ubicación, clock y
-lifecycle son propios; no recuperan productores ni scheduler.
+Externa causal a 44,1 kHz: cada voz captura una historia de 64 muestras para sus
+128 gains. SRC, historia, frontend, clock, captura y composición son propios.
+No se recuperan por ello productores/scheduler/allocator ni consumidor de retorno.
+La prueba independiente pasa 364 combinaciones tasa/motor/fuente; Mono/Legato/glide,
+Amount bipolar, captura externa, cambios de propietario y pánico.
+**140/140 suites**, **1386 cargas sin heap rastreado**, ASan/UBSan y revisión
+visual aprobados. [Evidencia y CI](releases/v0.51.0-validation.json).
 
-La prueba independiente pasa 784 combinaciones tasa/FX/fuente/curva/bypass y
-alineación de carrier/sidechain a siete tasas. ASan/UBSan aprobados en núcleo,
-puente y adaptador. **138 suites verificadas** y **1338 cargas sin heap
-rastreado**. La evidencia distingue la corrección del estímulo ADSR del test
-del producto, cuyo DSP y política de colas no cambiaron por ese fallo. Los dos
-verificadores Element FX pasan en Linux, Windows/MSVC y macOS Intel; Bend Voice
-también está aprobado. Otras regresiones y plugins/instaladores siguen en CI. [Evidencia y CI](releases/v0.50.0-validation.json).
-El CI completo 0.49.0 está aprobado en Linux, Windows y macOS universal
-(runtime Intel), así como sus verificadores nativos y regresiones específicas.
-
-Se mantiene **≈69 % ±10 de planificación**, sin nueva medición acústica.
-Siguen Gain/Pitch de Element y consumidores, Envelope auxiliar sin contrato
-activo, dinámica drum, productores/ruteo, Pulse/L1, Ableton real,
-firma/notarización y presets originales completos al final.
+El CI completo 0.50.0 y todas sus regresiones están aprobados en Linux,
+Windows/MSVC y macOS universal (runtime Intel). Se mantiene **≈69 % ±10 de
+planificación**, sin medición acústica nueva. Siguen Pitch de Element y helpers,
+Envelope auxiliar sin contrato activo, dinámica drum, productores/ruteo,
+Pulse/L1, Live real, firma/notarización y presets originales completos al final.
 
 ## Entrega anterior: Random hacia los ocho FX (0.46.0)
 

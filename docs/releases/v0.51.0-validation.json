@@ -1,0 +1,69 @@
+{
+  "version": "0.51.0",
+  "date": "2026-11-05",
+  "original_reference": {
+    "calls": 8192,
+    "processed": 1540,
+    "rejected": 6652,
+    "processed_return_zero": 385,
+    "bridge_gain_words": 197120,
+    "independent_repeat": "identical numeric input/output",
+    "evidence": "../firmware/element-gain246-validation.json",
+    "scope": "Synth gain kind 0 destination 3 colour 0, four sources, complete buffers and return. Pitch excluded."
+  },
+  "linux_build": "success: Release Standalone and VST3",
+  "linux_ctest": {
+    "status": "success: 140/140 suites",
+    "seconds": 664.06
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1386,
+    "tracked_heap_calls": 0,
+    "scope": "48 new Element voice gain workloads with source/amount/sensor automation; timing diagnostics on shared host, not dropout certification"
+  },
+  "host_integration": {
+    "native": "success: 364 rate/engine/source cases, seven rates, ten melodic engines and drum/legacy rejection; exact 64/257 audio, Mono/Legato/glide, signed amounts, paired signed external capture with ring rotation, owner switches, non-finite guards and panic",
+    "plugin": "success: four sources x ten melodic engines, exact stereo 64/257 audio, amount automation boundary, signed external input without monitoring, fixed PDC, panic, target availability, editor-free proxies and exact project/slot/clipboard values; complete plugin smoke passed"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan 8192 original fixtures, all four sources through host gain bridge",
+    "adapter": "success: ASan/UBSan 52 engine/source cases at 48 kHz plus Mono/Legato/glide, signed amounts, external clocks at seven rates, rotated paired block capture, owner switches and panic",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "native_ci": {
+    "status": "not yet submitted"
+  },
+  "plugins_installers_ci": {
+    "status": "not yet submitted"
+  },
+  "previous_product": {
+    "version": "0.50.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017829",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
+  "limits": [
+    "Original gain arithmetic and explicit buffers contrasted; original gain producer, allocator, scheduler and Level return consumer not recovered",
+    "Frontend, shared 44.1 kHz external SRC/history, 128-word per-voice capture, clock, placement and lifecycle are authored adaptations",
+    "External history can introduce modulation phase/lag; no original source timing or end-to-end acoustic equivalence claim",
+    "Element pitch, auxiliary Envelope, original drum dynamics, Live real, native ARM64, signing/notarization and complete presets remain pending"
+  ],
+  "host_source_sha256": {
+    "Source/Engine.h": "21f58ac967176077d2142a24186dea284134f7368031c9bcf8b8ca8df5b778d7",
+    "Source/Bend246Voice.h": "b4eddaf8f50bb22ee2c3cf5b65dbd33395d40adbffececefc4f8818f2c570019",
+    "Source/Element246Gain.h": "91c2e49a3a76a0b9ccdfd9defb18ff82320bb14ae613190309a7b9eac3fed611",
+    "Source/Element246VoiceInput.h": "e6cf5bfb68b5b1bc4e597f27721cfe9fc43dcfd62f15d878b0276a09d9d6b143",
+    "Source/PluginProcessor.cpp": "a29afe5a972a07b83dbaed82de027050138659569779352eacd2e77fb1d2b9d0",
+    "Source/PluginProcessor.h": "581c0cfc06d15cdde0ac7a06acad9ff95e54b0ced3f48d0a2b9e9a9944cb7c96",
+    "Source/ScreenAnimations.cpp": "d25d7f8de06e196e232f0c85c944eb2888985410f45d8e48ef4632e8e9085d05",
+    "Tests/Element246GainIntegrationTests.cpp": "4e38377f4dd2c90308581163568f6aa46a3e42f08f8bcee070c94b514028c4b8",
+    "Tests/Element246GainPluginSupport.h": "a0ae48a58c2f9d4f1d919aff1e76b087ccfc761a2a444742fc0b736bbccdee98",
+    "Tests/PluginSmoke.cpp": "862cfb0d50141aef786611f0f45f35d3caa169ac93b87588f7b1ffbeede78838",
+    "Tests/RealtimeTests.cpp": "910be359d4242b231d36129e3c57e02baf4d0f0e96b780466c856e3049a19f9b"
+  },
+  "visual": {
+    "status": "reviewed ELEMENT / VOICE, VOICE GAIN SELF, GAIN SELF source, GAIN target, AUDIO destination and bipolar Amount",
+    "sha256": "678853da1ecc97ea3467450666ca72d50dfc3729b52ca38cbc3f6b87a47f4851"
+  }
+}

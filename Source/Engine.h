@@ -8,6 +8,8 @@
 #include "Phase246.h"
 #include "Manual246FxAudio.h"
 #include "Element246FxAudio.h"
+#include "Element246Gain.h"
+#include "Element246VoiceInput.h"
 #include "SharedDrum246.h"
 #include "Fm246Voice.h"
 #include "Digital246Voice.h"
@@ -79,7 +81,7 @@ struct Parameters {
 class Engine {
 public:
     static constexpr int polyphony=8;
-    void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);reset(); }
+    void prepare(double rate) { sampleRate=std::max(8000.0,rate); smoothing=float(1-std::exp(-1.0/(sampleRate*.012))); cachedCutoff=-1;phaseConfig.prepare(sampleRate);drWaveConfig.prepare(phaseConfig);punchEffect.prepare(sampleRate);valueEffect.prepare(sampleRate);elementVoiceInput.prepare(sampleRate);reset(); }
     const std::array<uint32_t,4>& midiControllers() const noexcept {return midiCC;}
     void midiController(int number,int value) noexcept {if(number>=1&&number<=4)midiCC[size_t(number-1)]=uint32_t(std::clamp(value,0,127));}
     float element246Level() const noexcept {return elementControl.level();}
@@ -94,7 +96,7 @@ public:
         return {};
     }
     float bend246Level() const noexcept {return bendControl.level();}
-    void reset() {elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void reset() {elementVoiceInput.reset();elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false,bool drum=false,bool sampler=false) noexcept {
         sampler=mode==3&&sampler;
         if(selectionInitialized&&sampler!=selectedSampler){voices={};held.clear();}
@@ -208,6 +210,7 @@ public:
         const bool nativeSampler=target.engine==3&&target.sampler246;
         const bool nativeCore=nativeSampler||nativeDrum||nativeDbox||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativePhase||nativeDigital||nativeDrWave||nativeCluster;
         const bool nativeElement=target.element246;
+        elementVoiceInput.next(nativeElement,elementExternal);
         const double elementStep=44100./(64*sampleRate);
         const float elementEnvelope=nativeElement&&elementControl.willTick(elementStep)?visualState(target.engine).envelope:0;
         elementControl.next(nativeElement,target.element246Source,target.element246Amount,target.element246Destination,target.element246Colour,target.element246Sensor,elementExternal,elementEnvelope,elementFeedback,elementStep,nativeDrum||nativeDbox);
@@ -294,7 +297,8 @@ public:
             auto& nativeOutput=nativeSampler?v.sampler246.output:nativeDsynth?v.dsynth246.output:nativeVoltage?v.voltage246.output:nativeDna?v.dna246.output:nativeString?v.string246.output:nativeFm?v.fm246.output:nativeCluster?v.cluster246.output:nativeDrWave?v.drWave246.output:nativeDigital?v.digital246.output:v.phase246;
             nativeOutput.tremolo.configure(nativeTremolo,target.tremolo246Controls,target.tremolo246Shape,target.value246Tempo,nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
             nativeOutput.midi.configure(nativeMidi&&nativeCore&&!nativeDrum&&!nativeDbox,target.midi246Routes,midiCC,nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave);
-            nativeOutput.bend.configure(nativeCore&&!nativeDrum&&!nativeDbox&&((nativeCrank&&target.crank246Destination==3)||(nativeBend&&target.bend246Destination==3)),nativeCrank?target.crank246Colour:target.bend246Colour,nativeCrank?int16_t(crankControl.gainState&65535u):int16_t(bendControl.state.display&65535u),nativeCrank?reference::crank246PitchCoefficient(reference::crank246Level(crankControl.state),int16_t(target.crank246Amount)):reference::bend246PitchCoefficient(int(int16_t(bendControl.state.words[0])),int16_t(target.bend246Amount)),nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave,nativeCrank?2:1);
+            if(nativeElement&&target.element246Destination==3&&target.element246Colour==0){const int source=target.element246Source;nativeOutput.bend.configure(nativeCore&&!nativeDrum&&!nativeDbox,0,reference::element246GainScalar(elementControl.inputs,source,int16_t(target.element246Amount)),0,nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave,3,source==1?3:source==2?2:1,&elementVoiceInput.words,elementVoiceInput.head);}
+            else nativeOutput.bend.configure(nativeCore&&!nativeDrum&&!nativeDbox&&((nativeCrank&&target.crank246Destination==3)||(nativeBend&&target.bend246Destination==3)),nativeCrank?target.crank246Colour:target.bend246Colour,nativeCrank?int16_t(crankControl.gainState&65535u):int16_t(bendControl.state.display&65535u),nativeCrank?reference::crank246PitchCoefficient(reference::crank246Level(crankControl.state),int16_t(target.crank246Amount)):reference::bend246PitchCoefficient(int(int16_t(bendControl.state.words[0])),int16_t(target.bend246Amount)),nativeSampler||nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeCluster||nativeDrWave,nativeCrank?2:1);
             if(nativeDsynth){
                 s=v.dsynth246.next(frequency,dsynthModulated,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:midiAdsr,dsynthContext,int(&v-voices.data()),phaseConfig,v.released);
                 amplitude=1;v.level=v.dsynth246.output.envelopeLevel();if(v.dsynth246.done())v.active=false;
@@ -467,7 +471,7 @@ private:
     std::array<float,4> filterWords{};std::array<int16_t,4> filterRaw{},filterModulated{{8000,0,0,24576}};bool filterControlsInitialized=false;
     Punch246Effect punchEffect;float punchMix=0;bool punchActive=false;
     uint32_t randomRng=0x52414e44u;
-    Element246Control elementControl;float elementFeedback=0;
+    Element246VoiceInput elementVoiceInput;Element246Control elementControl;float elementFeedback=0;
     Crank246Control crankControl;
     Bend246Control bendControl;
     std::array<uint32_t,4> midiCC{{64,64,64,64}};

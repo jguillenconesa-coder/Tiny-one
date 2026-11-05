@@ -792,3 +792,11 @@ sidechain/mono bus integration. 8192 original callbacks, 3494 processed includin
 bridge halfwords. Two identical independent numeric extractions. Host frontend,
 resampling and routing are authored; kind 5 model-only. See docs/element246-fx-input.md.
 No firmware executable, private dump or decompiler pseudocode is distributed.
+
+
+Element voice gain 246: independently authored saturating-add reconstruction,
+shared causal external stream and owner-aware per-voice capture. 8192 original
+calls, 1540 processed, 385 Level zero returns, 197120 bridge gain words; two
+identical independent numeric extractions. Source producers/SRC/history/voice
+scheduling and composition are authored adaptations. No firmware, ELF or
+decompiler pseudocode distributed. See docs/element246-voice-gain.md.

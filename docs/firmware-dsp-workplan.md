@@ -838,3 +838,15 @@ bus son propios. No recupera productores ni scheduler. Siguiente: especiales
 Gain/Pitch de Element y consumidores, dinámica drum y ruteo/productores de voz.
 Mantener Envelope auxiliar fuera del plugin sin contrato activo validable.
 Pulse/L1, acústica/Live y presets originales completos siguen pendientes.
+
+
+## Element Voice Gain — 0.51.0
+
+[Gain](element246-voice-gain.md): synth 0x019cda14, kind 0, destino 3, color 0.
+8192 llamadas, cuatro fuentes, 1540 procesadas y 197120 gains del puente.
+385 Level retornan cero; core lo conserva y host usa predicado separado.
+Diez motores y fuentes Sensor/External/Gain Self/Level; externa causal con
+captura histórica de 64 muestras por voz hacia 128 gains. SRC, frontend,
+captura/lifecycle/clock propios. No sustituir esas pruebas por fidelidad acústica.
+Siguiente: Pitch de Element y helpers/consumidores, dinámica drum y productores
+originales. Envelope auxiliar sigue fuera sin contrato activo. Presets al final.

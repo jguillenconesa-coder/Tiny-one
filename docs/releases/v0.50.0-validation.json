@@ -43,7 +43,7 @@
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017868"
   },
   "plugins_installers_ci": {
-    "status": "queued; no final result claimed",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017829"
   },
   "previous_product": {
@@ -87,47 +87,47 @@
     {
       "name": "element",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017989",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "sampler",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070018034",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "bend",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070018064",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "manual_fx",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017832",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "crank_voice",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017851",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "drum",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017885",
-      "status": "queued"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "midi",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017831",
-      "status": "queued"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "crank",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017875",
-      "status": "queued"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "dbox",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42070017879",
-      "status": "queued"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     }
   ]
 }

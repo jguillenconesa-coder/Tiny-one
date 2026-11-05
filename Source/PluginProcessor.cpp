@@ -164,7 +164,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"element246Enabled",1},"Element LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[0],1},"Element LFO: Source",juce::StringArray{"G-force (virtual)","External Input","Voice Envelope","Instrument Level"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::element246Ids[1],1},"Element LFO: Amount",-32767,32767,16000));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[2],1},"Element LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","FX Input"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[2],1},"Element LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice / FX Input"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[3],1},"Element LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{"element246Sensor",1},"Element LFO: Virtual Sensor",-32768,32767,0));
     phaseState=std::make_unique<juce::AudioProcessorValueTreeState>(*this,nullptr,"Phase246",std::move(phaseLayout));

@@ -1,0 +1,200 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+.include "testutils.inc"
+start
+imm32 SP,0x03f00000
+imm32 P0,0x01a1e914
+CALL (P0);
+P0.H = inputs;
+P0.L = inputs;
+P1.H = input_ptr;
+P1.L = input_ptr;
+[P1] = P0;
+P0.H = results;
+P0.L = results;
+P1.H = output_ptr;
+P1.L = output_ptr;
+[P1] = P0;
+next_case:
+P0.H = input_ptr;
+P0.L = input_ptr;
+P5 = [P0];
+imm32 P1,0xff801950
+imm32 R0,0x1234567
+imm32 R1,0x1234567
+P2 = 128;
+LSETUP(init_ff801950,init_ff801950_end) LC0 = P2;
+init_ff801950: [P1++] = R0;
+init_ff801950_end: R0 = R0 + R1;
+imm32 P1,0xff800bb4
+R0 = [P5 + 12];
+imm32 R1,0x9020705
+P2 = 64;
+LSETUP(init_ff800bb4,init_ff800bb4_end) LC0 = P2;
+init_ff800bb4: [P1++] = R0;
+init_ff800bb4_end: R0 = R0 + R1;
+
+R0 = [P5 + 4];
+imm32 P1,0xff8016e4
+[P1] = R0;
+imm32 P1,0xff801704
+[P1] = R0;
+imm32 P1,0xff801734
+[P1] = R0;
+imm32 P1,0xff801754
+[P1] = R0;
+R0 = 0;
+imm32 P1,0xff8016d4
+[P1] = R0;
+imm32 P1,0xff8016d8
+[P1] = R0;
+P1 = P5;
+P1 += 16;
+P2.H = controls;
+P2.L = controls;
+P3 = 4;
+LSETUP(load_controls,load_controls_end) LC0 = P3;
+load_controls: R0 = [P1++];
+load_controls_end: [P2++] = R0;
+imm32 P2,0xff801724
+P3 = 4;
+LSETUP(load_targets,load_targets_end) LC0 = P3;
+load_targets: R0 = [P1++];
+load_targets_end: [P2++] = R0;
+imm32 P2,0xff801054
+imm32 R0,0x2468
+[P2] = R0;
+R0 = W[P1++] (X);
+imm32 P2,0xff801056
+W[P2] = R0;
+R0 = W[P1++] (X);
+imm32 P2,0xff80108c
+W[P2] = R0;
+R0 = W[P1++] (X);
+imm32 P2,0xff80108e
+W[P2] = R0;
+P1 += 2;
+R0 = [P1++];
+imm32 P2,0x01dfc80c
+[P2] = R0;
+imm32 P2,0xff800cb4
+P3 = 32;
+LSETUP(load_external,load_external_end) LC0 = P3;
+load_external: R0 = [P1++];
+load_external_end: [P2++] = R0;
+imm32 P2,0xff801d50
+P3 = 64;
+LSETUP(load_gain,load_gain_end) LC0 = P3;
+load_gain: R0 = [P1++];
+load_gain_end: [P2++] = R0;
+P0.H = tag;
+P0.L = tag;
+R0 = [P5 + 12];
+[P0] = R0;
+R0 = P0;
+R1.H = controls;
+R1.L = controls;
+R2 = [P5 + 8];
+imm32 P0,0x019cda14
+R3 = [P5];
+CC = R3 == 0;
+IF CC JUMP invoke;
+imm32 P0,0x019cde28
+CC = R3 == 1;
+IF CC JUMP invoke;
+imm32 P0,0x019cdf22
+invoke: CALL (P0);
+P0.H = return_value;
+P0.L = return_value;
+[P0] = R0;
+P0.H = output_ptr;
+P0.L = output_ptr;
+P2 = [P0];
+P1.H = tag;
+P1.L = tag;
+P3 = 1;
+LSETUP(save_tag,save_tag_end) LC0 = P3;
+save_tag: R0 = [P1++];
+save_tag_end: [P2++] = R0;
+P1.H = controls;
+P1.L = controls;
+P3 = 4;
+LSETUP(save_controls,save_controls_end) LC0 = P3;
+save_controls: R0 = [P1++];
+save_controls_end: [P2++] = R0;
+imm32 P1,0xff801724
+P3 = 4;
+LSETUP(save_targets,save_targets_end) LC0 = P3;
+save_targets: R0 = [P1++];
+save_targets_end: [P2++] = R0;
+P1.H = return_value;
+P1.L = return_value;
+P3 = 1;
+LSETUP(save_return,save_return_end) LC0 = P3;
+save_return: R0 = [P1++];
+save_return_end: [P2++] = R0;
+imm32 P1,0xff801054
+P3 = 1;
+LSETUP(save_sensor,save_sensor_end) LC0 = P3;
+save_sensor: R0 = [P1++];
+save_sensor_end: [P2++] = R0;
+imm32 P1,0xff80108c
+P3 = 1;
+LSETUP(save_env_level,save_env_level_end) LC0 = P3;
+save_env_level: R0 = [P1++];
+save_env_level_end: [P2++] = R0;
+imm32 P1,0x1dfc80c
+P3 = 1;
+LSETUP(save_drum_env,save_drum_env_end) LC0 = P3;
+save_drum_env: R0 = [P1++];
+save_drum_env_end: [P2++] = R0;
+imm32 P1,0xff800cb4
+P3 = 32;
+LSETUP(save_external,save_external_end) LC0 = P3;
+save_external: R0 = [P1++];
+save_external_end: [P2++] = R0;
+imm32 P1,0xff801d50
+P3 = 64;
+LSETUP(save_gain,save_gain_end) LC0 = P3;
+save_gain: R0 = [P1++];
+save_gain_end: [P2++] = R0;
+imm32 P1,0xff801950
+P3 = 128;
+LSETUP(save_pitch,save_pitch_end) LC0 = P3;
+save_pitch: R0 = [P1++];
+save_pitch_end: [P2++] = R0;
+imm32 P1,0xff800bb4
+P3 = 64;
+LSETUP(save_audio,save_audio_end) LC0 = P3;
+save_audio: R0 = [P1++];
+save_audio_end: [P2++] = R0;
+P0.H = output_ptr;
+P0.L = output_ptr;
+[P0] = P2;
+P0.H = input_ptr;
+P0.L = input_ptr;
+R0 = [P0];
+R1 = 444;
+R0 = R0 + R1;
+[P0] = R0;
+R1.H = inputs_end;
+R1.L = inputs_end;
+CC = R0 == R1;
+IF !CC JUMP next_case;
+R0.H = io_args;
+R0.L = io_args;
+P0 = 5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+input_ptr: .long 0
+output_ptr: .long 0
+tag: .long 0
+return_value: .long 0
+controls: .space 16
+io_args: .long 1,results,@BYTES@
+results: .space @BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .sdram,"aw"
+.incbin "@WORK@/sdram.bin"

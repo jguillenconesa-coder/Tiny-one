@@ -63,7 +63,8 @@ rango** (`0x01a1de8e`), no la escala de rango de Value/Bend/Crank.
 Esto demuestra coincidencia numérica bajo esos controles, buffers y palabras,
 en el simulador BF524 con los tres parches de writeback contrastados. **No**
 recupera los productores físicos/IPC, el detector de nivel/envolvente original,
-la voz completa ni equivalencia acústica. Gain/pitch especiales y FX ENV kind 4 siguen fuera. El audio FX tiene un
+la voz completa ni equivalencia acústica. Pitch y FX ENV kind 4 siguen fuera. [Gain de voz tiene un contrato separado en
+0.51.0](element246-voice-gain.md). El audio FX tiene un
 [contrato e integración separados en 0.50.0](element246-fx-input.md).
 
 ## Frontend propio del host

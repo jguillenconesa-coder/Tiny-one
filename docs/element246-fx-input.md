@@ -64,8 +64,8 @@ Element; no es una medición del audio transformado del bus.
 
 Se conserva Element > Crank > Bend > MIDI y el resto de prioridades, bypass,
 latencia/PDC y transición seca. No se recuperan productores físicos/IPC, allocator,
-scheduler, dinámica drum, voz completa o equivalencia acústica. Gain/Pitch de
-Element y auxiliares FX kind 4 siguen pendientes. El publicador Envelope original
+scheduler, dinámica drum, voz completa o equivalencia acústica. Pitch de Element y auxiliares FX kind 4 siguen pendientes.
+[Gain se integra por separado en 0.51.0](element246-voice-gain.md). El publicador Envelope original
 permanece fuera del plugin sin contrato activo verificable. Ableton real, ARM64
 nativo, firma/notarización y todos los presets originales no se validan aquí.
 

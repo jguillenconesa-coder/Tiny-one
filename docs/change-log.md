@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.51.0 — Element Voice Gain
+
+- Cuatro fuentes en diez motores, captura externa firmada por voz, automatización y guardado.
+- 8192 llamadas originales, 1540 procesadas y 197120 gains del puente contrastados.
+- Offsets saturados y gain self; retorno cero de Level preservado en el modelo.
+- SRC/historia/captura/lifecycle propios; Pitch y productores/consumidores originales pendientes.
+
 ## 0.50.0 — Element FX Input
 
 - Multiply/Subtract, cuatro fuentes, siete FX mono, automatización, UI y guardado.
