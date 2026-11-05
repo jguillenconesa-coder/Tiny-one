@@ -53,7 +53,9 @@ No se recuperan por ello productores/scheduler/allocator ni consumidor de retorn
 La prueba independiente pasa 364 combinaciones tasa/motor/fuente; Mono/Legato/glide,
 Amount bipolar, captura externa, cambios de propietario y pánico.
 **140/140 suites**, **1386 cargas sin heap rastreado**, ASan/UBSan y revisión
-visual aprobados. [Evidencia y CI](releases/v0.51.0-validation.json).
+visual aprobados. Los dos verificadores Gain y las regresiones Element/MIDI/
+Crank Voice/Crank/sampler pasan en Linux, Windows/MSVC y macOS Intel.
+Plugins/instaladores y las otras regresiones siguen en CI. [Evidencia y CI](releases/v0.51.0-validation.json).
 
 El CI completo 0.50.0 y todas sus regresiones están aprobados en Linux,
 Windows/MSVC y macOS universal (runtime Intel). Se mantiene **≈69 % ±10 de

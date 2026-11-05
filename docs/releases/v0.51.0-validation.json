@@ -32,10 +32,12 @@
     "leak_detection": "disabled due managed ptrace restrictions"
   },
   "native_ci": {
-    "status": "not yet submitted"
+    "status": "success: 2/2 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828813"
   },
   "plugins_installers_ci": {
-    "status": "not yet submitted"
+    "status": "in progress; no final result claimed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828850"
   },
   "previous_product": {
     "version": "0.50.0",
@@ -65,5 +67,63 @@
   "visual": {
     "status": "reviewed ELEMENT / VOICE, VOICE GAIN SELF, GAIN SELF source, GAIN target, AUDIO destination and bipolar Amount",
     "sha256": "678853da1ecc97ea3467450666ca72d50dfc3729b52ca38cbc3f6b87a47f4851"
-  }
+  },
+  "implementation_commit": "ca837dd",
+  "regression_ci": [
+    {
+      "name": "element",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828592",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "crank_voice",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828600",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "midi",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828626",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "sampler",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828546",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "crank",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828496",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "bend_voice",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828638",
+      "status": "queued"
+    },
+    {
+      "name": "element_fx",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828469",
+      "status": "queued"
+    },
+    {
+      "name": "bend",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828710",
+      "status": "queued"
+    },
+    {
+      "name": "manual_fx",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828802",
+      "status": "in progress"
+    },
+    {
+      "name": "drum",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828453",
+      "status": "in progress"
+    },
+    {
+      "name": "dbox",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828464",
+      "status": "in progress"
+    }
+  ]
 }
