@@ -57,7 +57,9 @@ La prueba independiente pasa 784 combinaciones tasa/FX/fuente/curva/bypass y
 alineación de carrier/sidechain a siete tasas. ASan/UBSan aprobados en núcleo,
 puente y adaptador. **138 suites verificadas** y **1338 cargas sin heap
 rastreado**. La evidencia distingue la corrección del estímulo ADSR del test
-del producto, cuyo DSP y política de colas no cambiaron por ese fallo. [Evidencia y CI](releases/v0.50.0-validation.json).
+del producto, cuyo DSP y política de colas no cambiaron por ese fallo. Los dos
+verificadores Element FX pasan en Linux, Windows/MSVC y macOS Intel; Bend Voice
+también está aprobado. Otras regresiones y plugins/instaladores siguen en CI. [Evidencia y CI](releases/v0.50.0-validation.json).
 El CI completo 0.49.0 está aprobado en Linux, Windows y macOS universal
 (runtime Intel), así como sus verificadores nativos y regresiones específicas.
 
