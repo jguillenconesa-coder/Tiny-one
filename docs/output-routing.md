@@ -111,3 +111,13 @@ Estado global, reloj de 689,0625 callbacks/s y aplicación sobre bases frescas s
 adaptaciones propias. La secuencia continúa sin notas y con el FX en bypass;
 retirar Random no vacía las memorias del efecto. Pánico reinicia la secuencia y
 conserva su política existente de borrar audio/colas. [Alcance](random246-fx.md).
+
+
+## Element Voice Pitch — 0.52.0
+
+Target Pitch completa el modo Voice / FX Input, sin alterar el Gain existente.
+Sensor/Level usan incremento relativo, Env usa contorno previo por voz retenido
+y Audio captura la historia SRC compartida de 64 words en parejas. Cada dueño
+de captura Gain/Pitch tiene transición explícita; se mantienen los límites
+positivos String/DNA y contratos escalar/vectoriales de cada motor. No cambia
+PDC, mezcla ni volumen maestro. [Contrato](element246-voice-pitch.md).

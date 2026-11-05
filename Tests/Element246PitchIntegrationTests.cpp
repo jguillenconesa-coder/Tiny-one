@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+#include "Engine.h"
+#include <string>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <vector>
+using namespace pocket;
+static void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
+int main(int argc,char**){try{const bool quick=argc>1;
+ Bend246Voice voice;std::array<int16_t,64> external{};external.fill(1234);voice.configure(true,1,20000,3000,true,4,5,&external,0);check(voice.amplitude(16384)==16384,"Blocked Element pitch starts before a block");std::array<uint32_t,128> block{};block.fill(12345678);voice.pitchBlock(block);check(block[0]==reference::element246PitchEnvelope(12345678,3000),"Element pitch capture differs");voice.configure(true,1,-20000,-3000,true,4,5,&external,0);for(int i=0;i<128;++i)voice.amplitude(16384);block.fill(12345678);voice.pitchBlock(block);check(block[0]==reference::element246PitchEnvelope(12345678,-3000),"Element misses pending block");voice.configure(false,1,0,0,true,4);check(!voice.started&&voice.pitch(1234)==1234,"Element disable retains processing");
+ voice.configure(true,0,123,0,false,3,1);check(voice.amplitude(1000)==1123,"Switching Element pitch to gain retains wrong owner");voice.configure(true,1,0,3000,false,4,5);check(voice.pitch(12345678)==reference::element246PitchEnvelope(12345678,3000)&&voice.amplitude(1000)==1000,"Switching Element gain to pitch retains gain operation");
+ for(double rate:{8000.,22050.,44100.,48000.,88200.,96000.,192000.}){Element246VoiceInput input;input.prepare(rate);for(int n=0;n<int(rate/20);++n)input.next(true,n<int(rate/40)?-.5f:.25f);for(auto x:input.words)check(std::abs(int(x)-8192)<=1,"Element causal history differs");input.next(false,0);for(auto x:input.words)check(x==0,"Element history survives disable");}
+ Sample sample;sample.rate=44100;sample.frames.resize(12000);for(size_t i=0;i<sample.frames.size();++i)sample.frames[i]=float(.3*std::sin(i*.075)+.1*std::sin(i*.113));sample.prepareDrumPcm();Kit kit;for(auto& clip:kit)clip=sample;
+ auto run=[&](double rate,int mode,int source,int route,int partition,bool change,int perf=0){auto e=std::make_unique<Engine>();e->prepare(rate);e->setSample(sample);e->setKit(kit,24);Parameters p;p.engine=mode==12?0:mode;p.digital246=mode==12;p.phase246=p.phase246Envelope=p.digital246Envelope=p.sampler246=p.sampler246Envelope=true;p.drum246=true;p.drive=0;p.sampleLoop=true;p.sampler246Controls=Sampler246Voice::clipControls(sample);p.element246=true;p.element246Destination=3;p.element246Source=source;p.element246Colour=route;p.element246Sensor=-16000;p.element246Amount=0;p.hybridVoiceMode=perf;p.hybridGlideMs=50;e->next(p);e->noteOn(60,.8f);std::vector<float> out;out.reserve(8192);
+  for(int start=0;start<8192;start+=partition)for(int n=start;n<std::min(start+partition,8192);++n){if(change&&n==1537)p.element246Amount=20000;if(n==4099&&perf)e->noteOn(67,.7f);if(n==5121&&perf)e->noteOff(67,1);if(n==6145)e->allNotesOff();const float input=change&&n>=1537?float(.35*std::sin(n*.07)):0;const auto value=e->next(p,input);if(!std::isfinite(value)||std::abs(value)>=8)throw std::runtime_error("Element unstable mode="+std::to_string(mode)+" source="+std::to_string(source));out.push_back(value);}e->reset();check(e->visualState(p.engine).active==0,"Element panic retains voices");return out;};
+ size_t cases=0;
+ for(double rate:{32000.,44100.,48000.,88200.,96000.,176400.,192000.})if(!quick||rate==48000)for(int mode:{0,1,2,3,4,5,6,7,8,9,10,11,12})if(!quick||mode==0||mode==1||mode==2||mode==5||mode==8||mode==11)for(int source=0;source<4;++source)for(int route:{1}){
+  const auto a=run(rate,mode,source,route,64,true),b=run(rate,mode,source,route,257,true),neutral=run(rate,mode,source,route,64,false);check(a==b,"Element pitch depends on partition");check(std::equal(a.begin(),a.begin()+1537,neutral.begin()),"Element pitch changes before timestamp");if(mode==4||mode==5||mode==11)check(a==neutral,"Element pitch targets unsupported drum/legacy");else if(a==neutral)throw std::runtime_error("Element inaudible mode="+std::to_string(mode)+" source="+std::to_string(source)+" route="+std::to_string(route));++cases;
+ }
+ if(!quick)for(int mode:{0,2,3,6,7,8,9,10})for(int perf:{1,2})for(int route:{1})check(run(48000,mode,0,route,64,true,perf)==run(48000,mode,0,route,257,true,perf),"Element pitch Mono/Legato/glide partition differs");
+ std::cout<<"PASS: "<<cases<<" Element pitch engine/source/route/rate cases, source-specific pitch and gain/pitch owner switches, capture/history/reset, exact 64/257 audio, timing, rejected engines and Mono/Legato/glide\n";
+}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

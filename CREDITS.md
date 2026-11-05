@@ -800,3 +800,14 @@ calls, 1540 processed, 385 Level zero returns, 197120 bridge gain words; two
 identical independent numeric extractions. Source producers/SRC/history/voice
 scheduling and composition are authored adaptations. No firmware, ELF or
 decompiler pseudocode distributed. See docs/element246-voice-gain.md.
+
+## Element voice pitch (0.52.0)
+
+The independently written pitch kernel and shared capture bridge were compared
+with 8,192 isolated rev246 calls using explicit source/gain/pitch buffers and the
+credited patched GNU Blackfin simulator. The 5,175-case host bridge subset uses
+constant gain for source-2 pitch; complete kernel tests also include variable
+gain. Source-1 Q31 saturation and processed-zero Level returns are retained.
+The existing authored 0.51.0 SRC/history and gain implementation are preserved.
+No firmware, instruction bytes, pseudocode or private ELF files are redistributed.
+See [scope](docs/element246-voice-pitch.md).

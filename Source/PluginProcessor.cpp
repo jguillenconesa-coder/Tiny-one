@@ -394,6 +394,8 @@ void PocketProcessor::prepareToPlay(double sr,int) {
     keyboardDisplayReset.store(true);rate=sr;filterConfig.prepare(sr);outputFilter.prepare(sr);setLatencySamples(outputFilter.latency); engine.prepare(sr); tape.prepare(sr); clock=0; step=0; seqNote=-1; sequenceNote.store(-1);heldNotes.clear();previousSeqMode=-1;wasSequencing=false;lastHostStep=INT64_MIN;
 }
 double PocketProcessor::getTailLengthSeconds() const {
+    // Additive Element gain can keep exciting D-synth after its outer ADSR.
+    if(dsynth246Enabled()&&element246Enabled()&&int(elementAudio[3]->load())==3&&int(elementAudio[4]->load())==0&&int(elementAudio[1]->load())!=2&&elementAudio[2]->load()!=0)return std::numeric_limits<double>::infinity();
     if(element246Enabled()&&elementAudio[2]->load()!=0&&((int(elementAudio[3]->load())==1&&int(elementAudio[4]->load())==3)||((drum246Enabled()||dbox246Enabled())&&int(elementAudio[3]->load())==0)))return std::numeric_limits<double>::infinity();
     if(crank246Enabled()&&crankAudio[2]->load()!=0&&((int(crankAudio[3]->load())==1&&int(crankAudio[4]->load())==3)||((drum246Enabled()||dbox246Enabled())&&int(crankAudio[3]->load())==0)))return std::numeric_limits<double>::infinity();
     if(bend246Enabled()&&bendAudio[3]->load()!=0&&((int(bendAudio[2]->load())==1&&int(bendAudio[1]->load())==3)||((drum246Enabled()||dbox246Enabled())&&int(bendAudio[2]->load())==0)))return std::numeric_limits<double>::infinity();

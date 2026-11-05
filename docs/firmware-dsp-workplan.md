@@ -850,3 +850,18 @@ captura histórica de 64 muestras por voz hacia 128 gains. SRC, frontend,
 captura/lifecycle/clock propios. No sustituir esas pruebas por fidelidad acústica.
 Siguiente: Pitch de Element y helpers/consumidores, dinámica drum y productores
 originales. Envelope auxiliar sigue fuera sin contrato activo. Presets al final.
+
+
+## Element Voice Pitch — 0.52.0
+
+`0x019cda14`, kind 0/destino 3/color 1: 8192 llamadas, 5780 procesadas, 2412
+rechazadas y 1444 Level procesadas con retorno cero. Repetición idéntica y 5175
+casos del puente stream/bloque, con gain constante explícito para Env→Pitch.
+Núcleo conserva cadena Q31 extrema de Audio. [Contrato](element246-voice-pitch.md).
+
+Conserva la ganancia de 0.51.0 y su frontend SRC; contorno previo por voz, captura,
+clock, ownership y lifecycle propios. Añade cola conservadora D-synth para la
+ganancia aditiva que puede persistir tras ADSR. No se recuperan productores ni
+scheduler. Siguiente: dinámica drum y contratos legibles de voz/ruteo sobre más
+rutas de parámetros. Mantener Envelope auxiliar fuera sin llamada activa
+validable. Pulse/L1, acústica/Live, ARM64 actual y presets finales siguen pendientes.

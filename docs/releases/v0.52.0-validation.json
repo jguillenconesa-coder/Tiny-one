@@ -1,0 +1,89 @@
+{
+  "version": "0.52.0",
+  "date": "2026-11-05",
+  "implementation_commit": "pending verified commit",
+  "base_commit": "c481e0b3e1f214953db549f9996142772df89b06",
+  "original_reference": {
+    "calls": 8192,
+    "processed": 5780,
+    "rejected": 2412,
+    "processed_return_zero": 1444,
+    "matrix_combinations": 40,
+    "complete_tag_controls_targets_sources_pitch_gain_audio_return": true,
+    "independent_repeat": "identical numeric inputs/outputs",
+    "evidence": "../firmware/element-pitch246-validation.json",
+    "bridge_original_calls": 5175,
+    "bridge_words_per_variant": 662400,
+    "bridge_condition": "Source-2 host pitch bridge restricted to original constant gain cases; complete core includes variable gain"
+  },
+  "native": {
+    "status": "success",
+    "suites": 2,
+    "engine_source_rate_cases": 364,
+    "mono_legato_glide_combinations": 16,
+    "seconds": 7.24,
+    "scope": "Both native suites passed in final product regression, including owner switches"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 142,
+    "total": 142,
+    "seconds": 409.96,
+    "runs": [
+      {
+        "scope": "complete plugin_smoke",
+        "passed": 1,
+        "total": 1,
+        "seconds": 70.22
+      },
+      {
+        "scope": "remaining product regression",
+        "passed": 141,
+        "total": 141,
+        "seconds": 339.74
+      }
+    ]
+  },
+  "realtime": {
+    "status": "success",
+    "new_workloads": 60,
+    "scope": "Linux C++ and wrapped C heap calls tracked within callback; shared-cloud timing is diagnostic, not real-device/dropout certification",
+    "workloads": 1446,
+    "tracked_heap_calls": 0
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan complete 8192 fixtures and both host bridge variants",
+    "core_seconds": 7.43,
+    "adapter": "success: 24 quick engine/source cases at 48 kHz, including String/DNA pitch domains, rejected engines, capture/owner changes and seven-rate SRC history/reset; full 364 cases and Mono/Legato/glide covered in Release",
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "plugin": {
+    "status": "success",
+    "cases": 80,
+    "scope": "Four sources/ten engines/two rates, exact 64/257 stereo output, automation boundary, PDC, release/panic, unavailable drum/D-box targets, editor-free proxies, exact project/slot/clipboard values, preserved gain/FX regression and conservative D-synth additive-gain tail"
+  },
+  "visual": {
+    "status": "reviewed ELEMENT / VOICE, LEVEL source, AUDIO destination and PITCH target",
+    "sha256": "fb6bc1db2953e6a5fb4c1a1acdbfb84f3d06e81696d752cc0021ab2415f8a669"
+  },
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugins_installers_ci": {
+    "status": "pending push"
+  },
+  "previous_product": {
+    "version": "0.51.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42082828850",
+    "status": "success: Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points, not acoustic fidelity",
+  "limits": [
+    "Original synth kind 0/destination 3/colour 1 under supplied buffers; source-3 processed-zero return handled separately from routing.",
+    "Audio-to-pitch original conversion chain clips nonzero integral products to signed Q31 endpoints; no authored replacement curve. Existing String/DNA positive-divisor bounds preserved.",
+    "Source-2 pitch uses held prior per-voice Q14 contour (or 16384 without optional ADSR), not a recovered original gain producer.",
+    "Source-1 reuses 0.51.0 authored anti-alias/interpolated causal 44.1 kHz SRC/history, captured as pairs at 88.2 kHz. Modulation phase/lag differs from unknown physical producer; PDC unchanged.",
+    "Gain and frontend from 0.51.0 preserved, capture ownership split. D-synth reports unbounded conservative tail for additive gain that can persist after outer ADSR. No allocator/scheduler/auxiliary Envelope caller/L1/OTP recovery.",
+    "No new actual Ableton, native ARM64, signing/notarization, acoustic equivalence or complete original preset claim. No release/tag publication or cloud configuration changes."
+  ]
+}

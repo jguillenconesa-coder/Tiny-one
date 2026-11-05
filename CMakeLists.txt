@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.51.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.52.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -412,3 +412,5 @@ add_subdirectory(research/element-fx)
 add_subdirectory(research/element-gain)
 
 add_subdirectory(research/element-modulation)
+
+add_subdirectory(research/element-pitch)

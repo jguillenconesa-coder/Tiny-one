@@ -1,4 +1,9 @@
-# Pocket One 0.47.0
+# Pocket One 0.52.0
+
+**Element voice pitch**: four sources, ten melodic engines, automation and state.
+Preserves 0.51.0 gain and its shared external frontend. Original arithmetic
+verified under explicit buffers; held per-voice envelope and host composition
+remain authored. [Scope](docs/element246-voice-pitch.md).
 
 **Bend voice gain/pitch**: new Voice destination for ten native melodic engines,
 bipolar amount, contextual controls, automation and persistence. 6,144 additional

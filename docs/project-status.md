@@ -39,7 +39,19 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Element hacia la ganancia de voz (0.51.0)
+## Entrega actual: Element hacia pitch de voz (0.52.0)
+
+[Pitch de Element](element246-voice-pitch.md) en diez motores y cuatro fuentes,
+con automatización/estado y captura separada de Gain de 0.51.0. 8192 callbacks,
+5780 procesados y 1444 Level procesados con retorno cero. El puente coincide
+con 5175 casos originales, con gain constante explícito en Env→Pitch. El SRC
+externo existente, el contorno previo retenido y el lifecycle son propios.
+[Evidencia y CI](releases/v0.52.0-validation.json). Se mantiene **≈69 % ±10**,
+sin nueva medición acústica ni recuperación del scheduler original. Linux Release:
+**142/142 suites**, **1446 cargas de tiempo real sin heap rastreado**, ASan/UBSan
+del núcleo y adaptador aprobados; revisión visual aprobada.
+
+## Entrega anterior: Element hacia la ganancia de voz (0.51.0)
 
 [Gain](element246-voice-gain.md) conecta cuatro fuentes a diez motores melódicos:
 sensor virtual, audio externo firmado, gain self y Level. Automatización,
@@ -55,11 +67,11 @@ Amount bipolar, captura externa, cambios de propietario y pánico.
 **140/140 suites**, **1386 cargas sin heap rastreado**, ASan/UBSan y revisión
 visual aprobados. Los dos verificadores Gain y las regresiones Element/MIDI/
 Crank Voice/Crank/sampler pasan en Linux, Windows/MSVC y macOS Intel.
-Plugins/instaladores y las otras regresiones siguen en CI. [Evidencia y CI](releases/v0.51.0-validation.json).
+Plugins/instaladores completos aprobados en Linux, Windows/MSVC y macOS universal (runtime Intel). [Evidencia y CI](releases/v0.51.0-validation.json).
 
 El CI completo 0.50.0 y todas sus regresiones están aprobados en Linux,
 Windows/MSVC y macOS universal (runtime Intel). Se mantiene **≈69 % ±10 de
-planificación**, sin medición acústica nueva. Siguen Pitch de Element y helpers,
+planificación**, sin medición acústica nueva. Siguen los productores de Pitch de Element y helpers,
 Envelope auxiliar sin contrato activo, dinámica drum, productores/ruteo,
 Pulse/L1, Live real, firma/notarización y presets originales completos al final.
 

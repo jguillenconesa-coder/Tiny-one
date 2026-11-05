@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.52.0 — Element Voice Pitch
+
+- Pitch según cuatro fuentes sobre diez motores, automatización, UI y guardado.
+- Conserva Gain/SRC de 0.51.0 y separa propietarios de captura Gain/Pitch.
+- 8192 callbacks y puente condicionado contrastados; retorno cero Level procesado.
+- Cola D-synth conservadora ante ganancia aditiva con excitación independiente.
+
 ## 0.51.0 — Element Voice Gain
 
 - Cuatro fuentes en diez motores, captura externa firmada por voz, automatización y guardado.

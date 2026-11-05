@@ -1,0 +1,34 @@
+name: Validate Element voice pitch
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/element-pitch/**'
+      - 'research/blackfin/element-pitch-stream.s.in'
+      - 'Source/Element246*.h'
+      - 'Source/Engine.h'
+      - 'Source/Phase246.h'
+      - 'Source/*246Voice.h'
+      - 'Source/Midi246*.h'
+      - 'Source/Bend246*.h'
+      - 'Source/Crank246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Tests/Element246Pitch*'
+      - 'Tests/RunElement246PitchTests.py'
+      - 'Tests/ReferenceVectors/element-pitch246-*.gz'
+      - 'scripts/verify-element-pitch246.py'
+      - '.github/workflows/element-pitch246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/element-pitch -B build-element-pitch -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-element-pitch --config Release --parallel 2
+      - run: ctest --test-dir build-element-pitch -C Release --output-on-failure

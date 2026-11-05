@@ -1,4 +1,9 @@
-# Pocket One 0.51.0
+# Pocket One 0.52.0
+
+**Element hacia pitch de voz**: cuatro fuentes, diez motores, automatización y
+guardado. Ganancia de 0.51.0 conservada, SRC compartido y captura por propietario.
+Núcleo contrastado; contorno previo para Env→Pitch y composición propios.
+[Guía](docs/element246-voice-pitch.md) · [Validación](docs/releases/v0.52.0-validation.json).
 
 **Element hacia la ganancia de voz**: cuatro fuentes y diez motores melódicos,
 con audio externo firmado por parejas de gains, automatización y guardado.

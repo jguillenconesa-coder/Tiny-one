@@ -1,0 +1,89 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "factory_index_zero_based": 3,
+  "callback": "0x019cda14",
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 8192,
+  "processed_matrix_counts": {
+    "0:0:0:1": 143,
+    "1:0:0:1": 143,
+    "2:0:0:1": 144,
+    "3:0:0:1": 144,
+    "0:1:0:1": 148,
+    "1:1:0:1": 144,
+    "2:1:0:1": 148,
+    "3:1:0:1": 146,
+    "0:2:0:1": 146,
+    "1:2:0:1": 144,
+    "2:2:0:1": 147,
+    "3:2:0:1": 146,
+    "0:3:0:1": 148,
+    "1:3:0:1": 144,
+    "2:3:0:1": 144,
+    "3:3:0:1": 145,
+    "0:4:0:1": 144,
+    "2:4:0:1": 144,
+    "0:6:0:1": 142,
+    "1:6:0:1": 146,
+    "2:6:0:1": 144,
+    "3:6:0:1": 144,
+    "0:7:0:1": 142,
+    "1:7:0:1": 146,
+    "2:7:0:1": 142,
+    "3:7:0:1": 144,
+    "1:11:0:1": 143,
+    "2:11:0:1": 144,
+    "3:11:0:1": 145,
+    "0:12:0:1": 144,
+    "1:12:0:1": 147,
+    "2:12:0:1": 145,
+    "3:12:0:1": 144,
+    "0:13:0:1": 145,
+    "1:13:0:1": 144,
+    "3:13:0:1": 142,
+    "1:4:0:1": 144,
+    "3:4:0:1": 144,
+    "0:11:0:1": 142,
+    "2:13:0:1": 145
+  },
+  "return_value_counts": {
+    "0": 3856,
+    "1": 4336
+  },
+  "artifacts": {
+    "element-pitch246-input.bin.gz": {
+      "bytes": 450409,
+      "raw_bytes": 3637248,
+      "sha256": "58157d532dfb7a08cca5de5ba78fd77b61fb420176866503ce35d62458f4b660"
+    },
+    "element-pitch246-output.bin.gz": {
+      "bytes": 2578631,
+      "raw_bytes": 9863168,
+      "sha256": "2cf9295742119d46a93acd4c73dc9a9f4815a0b4909f81b2373b2ea4f3c436ac"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "fe8b5fdb8b5c6e500f47dc6ae38b629cb391795c1e368a04279619890a6f2d27",
+    "bfin-elf-ld": "3c9406274b737202a5fe4f54951dcfc94c869e99109943264dc61d29a3910905",
+    "run-fp": "5f0ce8de0a3c20b30a8f6495293610ef339c697eb5b91aee3e14a4a3ad839ef5"
+  },
+  "limits": [
+    "Supplied sensor, 64 signed external samples, 128 gain words and level; synth kind 0 destination 3 colour 1 and drum/wrong-dispatch rejection. Original producers/scheduler not recovered.",
+    "Numerical buffer transformation only; no auxiliary Envelope or acoustic equivalence."
+  ],
+  "processed": 5780,
+  "rejected": 2412,
+  "processed_return_zero": 1444,
+  "host_bridge_calls": 5175,
+  "host_bridge_words_per_variant": 662400,
+  "host_bridge_condition": "Source-2 pitch uses supplied constant gain only; complete core compares variable gains too.",
+  "independent_repeat": "identical numeric input/output",
+  "source_sha256": {
+    "Source/Element246Pitch.h": "56c4aa03e58f296fb18e61a1b981696997bb109b95edc76dbaf4c7575457397e",
+    "Source/Bend246Voice.h": "b54254dac0adcec63dc4f2eaaa12ecfc91bca72de1c6f28f4e61dac2d2021145",
+    "Tests/Element246PitchReferenceTests.cpp": "00835ebef16dcd7d5094c910a7fbbcd03d206b53e4c30150f1f7088ce1022b4d",
+    "scripts/verify-element-pitch246.py": "6b88e2e285d27cdcabd5a77ab33548d18cb0d10bbf1864c2bcbded2f2201a66a",
+    "scripts/verify-element246.py": "ad687b446a2ed0b4870321b24c00c72a01648c8a1c90a8bd11c632a67e2529f0",
+    "research/blackfin/element-pitch-stream.s.in": "24359b16e168dc92890699aeb4cf6ab164098dee9a2d8940386322c84dfb07f9"
+  }
+}
