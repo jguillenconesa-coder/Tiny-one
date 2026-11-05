@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #include "PluginProcessor.h"
 #include "Midi246PluginSupport.h"
+#include "Drum246AllocationPluginSupport.h"
 #include "Bend246VoicePluginSupport.h"
 #include "Crank246VoicePluginSupport.h"
 #include "Manual246FxPluginSupport.h"
@@ -170,6 +171,7 @@ int main(int argc,char** argv) {
   testManualFxAudio(argc>1?argv[1]:nullptr);
   testElementFxAudio(argc>1?argv[1]:nullptr);
   testElementVoiceGain(argc>1?argv[1]:nullptr);
+  testDrum246AllocationPlugin();
   auto p=std::make_unique<PocketProcessor>(); p->prepareToPlay(48000,256);
   juce::StringArray parameterNames;
   for(auto* parameter:p->getParameters()){const auto name=parameter->getName(100);check(!name.isEmpty()&&name.contains(":"),"Host parameter lacks a descriptive category");check(!parameterNames.contains(name),"Ambiguous duplicate MIDI mapping names");parameterNames.add(name);}

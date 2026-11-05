@@ -1,5 +1,11 @@
 # Drum bank / held registry lifecycle, rev246
 
+Since 0.53.0 the selection helper is shared with `Source/Drum246Allocator.h`
+and integrated through an explicitly authored host adapter. The remaining
+models in this research directory are not linked into the instrument; version
+0.52.0 references below describe the initial study. See
+[the integration scope](../../docs/drum246-voice-allocation.md).
+
 Standalone research, not linked into the instrument (still 0.52.0). Reconstructs
 registry clearing, held-note reactivation, bank begin/factory finish and the
 occupied-voice query. See [contract](../../docs/drum246-bank-lifecycle.md) and

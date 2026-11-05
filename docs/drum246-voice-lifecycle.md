@@ -1,10 +1,13 @@
 # Drum VoiceCtl: asignación, propiedad y ciclo de notas rev246
 
 Investigación posterior al [ruteo Core](drum246-core-routing.md), 5 de noviembre
-de 2026. **El instrumento permanece en 0.52.0**: el modelo no se enlaza al plugin,
-no modifica su asignador y no genera instaladores. Cierra un consumidor activo
+de 2026. **El estudio inicial se entregó con el instrumento en 0.52.0**:
+el modelo de investigación no se enlazaba al plugin ni generaba instaladores. Cierra un consumidor activo
 de la consulta de actividad, sin recuperar por ello el scheduler de render ni
 la envolvente dinámica original.
+
+Desde [0.53.0](drum246-voice-allocation.md), el selector compartido se integra
+en un adaptador híbrido; el resto de este modelo de investigación sigue separado.
 
 ## Contrato contrastado
 

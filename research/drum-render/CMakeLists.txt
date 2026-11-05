@@ -23,3 +23,7 @@ add_test(NAME drum246_lfo_integration COMMAND drum246_lfo_integration_tests)
 add_executable(shared_drum246_tests ../../Tests/SharedDrum246Tests.cpp)
 target_include_directories(shared_drum246_tests PRIVATE ../../Source)
 add_test(NAME shared_drum246 COMMAND shared_drum246_tests)
+
+add_executable(drum246_allocation_tests ../../Tests/Drum246AllocationTests.cpp)
+target_include_directories(drum246_allocation_tests PRIVATE ../../Source)
+add_test(NAME drum246_allocation COMMAND drum246_allocation_tests)

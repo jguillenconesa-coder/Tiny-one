@@ -8,6 +8,7 @@ on:
       - 'research/blackfin/drum-*'
       - 'research/blackfin/gnu-13.1-fp-load-writeback.patch'
       - 'scripts/verify-drum246.py'
+      - 'Tests/Drum246AllocationTests.cpp'
       - 'Tests/Drum246IntegrationTests.cpp'
       - 'Tests/SharedDrum246Tests.cpp'
       - 'Source/Drum246*.h'

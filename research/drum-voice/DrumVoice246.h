@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
 #include "../drum-core/CoreDrumSampler246.h"
+#include "Drum246Allocator.h"
 namespace pocket::research {
 // Research domain: type-1 drum mode, no modulation objects/FX and supplied
 // octave transposition only. Does not provide a scheduler or gain producer.
@@ -21,8 +22,9 @@ struct DrumVoice246 {
         const auto count=get(held.data()+2560);
         for(unsigned i=0;i<count;++i)if(get(held.data()+i*20)==event[0])return -1;
         if(count>=128||sound>=8||transpose<-24||transpose>24||transpose%12)return -1;
-        int selected=-1,best=-1;
-        for(unsigned v=0;v<12;++v){if(!*at(0x1070+v)){selected=int(v);break;}const auto age=reference::signedPhase(query(v));if(age>best){best=age;selected=int(v);}}
+        std::array<uint8_t,12> occupied{};
+        for(unsigned v=0;v<12;++v)occupied[v]=*at(0x1070+v);
+        const int selected=reference::drum246SelectVoice(occupied,[&](unsigned v){return query(v);});
         if(selected<0)return -1;
         const auto voice=unsigned(selected),pad=unsigned(note-53);
         *at(0x1070+voice)=0;

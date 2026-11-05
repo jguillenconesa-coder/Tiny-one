@@ -1,4 +1,8 @@
-# Pocket One 0.52.0
+# Pocket One 0.53.0
+
+**Verified drum allocation**: first free voice, greatest block count stealing,
+held duplicates and release checks against the current owner. Sustain, channels, retirement,
+dynamics and host composition remain authored. [Scope](docs/drum246-voice-allocation.md).
 
 **Element voice pitch**: four sources, ten melodic engines, automation and state.
 Preserves 0.51.0 gain and its shared external frontend. Original arithmetic

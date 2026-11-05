@@ -1,5 +1,11 @@
 # Drum VoiceCtl lifecycle, rev246
 
+Since 0.53.0 the selection helper is shared with `Source/Drum246Allocator.h`
+and integrated through an explicitly authored host adapter. The remaining
+models in this research directory are not linked into the instrument; version
+0.52.0 references below describe the initial study. See
+[the integration scope](../../docs/drum246-voice-allocation.md).
+
 Research-only reconstruction of the original note-on/off consumer of Core drum
 activity. Not linked into the instrument; version stays 0.52.0. See
 [the contract](../../docs/drum246-voice-lifecycle.md) and

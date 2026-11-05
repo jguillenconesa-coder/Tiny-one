@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 5 de noviembre de 2026
+# Estado y entregas del proyecto — 6 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -7,7 +7,7 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
-## Avance estimado: aproximadamente 69 % del objetivo completo
+## Avance estimado: aproximadamente 70 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
 ni un cociente de muestras, pruebas o commits. La incertidumbre es de unos
@@ -19,11 +19,11 @@ prototipo tocable con una réplica completa:
 | --- | ---: | ---: | ---: |
 | Motores originales y sus filtros | 30 % | 86 % | 25,8 puntos |
 | Efectos, envolventes y moduladores | 20 % | 98 % | 19,6 puntos |
-| Voz, modos de ejecución y ruteo original | 15 % | 37 % | 5,55 puntos |
+| Voz, modos de ejecución y ruteo original | 15 % | 40 % | 6 puntos |
 | Interfaz, cinta, mezcla y flujo creativo | 15 % | 78 % | 11,7 puntos |
 | Distribución macOS/Windows y validación Live | 10 % | 65 % | 6,5 puntos |
 | Todos los presets originales fieles | 10 % | 0 % | 0 puntos |
-| Total | 100 % | | **≈69 %** (69,15 antes de redondear) |
+| Total | 100 % | | **≈70 %** (69,60 antes de redondear) |
 
 La base funcional de software está bastante más adelantada (orientativamente
 70–75 %): VST3/standalone, MIDI, estados, interfaz, cinta y motores propios ya
@@ -39,7 +39,25 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Investigación actual: ocupación y cambios de banco de batería
+## Entrega actual: asignador de batería híbrido (0.53.0)
+
+[Asignación de doce voces](drum246-voice-allocation.md) integrada: selector original
+por primera libre/mayor contador firmado, empates por índice, duplicados retenidos
+y liberación por propietario. 12.288 registros originales siguen coincidiendo
+con el selector compartido en Source (4.416 selecciones aceptadas dentro de ellos).
+El registro de 17 × 128 teclas, canales, sustain, pánico, retirada/SRC y fallback
+ante contadores negativos son propios. Dinámica y productores de buffers siguen
+pendientes; no se integra la limpieza de registro como pánico de audio.
+Pruebas nativas: 84 composiciones a siete tasas, todos los modos y cuatro
+configuraciones LFO, con ASan/UBSan completos aprobados. Linux: **143/143 suites**,
+**1.446 cargas sin heap rastreado** y cuatro casos de plugin 48/96 kHz, buffers
+64/257. CI nativo y paquetes en preparación;
+[evidencia](releases/v0.53.0-validation.json).
+**≈70 % ±10 de planificación**, por el área de voz/ruteo 37→40 %, sin medición
+acústica nueva. Esta integración aplica el método híbrido autorizado y acota la
+espera anterior: se integra el selector probado con fronteras propias explícitas.
+
+## Investigación anterior: ocupación y cambios de banco de batería
 
 [Bancos y registro retenido](drum246-bank-lifecycle.md): 8.192 casos originales,
 las 4.096 máscaras de ocupación, 128 comienzos/finales de factory, 256 resets
@@ -75,7 +93,7 @@ instaladores. Los doce productores son objetos de audio; la dinámica original
 sigue pendiente. Próximo: llamador activo de render/actividad y escritores
 pitch/gain. Avance de planificación: **≈69 % ±10**, fidelidad acústica sin medir.
 
-## Entrega actual: Element hacia pitch de voz (0.52.0)
+## Entrega anterior: Element hacia pitch de voz (0.52.0)
 
 [Pitch de Element](element246-voice-pitch.md) en diez motores y cuatro fuentes,
 con automatización/estado y captura separada de Gain de 0.51.0. 8192 callbacks,

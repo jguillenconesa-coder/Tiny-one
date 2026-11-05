@@ -1,4 +1,9 @@
-# Pocket One 0.52.0
+# Pocket One 0.53.0
+
+**Asignación de batería contrastada**: primera voz libre, robo por contador de
+bloques y pertenencia/propietario de nota. Los duplicados retenidos no reinician
+el lector; sustain, canales, retirada y dinámica permanecen adaptaciones propias.
+[Guía](docs/drum246-voice-allocation.md) · [Validación](docs/releases/v0.53.0-validation.json).
 
 **Element hacia pitch de voz**: cuatro fuentes, diez motores, automatización y
 guardado. Ganancia de 0.51.0 conservada, SRC compartido y captura por propietario.

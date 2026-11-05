@@ -1,10 +1,13 @@
 # Batería rev246: bancos, registro retenido y ocupación
 
 Investigación del 5 de noviembre de 2026, continuación de
-[VoiceCtl note-on/off](drum246-voice-lifecycle.md). **El instrumento continúa en
-0.52.0**, sin cambios ejecutables ni nuevos instaladores. El bloque distingue
+[VoiceCtl note-on/off](drum246-voice-lifecycle.md). **El estudio inicial se
+entregó con el instrumento en 0.52.0**, sin cambios ejecutables ni nuevos instaladores. El bloque distingue
 limpieza del registro, reinicio de lectores y retirada normal durante el render;
 esta última sigue sin contrato recuperado.
+
+La posterior [0.53.0](drum246-voice-allocation.md) integra solo el selector
+compartido, con retirada propia; no integra estas limpiezas como pánico de audio.
 
 ## Contratos originales contrastados
 

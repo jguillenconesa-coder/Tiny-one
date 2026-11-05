@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
 #include "Drum246.h"
+#include "Drum246Allocator.h"
 #include "Drum246Modulation.h"
 #include "Drum246Tables.h"
 #include "Phase246.h"
@@ -63,12 +64,36 @@ struct Drum246Voice {
 };
 struct Drum246Bank {
     struct Hit {Drum246Voice voice;Drum246ModulationControl modulation;bool active=false,keyDown=false,released=false;int note=0,channel=1,pad=0;float velocity=0,last=0,stolen=0;uint64_t age=0;unsigned fade=0;};
+    using Registry=std::array<std::array<int8_t,128>,17>;
+    static Registry emptyRegistry() noexcept {Registry r{};for(auto& channel:r)channel.fill(-1);return r;}
     std::array<Hit,12> hits{};std::array<bool,17> pedals{};uint64_t age=0;
+    // Host extension: original membership/owner checks, indexed by MIDI note and
+    // channel. A stolen note stays held until its off, even after audio retires.
+    Registry heldVoice=emptyRegistry();
     void reset() noexcept {*this={};}
-    void noteOn(int note,float velocity,int channel,int pad,double hostRate) noexcept {Hit* hit=nullptr;for(auto& h:hits)if(!h.active){hit=&h;break;}if(!hit)hit=&*std::min_element(hits.begin(),hits.end(),[](const auto& a,const auto& b){return a.age<b.age;});const auto tail=hit->active?hit->last:0.f;const auto modulation=hit->modulation;*hit={};hit->modulation=modulation;hit->modulation.noteOn();hit->active=hit->keyDown=true;hit->note=note;hit->pad=pad;hit->channel=channel;hit->velocity=std::clamp(velocity,0.f,1.f);hit->age=++age;hit->stolen=tail;hit->fade=tail!=0?unsigned(hostRate*.003):0;}
-    void noteOff(int note,int channel) noexcept {for(auto& h:hits)if(h.active&&h.note==note&&h.channel==channel){h.keyDown=false;if(!pedals[size_t(channel-1)])h.released=true;}}
-    void pedal(int channel,bool down) noexcept {pedals[size_t(channel-1)]=down;if(!down)for(auto& h:hits)if(h.channel==channel&&!h.keyDown)h.released=true;}
-    void allNotesOff(int channel) noexcept {for(auto& h:hits)if(channel==0||h.channel==channel){h.keyDown=false;h.released=true;}if(channel==0)pedals.fill(false);else pedals[size_t(channel-1)]=false;}
+    bool noteOn(int note,float velocity,int channel,int pad,double hostRate) noexcept {
+        if(note<0||note>127||channel<1||channel>17||pad<0||pad>=24||!std::isfinite(velocity)||velocity<=0)return false;
+        auto& held=heldVoice[size_t(channel-1)][size_t(note)];if(held>=0)return false;
+        std::array<uint8_t,12> occupied{};for(size_t i=0;i<12;++i)occupied[i]=hits[i].active?1:0;
+        int slot=reference::drum246SelectVoice(occupied,[&](unsigned v){return hits[v].voice.state.active();});
+        // Defensive host policy for wrapped/negative counts; original asserts.
+        if(slot<0)slot=0;
+        auto* hit=&hits[size_t(slot)];const auto tail=hit->active?hit->last:0.f;const auto modulation=hit->modulation;
+        *hit={};hit->modulation=modulation;hit->modulation.noteOn();hit->active=hit->keyDown=true;
+        hit->note=note;hit->pad=pad;hit->channel=channel;hit->velocity=std::clamp(velocity,0.f,1.f);
+        hit->age=++age;hit->stolen=tail;hit->fade=tail!=0?unsigned(hostRate*.003):0;held=int8_t(slot);return true;
+    }
+    void noteOff(int note,int channel) noexcept {
+        if(note<0||note>127||channel<1||channel>17)return;
+        auto& held=heldVoice[size_t(channel-1)][size_t(note)];const int slot=held;held=-1;if(slot<0)return;
+        auto& h=hits[size_t(slot)];if(h.active&&h.note==note&&h.channel==channel){h.keyDown=false;if(!pedals[size_t(channel-1)])h.released=true;}
+    }
+    void pedal(int channel,bool down) noexcept {if(channel<1||channel>17)return;pedals[size_t(channel-1)]=down;if(!down)for(auto& h:hits)if(h.channel==channel&&!h.keyDown)h.released=true;}
+    void allNotesOff(int channel) noexcept {
+        if(channel<0||channel>17)return;
+        for(auto& h:hits)if(channel==0||h.channel==channel){h.keyDown=false;h.released=true;}
+        if(channel==0){pedals.fill(false);heldVoice=emptyRegistry();}else{pedals[size_t(channel-1)]=false;heldVoice[size_t(channel-1)].fill(-1);}
+    }
     float next(const Kit& kit,const std::array<PadSettings,24>& pads,const std::array<int16_t,4>& dynamics,const std::array<float,17>& bends,double tune,const Phase246Config& rate,bool tremolo,const std::array<int16_t,4>& tremoloControls,int shape,uint32_t tempo,const Drum246ModulationConfig& modulation={},bool sharedSource=false) noexcept {
         float sum=0;for(auto& h:hits){if(!h.active)continue;h.voice.output.tremolo.configure(tremolo,tremoloControls,shape,tempo,true);const auto controls=h.modulation.next((modulation.element||modulation.crank||modulation.bend||modulation.midi||modulation.random||modulation.value)?drum246BaseControls(pads[size_t(h.pad)],kit[sharedSource?0:size_t(h.pad)]):std::array<int16_t,8>{},8,modulation,rate.table);auto value=h.voice.next(bends[size_t(h.channel-1)]*tune,pads[size_t(h.pad)],kit[sharedSource?0:size_t(h.pad)],dynamics,rate,h.released,h.modulation.applied?&controls:nullptr)*h.velocity*.16f;if(h.fade){const auto weight=float(h.fade)/float(std::max(1u,unsigned(rate.internalRate/rate.step*.003)));value=value*(1-weight)+h.stolen*weight;--h.fade;}h.last=value;sum+=value;if(h.voice.done())h.active=false;}return sum;
     }

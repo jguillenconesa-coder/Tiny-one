@@ -95,6 +95,14 @@ int main(int argc,char** argv) {
     if(preset<=-158&&preset>=-177){midi.addEvent(juce::MidiMessage::controllerEvent(7,1,iteration%4==0?0:iteration%4==1?48:iteration%4==2?96:127),31);if(iteration%64==0){auto* target=p->phaseParameters().getParameter(pocket::midi246Ids[0]);target->setValueNotifyingHost(target->convertTo0to1(float(19+iteration/64%2)));}}
     if(preset<=-144&&preset>=-157){for(int cc=1;cc<=4;++cc)midi.addEvent(juce::MidiMessage::controllerEvent(1,cc,iteration%3==0?0:iteration%3==1?96:127),31);if(iteration%64==0){auto& raw=p->phaseParameters();auto* route=raw.getParameter(pocket::midi246Ids[0]);route->setValueNotifyingHost(route->convertTo0to1(float(17+iteration/64%2)));}}
     if(preset<=-100&&preset>=-107){for(int cc=1;cc<=4;++cc)midi.addEvent(juce::MidiMessage::controllerEvent(cc,cc,48+(iteration*7+cc*11)%33),block>32?31:0);if(iteration%64==0){auto& raw=p->phaseParameters();raw.getParameter("midi246Enabled")->setValueNotifyingHost(iteration%128==0?1.f:0.f);for(size_t i=0;i<4;++i)raw.getParameter(pocket::midi246Ids[i])->setValueNotifyingHost(float((iteration/64+int(i)*4)%17)/20);}}
+    // Strengthen the existing native drum workloads without adding product builds:
+    // dense simultaneous hits, held duplicates, stolen-owner offs and channel sustain.
+    if(preset==-80||preset==-81||(preset<=-92&&preset>=-95)){
+     if(iteration%32==0)for(int n=60;n<84;++n){midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,.8f),0);midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,.2f),0);}
+     if(iteration%32==16)for(int n=60;n<84;++n)midi.addEvent(juce::MidiMessage::noteOff(1+n%3,n),31);
+     if(iteration%64==0)midi.addEvent(juce::MidiMessage::controllerEvent(1,64,127),0);
+     if(iteration%64==48)midi.addEvent(juce::MidiMessage::controllerEvent(1,64,0),0);
+    }
     if(iteration%100==0)p->keyboard.noteOn(2,65,.6f);
     if(iteration%100==50)p->keyboard.noteOff(2,65,0);
     fillElementInput();const auto start=std::chrono::steady_clock::now();tracking=true;p->processBlock(audio,midi);tracking=false;

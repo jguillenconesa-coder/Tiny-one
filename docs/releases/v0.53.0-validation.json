@@ -1,0 +1,85 @@
+{
+  "version": "0.53.0",
+  "date": "2026-11-06",
+  "base_commit": "f2d5ca1",
+  "change": "Native drum original selector integrated through an explicitly authored channel/retirement adapter",
+  "original_reference": {
+    "records": 12288,
+    "accepted_selections": 4416,
+    "voice_evidence": "../firmware/drum-voice246-validation.json",
+    "bank_evidence": "../firmware/drum-bank246-validation.json",
+    "status": "both existing full numeric fixtures pass using shared Source selector",
+    "new_firmware_extraction": false
+  },
+  "native": {
+    "status": "success",
+    "reader_compositions": 84,
+    "host_rates": 7,
+    "modes": 3,
+    "modulations": 4,
+    "held_keys": 2176,
+    "allocation_suite_seconds": 2.63
+  },
+  "sanitizers": {
+    "host_adapter": "success: complete allocation suite, 84 reader compositions and dense host registry",
+    "host_adapter_seconds": 82.74,
+    "bank_reference": "success: 8192 complete records using Source selector",
+    "bank_reference_seconds": 39.2,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 143,
+    "total": 143,
+    "recorded_seconds": 652.36,
+    "runs": [
+      {
+        "scope": "CTest tests 1..132 completed before environment transition; sum of logged test times",
+        "passed": 132,
+        "total": 132,
+        "seconds": 492.73
+      },
+      {
+        "scope": "Only pending tests 133..143 resumed after CTest parent was interrupted by environment transition",
+        "passed": 11,
+        "total": 11,
+        "seconds": 159.63
+      }
+    ],
+    "plugin_smoke_seconds": 113.36,
+    "realtime_seconds": 158.23
+  },
+  "plugin": {
+    "status": "success: all four new A/B plugin cases within complete plugin_smoke",
+    "cases": 4,
+    "scope": "48/96 kHz, buffers 64/257, exact audio with six timestamped held duplicates, note-off and tail",
+    "module_version": "0.53.0"
+  },
+  "realtime": {
+    "status": "success",
+    "strengthened_existing_native_drum_workloads": 36,
+    "scope": "dense timestamped notes/duplicates/stale offs/sustain; existing C++ and wrapped C heap tracking; timings diagnostic",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "metrics_sha256": "b7f163382267367c5546367e38b6ad36865daf6af8ec59c638535e294dba1bae"
+  },
+  "native_ci": {
+    "status": "pending push"
+  },
+  "plugins_installers_ci": {
+    "status": "pending push"
+  },
+  "estimated_progress": "approximately 70% +/-10 planning points; voice/routing area 37% to 40%, total weighted 69.60; not acoustic fidelity",
+  "limits": [
+    "Original selector first-free / greatest signed block count, first tie; query side effects and stop at free index preserved. Existing original numeric fixtures reused, not counted as new extractions.",
+    "Host busy state follows Hit.active and own SRC/filter retirement, rather than a recovered original scheduler. Original per-sample pitch/gain producers and dynamic envelope still pending.",
+    "Fixed 17 x 128 membership registry, channels/aliases, sustain, panic, 3 ms steal fade and first-voice fallback for no signed candidate are authored extensions.",
+    "Incoming MIDI still triggers existing global FX frontend even for ignored held duplicates; only reader/per-voice reactivation is suppressed.",
+    "No new parameters or serialized runtime registry. Other drum legacy and D-box allocators preserved.",
+    "No new acoustic/actual Ableton/ARM64 runtime/signing/notarization or full original preset validation. No release/tag/cloud configuration publication."
+  ],
+  "source_sha256": {
+    "Source/Drum246Allocator.h": "6d07df43e822cb7bac4943af8b955c80032b8417a2608c5c30f4abe0a3f9bb61",
+    "Source/Drum246Voice.h": "228cf15ce090356df45a004887b954daabc6e46c6177a4babcf2645d6da3ba63"
+  }
+}

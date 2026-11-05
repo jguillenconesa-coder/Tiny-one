@@ -910,3 +910,20 @@ anteriores, descartando coincidencias de inmediato bajo. Siguiente: llamador de
 render y consumidor activo de velocidad/pitch mediante accesos indirectos;
 productores de buffers y dinámica aún pendientes, sin atribuir automáticamente
 su ausencia a L1. Mantener el instrumento híbrido y presets completos al final.
+
+## Asignador drum híbrido — 0.53.0
+
+[Integración](drum246-voice-allocation.md): selector original compartido entre
+Source y los dos verificadores de investigación (12.288 registros, 4.416
+selecciones aceptadas). Doce hits con primera libre/mayor contador firmado,
+consultas con efectos laterales y empate por índice. Registro nota/canal y
+liberación por propietario; frontera de ocupación/retirada, sustain, pánico,
+canal interno y fallback negativo propios. No integra los resets de banco o
+clear registry como retirada normal. Aplica la decisión híbrida del propietario:
+se integra un contrato probado sin atribuir sus fronteras al scheduler original.
+84 composiciones de lector y ASan/UBSan aprobados; Linux 143/143 suites,
+1.446 cargas sin heap rastreado y cuatro casos de plugin 48/96 kHz / 64/257
+aprobados. CI nativo y paquetes pendientes de push.
+Siguiente: llamador de render y productores de buffers; mantener curva dinámica,
+frontend y cadencia del host identificados como propios. No repetir búsquedas de
+inmediatos bajos como prueba de L1; presets completos permanecen al final.
