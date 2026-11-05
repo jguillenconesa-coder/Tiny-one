@@ -1,0 +1,77 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "input_prefix_bytes": 19968,
+  "input_record_bytes": 1156,
+  "output_prefix_bytes": 2052,
+  "output_record_bytes": 5156,
+  "output_suffix_bytes": 16896,
+  "core_factory": "0x01967984",
+  "factory_helper": "0x01a1b9c0",
+  "note_on": "0x01a84ba0",
+  "note_off": "0x01a84dac",
+  "activity_query": "0x01967308",
+  "core_reset": "0x01967ccc",
+  "core_release": "0x01967d64",
+  "producer_table": "0x01aaad30",
+  "selected_sound": "0x01aaac10",
+  "voice_pad_table": "0xff801334",
+  "control_banks": "0x01aaadb4",
+  "sample_references": "0x01cc10cc",
+  "type": 8,
+  "voices": 12,
+  "sounds": 8,
+  "pads": 24,
+  "artifacts": {
+    "drum-voice246-input.bin.gz": {
+      "bytes": 1480734,
+      "raw_bytes": 4754944,
+      "sha256": "eed6d679e4b3514efbd23a16b832788b53c6d1fe39eacd7c57a3d93043e117b1"
+    },
+    "drum-voice246-output.bin.gz": {
+      "bytes": 2913158,
+      "raw_bytes": 21137924,
+      "sha256": "30414c9d9b41c4612b858b3e539023572eadb335b7a9ab4c10392fb35ecbb197"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Original complete note-on/off and activity query, with null modulation objects/FX, type 1 drum mode, explicit preview selection and event order.",
+    "Transposition restricted to -24/-12/0/12/24 semitones; explicit PCM/padding/pitch/gain and optional render cadence. No gain producer or scheduler recovery.",
+    "Research only; no plugin integration or installers."
+  ],
+  "date": "2026-11-05",
+  "product_version_unchanged": "0.52.0",
+  "independent_repeat": "two independent runs: identical numeric inputs/outputs",
+  "counts": {
+    "started": 2176,
+    "assigned_occupied": 2044,
+    "ignored_note_ons": 576,
+    "removed_held_notes": 1152,
+    "stale_owner_removals": 854,
+    "removals_without_mode_change": 878,
+    "explicit_activity_queries": 2730,
+    "rendered_blocks": 3072,
+    "rendered_samples": 393216,
+    "nonzero_audio_blocks": 2402,
+    "restarted": 640
+  },
+  "native_linux": {
+    "status": "success",
+    "suites": 1,
+    "seconds": 0.29
+  },
+  "sanitizers": {
+    "status": "success: complete ASan/UBSan suite",
+    "seconds": 13.93,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "native_ci": {
+    "status": "pending: dedicated Linux/Windows/MSVC/macOS Intel workflow"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points, not acoustic fidelity"
+}

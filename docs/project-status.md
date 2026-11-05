@@ -39,6 +39,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Investigación actual: asignación y ciclo de notas de batería
+
+[Drum VoiceCtl](drum246-voice-lifecycle.md): 4.096 casos originales, 2.176 notas
+iniciadas, 2.044 asignaciones sobre voces ocupadas y 854 releases con propietario
+antiguo; 3.072 renders / 393.216 muestras. Lista retenida, globals, estados y
+buffers completos coincidentes, dos extracciones idénticas y ASan/UBSan aprobados.
+Las palabras de velocidad/pitch del evento no recuperan el productor de buffers.
+Faltan retirada de ocupación, llamador de render y composición pitch/gain; el
+instrumento permanece 0.52.0, sin nuevos instaladores. CI nativo dedicado.
+Avance **≈69 % ±10 de planificación**, sin medición acústica nueva.
+
 ## Investigación posterior: ruteo Core del drum sampler
 
 [Factory/disparo/release tipo 8](drum246-core-routing.md): 4.608 casos originales,

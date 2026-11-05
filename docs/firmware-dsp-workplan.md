@@ -883,3 +883,14 @@ render/actividad y escritores pitch/gain de esos doce objetos; conservar dinámi
 y asignación híbridas mientras falta esa composición. No extrapolar a D-box,
 scheduler MIDI o equivalencia acústica. Mantener Envelope auxiliar fuera sin
 contrato activo y presets originales completos al final.
+
+## Drum VoiceCtl — investigación posterior al ruteo Core
+
+[Note-on/off y consulta de actividad](drum246-voice-lifecycle.md): 4.096 casos
+originales, 2.176 notas iniciadas / 2.044 ocupadas, 854 retiradas con propietario
+antiguo y 393.216 muestras. Modelo independiente, dos extracciones idénticas,
+Release y ASan/UBSan aprobados. Compara lista retenida, globals, doce estados y
+buffers completos. Pitch de evento solo cinco octavas explícitas. No integra
+código en el instrumento ni incrementa versión; CI nativo dedicado. Siguiente:
+retirada de ocupación, llamador activo de render y productores pitch/gain. No
+reemplazar la dinámica ni el scheduler híbridos sin contrastar esa composición.

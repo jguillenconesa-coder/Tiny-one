@@ -74,5 +74,8 @@ retirar una voz, ni el mezclador completo. Tampoco se mide equivalencia acústic
 La siguiente dependencia concreta es el llamador activo de render/actividad de
 estos doce objetos y los escritores de sus entradas pitch/gain. Esa composición
 se contrastará antes de sustituir la dinámica o el allocator del instrumento.
-Se mantiene **≈69 % ±10 puntos como estimación de planificación**; presets
+El [estudio posterior de VoiceCtl](drum246-voice-lifecycle.md) ya contrasta el
+consumidor de actividad y su cadena note-on/off; el llamador de render y los
+productores de buffers siguen pendientes. Se mantiene **≈69 % ±10 puntos como
+estimación de planificación**; presets
 originales completos, Live real y calibración acústica siguen pendientes.
