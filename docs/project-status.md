@@ -49,7 +49,9 @@ historial, controles y buffers completos; dos extracciones independientes idént
 curva triangular asimétrica y fase detenida conservados; reloj, lifecycle,
 composición y captura por voz son propios. Productores y scheduler pendientes.
 
-[Evidencia de comprobaciones y CI](releases/v0.48.0-validation.json).
+**134/134 suites**, **1.242 cargas sin heap rastreado**, ASan/UBSan y revisión
+visual aprobados. Los dos verificadores Crank Voice pasan en Linux, Windows/MSVC
+y macOS Intel. Plugins/instaladores y otras regresiones siguen en CI. [Evidencia de comprobaciones y CI](releases/v0.48.0-validation.json).
 El CI completo 0.47.0 terminó aprobado en Linux, Windows/MSVC y macOS universal
 (runtime Intel). Se mantiene **≈69 % ±10 de planificación**, sin medición acústica.
 Siguen especiales FX/Element y consumidores, dinámica drum, ruteo/productores,

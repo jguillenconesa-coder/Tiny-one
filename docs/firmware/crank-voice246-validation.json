@@ -92,5 +92,7 @@
     "Tests/Crank246VoiceReferenceTests.cpp": "83510d1722c2bedac95470b20674c10bd7009cbd250d06c68949cb5e60bc088e",
     "scripts/verify-crank-voice246.py": "10cb5833efc9a5c9e071b464f1e8c3fad330c68394d8522c09a038a9b4ed5a51",
     "research/blackfin/crank-voice-stream.s.in": "60b735d312cf5981e46b92ebe9c24893389e52df611a5058ddbfa0f018461907"
-  }
+  },
+  "host_integration_source_sha256": "e31b463f17cacc09b2c867a8e294f4f52a50a2f04f761e38d8ac99e7330df0ca",
+  "sanitizers": "ASan/UBSan: original reference plus bridge; host integration with extended negative-amount traversal, all ten melodic engines, passed. Leak detection disabled due managed ptrace restrictions."
 }

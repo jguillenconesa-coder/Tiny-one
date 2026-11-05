@@ -28,14 +28,16 @@
   },
   "sanitizers": {
     "core": "success: ASan/UBSan 18432 original fixtures and exact block bridge",
-    "adapter": "pending final extended negative-amount run",
+    "adapter": "success: ASan/UBSan 26 engine/rate/target cases at 48 kHz plus Mono/Legato/glide, signed amounts and extended negative-pitch traversal on all ten melodic engines",
     "leak_detection": "disabled due managed ptrace restrictions"
   },
   "native_ci": {
-    "status": "not yet submitted"
+    "status": "success: 2/2 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975631"
   },
   "plugins_installers_ci": {
-    "status": "not yet submitted"
+    "status": "in progress; no final result claimed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975729"
   },
   "previous_product": {
     "version": "0.47.0",
@@ -52,5 +54,43 @@
   "visual": {
     "status": "reviewed CRANK / VOICE, PITCH target, VOICE destination and blue virtual encoder",
     "sha256": "4c35c24047dcd31fa47986e7c6c68554dc6022fdf86044f253e3a31712bc1634"
-  }
+  },
+  "implementation_commit": "f2246d6",
+  "regression_ci": [
+    {
+      "name": "bend_voice",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975688",
+      "status": "queued"
+    },
+    {
+      "name": "element",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975724",
+      "status": "queued"
+    },
+    {
+      "name": "drum",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975646",
+      "status": "queued"
+    },
+    {
+      "name": "crank",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975604",
+      "status": "in progress"
+    },
+    {
+      "name": "sampler",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975759",
+      "status": "in progress"
+    },
+    {
+      "name": "midi",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975644",
+      "status": "in progress"
+    },
+    {
+      "name": "dbox",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975855",
+      "status": "in progress"
+    }
+  ]
 }
