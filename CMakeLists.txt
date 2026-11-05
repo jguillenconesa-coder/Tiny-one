@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PocketOne VERSION 0.48.0 LANGUAGES C CXX)
+project(PocketOne VERSION 0.49.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(MSVC)
@@ -407,5 +407,6 @@ endif()
 
 add_subdirectory(research/crank-modulation)
 add_subdirectory(research/crank-voice)
+add_subdirectory(research/manual-fx)
 
 add_subdirectory(research/element-modulation)

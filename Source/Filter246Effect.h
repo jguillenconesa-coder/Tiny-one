@@ -2,6 +2,7 @@
 #pragma once
 #include "Filter246.h"
 #include "Midi246.h"
+#include "Manual246FxAudio.h"
 #include "Filter246Tables.h"
 #include "Filter246Controls.h"
 #include "Nitro246.h"
@@ -52,7 +53,7 @@ struct Filter246Effect {
         reset();
     }
     void reset() noexcept {cwoState={};cwoMemory.fill(0);springState={};springMemory.fill(0);springPending=0;state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);phoneState={};phoneMemory.fill(0);wasNitro=wasDelay=wasGrid=wasPhone=wasSpring=wasCwo=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
-    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false,const Midi246FxAudio* midiAudio=nullptr) noexcept {
+    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false,const Midi246FxAudio* midiAudio=nullptr,const Manual246FxAudio* manualAudio=nullptr) noexcept {
         if(dry.empty())return input;
         if(!initialized){mix=enabled?1.f:0.f;initialized=true;}
         if(enabled&&(!wasEnabled||nitro!=wasNitro||delay!=wasDelay||grid!=wasGrid||phone!=wasPhone||spring!=wasSpring||cwo!=wasCwo)){cwoState={};if(cwo)cwoMemory.fill(0);springState={};springPending=0;if(spring)springMemory.fill(0);phoneState={};if(phone)phoneMemory.fill(0);state={};nitroState={};delayState={};gridState={};if(delay)delayMemory.fill(0);if(grid)gridMemory.fill(0);awake=false;firstSignal=firstSignalHost=~uint64_t(0);dcInput=dcOutput=0;}wasEnabled=enabled;wasNitro=nitro;wasDelay=delay;wasGrid=grid;wasPhone=phone;wasSpring=spring;wasCwo=cwo;if(input!=0){awake=true;if(enabled&&firstSignalHost==~uint64_t(0))firstSignalHost=hostPosition;}
@@ -63,6 +64,7 @@ struct Filter246Effect {
             const double fraction=hostPosition==0?1:std::clamp(double(inputPosition)*ratio-(double(hostPosition)-1),0.,1.);
             const auto sample=previous+(filtered-previous)*fraction;
             block[cursor++]=int16_t(std::clamp(std::lround(sample*32768),-32768l,32767l));
+            if(enabled&&manualAudio)block[cursor-1]=manualAudio->apply(block[cursor-1]);
             if(enabled&&midiAudio)block[cursor-1]=midiAudio->apply(block[cursor-1]);
             if(enabled&&block[cursor-1]!=0&&firstSignal==~uint64_t(0))firstSignal=inputPosition;
             if(cursor==64){

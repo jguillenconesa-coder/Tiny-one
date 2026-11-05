@@ -152,14 +152,14 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     for(size_t i=0;i<4;++i)phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::midi246Ids[i],1},"MIDI LFO: CC "+juce::String(int(i+1))+" Destination",midiRoutes,int(i+1)));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Enabled",1},"Bend LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[0],1},"Bend LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[1],1},"Bend LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::bend246Ids[1],1},"Bend LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice / FX Input"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[2],1},"Bend LFO: Amount",-32767,32767,16000));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::bend246Ids[3],1},"Bend LFO: Orange Encoder",0,16383,8192));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"bend246Reverse",1},"Bend LFO: Reverse Direction",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"crank246Enabled",1},"Crank LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::crank246Ids[0],1},"Crank LFO: Blue Encoder",-8192,8191,0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::crank246Ids[1],1},"Crank LFO: Amount",-32767,32767,16000));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[2],1},"Crank LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[2],1},"Crank LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice / FX Input"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[3],1},"Crank LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"element246Enabled",1},"Element LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[0],1},"Element LFO: Source",juce::StringArray{"G-force (virtual)","External Input","Voice Envelope","Instrument Level"},0));
@@ -553,8 +553,9 @@ void PocketProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBu
         outputGain+=outputSmoothing*(outputTarget-outputGain);
         // Master gain follows the complete FX bus so it also controls retained tails.
         if(std::abs(outputTarget-outputGain)<(outputTarget==0?1.e-7f:1.e-5f))outputGain=outputTarget;
+        const auto manualFxAudio=engine.manualFxAudio();
         const auto midiFxAudio=p.midi246?pocket::Midi246FxAudio(p.midi246Routes,engine.midiControllers()):pocket::Midi246FxAudio{};
-        const float value=outputGain*outputFilter.next(mixed,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246||p.spring246||p.cwo246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246,p.spring246,p.cwo246,&midiFxAudio);blockPeak=std::max(blockPeak,std::abs(value));
+        const float value=outputGain*outputFilter.next(mixed,p.filter246||p.nitro246||p.delay246||p.grid246||p.phone246||p.spring246||p.cwo246,engine.filterControls(),filterConfig.table,p.nitro246,p.delay246,p.grid246,p.phone246,p.spring246,p.cwo246,&midiFxAudio,&manualFxAudio);blockPeak=std::max(blockPeak,std::abs(value));
         for(int ch=0;ch<buffer.getNumChannels();++ch) buffer.setSample(ch,i,value);
         if(++scopeCounter>=8) {scopeCounter=0; scope[size_t(scopeIndex)].store(value,std::memory_order_relaxed); scopeIndex=(scopeIndex+1)%256;}
     }

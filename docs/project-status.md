@@ -39,23 +39,29 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Crank hacia la voz (0.48.0)
+## Entrega actual: Bend/Crank hacia la entrada FX (0.49.0)
 
-[Crank Voice](crank246-voice.md) añade Level/Pitch en diez motores melódicos,
-encoder virtual, automatización, controles y proyectos/slots/clipboard.
-18.432 llamadas originales: 2.060 aceptadas y 16.372 rechazadas, con estado,
-historial, controles y buffers completos; dos extracciones independientes idénticas.
-263.680 pares pitch/gain contrastan también el puente. Coeficiente compartido,
-curva triangular asimétrica y fase detenida conservados; reloj, lifecycle,
-composición y captura por voz son propios. Productores y scheduler pendientes.
+[FX Gain/Shape](manual246-fx-input.md) añade dos curvas en los siete efectos del
+bus mono, con mezcla/cinta/audio externo monitorizado, automatización, controles
+y proyectos/slots/clipboard. Level/Pitch conservados en Voice / FX Input;
+Punch/bypass y targets inválidos rechazados.
 
-**134/134 suites**, **1.242 cargas sin heap rastreado**, ASan/UBSan y revisión
-visual aprobados. Los dos verificadores Crank Voice pasan en Linux, Windows/MSVC
-y macOS Intel. Plugins/instaladores y otras regresiones siguen en CI. [Evidencia de comprobaciones y CI](releases/v0.48.0-validation.json).
-El CI completo 0.47.0 terminó aprobado en Linux, Windows/MSVC y macOS universal
-(runtime Intel). Se mantiene **≈69 % ±10 de planificación**, sin medición acústica.
-Siguen especiales FX/Element y consumidores, dinámica drum, ruteo/productores,
-Pulse/L1, Live real, firma/notarización y presets originales al final.
+16.384 llamadas originales nuevas: 6.986 aceptadas y 9.398 rechazadas, estado,
+controles/retorno y buffers completos; dos extracciones independientes idénticas
+por fuente. 447.104 muestras contrastan también el puente. Clock, ownership,
+muestreo de fuente y composición en el host son propios; productores/scheduler
+originales pendientes. [Evidencia y CI](releases/v0.49.0-validation.json).
+
+La prueba independiente pasa 392 combinaciones de tasa/FX/fuente/curva/bypass.
+**136/136 suites**, **1.290 cargas sin heap rastreado**, ASan/UBSan y revisión
+visual aprobados.
+El CI completo 0.48.0 ya pasó en Linux, Windows y macOS universal (runtime Intel).
+El CI nativo Crank Voice 0.48 pasó en los tres sistemas; cuatro regresiones
+anteriores quedaron sin runner macOS tras pasar Linux/Windows (ningún paso macOS
+ejecutado). No se atribuye un fallo de DSP ni aprobación macOS a esas ejecuciones.
+Se mantiene **≈69 % ±10 de planificación**, sin medición acústica nueva.
+Siguen especiales Element/consumidores, dinámica drum, productores/ruteo,
+Pulse/L1, Ableton real, firma/notarización y presets originales al final.
 
 ## Entrega anterior: Random hacia los ocho FX (0.46.0)
 

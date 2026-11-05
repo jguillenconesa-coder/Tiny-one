@@ -1,0 +1,72 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "source": "crank",
+  "callback": "0x019cb3d4",
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 8192,
+  "accepted_matrix_counts": {
+    "1:2:2": 109,
+    "2:2:2": 110,
+    "3:2:2": 108,
+    "4:2:2": 110,
+    "5:2:2": 108,
+    "6:2:2": 109,
+    "7:2:2": 112,
+    "0:2:2": 109,
+    "0:5:2": 107,
+    "1:5:2": 108,
+    "2:5:2": 109,
+    "3:5:2": 110,
+    "4:5:2": 110,
+    "6:5:2": 109,
+    "7:5:2": 107,
+    "5:5:2": 111,
+    "0:2:3": 111,
+    "1:2:3": 109,
+    "2:2:3": 109,
+    "3:2:3": 111,
+    "5:2:3": 108,
+    "6:2:3": 110,
+    "7:2:3": 106,
+    "4:2:3": 109,
+    "1:5:3": 111,
+    "2:5:3": 108,
+    "3:5:3": 108,
+    "4:5:3": 108,
+    "5:5:3": 110,
+    "6:5:3": 109,
+    "7:5:3": 111,
+    "0:5:3": 109
+  },
+  "artifacts": {
+    "crank-fx246-input.bin.gz": {
+      "bytes": 494545,
+      "raw_bytes": 1048576,
+      "sha256": "dde721f0eef26c8dbf338e16d548faafd36cd7a41ae574bae135ed016f191dc8"
+    },
+    "crank-fx246-output.bin.gz": {
+      "bytes": 827397,
+      "raw_bytes": 9338880,
+      "sha256": "95bbc3ddf4d3cd0a47f6bfeb582ec520996012736dfbe97c3ac0e7d6b99aed9c"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "FX callback kinds 2/5 destination 3 colours 2/3 with supplied source state and complete buffers. Other kinds/selectors rejected.",
+    "Host scheduling and input routing not recovered; no hardware acoustic equivalence."
+  ],
+  "accepted": 3493,
+  "rejected": 4699,
+  "bridge_samples": 223552,
+  "independent_repeat": "identical numeric input and output",
+  "source_sha256": {
+    "Source/Manual246FxAudio.h": "a1bffebc08dacf43af63c021b9abadbcfb613c2c7de7e605874cdceb5402ee98",
+    "Tests/Manual246FxReferenceTests.cpp": "17851542473f41ca3da96dd175c741eb4514cc4d1596f650094ba6552969393b",
+    "scripts/verify-manual-fx246.py": "34a9f20c2ee18609cfa46e99e0efa80fd5d1c92079facc4538a1547be00e1255",
+    "research/blackfin/crank-fx-stream.s.in": "60b735d312cf5981e46b92ebe9c24893389e52df611a5058ddbfa0f018461907"
+  }
+}

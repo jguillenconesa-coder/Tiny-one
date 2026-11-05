@@ -1,0 +1,69 @@
+{
+  "version": "0.49.0",
+  "date": "2026-11-05",
+  "original_reference": {
+    "calls": 16384,
+    "accepted": 6986,
+    "rejected": 9398,
+    "bridge_samples": 447104,
+    "independent_repeat": "identical numeric input/output, both sources",
+    "evidence": [
+      "../firmware/bend-fx246-validation.json",
+      "../firmware/crank-fx246-validation.json"
+    ]
+  },
+  "linux_build": "success: Release Standalone and VST3",
+  "linux_ctest": {
+    "status": "success: 136/136 suites",
+    "seconds": 769.34
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1290,
+    "tracked_heap_calls": 0,
+    "scope": "48 new Bend/Crank FX input workloads with source/amount/target automation; timing diagnostics on shared host, not dropout certification"
+  },
+  "host_integration": {
+    "native": "success: 392 rate/effect/source/curve/bypass cases, seven rates; exact 64/257 audio, signed amounts, automation boundary, PDC, reset and silence",
+    "plugin": "success: 56 effect/source/curve/rate cases on seven FX, monitored external input, exact stereo 64/257 audio, automation boundary, fixed PDC, panic, route availability, editor-free proxies and project/slot/clipboard; complete plugin smoke passed with screenshots"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan 16384 original fixtures and exact sample bridge",
+    "adapter": "success: ASan/UBSan 56 effect/source/curve/bypass cases at 48 kHz, signed amounts, source activation, PDC, reset and silence",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "native_ci": {
+    "status": "not yet submitted"
+  },
+  "plugins_installers_ci": {
+    "status": "not yet submitted"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
+  "limits": [
+    "Host clock, shared source ownership, automation snapshot and placement before mono FX are authored adaptations",
+    "Original callbacks kinds 2/5 destination 3 colours 2/3; kind-4 auxiliary ENV, Element specials and Crank sequencers excluded",
+    "Buffer producers, allocator, physical accessory reader and scheduler not recovered",
+    "No new real Ableton, native ARM64, signing/notarization, acoustic-equivalence or complete original preset claim"
+  ],
+  "visual": {
+    "status": "reviewed Bend and Crank / FX INPUT captions, AUDIO destination, FX SHAPE target, Amount and source encoder; Reverse retained only for Bend",
+    "sha256": {
+      "bend-fx-input.png": "1173ff6d4b0b9604af011d392ea34c66fbbf04cec498046b94f4fdc0dc830e0e",
+      "crank-fx-input.png": "39ec18cd4152596aa63dd9f47fda8e3689eece6dc3b91651a35b8ee0d109baa3"
+    }
+  },
+  "host_source_sha256": {
+    "Source/Engine.h": "c751ed04c5e026de5546c1faf8c3f6091e53105e3865fdeee25e795865d0e959",
+    "Source/Filter246Effect.h": "bb81a392dd64ce204287d24c9b572f6f2b75a13792c0884ed825a6c34180ec7d",
+    "Source/PluginProcessor.cpp": "e15bf98440a2c277501bbde7d14f8d3b84c97aa55a4b43750933f9e68122d098",
+    "Source/PluginProcessor.h": "d1a064bc8491e24d16f7c33558be1ac58fafee0d1a9b6a13248bb284994e34f2",
+    "Source/ScreenAnimations.cpp": "941d6dda90dbdbf82296235c0fed9a2f0b1151c8ce0ef92b8133b7d1f2d2b193",
+    "Tests/Manual246FxIntegrationTests.cpp": "6dede1f6a676a35106f0d0f0480bda353a20ce3db4704f004538c4d50f87c2fe",
+    "Tests/Manual246FxPluginSupport.h": "d7123164a7e5560e282308734066ae65073e3f4f72109a364c4d89f443d37da6"
+  },
+  "previous_product": {
+    "version": "0.48.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975729",
+    "status": "success: Linux, Windows/MSVC and macOS universal; runtime Intel"
+  }
+}

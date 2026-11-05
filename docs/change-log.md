@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## 0.49.0 — Bend/Crank FX Input
+
+- FX Gain/Shape en siete efectos del bus mono; audio externo, controles y guardado.
+- 16.384 callbacks originales, 6.986 aceptados y 447.104 muestras del puente contrastados.
+- Destino Voice / FX Input conserva Level/Pitch; Punch/bypass y targets inválidos rechazados.
+- Aritmética Q15/XOR conservada; clock, ubicación y composición del host propios.
+
 ## 0.48.0 — Crank Voice
 
 - Level/Pitch en diez motores, encoder virtual, automatización y estados/slots/clipboard.

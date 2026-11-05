@@ -3,6 +3,7 @@
 #include "Midi246PluginSupport.h"
 #include "Bend246VoicePluginSupport.h"
 #include "Crank246VoicePluginSupport.h"
+#include "Manual246FxPluginSupport.h"
 #include "Random246FxPluginSupport.h"
 #include "ScreenAnimations.h"
 #include "SoundBrowser.h"
@@ -110,6 +111,17 @@ static void testCrankVoiceRoutes(const char* screenshot){
  p->prepareToPlay(48000,256);{std::unique_ptr<juce::AudioProcessorEditor> ui(p->createEditor());if(screenshot){juce::PNGImageFormat png;auto image=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream out(juce::File(juce::String::fromUTF8(screenshot)).getSiblingFile("crank246-voice.png"));out.setPosition(0);out.truncate();check(png.writeImageToStream(image,out),"Crank voice screenshot failed");}}
  for(int mode:{4,5,11}){auto* engine=p->state.getParameter("engine");engine->setValueNotifyingHost(engine->convertTo0to1(float(mode)));check(!p->crank246TargetAvailable(),"Crank voice advertised on drum/legacy engine");}
 }
+static void testManualFxAudio(const char* screenshot){
+ auto render=[&](int fx,bool crank,int colour,double rate,int block,bool motion){auto p=std::make_unique<PocketProcessor>();configureManualFxTest(*p,fx,crank,colour);auto& r=p->phaseParameters();auto* amount=r.getParameter(crank?"crank246Amount":"bend246Amount");amount->setValueNotifyingHost(amount->convertTo0to1(0));p->state.getParameter("inputMonitor")->setValueNotifyingHost(1);p->prepareToPlay(rate,block);juce::AudioBuffer<float> warm(2,int(rate*.2));warm.clear();juce::MidiBuffer none;p->processBlock(warm,none);const int latency=p->getLatencySamples();check(crank?p->crank246TargetAvailable():p->bend246TargetAvailable(),"Manual FX input unavailable");std::vector<float> result;
+  for(int section=0;section<2;++section){if(section==1&&motion){amount->setValueNotifyingHost(amount->convertTo0to1(-24000));auto* angle=r.getParameter(crank?"crank246Angle":"bend246Angle");angle->setValueNotifyingHost(angle->convertTo0to1(4096));}for(int offset=0;offset<8192;offset+=block){const int n=std::min(block,8192-offset);juce::AudioBuffer<float> audio(2,n);for(int i=0;i<n;++i){const float x=float(.2*std::sin((section*8192+offset+i)*.071));audio.setSample(0,i,x);audio.setSample(1,i,x*.5f);}juce::MidiBuffer midi;p->processBlock(audio,midi);for(int i=0;i<n;++i){const float v=audio.getSample(0,i);check(std::isfinite(v)&&std::abs(v)<8&&v==audio.getSample(1,i),"Manual FX stereo audio invalid");result.push_back(v);}}}
+  check(p->getLatencySamples()==latency,"Manual FX changes PDC");juce::AudioBuffer<float> silence(2,257);silence.clear();juce::MidiBuffer panic;panic.addEvent(juce::MidiMessage::allSoundOff(1),0);p->processBlock(silence,panic);for(int i=0;i<257;++i)check(silence.getSample(0,i)==0,"Manual FX panic retains output");return result;};
+ for(double rate:{44100.,96000.})for(int fx=0;fx<7;++fx)for(bool crank:{false,true})for(int colour:{2,3}){const auto a=render(fx,crank,colour,rate,64,true),b=render(fx,crank,colour,rate,257,true),neutral=render(fx,crank,colour,rate,64,false);check(a==b,"Manual FX plugin depends on host partition");check(std::equal(a.begin(),a.begin()+8192,neutral.begin()),"Manual FX automation affects earlier audio");if(a==neutral){std::cerr<<"manual fx "<<fx<<" crank "<<crank<<" colour "<<colour<<'\n';throw std::runtime_error("Manual FX automation inaudible");}}
+ for(bool crank:{false,true}){auto p=std::make_unique<PocketProcessor>();configureManualFxTest(*p,0,crank,3);p->setScreenPage(2);auto& r=p->phaseParameters();check(p->screenKnob(crank?2:1).followedParameter()==r.getParameter(crank?"crank246Destination":"bend246Destination"),"Manual FX proxy needs editor");juce::MemoryBlock state;p->getStateInformation(state);auto q=std::make_unique<PocketProcessor>();q->setStateInformation(state.getData(),int(state.getSize()));check(crank?q->crank246TargetAvailable():q->bend246TargetAvailable(),"Manual FX state loses routing");juce::String error;check(p->assignSoundSlot(false,0)&&p->copySound(error),"Manual FX slot/clipboard save failed");p->applyPreset(0);check(p->recallSoundSlot(false,0,error)&&(crank?p->crank246TargetAvailable():p->bend246TargetAvailable()),"Manual FX slot loses route");p->applyPreset(0);check(p->pasteSound(error)&&(crank?p->crank246TargetAvailable():p->bend246TargetAvailable()),"Manual FX clipboard loses route");
+  p->prepareToPlay(48000,256);if(screenshot){std::unique_ptr<juce::AudioProcessorEditor> ui(p->createEditor());juce::PNGImageFormat png;auto shot=ui->createComponentSnapshot(ui->getLocalBounds(),true,1.5f);juce::FileOutputStream file(juce::File(juce::String::fromUTF8(screenshot)).getSiblingFile(crank?"crank-fx-input.png":"bend-fx-input.png"));check(png.writeImageToStream(shot,file),"Manual FX screenshot failed");}
+  r.getParameter("filter246Enabled")->setValueNotifyingHost(0);r.getParameter("punch246Enabled")->setValueNotifyingHost(1);check(!(crank?p->crank246TargetAvailable():p->bend246TargetAvailable()),"Manual FX input incorrectly targets Punch or bypass");r.getParameter("filter246Enabled")->setValueNotifyingHost(1);auto* target=r.getParameter(crank?"crank246Colour":"bend246Colour");target->setValueNotifyingHost(target->convertTo0to1(4));check(!(crank?p->crank246TargetAvailable():p->bend246TargetAvailable()),"Manual FX advertises invalid target");
+ }
+ std::cout<<"PASS: Bend/Crank FX input on seven effects/two curves/two rates, monitored external input, exact 64/257 audio, automation, PDC, panic, availability, proxies and persistence\n";
+}
 int main(int argc,char** argv) {
  try {
   juce::ScopedJuceInitialiser_GUI init;
@@ -118,6 +130,7 @@ int main(int argc,char** argv) {
   testMidiVoiceRoutes(argc>1?argv[1]:nullptr);
   testBendVoiceRoutes(argc>1?argv[1]:nullptr);
   testCrankVoiceRoutes(argc>1?argv[1]:nullptr);
+  testManualFxAudio(argc>1?argv[1]:nullptr);
   auto p=std::make_unique<PocketProcessor>(); p->prepareToPlay(48000,256);
   juce::StringArray parameterNames;
   for(auto* parameter:p->getParameters()){const auto name=parameter->getName(100);check(!name.isEmpty()&&name.contains(":"),"Host parameter lacks a descriptive category");check(!parameterNames.contains(name),"Ambiguous duplicate MIDI mapping names");parameterNames.add(name);}

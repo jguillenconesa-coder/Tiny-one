@@ -1,4 +1,9 @@
-# Pocket One 0.48.0
+# Pocket One 0.49.0
+
+**Bend y Crank hacia la entrada FX**: Gain/Shape en los siete efectos del bus mono,
+con audio externo, automatización y guardado. 16.384 callbacks originales y
+447.104 muestras del puente contrastados; reloj y composición del host propios.
+[Guía](docs/manual246-fx-input.md) · [Validación](docs/releases/v0.49.0-validation.json).
 
 **Crank hacia la voz**: Level/Pitch en diez motores melódicos, con encoder virtual,
 automatización, controles contextuales y guardado. 18.432 llamadas originales
@@ -82,7 +87,7 @@ FM **0.28.0**: afinación fraccionaria propia y Value/Random/Tremolo integrados.
 
 **Sintetizador VST3 y aplicación independiente inspirados en el Teenage Engineering OP-1.** Interfaz gris, pantalla animada, cuatro mandos azul/verde/blanco/naranja y teclado de dos octavas. Implementación independiente; no contiene firmware, muestras de fábrica ni gráficos originales.
 
-[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.48.0.md)
+[English manual](README.en.md) · [Créditos](CREDITS.md) · [Licencia](LICENSE) · [Notas de versión](docs/releases/v0.49.0.md)
 
 ![Interfaz y pantalla animada de Pocket One](docs/screen-animation.gif)
 

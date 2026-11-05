@@ -812,3 +812,16 @@ Reloj, inicialización, lifecycle y composición siguen siendo propios.
 Siguiente: especiales FX/Element y consumidores activos; mantener Envelope de
 Element fuera del plugin sin llamada activa verificable. Productores de voz,
 dinámica drum, Pulse/L1, acústica/Live y presets finales siguen pendientes.
+
+
+## Bend/Crank FX Input — 0.49.0
+
+[Gain/Shape](manual246-fx-input.md): callbacks 0x019ca328 / 0x019cb3d4,
+kinds 2/5, destino 3, colores 2/3. 8192 llamadas por fuente, 3493 aceptadas cada
+una, 447104 muestras del puente total; repetición independiente idéntica.
+Siete FX, controles, automatización y persistencia. Clock/fuente global,
+ubicación por muestra cuantizada y composición del host propios. No se
+reinterpretan como scheduler o productores recuperados. Siguiente frente:
+especiales de Element y consumidores activos, dinámica drum y productores/ruteo.
+Mantener Envelope de Element fuera del plugin sin llamada activa verificable.
+Pulse/L1, acústica, Live y presets finales siguen pendientes.

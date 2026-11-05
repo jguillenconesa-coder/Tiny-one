@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <vector>
 #include "Phase246.h"
+#include "Manual246FxAudio.h"
 #include "SharedDrum246.h"
 #include "Fm246Voice.h"
 #include "Digital246Voice.h"
@@ -82,6 +83,11 @@ public:
     void midiController(int number,int value) noexcept {if(number>=1&&number<=4)midiCC[size_t(number-1)]=uint32_t(std::clamp(value,0,127));}
     float element246Level() const noexcept {return elementControl.level();}
     float crank246Phase() const noexcept {return crankControl.phase();}
+    Manual246FxAudio manualFxAudio() const noexcept {
+        if(crankControl.active&&crankControl.destination==3&&crankControl.colour>=2&&crankControl.colour<=3)return {reference::saturate16((reference::crank246Level(crankControl.state)-64)*512),crankControl.controls[1],crankControl.colour};
+        if(bendControl.active&&bendControl.destination==3&&bendControl.colour>=2&&bendControl.colour<=3)return {reference::saturate16(int(int16_t(bendControl.state.words[0]))*256),bendControl.controls[2],bendControl.colour};
+        return {};
+    }
     float bend246Level() const noexcept {return bendControl.level();}
     void reset() {elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false,bool drum=false,bool sampler=false) noexcept {

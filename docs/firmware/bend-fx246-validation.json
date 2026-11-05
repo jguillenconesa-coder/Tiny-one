@@ -1,0 +1,72 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "source": "bend",
+  "callback": "0x019ca328",
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 8192,
+  "accepted_matrix_counts": {
+    "1:2:2": 109,
+    "2:2:2": 110,
+    "3:2:2": 108,
+    "4:2:2": 110,
+    "5:2:2": 108,
+    "6:2:2": 109,
+    "7:2:2": 112,
+    "0:2:2": 109,
+    "0:5:2": 107,
+    "1:5:2": 108,
+    "2:5:2": 109,
+    "3:5:2": 110,
+    "4:5:2": 110,
+    "6:5:2": 109,
+    "7:5:2": 107,
+    "5:5:2": 111,
+    "0:2:3": 111,
+    "1:2:3": 109,
+    "2:2:3": 109,
+    "3:2:3": 111,
+    "5:2:3": 108,
+    "6:2:3": 110,
+    "7:2:3": 106,
+    "4:2:3": 109,
+    "1:5:3": 111,
+    "2:5:3": 108,
+    "3:5:3": 108,
+    "4:5:3": 108,
+    "5:5:3": 110,
+    "6:5:3": 109,
+    "7:5:3": 111,
+    "0:5:3": 109
+  },
+  "artifacts": {
+    "bend-fx246-input.bin.gz": {
+      "bytes": 372383,
+      "raw_bytes": 786432,
+      "sha256": "34ea93e945f14bd23ea388bdf2a7e7bc927dd06b65fc6852541b317c5e5b5a4a"
+    },
+    "bend-fx246-output.bin.gz": {
+      "bytes": 679928,
+      "raw_bytes": 9076736,
+      "sha256": "92c6b827d98a5d8944d6c50c8bc6338499a945c5152210479691562991bed3e3"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "FX callback kinds 2/5 destination 3 colours 2/3 with supplied source state and complete buffers. Other kinds/selectors rejected.",
+    "Host scheduling and input routing not recovered; no hardware acoustic equivalence."
+  ],
+  "accepted": 3493,
+  "rejected": 4699,
+  "bridge_samples": 223552,
+  "independent_repeat": "identical numeric input and output",
+  "source_sha256": {
+    "Source/Manual246FxAudio.h": "a1bffebc08dacf43af63c021b9abadbcfb613c2c7de7e605874cdceb5402ee98",
+    "Tests/Manual246FxReferenceTests.cpp": "17851542473f41ca3da96dd175c741eb4514cc4d1596f650094ba6552969393b",
+    "scripts/verify-manual-fx246.py": "34a9f20c2ee18609cfa46e99e0efa80fd5d1c92079facc4538a1547be00e1255",
+    "research/blackfin/bend-fx-stream.s.in": "3c2e139e5ec9ea60053729ed3da258fcdd1db536f8a9cd86d56944e5386a6b43"
+  }
+}

@@ -36,7 +36,7 @@
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975631"
   },
   "plugins_installers_ci": {
-    "status": "in progress; no final result claimed",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975729"
   },
   "previous_product": {
@@ -60,37 +60,42 @@
     {
       "name": "bend_voice",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975688",
-      "status": "queued"
+      "status": "Linux and Windows/MSVC success; macOS Intel cancelled before any steps: hosted runner not acquired after multiple attempts"
     },
     {
       "name": "element",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975724",
-      "status": "queued"
+      "status": "Linux and Windows/MSVC success; macOS Intel cancelled before any steps: hosted runner not acquired after multiple attempts"
     },
     {
       "name": "drum",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975646",
-      "status": "queued"
+      "status": "Linux and Windows/MSVC success; macOS Intel cancelled before any steps: hosted runner not acquired after multiple attempts"
     },
     {
       "name": "crank",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975604",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "sampler",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975759",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "midi",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975644",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
     },
     {
       "name": "dbox",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975855",
-      "status": "in progress"
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "bend",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975582",
+      "status": "Linux and Windows/MSVC success; macOS Intel cancelled before any steps: hosted runner not acquired after multiple attempts"
     }
   ]
 }

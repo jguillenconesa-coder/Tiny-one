@@ -1,0 +1,40 @@
+name: Validate Bend and Crank FX input audio
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/manual-fx/**'
+      - 'research/blackfin/*-fx-stream.s.in'
+      - 'Source/Manual246FxAudio.h'
+      - 'Source/Bend246*.h'
+      - 'Source/Crank246*.h'
+      - 'Source/Engine.h'
+      - 'Source/Filter246Effect.h'
+      - 'Source/Midi246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Filter246*.h'
+      - 'Source/Nitro246*.h'
+      - 'Source/Delay246*.h'
+      - 'Source/Grid246*.h'
+      - 'Source/Phone246*.h'
+      - 'Source/Spring246*.h'
+      - 'Source/Cwo246*.h'
+      - 'Tests/Manual246Fx*'
+      - 'Tests/RunManual246FxTests.py'
+      - 'Tests/ReferenceVectors/*-fx246-*.gz'
+      - 'scripts/verify-manual-fx246.py'
+      - '.github/workflows/manual-fx246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/manual-fx -B build-manual-fx -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-manual-fx --config Release --parallel 2
+      - run: ctest --test-dir build-manual-fx -C Release --output-on-failure

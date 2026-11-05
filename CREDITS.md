@@ -776,3 +776,11 @@ Numeric fixtures contain no firmware executable or decompiler output. Reuses the
 independently checked signed-word pitch primitive and owner-aware Bend block
 capture; host clock, lifecycle and composition are authored adaptations.
 See docs/crank246-voice.md and docs/firmware/crank-voice246-validation.json.
+
+
+Bend/Crank FX input 246: independently authored Q15 gain and XOR shape transforms,
+shared-source snapshot and mono bus integration. 8192 original callbacks per
+source, 3493 accepted each, 447104 bridge halfwords total; complete numerical
+states and buffers checked with two identical independent runs per source.
+Host clock and routing are authored. Firmware, decompiler pseudocode and ELF
+stay private. See docs/manual246-fx-input.md for limits and attribution.
