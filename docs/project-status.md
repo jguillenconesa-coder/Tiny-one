@@ -47,7 +47,8 @@ retenidos y 128 limpiezas aisladas. 786.432 muestras con cadencia/pitch/gain
 suministrados; dos extracciones idénticas, Release y ASan/UBSan completos aprobados.
 La limpieza conserva los lectores: no es el pánico del host ni la retirada normal
 por bloque. Salida MIDI explícitamente desactivada; no hay mensajes transmitidos.
-Instrumento 0.52.0 sin cambios, CI nativo dedicado, sin nuevos instaladores.
+Instrumento 0.52.0 sin cambios, sin nuevos instaladores. CI nativo y regresiones
+aprobados en Linux, Windows/MSVC y macOS Intel.
 Siguiente: llamador de render y consumidor activo de velocidad/pitch, incluidos
 accesos indirectos. Avance **≈69 % ±10 de planificación**, acústica sin medir.
 

@@ -88,7 +88,43 @@
     "leak_detection": "disabled due managed ptrace"
   },
   "native_ci": {
-    "status": "pending: dedicated Linux/Windows/MSVC/macOS Intel workflow"
+    "status": "success: Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720570",
+    "platforms": {
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720570/job/127547695861"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720570/job/127547696350"
+      },
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720570/job/127547696434"
+      }
+    },
+    "suites_per_platform": 1
   },
-  "estimated_progress": "approximately 69% +/-10 planning points, not acoustic fidelity"
+  "estimated_progress": "approximately 69% +/-10 planning points, not acoustic fidelity",
+  "implementation_commit": "8bc009bcd9825f30b12f53d67d03b5770f548eda",
+  "sampler_regression_ci": {
+    "status": "success: Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720678",
+    "platforms": {
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720678/job/127547700271"
+      },
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720678/job/127547700611"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42113720678/job/127547700906"
+      }
+    }
+  },
+  "ci_snapshot_utc": "2026-11-05 21:36 UTC"
 }

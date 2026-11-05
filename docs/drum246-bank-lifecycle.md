@@ -61,13 +61,14 @@ en clear puro. Dos extracciones independientes dan los mismos bytes numéricos.
 [Modelo, formato y reproducción](../research/drum-bank/README.md).
 [Evidencia y hashes](firmware/drum-bank246-validation.json). Suite Release y
 ASan/UBSan completas en Linux; leaks desactivados por ptrace del entorno. CI
-nativo separado para Linux, Windows/MSVC y macOS Intel. No se versionan firmware,
+nativo (1/1 suite) y regresiones del lector aprobados en Linux, Windows/MSVC y
+macOS Intel. No se versionan firmware,
 ELF, desensamblado ni pseudocódigo.
 
 ## Límites y continuación
 
 Tipo 8, modo drum 1, LFO/FX nulos, salida MIDI cero, índices y transiciones de
-fase válidos. Las inicializaciones, preview, PCM/padding, pitch/gain y tiempos son
+fase válidos (fase 0/1). Las inicializaciones, preview, PCM/padding, pitch/gain y tiempos son
 entradas del harness; no se atribuyen al arranque original. Las cinco
 transposiciones por octavas y la selección de banco no recuperan los productores
 de buffers. Los guards del modelo ante fase/índice inválidos son propios; no

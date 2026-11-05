@@ -902,7 +902,8 @@ reemplazar la dinámica ni el scheduler híbridos sin contrastar esa composició
 ocupación, 128 pares begin/factory finish, 256 resets retenidos sobre 2.176 filas,
 128 limpiezas aisladas y 786.432 muestras con entradas/cadencia explícitas.
 Dos extracciones idénticas, Release y ASan/UBSan completos aprobados; CI nativo
-separado. Clear registry conserva lectores y filas residuales, no reemplaza
+separado y regresiones del lector aprobados en Linux, Windows/MSVC y macOS Intel.
+Clear registry conserva lectores y filas residuales, no reemplaza
 pánico ni retirada de audio. MIDI output=0: solo flags externos, sin transmisor.
 No integra código ni aumenta versión. Se clasifican las referencias candidatas
 anteriores, descartando coincidencias de inmediato bajo. Siguiente: llamador de
