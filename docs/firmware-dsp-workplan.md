@@ -890,7 +890,8 @@ contrato activo y presets originales completos al final.
 originales, 2.176 notas iniciadas / 2.044 ocupadas, 854 retiradas con propietario
 antiguo y 393.216 muestras. Modelo independiente, dos extracciones idénticas,
 Release y ASan/UBSan aprobados. Compara lista retenida, globals, doce estados y
-buffers completos. Pitch de evento solo cinco octavas explícitas. No integra
-código en el instrumento ni incrementa versión; CI nativo dedicado. Siguiente:
+buffers completos. Pitch de evento solo cinco transposiciones por octavas. No integra
+código en el instrumento ni incrementa versión; CI nativo y regresiones aprobados
+en Linux, Windows/MSVC y macOS Intel. Siguiente:
 retirada de ocupación, llamador activo de render y productores pitch/gain. No
 reemplazar la dinámica ni el scheduler híbridos sin contrastar esa composición.

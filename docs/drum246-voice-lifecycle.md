@@ -63,7 +63,8 @@ Gated/One Shot/Loop bajo controles explícitos y renders omitidos con veneno.
 Se comprueban también conversión de los 1.025 coeficientes y PCM intacto.
 Dos extracciones independientes dan las mismas entradas y salidas numéricas.
 Release y ASan/UBSan completos aprobados en Linux (leaks desactivados por ptrace);
-CI nativo dedicado en Linux, Windows/MSVC y macOS Intel.
+CI nativo (1/1 suite) y regresiones del lector aprobados en Linux, Windows/MSVC
+y macOS Intel.
 
 [Modelo, formato y reproducción](../research/drum-voice/README.md).
 [Evidencia y hashes](firmware/drum-voice246-validation.json). No se incluyen

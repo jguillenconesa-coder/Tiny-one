@@ -47,7 +47,8 @@ antiguo; 3.072 renders / 393.216 muestras. Lista retenida, globals, estados y
 buffers completos coincidentes, dos extracciones idénticas y ASan/UBSan aprobados.
 Las palabras de velocidad/pitch del evento no recuperan el productor de buffers.
 Faltan retirada de ocupación, llamador de render y composición pitch/gain; el
-instrumento permanece 0.52.0, sin nuevos instaladores. CI nativo dedicado.
+instrumento permanece 0.52.0, sin nuevos instaladores. CI nativo y regresiones
+aprobados en Linux, Windows/MSVC y macOS Intel.
 Avance **≈69 % ±10 de planificación**, sin medición acústica nueva.
 
 ## Investigación posterior: ruteo Core del drum sampler
