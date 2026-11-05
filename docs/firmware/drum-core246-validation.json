@@ -64,10 +64,31 @@
     "leak_detection": "disabled due managed ptrace"
   },
   "native_ci": {
-    "status": "pending: dedicated Linux/Windows/MSVC/macOS Intel workflow"
+    "status": "success: 1/1 suite on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42100926959",
+    "suites_per_platform": 1,
+    "platforms": {
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "started_at": "2026-11-05T20:11:31Z",
+        "completed_at": "2026-11-05T20:12:52Z"
+      },
+      "validate (windows-2022)": {
+        "status": "success",
+        "started_at": "2026-11-05T20:10:47Z",
+        "completed_at": "2026-11-05T20:12:14Z"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "started_at": "2026-11-05T20:10:47Z",
+        "completed_at": "2026-11-05T20:11:26Z"
+      }
+    }
   },
   "product_ci": {
     "status": "success: unchanged 0.52.0",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091922166"
-  }
+  },
+  "implementation_commit": "a8ade790d79fae6873d36f687b49b92e03ef4208",
+  "ci_snapshot_utc": "2026-11-05 20:13 UTC"
 }

@@ -44,7 +44,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 [Factory/disparo/release tipo 8](drum246-core-routing.md): 4.608 casos originales,
 rejilla de doce voces × ocho sonidos × 24 pads, con 3.456 bloques renderizados
 (442.368 muestras). Dos extracciones idénticas, suite Release y ASan/UBSan
-aprobadas; CI nativo separado. No cambia el instrumento 0.52.0 ni genera
+aprobadas; CI aprobado en Linux, Windows/MSVC y macOS Intel. No cambia el
+instrumento 0.52.0 ni genera
 instaladores. Los doce productores son objetos de audio; la dinámica original
 sigue pendiente. Próximo: llamador activo de render/actividad y escritores
 pitch/gain. Avance de planificación: **≈69 % ±10**, fidelidad acústica sin medir.

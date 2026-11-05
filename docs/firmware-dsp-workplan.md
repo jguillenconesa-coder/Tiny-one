@@ -875,7 +875,8 @@ sin cambiarlo.
 [Contrato](drum246-core-routing.md): factory tipo 8, reset y release con 4.608
 casos originales y rejilla 12 × 8 × 24. 3.456 renders / 442.368 muestras, estados
 y buffers completos contrastados; dos extracciones idénticas. Suite standalone
-Release y ASan/UBSan aprobadas, CI nativo separado. No integra código en el
+Release y ASan/UBSan aprobadas; CI nativo aprobado en Linux, Windows/MSVC y
+macOS Intel. No integra código en el
 instrumento, no cambia versión ni genera instaladores. `s_drum_producers` son
 objetos de audio, no el productor de dinámica. Siguiente: llamador activo de
 render/actividad y escritores pitch/gain de esos doce objetos; conservar dinámica

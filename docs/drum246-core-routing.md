@@ -57,7 +57,7 @@ no nulos ni se presentan llamadas trazadas como audio adicional.
 [Modelo, formato y reproducción](../research/drum-core/README.md).
 [Evidencia y hashes](firmware/drum-core246-validation.json). Suite independiente
 Release y ASan/UBSan completa aprobadas en Linux; leak detection desactivado por
-ptrace del entorno. CI nativo separado para Linux, Windows/MSVC y macOS Intel.
+ptrace del entorno. CI nativo separado aprobado: 1/1 suite en Linux, Windows/MSVC y macOS Intel.
 El modelo y los fixtures no se enlazan al plugin; tampoco contienen firmware,
 pseudocódigo ni desensamblado original.
 
