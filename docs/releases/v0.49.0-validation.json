@@ -33,10 +33,12 @@
     "leak_detection": "disabled due managed ptrace restrictions"
   },
   "native_ci": {
-    "status": "not yet submitted"
+    "status": "success: 2/2 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773724"
   },
   "plugins_installers_ci": {
-    "status": "not yet submitted"
+    "status": "in progress; no final result claimed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773570"
   },
   "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
   "limits": [
@@ -65,5 +67,53 @@
     "version": "0.48.0",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42016975729",
     "status": "success: Linux, Windows/MSVC and macOS universal; runtime Intel"
-  }
+  },
+  "implementation_commit": "11d3561",
+  "regression_ci": [
+    {
+      "name": "bend_voice",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773626",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "dbox",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773589",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "crank",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773661",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "element",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773603",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "crank_voice",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773748",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "sampler",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773639",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "drum",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773592",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "bend",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773669",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    {
+      "name": "midi",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773624",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    }
+  ]
 }

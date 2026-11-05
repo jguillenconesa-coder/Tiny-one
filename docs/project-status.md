@@ -54,7 +54,10 @@ originales pendientes. [Evidencia y CI](releases/v0.49.0-validation.json).
 
 La prueba independiente pasa 392 combinaciones de tasa/FX/fuente/curva/bypass.
 **136/136 suites**, **1.290 cargas sin heap rastreado**, ASan/UBSan y revisión
-visual aprobados.
+visual aprobados. Los dos verificadores nuevos y las nueve regresiones
+específicas pasan en Linux, Windows/MSVC y macOS Intel.
+[Plugins e instaladores 0.49](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773570)
+siguen en curso.
 El CI completo 0.48.0 ya pasó en Linux, Windows y macOS universal (runtime Intel).
 El CI nativo Crank Voice 0.48 pasó en los tres sistemas; cuatro regresiones
 anteriores quedaron sin runner macOS tras pasar Linux/Windows (ningún paso macOS
