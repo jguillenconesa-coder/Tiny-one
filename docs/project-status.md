@@ -49,7 +49,9 @@ externo existente, el contorno previo retenido y el lifecycle son propios.
 [Evidencia y CI](releases/v0.52.0-validation.json). Se mantiene **≈69 % ±10**,
 sin nueva medición acústica ni recuperación del scheduler original. Linux Release:
 **142/142 suites**, **1446 cargas de tiempo real sin heap rastreado**, ASan/UBSan
-del núcleo y adaptador aprobados; revisión visual aprobada.
+del núcleo y adaptador aprobados; revisión visual aprobada. Las dos suites de
+Pitch y las regresiones de Gain pasan en Linux, Windows/MSVC y macOS Intel.
+Plugins/instaladores completos siguen en curso, enlazados por revisión.
 
 ## Entrega anterior: Element hacia la ganancia de voz (0.51.0)
 

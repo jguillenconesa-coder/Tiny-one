@@ -1,7 +1,7 @@
 {
   "version": "0.52.0",
   "date": "2026-11-05",
-  "implementation_commit": "pending verified commit",
+  "implementation_commit": "7c9a6779c495c00e7243252b1b8be8ca70d6b894",
   "base_commit": "c481e0b3e1f214953db549f9996142772df89b06",
   "original_reference": {
     "calls": 8192,
@@ -67,10 +67,30 @@
     "sha256": "fb6bc1db2953e6a5fb4c1a1acdbfb84f3d06e81696d752cc0021ab2415f8a669"
   },
   "native_ci": {
-    "status": "pending push"
+    "status": "success: 2/2 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091921807",
+    "suites_per_platform": 2,
+    "platforms": {
+      "linux": {
+        "passed": 2,
+        "total": 2,
+        "seconds": 10.78
+      },
+      "windows_msvc": {
+        "passed": 2,
+        "total": 2,
+        "seconds": 8.47
+      },
+      "macos_intel": {
+        "passed": 2,
+        "total": 2,
+        "seconds": 17.29
+      }
+    }
   },
   "plugins_installers_ci": {
-    "status": "pending push"
+    "status": "in progress on all platforms; Linux/Windows testing, macOS universal configuring",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091922166"
   },
   "previous_product": {
     "version": "0.51.0",
@@ -85,5 +105,10 @@
     "Source-1 reuses 0.51.0 authored anti-alias/interpolated causal 44.1 kHz SRC/history, captured as pairs at 88.2 kHz. Modulation phase/lag differs from unknown physical producer; PDC unchanged.",
     "Gain and frontend from 0.51.0 preserved, capture ownership split. D-synth reports unbounded conservative tail for additive gain that can persist after outer ADSR. No allocator/scheduler/auxiliary Envelope caller/L1/OTP recovery.",
     "No new actual Ableton, native ARM64, signing/notarization, acoustic equivalence or complete original preset claim. No release/tag publication or cloud configuration changes."
-  ]
+  ],
+  "gain_regression_ci": {
+    "status": "success on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091921818"
+  },
+  "ci_snapshot_utc": "2026-11-05 19:23 UTC"
 }

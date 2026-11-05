@@ -865,3 +865,7 @@ ganancia aditiva que puede persistir tras ADSR. No se recuperan productores ni
 scheduler. Siguiente: dinámica drum y contratos legibles de voz/ruteo sobre más
 rutas de parámetros. Mantener Envelope auxiliar fuera sin llamada activa
 validable. Pulse/L1, acústica/Live, ARM64 actual y presets finales siguen pendientes.
+
+Antes de otra entrega, consultar el CI 0.52.0 enlazado en la evidencia y resolver
+cualquier fallo. El producto 0.51.0 ya terminó aprobado en Linux, Windows/MSVC
+y macOS universal (runtime Intel); no repetir sus builds aprobados.
