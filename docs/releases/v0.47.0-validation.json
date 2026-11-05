@@ -33,8 +33,14 @@
     "adapter": "success: ASan/UBSan 26 engine/rate/target cases at 48 kHz plus Mono/Legato/glide, signed amounts and block capture",
     "leak_detection": "disabled due managed ptrace restrictions"
   },
-  "native_ci": "pending implementation commit",
-  "plugins_installers_ci": "pending implementation commit",
+  "native_ci": {
+    "status": "success: 2/2 suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004949"
+  },
+  "plugins_installers_ci": {
+    "status": "in progress; no final result claimed",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004873"
+  },
   "previous_product": {
     "version": "0.46.0",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/41905480335",
@@ -50,5 +56,36 @@
   "visual": {
     "status": "reviewed Bend / Voice caption, Pitch target, Voice destination, Amount, Orange and Reverse controls",
     "sha256": "465f6fffbf35a81d2209fcd14dc81adea5acdfd5c6de08adfb806b5cfa3ebfee"
+  },
+  "implementation_commit": "df632ff",
+  "bend_regression_ci": {
+    "status": "success: original parameter callbacks and host integration on all three platforms",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011005011"
+  },
+  "regression_ci": {
+    "midi": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004962",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    "fm": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004859",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    "dsynth": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011005014",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    "crank": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004847",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    "voltage": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004922",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    },
+    "drum": {
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004913",
+      "status": "success on Linux, Windows/MSVC and macOS Intel"
+    }
   }
 }

@@ -54,7 +54,10 @@ límites y lifecycle son propios. No se recuperan por ello el productor de buffe
 allocator ni scheduler originales. **132 suites verificadas**, **1.194 cargas sin
 heap rastreado**, ASan/UBSan y revisión visual aprobados; la evidencia separa
 la corrección del estímulo de prueba del plugin de los cambios de producto.
-[Evidencia](releases/v0.47.0-validation.json).
+[Los dos verificadores Bend Voice](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004949)
+pasan en Linux, Windows/MSVC y macOS Intel; las regresiones Bend/MIDI/FM/D-synth/Crank
+también pasan. [Plugins e instaladores completos](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004873)
+siguen en curso. [Evidencia](releases/v0.47.0-validation.json).
 
 Se mantiene **≈69 % ±10 puntos de planificación**, sin nueva medición de fidelidad.
 El CI completo 0.46.0 está aprobado; ARM64 de esa revisión no adquirió runner.
