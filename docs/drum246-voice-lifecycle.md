@@ -79,13 +79,13 @@ palabras de evento no prueban todavía el productor de esos buffers**.
 
 ## Continuación
 
-Faltan el llamador activo de render, el consumidor que retira ocupación y los
-escritores de buffers pitch/gain. Hay referencias legibles candidatas a ocupación
-en `0x01976edc`, `0x01a27e2e`, `0x01a856ee`, `0x01a85e16`, `0x01a86254` y
-`0x01a865cc`; son puntos para inspeccionar, no contratos recuperados. Integrar
-el asignador antes de contrastar su composición podría cambiar indebidamente
-colas y reutilización de voces. Por eso se agrupará la integración con esas
-dependencias. La dinámica, el scheduler híbrido y el frontend del instrumento
-se conservan por ahora. D-box, MIDI físico, fidelidad acústica, Live real y
-presets completos no quedan validados por este estudio. Avance **≈69 % ±10**
-de planificación, sin aumento por acumular casos numéricos.
+El [estudio posterior de bancos y registro](drum246-bank-lifecycle.md) ya
+contrasta la limpieza de ocupación/lista, el reset retenido y las fases de
+factory. Clasifica las referencias candidatas previas y descarta la falsa
+coincidencia `0x01976edc` / `0x01cc1070`. La limpieza conserva los lectores,
+así que no recupera la retirada normal por bloque. Siguen pendientes el llamador
+de render y el consumidor de velocidad/pitch, incluidos accesos indirectos.
+Agrupar la integración con esa composición evita confundir un registro vacío
+con audio detenido. Dinámica, scheduler y frontend híbridos permanecen propios;
+D-box, Live real, acústica y presets completos no quedan validados por estos
+estudios. Avance **≈69 % ±10 de planificación**.

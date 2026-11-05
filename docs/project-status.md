@@ -39,7 +39,19 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Investigación actual: asignación y ciclo de notas de batería
+## Investigación actual: ocupación y cambios de banco de batería
+
+[Bancos y registro retenido](drum246-bank-lifecycle.md): 8.192 casos originales,
+las 4.096 máscaras de ocupación, 128 comienzos/finales de factory, 256 resets
+retenidos y 128 limpiezas aisladas. 786.432 muestras con cadencia/pitch/gain
+suministrados; dos extracciones idénticas, Release y ASan/UBSan completos aprobados.
+La limpieza conserva los lectores: no es el pánico del host ni la retirada normal
+por bloque. Salida MIDI explícitamente desactivada; no hay mensajes transmitidos.
+Instrumento 0.52.0 sin cambios, CI nativo dedicado, sin nuevos instaladores.
+Siguiente: llamador de render y consumidor activo de velocidad/pitch, incluidos
+accesos indirectos. Avance **≈69 % ±10 de planificación**, acústica sin medir.
+
+## Investigación anterior: asignación y ciclo de notas de batería
 
 [Drum VoiceCtl](drum246-voice-lifecycle.md): 4.096 casos originales, 2.176 notas
 iniciadas, 2.044 asignaciones sobre voces ocupadas y 854 releases con propietario

@@ -895,3 +895,17 @@ código en el instrumento ni incrementa versión; CI nativo y regresiones aproba
 en Linux, Windows/MSVC y macOS Intel. Siguiente:
 retirada de ocupación, llamador activo de render y productores pitch/gain. No
 reemplazar la dinámica ni el scheduler híbridos sin contrastar esa composición.
+
+## Drum bank / registro retenido — investigación posterior a VoiceCtl
+
+[Contratos](drum246-bank-lifecycle.md): 8.192 casos originales, 4.096 máscaras de
+ocupación, 128 pares begin/factory finish, 256 resets retenidos sobre 2.176 filas,
+128 limpiezas aisladas y 786.432 muestras con entradas/cadencia explícitas.
+Dos extracciones idénticas, Release y ASan/UBSan completos aprobados; CI nativo
+separado. Clear registry conserva lectores y filas residuales, no reemplaza
+pánico ni retirada de audio. MIDI output=0: solo flags externos, sin transmisor.
+No integra código ni aumenta versión. Se clasifican las referencias candidatas
+anteriores, descartando coincidencias de inmediato bajo. Siguiente: llamador de
+render y consumidor activo de velocidad/pitch mediante accesos indirectos;
+productores de buffers y dinámica aún pendientes, sin atribuir automáticamente
+su ausencia a L1. Mantener el instrumento híbrido y presets completos al final.
