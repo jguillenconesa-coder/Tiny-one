@@ -799,3 +799,16 @@ Siguiente frente: contrastar los especiales restantes de Crank/Element y sus
 consumidores, sin reinterpretar buffers explícitos como productores recuperados.
 El productor de ganancia drum, ruteo/voz completos, Pulse/L1, calibración acústica,
 Live real, firma/notarización y presets completos permanecen separados.
+
+
+## Crank Voice — 0.48.0
+
+[Level/Pitch](crank246-voice.md): callback synth 0x019cb0d4, kind 0, destino 3,
+colores 0/1. 18.432 llamadas originales, 2.060 aceptadas, 16.372 rechazadas;
+263.680 pares para el puente y repetición independiente idéntica. Ganancia
+suavizada compartida y pitch asimétrico según mitad de fase triangular.
+Diez motores con UI/estado/automatización; owner Bend/Crank separado en captura.
+Reloj, inicialización, lifecycle y composición siguen siendo propios.
+Siguiente: especiales FX/Element y consumidores activos; mantener Envelope de
+Element fuera del plugin sin llamada activa verificable. Productores de voz,
+dinámica drum, Pulse/L1, acústica/Live y presets finales siguen pendientes.

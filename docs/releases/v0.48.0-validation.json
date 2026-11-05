@@ -1,0 +1,56 @@
+{
+  "version": "0.48.0",
+  "date": "2026-11-05",
+  "original_reference": {
+    "calls": 18432,
+    "accepted": 2060,
+    "rejected": 16372,
+    "gain_calls": 1040,
+    "pitch_calls": 1020,
+    "bridge_pairs": 263680,
+    "independent_repeat": "identical numeric input/output",
+    "evidence": "../firmware/crank-voice246-validation.json"
+  },
+  "linux_build": "success: Release Standalone and VST3",
+  "linux_ctest": {
+    "status": "success: 134/134 suites",
+    "seconds": 632.58
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1242,
+    "tracked_heap_calls": 0,
+    "scope": "48 additional Crank Voice workloads; timings diagnostic on shared host, not dropout certification"
+  },
+  "host_integration": {
+    "native": "success: 182 rate/engine/destination cases, seven rates, ten supported melodic engines and drum/legacy rejection; exact 64/257 audio, Mono/Legato/glide and signed amounts. Negative amounts traverse the negative-pitch domain before note-off on every melodic engine.",
+    "plugin": "success: complete plugin smoke with screenshot generation; ten melodic engines x Level/Pitch, exact stereo 64/257 audio, automation boundary, route availability, editor-free proxies and project/slot/clipboard"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan 18432 original fixtures and exact block bridge",
+    "adapter": "pending final extended negative-amount run",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "native_ci": {
+    "status": "not yet submitted"
+  },
+  "plugins_installers_ci": {
+    "status": "not yet submitted"
+  },
+  "previous_product": {
+    "version": "0.47.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004873",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
+  "limits": [
+    "Global host coefficient clock, per-voice capture/lifecycle and composition are authored; original callback arithmetic and supplied buffers separately checked",
+    "Ten melodic engines only; drum/legacy rejected; FX audio, Crank sequencers and Element Envelope excluded",
+    "Original buffer producers, allocator and scheduler not recovered",
+    "No new real Ableton, native ARM64, signing/notarization, acoustic-equivalence, L1/OTP or complete original preset claim"
+  ],
+  "visual": {
+    "status": "reviewed CRANK / VOICE, PITCH target, VOICE destination and blue virtual encoder",
+    "sha256": "4c35c24047dcd31fa47986e7c6c68554dc6022fdf86044f253e3a31712bc1634"
+  }
+}

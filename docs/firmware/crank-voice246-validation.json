@@ -1,0 +1,96 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "factory_index_zero_based": 6,
+  "factory_wrapper": "0x019c9ab2",
+  "callbacks": {
+    "synth": "0x019cb0d4",
+    "drum_rejection": "0x019cb30c"
+  },
+  "model": "BF524 simulator, three verified writeback patches; not hardware",
+  "calls": 18432,
+  "families": "12288 synth and 6144 drum rejection calls",
+  "accepted_matrix_counts": {
+    "0:0:0:3": 206,
+    "0:1:0:3": 206,
+    "0:2:0:3": 206,
+    "0:3:0:3": 206,
+    "0:4:0:3": 206,
+    "0:6:0:3": 206,
+    "0:7:0:3": 206,
+    "0:11:0:3": 206,
+    "0:12:0:3": 206,
+    "0:13:0:3": 206
+  },
+  "source_prepare": "0x019cae18",
+  "source_reset": "0x019cae08",
+  "source_state": "0xff907acc",
+  "gain_state": "0x01dd59bc",
+  "shared_history": "0xff907ae8",
+  "previous_angle": "0x01dd5a54",
+  "artifacts": {
+    "crank-voice246-input.bin.gz": {
+      "bytes": 1182062,
+      "raw_bytes": 2359296,
+      "sha256": "941fda57653d52a79a4604770260dd3bcf4b4e00e1f5a58ce2e8cceb5aa42f46"
+    },
+    "crank-voice246-output.bin.gz": {
+      "bytes": 1450381,
+      "raw_bytes": 21012480,
+      "sha256": "47f5e7acee4098663af17ed305a1c9eeb371a9bcd1fa2d776f3fdd9c2b26f85f"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Interleaved source state, ring history, flags, counters and control/display words under supplied manual encoder inputs; gain/pitch transforms and complete buffers; input producers are supplied.",
+    "Only synth kind 0 destination 3 targets 0/1; no FX audio or auxiliary ENV.",
+    "No complete voice, protected gain producer or acoustic equivalence claim."
+  ],
+  "independent_repeat": "byte-identical numeric inputs and outputs in private-crank-voice246-a and private-crank-voice246-b",
+  "accepted": 2060,
+  "rejected": 16372,
+  "accepted_targets": {
+    "0": 1040,
+    "1": 1020
+  },
+  "accepted_type_targets": {
+    "0:0": 104,
+    "1:0": 104,
+    "2:0": 104,
+    "3:0": 104,
+    "4:0": 104,
+    "6:0": 104,
+    "7:0": 104,
+    "11:0": 104,
+    "12:0": 104,
+    "13:0": 104,
+    "0:1": 102,
+    "1:1": 102,
+    "2:1": 102,
+    "3:1": 102,
+    "4:1": 102,
+    "6:1": 102,
+    "7:1": 102,
+    "11:1": 102,
+    "12:1": 102,
+    "13:1": 102
+  },
+  "pitch_half_sign_cells": {
+    "lower:negative": 376,
+    "lower:nonnegative": 387,
+    "upper:nonnegative": 133,
+    "upper:negative": 124
+  },
+  "bridge_pairs": 263680,
+  "source_sha256": {
+    "Source/Crank246Special.h": "ae7b00eed39f4920b5820e58b5c3731ee30defb30c7a43e7b12129375fa85299",
+    "Source/Crank246Control.h": "b145b284ef4b8a4eb35d1f0c9593218f79b954a13f137343a22dc62efc5854a0",
+    "Source/Bend246Voice.h": "d3c38015c733f27cf0cc359bcde0958e319abcd19af8ab84de31dba413992ed8",
+    "Tests/Crank246VoiceReferenceTests.cpp": "83510d1722c2bedac95470b20674c10bd7009cbd250d06c68949cb5e60bc088e",
+    "scripts/verify-crank-voice246.py": "10cb5833efc9a5c9e071b464f1e8c3fad330c68394d8522c09a038a9b4ed5a51",
+    "research/blackfin/crank-voice-stream.s.in": "60b735d312cf5981e46b92ebe9c24893389e52df611a5058ddbfa0f018461907"
+  }
+}

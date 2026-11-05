@@ -1,5 +1,13 @@
 # Historial de cambios
 
+## 0.48.0 — Crank Voice
+
+- Level/Pitch en diez motores, encoder virtual, automatización y estados/slots/clipboard.
+- 18.432 llamadas originales y 263.680 pares de pitch/ganancia contrastados; repetición independiente idéntica.
+- Coeficiente global y captura por voz con propietario explícito para cambios Bend/Crank.
+- Reloj, lifecycle y composición propios; productores y scheduler siguen pendientes.
+- Fallback de versión NSIS actualizado; CI ya suministra VERSION explícitamente.
+
 ## 0.47.0 — Bend Voice
 
 - Level/Pitch para diez motores melódicos; 6.144 llamadas originales adicionales y 89.088 pares para el puente.

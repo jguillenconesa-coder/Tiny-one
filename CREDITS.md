@@ -767,3 +767,12 @@ and 89088 accepted pitch/gain pairs; only synthetic numeric observations are
 bundled. Source/coefficient scheduling and lifecycle are explicit host policies,
 not a recovered physical reader, buffer producer or original voice scheduler.
 See [scope](docs/bend246-voice.md).
+
+
+Crank Voice 246: independently authored gain/pitch reconstruction and host
+integration. 18,432 original callbacks under explicit state/buffers, two identical
+independent numeric extractions; 2,060 accepted calls and 263,680 bridge pairs.
+Numeric fixtures contain no firmware executable or decompiler output. Reuses the
+independently checked signed-word pitch primitive and owner-aware Bend block
+capture; host clock, lifecycle and composition are authored adaptations.
+See docs/crank246-voice.md and docs/firmware/crank-voice246-validation.json.

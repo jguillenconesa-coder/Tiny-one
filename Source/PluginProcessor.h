@@ -68,7 +68,7 @@ public:
     bool element246TargetAvailable() const {const int dest=int(elementAudio[3]->load()),colour=int(elementAudio[4]->load());if(dest&&colour>=4)return false;return midi246RouteAvailable(dest==0?colour+1:dest==1?colour+9:colour+13);}
     std::atomic<float> visualElement{0};
     bool crank246Enabled() const {return !element246Enabled()&&crankAudio[0]->load()>.5f&&midi246Available();}
-    bool crank246TargetAvailable() const {const int dest=int(crankAudio[3]->load()),colour=int(crankAudio[4]->load());if(dest&&colour>=4)return false;return midi246RouteAvailable(dest==0?colour+1:dest==1?colour+9:colour+13);}
+    bool crank246TargetAvailable() const {const int dest=int(crankAudio[3]->load()),colour=int(crankAudio[4]->load());if(dest==3)return colour<2&&midi246RouteAvailable(colour==0?19:20);if(dest&&colour>=4)return false;return midi246RouteAvailable(dest==0?colour+1:dest==1?colour+9:colour+13);}
     std::atomic<float> visualCrank{0};
     bool bend246Enabled() const {return !element246Enabled()&&!crank246Enabled()&&bendAudio[0]->load()>.5f&&midi246Available();}
     bool bend246TargetAvailable() const {const int colour=int(bendAudio[1]->load()),dest=int(bendAudio[2]->load());if(dest==3)return colour<2&&midi246RouteAvailable(colour==0?19:20);if(dest&&colour>=4)return false;return midi246RouteAvailable(dest==0?colour+1:dest==1?colour+9:colour+13);}

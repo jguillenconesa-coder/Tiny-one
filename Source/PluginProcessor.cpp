@@ -159,7 +159,7 @@ PocketProcessor::PocketProcessor(juce::File soundsDirectory) : AudioProcessor(Bu
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"crank246Enabled",1},"Crank LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::crank246Ids[0],1},"Crank LFO: Blue Encoder",-8192,8191,0));
     phaseLayout.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{pocket::crank246Ids[1],1},"Crank LFO: Amount",-32767,32767,16000));
-    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[2],1},"Crank LFO: Destination",juce::StringArray{"Instrument","ADSR","FX"},0));
+    phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[2],1},"Crank LFO: Destination",juce::StringArray{"Instrument","ADSR","FX","Voice"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::crank246Ids[3],1},"Crank LFO: Target",juce::StringArray{"Blue","Green","White","Orange","Target 5","Target 6","Target 7","Target 8"},0));
     phaseLayout.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{"element246Enabled",1},"Element LFO: Enabled",false));
     phaseLayout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{pocket::element246Ids[0],1},"Element LFO: Source",juce::StringArray{"G-force (virtual)","External Input","Voice Envelope","Instrument Level"},0));

@@ -39,30 +39,21 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Bend hacia la voz (0.47.0)
+## Entrega actual: Crank hacia la voz (0.48.0)
 
-[Bend Voice](bend246-voice.md) incorpora Level/Pitch en diez motores melódicos,
-automatización, estado/slots/clipboard, controles contextuales y rechazo de drum
-/legacy. 6.144 llamadas originales nuevas: 696 aceptadas (356 Level, 340 Pitch)
-y 5.448 rechazadas, con fuente/historial/display/controles/targets/retorno y buffers
-completos. Dos ejecuciones independientes idénticas. El puente coincide con
-89.088 pares de pitch/ganancia de los bloques originales aceptados.
+[Crank Voice](crank246-voice.md) añade Level/Pitch en diez motores melódicos,
+encoder virtual, automatización, controles y proyectos/slots/clipboard.
+18.432 llamadas originales: 2.060 aceptadas y 16.372 rechazadas, con estado,
+historial, controles y buffers completos; dos extracciones independientes idénticas.
+263.680 pares pitch/gain contrastan también el puente. Coeficiente compartido,
+curva triangular asimétrica y fase detenida conservados; reloj, lifecycle,
+composición y captura por voz son propios. Productores y scheduler pendientes.
 
-Coeficiente suavizado compartido, curva de pitch asimétrica y saturación conservados.
-Cadencia global del host, captura por voz/bloque de 128 y composición de envolvente,
-límites y lifecycle son propios. No se recuperan por ello el productor de buffers,
-allocator ni scheduler originales. **132 suites verificadas**, **1.194 cargas sin
-heap rastreado**, ASan/UBSan y revisión visual aprobados; la evidencia separa
-la corrección del estímulo de prueba del plugin de los cambios de producto.
-[Los dos verificadores Bend Voice](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004949)
-pasan en Linux, Windows/MSVC y macOS Intel; las regresiones Bend/MIDI/FM/D-synth/Crank
-también pasan. [Plugins e instaladores completos](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004873)
-siguen en curso. [Evidencia](releases/v0.47.0-validation.json).
-
-Se mantiene **≈69 % ±10 puntos de planificación**, sin nueva medición de fidelidad.
-El CI completo 0.46.0 está aprobado; ARM64 de esa revisión no adquirió runner.
-Siguen especiales de los demás LFO, ruteo/productores, Pulse/L1, acústica/Live,
-firma/notarización y presets completos al final.
+[Evidencia de comprobaciones y CI](releases/v0.48.0-validation.json).
+El CI completo 0.47.0 terminó aprobado en Linux, Windows/MSVC y macOS universal
+(runtime Intel). Se mantiene **≈69 % ±10 de planificación**, sin medición acústica.
+Siguen especiales FX/Element y consumidores, dinámica drum, ruteo/productores,
+Pulse/L1, Live real, firma/notarización y presets originales al final.
 
 ## Entrega anterior: Random hacia los ocho FX (0.46.0)
 

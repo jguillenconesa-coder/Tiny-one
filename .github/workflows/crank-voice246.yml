@@ -1,0 +1,40 @@
+name: Validate Crank voice gain and pitch
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/crank-voice/**'
+      - 'research/blackfin/crank-*'
+      - 'Source/Element246*.h'
+      - 'Source/Crank246*.h'
+      - 'Source/Bend246*.h'
+      - 'Tests/Crank246VoicePluginSupport.h'
+      - 'Source/Midi246*.h'
+      - 'Source/Drum246Modulation*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/Sampler246Modulation.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Engine.h'
+      - 'Source/Phase246.h'
+      - 'Source/*246Voice.h'
+      - 'Source/SharedDrum246.h'
+      - 'Tests/Crank246Voice*.cpp'
+      - 'Tests/RunCrank246VoiceTests.py'
+      - 'Tests/ReferenceVectors/crank-voice246-*'
+      - 'scripts/verify-crank-voice246.py'
+      - '.github/workflows/crank-voice246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/crank-voice -B build-crank-voice -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-crank-voice --config Release --parallel 2
+      - run: ctest --test-dir build-crank-voice -C Release --output-on-failure

@@ -38,7 +38,7 @@
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004949"
   },
   "plugins_installers_ci": {
-    "status": "in progress; no final result claimed",
+    "status": "success on Linux, Windows/MSVC and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42011004873"
   },
   "previous_product": {

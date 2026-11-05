@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #pragma once
-#include "Crank246.h"
+#include "Crank246Special.h"
 namespace pocket {
 inline constexpr std::array<const char*,4> crank246Ids{{"crank246Angle","crank246Amount","crank246Destination","crank246Colour"}};
 // Authored host tick and activation policy. One inertial source feeds every
 // voice/FX; notes do not reset it. Controls, not its live trajectory, persist.
 struct Crank246Control {
- reference::Crank246State state;
+ reference::Crank246State state;uint32_t gainState=0;
  std::array<int16_t,8> controls{};
  double position=1;
  bool active=false;
@@ -14,9 +14,9 @@ struct Crank246Control {
  void next(bool enabled,int angle,int amount,int dest,int target,double step) noexcept {
   if(!enabled){if(active)*this={};return;}
   if(!active){*this={};active=true;}
-  colour=std::clamp(target,0,7);destination=std::clamp(dest,0,2);
+  colour=std::clamp(target,0,7);destination=std::clamp(dest,0,3);
   controls[0]=int16_t(std::clamp(angle,-8192,8191));controls[1]=int16_t(std::clamp(amount,-32767,32767));controls[2]=int16_t(destination*2048);
-  if(position>=1){reference::crank246Prepare(state);reference::crank246Advance(state,controls);position-=1;}
+  if(position>=1){reference::crank246Prepare(state);const auto level=reference::crank246Advance(state,controls);if(destination==3&&colour==0){const auto gain=reference::crank246VoiceCoefficient(int16_t(gainState&65535u),level,controls[1]);gainState=(gainState&0xffff0000u)|uint16_t(gain);}position-=1;}
   position+=step;
  }
  float phase() const noexcept {return active?float(state.words[2])/256.f:0;}
