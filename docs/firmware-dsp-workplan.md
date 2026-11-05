@@ -866,6 +866,19 @@ scheduler. Siguiente: dinámica drum y contratos legibles de voz/ruteo sobre má
 rutas de parámetros. Mantener Envelope auxiliar fuera sin llamada activa
 validable. Pulse/L1, acústica/Live, ARM64 actual y presets finales siguen pendientes.
 
-Antes de otra entrega, consultar el CI 0.52.0 enlazado en la evidencia y resolver
-cualquier fallo. El producto 0.51.0 ya terminó aprobado en Linux, Windows/MSVC
-y macOS universal (runtime Intel); no repetir sus builds aprobados.
+El CI completo 0.52.0 terminó aprobado en Linux, Windows/MSVC y macOS
+universal (runtime Intel), igual que 0.51.0. No repetir builds del producto
+sin cambiarlo.
+
+## Core del drum sampler — investigación posterior a 0.52.0
+
+[Contrato](drum246-core-routing.md): factory tipo 8, reset y release con 4.608
+casos originales y rejilla 12 × 8 × 24. 3.456 renders / 442.368 muestras, estados
+y buffers completos contrastados; dos extracciones idénticas. Suite standalone
+Release y ASan/UBSan aprobadas, CI nativo separado. No integra código en el
+instrumento, no cambia versión ni genera instaladores. `s_drum_producers` son
+objetos de audio, no el productor de dinámica. Siguiente: llamador activo de
+render/actividad y escritores pitch/gain de esos doce objetos; conservar dinámica
+y asignación híbridas mientras falta esa composición. No extrapolar a D-box,
+scheduler MIDI o equivalencia acústica. Mantener Envelope auxiliar fuera sin
+contrato activo y presets originales completos al final.

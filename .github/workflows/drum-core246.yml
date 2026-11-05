@@ -1,0 +1,29 @@
+name: Validate Core drum sampler routing
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/drum-core/**'
+      - 'research/blackfin/drum-core-stream.s.in'
+      - 'Source/Drum246.h'
+      - 'Source/Drum246Tables.h'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-drum-core246.py'
+      - '.github/workflows/drum-core246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/drum-core -B build-drum-core -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-drum-core --config Release --parallel 2
+      - run: ctest --test-dir build-drum-core -C Release --output-on-failure

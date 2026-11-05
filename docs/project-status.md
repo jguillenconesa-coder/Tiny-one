@@ -39,6 +39,16 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Investigación posterior: ruteo Core del drum sampler
+
+[Factory/disparo/release tipo 8](drum246-core-routing.md): 4.608 casos originales,
+rejilla de doce voces × ocho sonidos × 24 pads, con 3.456 bloques renderizados
+(442.368 muestras). Dos extracciones idénticas, suite Release y ASan/UBSan
+aprobadas; CI nativo separado. No cambia el instrumento 0.52.0 ni genera
+instaladores. Los doce productores son objetos de audio; la dinámica original
+sigue pendiente. Próximo: llamador activo de render/actividad y escritores
+pitch/gain. Avance de planificación: **≈69 % ±10**, fidelidad acústica sin medir.
+
 ## Entrega actual: Element hacia pitch de voz (0.52.0)
 
 [Pitch de Element](element246-voice-pitch.md) en diez motores y cuatro fuentes,
@@ -51,7 +61,7 @@ sin nueva medición acústica ni recuperación del scheduler original. Linux Rel
 **142/142 suites**, **1446 cargas de tiempo real sin heap rastreado**, ASan/UBSan
 del núcleo y adaptador aprobados; revisión visual aprobada. Las dos suites de
 Pitch y las regresiones de Gain pasan en Linux, Windows/MSVC y macOS Intel.
-Plugins/instaladores completos siguen en curso, enlazados por revisión.
+Plugins/instaladores completos aprobados en Linux, Windows/MSVC y macOS universal (runtime Intel).
 
 ## Entrega anterior: Element hacia la ganancia de voz (0.51.0)
 

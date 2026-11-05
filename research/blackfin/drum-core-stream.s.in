@@ -1,0 +1,306 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored harness: original code remains in the privately supplied LDR.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+@SETUP@
+// Eight explicit sample references, each a pointer to its PCM-pointer word.
+imm32 P1,0x01cc10cc
+imm32 R0,0x02010000
+R1 = 8;
+P0 = 8;
+LSETUP(refs,refs_end) LC0=P0;
+refs: [P1++] = R0;
+refs_end: R0=R0+R1;
+// Initialize the Core pointer table without calling a constructor.
+imm32 P1,0x01aaad30
+imm32 R0,0xffb00000
+R1 = 20;
+P0 = 12;
+LSETUP(ptrs,ptrs_end) LC0=P0;
+ptrs: [P1++] = R0;
+ptrs_end: R0=R0+R1;
+P1.H=initial_controls;
+P1.L=initial_controls;
+imm32 P2,0x01aaadb4
+P0=768;
+LSETUP(init_controls,init_controls_end) LC0=P0;
+init_controls: R0=[P1++];
+init_controls_end: [P2++]=R0;
+imm32 P1,0xff801b50
+imm32 R0,0x6c6c6c6c
+P0=128;
+LSETUP(init_derived,init_derived_end) LC0=P0;
+init_derived: [P1++]=R0;
+init_derived_end: NOP;
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+R0=[P4];
+CC=BITTST(R0,0);
+IF !CC JUMP loaded;
+P1=P4;
+P1+=32;
+P1+=40;
+imm32 P2,0xffb00000
+P0=60;
+LSETUP(load_pool,load_pool_end) LC0=P0;
+load_pool: R0=[P1++];
+load_pool_end: [P2++]=R0;
+loaded:
+P1=P4;
+P1+=24;
+imm32 P2,0xff801334
+P0=12;
+LSETUP(load_pads,load_pads_end) LC0=P0;
+load_pads: R0=[P1++];
+load_pads_end: [P2++]=R0;
+R0=[P4+4];
+R0<<=2;
+P1=P4;
+P1+=24;
+P0=R0;
+P1=P1+P0;
+R0=[P1];
+R0<<=4;
+R1=[P4+8];
+R2=384;
+R1*=R2;
+R0=R0+R1;
+imm32 R1,0x01aaadb4
+R0=R0+R1;
+P2=R0;
+P1=P4;
+imm32 P0,312
+P1=P1+P0;
+P0=4;
+LSETUP(load_controls,load_controls_end) LC0=P0;
+load_controls: R0=[P1++];
+load_controls_end: [P2++]=R0;
+R0=[P4+12];
+imm32 P1,0x01aaac10
+[P1]=R0;
+R0=[P4];
+CC=BITTST(R0,1);
+IF !CC JUMP factory_done;
+R0=8;
+imm32 P0,0x01967984
+CALL(P0);
+factory_done:
+R0=[P4+8];
+imm32 P1,0x01aaac10
+[P1]=R0;
+// Trace dispatch with authored endpoints and controlled signed this-adjustments.
+P1.H=trace;
+P1.L=trace;
+imm32 R0,0x13579bdf
+P0=4;
+LSETUP(clear_trace,clear_trace_end) LC0=P0;
+clear_trace: [P1++]=R0;
+clear_trace_end: NOP;
+R0=0;
+[P1]=R0;
+R0=[P4+16];
+P1.H=spy_table;
+P1.L=spy_table;
+W[P1+0x18]=R0;
+R0=[P4+20];
+W[P1+0x28]=R0;
+R0=[P4+4];
+R1=20;
+R0*=R1;
+imm32 R1,0xffb00000
+R0=R0+R1;
+P2=R0;
+[P2]=P1;
+R0=[P4];
+CC=BITTST(R0,2);
+IF !CC JUMP traced_reset;
+R0=[P4+4];
+imm32 P0,0x01967ccc
+CALL(P0);
+traced_reset:
+R0=[P4];
+CC=BITTST(R0,3);
+IF !CC JUMP traced_release;
+R0=[P4+4];
+imm32 P0,0x01967d64
+CALL(P0);
+traced_release:
+R0=[P4+4];
+R1=20;
+R0*=R1;
+imm32 R1,0xffb00000
+R0=R0+R1;
+P2=R0;
+imm32 R0,0x0190fac4
+[P2]=R0;
+// Execute the same Core routes against the real original sampler vtable.
+R0=[P4];
+CC=BITTST(R0,2);
+IF !CC JUMP real_reset;
+R0=[P4+4];
+imm32 P0,0x01967ccc
+CALL(P0);
+real_reset:
+R0=[P4];
+CC=BITTST(R0,3);
+IF !CC JUMP real_release;
+R0=[P4+4];
+imm32 P0,0x01967d64
+CALL(P0);
+real_release:
+P1.H=trace;
+P1.L=trace;
+P0=5;
+LSETUP(save_trace,save_trace_end) LC0=P0;
+save_trace: R0=[P1++];
+save_trace_end: [P5++]=R0;
+imm32 P1,0x01aaad30
+P0=12;
+LSETUP(save_ptrs,save_ptrs_end) LC0=P0;
+save_ptrs: R0=[P1++];
+save_ptrs_end: [P5++]=R0;
+imm32 P1,0xffb00000
+P0=60;
+LSETUP(save_before,save_before_end) LC0=P0;
+save_before: R0=[P1++];
+save_before_end: [P5++]=R0;
+// Preserve the supplied controls/pitch/gain while rendering an original block.
+P1=P4;
+imm32 P0,328
+P1=P1+P0;
+imm32 P2,0xff801950
+P0=128;
+LSETUP(load_pitch,load_pitch_end) LC0=P0;
+load_pitch: R0=[P1++];
+load_pitch_end: [P2++]=R0;
+imm32 P2,0xff801d50
+P0=64;
+LSETUP(load_gain,load_gain_end) LC0=P0;
+load_gain: R0=[P1++];
+load_gain_end: [P2++]=R0;
+// Select the actual bank/pad controls, also used by Core above.
+R0=[P4+4];
+P1=P4;
+P1+=24;
+R0<<=2;
+P0=R0;
+P1=P1+P0;
+R0=[P1];
+R0<<=4;
+R1=[P4+8];
+R2=384;
+R1*=R2;
+R0=R0+R1;
+imm32 R1,0x01aaadb4
+R0=R0+R1;
+P3=R0;
+// Poison output so skipped renders are checked too.
+P1.H=audio;
+P1.L=audio;
+imm32 R0,0x24681357
+P0=64;
+LSETUP(init_audio,init_audio_end) LC0=P0;
+init_audio: [P1++]=R0;
+init_audio_end: NOP;
+R0=[P4];
+CC=BITTST(R0,4);
+IF !CC JUMP rendered;
+R0=[P4+4];
+R1=20;
+R0*=R1;
+imm32 R1,0xffb00000
+R0=R0+R1;
+R1.H=audio;
+R1.L=audio;
+R2=P3;
+imm32 P0,0x019789ec
+CALL(P0);
+rendered:
+imm32 P1,0xffb00000
+P0=60;
+LSETUP(save_after,save_after_end) LC0=P0;
+save_after: R0=[P1++];
+save_after_end: [P5++]=R0;
+P1.H=audio;
+P1.L=audio;
+P0=64;
+LSETUP(save_audio,save_audio_end) LC0=P0;
+save_audio: R0=[P1++];
+save_audio_end: [P5++]=R0;
+imm32 P1,0xff801950
+P0=128;
+LSETUP(save_pitch,save_pitch_end) LC0=P0;
+save_pitch: R0=[P1++];
+save_pitch_end: [P5++]=R0;
+imm32 P1,0xff801d50
+P0=64;
+LSETUP(save_gain,save_gain_end) LC0=P0;
+save_gain: R0=[P1++];
+save_gain_end: [P5++]=R0;
+imm32 P1,0xff801b50
+P0=128;
+LSETUP(save_derived,save_derived_end) LC0=P0;
+save_derived: R0=[P1++];
+save_derived_end: [P5++]=R0;
+imm32 P1,0x01aaadb4
+P0=768;
+LSETUP(save_controls,save_controls_end) LC0=P0;
+save_controls: R0=[P1++];
+save_controls_end: [P5++]=R0;
+imm32 P0,1096
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF !CC JUMP next_case;
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+R0.H=pcm_args;
+R0.L=pcm_args;
+P0=5;
+EXCPT 0;
+exit 0
+trace_reset:
+P0.H=trace;
+P0.L=trace;
+[P0]=R0;
+[P0+4]=R1;
+R0=[P0+16];
+BITSET(R0,0);
+[P0+16]=R0;
+RTS;
+trace_release:
+P0.H=trace;
+P0.L=trace;
+[P0+8]=R0;
+[P0+12]=R1;
+R0=[P0+16];
+BITSET(R0,1);
+[P0+16]=R0;
+RTS;
+.data
+.align 4
+trace: .space 20
+spy_table: .space 28
+.long trace_reset
+.space 12
+.long trace_release
+audio: .space 256
+coeff_args: .long 1,0xff802154,2052
+io_args: .long 1,results,@BYTES@
+pcm_args: .long 1,samples,16896
+@HANDLES@
+samples: .incbin "@WORK@/inputs.bin",0,16896
+initial_controls: .incbin "@WORK@/inputs.bin",16896,3072
+inputs: .incbin "@WORK@/inputs.bin",19968
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

@@ -1,0 +1,73 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4608,
+  "input_prefix_bytes": 19968,
+  "input_record_bytes": 1096,
+  "output_prefix_bytes": 2052,
+  "output_record_bytes": 5156,
+  "output_suffix_bytes": 16896,
+  "core_factory": "0x01967984",
+  "factory_helper": "0x01a1b9c0",
+  "core_reset": "0x01967ccc",
+  "core_release": "0x01967d64",
+  "producer_table": "0x01aaad30",
+  "selected_sound": "0x01aaac10",
+  "voice_pad_table": "0xff801334",
+  "control_banks": "0x01aaadb4",
+  "sample_references": "0x01cc10cc",
+  "type": 8,
+  "voices": 12,
+  "sounds": 8,
+  "pads": 24,
+  "artifacts": {
+    "drum-core246-input.bin.gz": {
+      "bytes": 1830472,
+      "raw_bytes": 5070336,
+      "sha256": "c8d0967766a6e018492027307f78c14210983aba1991c31dcd786a3543efd184"
+    },
+    "drum-core246-output.bin.gz": {
+      "bytes": 2643366,
+      "raw_bytes": 23777796,
+      "sha256": "0b122bd6c5c4f934e9de8b5999229566a2c36e7a3bc7b52ec74b5d5b31007a7e"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Original Core dispatch traced using authored spy endpoints and signed this adjustments; the same routes then execute original sampler reset/release and optional render.",
+    "Valid indices only; explicit pads, sample references, controls, PCM padding, pitch/gain and event order. No gain-envelope producer, MIDI allocator, original scheduling or acoustic equivalence.",
+    "Research-only, no plugin integration or installer build."
+  ],
+  "date": "2026-11-05",
+  "product_version_unchanged": "0.52.0",
+  "independent_repeat": "two independent runs: identical uncompressed inputs and outputs",
+  "counts": {
+    "factories": 159,
+    "resets": 2513,
+    "releases": 2514,
+    "rendered_blocks": 3456,
+    "rendered_samples": 442368,
+    "nonzero_audio_blocks": 1614,
+    "bound_selected_sound_differences": 3088
+  },
+  "native_linux": {
+    "status": "success",
+    "suites": 1,
+    "seconds": 0.36
+  },
+  "sanitizers": {
+    "status": "success: complete suite, ASan/UBSan",
+    "seconds": 16.94,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "native_ci": {
+    "status": "pending: dedicated Linux/Windows/MSVC/macOS Intel workflow"
+  },
+  "product_ci": {
+    "status": "success: unchanged 0.52.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091922166"
+  }
+}

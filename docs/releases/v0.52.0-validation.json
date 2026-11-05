@@ -89,7 +89,7 @@
     }
   },
   "plugins_installers_ci": {
-    "status": "in progress on all platforms; Linux/Windows testing, macOS universal configuring",
+    "status": "success: Linux, Windows/MSVC and macOS universal; runtime Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091922166"
   },
   "previous_product": {
@@ -110,5 +110,5 @@
     "status": "success on Linux, Windows/MSVC and macOS Intel",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42091921818"
   },
-  "ci_snapshot_utc": "2026-11-05 19:23 UTC"
+  "ci_snapshot_utc": "2026-11-05 20:08 UTC"
 }
