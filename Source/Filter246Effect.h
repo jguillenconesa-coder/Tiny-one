@@ -3,6 +3,7 @@
 #include "Filter246.h"
 #include "Midi246.h"
 #include "Manual246FxAudio.h"
+#include "Element246FxAudio.h"
 #include "Filter246Tables.h"
 #include "Filter246Controls.h"
 #include "Nitro246.h"
@@ -38,7 +39,8 @@ struct Filter246Effect {
     std::array<int16_t,512> history{};
     std::vector<float> dry;
     struct Biquad {double b0=1,b1=0,b2=0,a1=0,a2=0,z1=0,z2=0;double next(double x) noexcept {const double y=b0*x+z1;z1=b1*x-a1*y+z2;z2=b2*x-a2*y;return y;}};
-    std::array<Biquad,2> filters{};
+    std::array<Biquad,2> filters{},externalFilters{};
+    double externalPrevious=0;
     double hostRate=48000,ratio=48000./44100,previous=0;
     uint64_t hostPosition=0,inputPosition=0;int64_t completed=-1;
     int latency=0;unsigned cursor=0;uint64_t underruns=0;
@@ -50,20 +52,24 @@ struct Filter246Effect {
         hostRate=std::max(8000.,rate);ratio=hostRate/internalRate;latency=latencyFor(hostRate);dry.resize(size_t(latency)+2);smoothing=float(1-std::exp(-1/(hostRate*.012)));dcCoefficient=std::exp(-2*3.14159265358979323846*15/hostRate);
         constexpr double pi=3.14159265358979323846;const double w=2*pi*std::min(17640.,hostRate*.4)/hostRate,cs=std::cos(w),sn=std::sin(w);const double q[]={.541196100146197,1.306562964876377};
         for(size_t i=0;i<2;++i){const double alpha=sn/(2*q[i]),a0=1+alpha;filters[i]={(1-cs)/(2*a0),(1-cs)/a0,(1-cs)/(2*a0),-2*cs/a0,(1-alpha)/a0,0,0};}
-        reset();
+        externalFilters=filters;reset();
     }
-    void reset() noexcept {cwoState={};cwoMemory.fill(0);springState={};springMemory.fill(0);springPending=0;state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);phoneState={};phoneMemory.fill(0);wasNitro=wasDelay=wasGrid=wasPhone=wasSpring=wasCwo=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
-    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false,const Midi246FxAudio* midiAudio=nullptr,const Manual246FxAudio* manualAudio=nullptr) noexcept {
+    void reset() noexcept {cwoState={};cwoMemory.fill(0);springState={};springMemory.fill(0);springPending=0;state={};nitroState={};delayState={};delayMemory.fill(0);gridState={};gridMemory.fill(0);phoneState={};phoneMemory.fill(0);wasNitro=wasDelay=wasGrid=wasPhone=wasSpring=wasCwo=false;meters.fill(0);block.fill(0);history.fill(0);std::fill(dry.begin(),dry.end(),0.f);for(auto& f:filters)f.z1=f.z2=0;for(auto& f:externalFilters)f.z1=f.z2=0;externalPrevious=0;hostPosition=inputPosition=0;completed=-1;previous=0;cursor=0;underruns=0;mix=0;dcInput=dcOutput=0;initialized=wasEnabled=awake=false;firstSignal=firstSignalHost=~uint64_t(0);}
+    float next(float input,bool enabled,const std::array<int16_t,4>& controls,const std::array<int16_t,8192>& sine,bool nitro=false,bool delay=false,bool grid=false,bool phone=false,bool spring=false,bool cwo=false,const Midi246FxAudio* midiAudio=nullptr,const Manual246FxAudio* manualAudio=nullptr,const Element246FxAudio* elementAudio=nullptr,float externalInput=0.f) noexcept {
         if(dry.empty())return input;
         if(!initialized){mix=enabled?1.f:0.f;initialized=true;}
         if(enabled&&(!wasEnabled||nitro!=wasNitro||delay!=wasDelay||grid!=wasGrid||phone!=wasPhone||spring!=wasSpring||cwo!=wasCwo)){cwoState={};if(cwo)cwoMemory.fill(0);springState={};springPending=0;if(spring)springMemory.fill(0);phoneState={};if(phone)phoneMemory.fill(0);state={};nitroState={};delayState={};gridState={};if(delay)delayMemory.fill(0);if(grid)gridMemory.fill(0);awake=false;firstSignal=firstSignalHost=~uint64_t(0);dcInput=dcOutput=0;}wasEnabled=enabled;wasNitro=nitro;wasDelay=delay;wasGrid=grid;wasPhone=phone;wasSpring=spring;wasCwo=cwo;if(input!=0){awake=true;if(enabled&&firstSignalHost==~uint64_t(0))firstSignalHost=hostPosition;}
         const float clean=hostPosition>=uint64_t(latency)?dry[size_t((hostPosition-uint64_t(latency))%dry.size())]:0;
         dry[size_t(hostPosition%dry.size())]=input;
         double filtered=input;if(hostRate!=internalRate)for(auto& f:filters)filtered=f.next(filtered);
+        double externalFiltered=std::isfinite(externalInput)?double(externalInput):0.;if(hostRate!=internalRate)for(auto& f:externalFilters)externalFiltered=f.next(externalFiltered);
         while(double(inputPosition)*ratio<=double(hostPosition)+1e-9){
             const double fraction=hostPosition==0?1:std::clamp(double(inputPosition)*ratio-(double(hostPosition)-1),0.,1.);
             const auto sample=previous+(filtered-previous)*fraction;
             block[cursor++]=int16_t(std::clamp(std::lround(sample*32768),-32768l,32767l));
+            const auto externalSample=externalPrevious+(externalFiltered-externalPrevious)*fraction;
+            const auto externalWord=int16_t(std::clamp(std::round(externalSample*32768),-32768.,32767.));
+            if(enabled&&elementAudio)block[cursor-1]=elementAudio->apply(block[cursor-1],externalWord);
             if(enabled&&manualAudio)block[cursor-1]=manualAudio->apply(block[cursor-1]);
             if(enabled&&midiAudio)block[cursor-1]=midiAudio->apply(block[cursor-1]);
             if(enabled&&block[cursor-1]!=0&&firstSignal==~uint64_t(0))firstSignal=inputPosition;
@@ -82,7 +88,7 @@ struct Filter246Effect {
         if(enabled&&guardSilence&&(firstSignalHost==~uint64_t(0)||hostPosition<firstSignalHost+uint64_t(latency)))wet=0;
         if(removeDC){const double filteredWet=wet-dcInput+dcCoefficient*dcOutput;dcInput=wet;dcOutput=filteredWet;wet=float(filteredWet);}
         mix+=smoothing*((enabled?1.f:0.f)-mix);if(!enabled&&mix<.000001f)mix=0;
-        previous=filtered;++hostPosition;return clean+(wet-clean)*mix;
+        externalPrevious=externalFiltered;previous=filtered;++hostPosition;return clean+(wet-clean)*mix;
     }
 };
 }

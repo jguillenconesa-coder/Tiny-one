@@ -1,7 +1,9 @@
 # Element LFO 246 — 0.43.0
 
 En la página LFO elige **LFO: Element**. Blue selecciona la fuente, Green la
-cantidad bipolar, White Instrument/ADSR/FX y Orange el target. Hay cuatro fuentes:
+cantidad bipolar, White Instrument/ADSR/FX y Orange el target.
+[0.50.0 añade FX Input: Multiply/Subtract](element246-fx-input.md), con contrato
+de audio separado, muestras externas firmadas y Self sobre el propio audio. Hay cuatro fuentes:
 
 | Fuente | Uso en el plugin |
 |---|---|
@@ -61,8 +63,8 @@ rango** (`0x01a1de8e`), no la escala de rango de Value/Bend/Crank.
 Esto demuestra coincidencia numérica bajo esos controles, buffers y palabras,
 en el simulador BF524 con los tres parches de writeback contrastados. **No**
 recupera los productores físicos/IPC, el detector de nivel/envolvente original,
-la voz completa ni equivalencia acústica. Audio/pitch/gain especiales y FX ENV
-kind 4 quedan fuera de este contrato e integración.
+la voz completa ni equivalencia acústica. Gain/pitch especiales y FX ENV kind 4 siguen fuera. El audio FX tiene un
+[contrato e integración separados en 0.50.0](element246-fx-input.md).
 
 ## Frontend propio del host
 

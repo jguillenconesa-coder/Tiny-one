@@ -1,5 +1,13 @@
 # Historial de cambios
 
+## 0.50.0 — Element FX Input
+
+- Multiply/Subtract, cuatro fuentes, siete FX mono, automatización, UI y guardado.
+- Entrada externa firmada y remuestreada por muestra, independiente del pico de parámetros.
+- 8.192 llamadas originales, 3.494 procesadas; Self transforma audio aunque retorne cero.
+- 223.616 muestras transformadas y 111.936 muestras del puente kind 2 contrastadas.
+- Productores, clock, frontend y ubicación del host siguen explícitos; Envelope auxiliar fuera del plugin.
+
 ## 0.49.0 — Bend/Crank FX Input
 
 - FX Gain/Shape en siete efectos del bus mono; audio externo, controles y guardado.

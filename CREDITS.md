@@ -784,3 +784,11 @@ source, 3493 accepted each, 447104 bridge halfwords total; complete numerical
 states and buffers checked with two identical independent runs per source.
 Host clock and routing are authored. Firmware, decompiler pseudocode and ELF
 stay private. See docs/manual246-fx-input.md for limits and attribution.
+
+
+Element FX audio 246: independently authored reconstruction and signed external
+sidechain/mono bus integration. 8192 original callbacks, 3494 processed including
+874 source-3 zero returns, 223616 transformed halfwords and 111936 kind-2 host
+bridge halfwords. Two identical independent numeric extractions. Host frontend,
+resampling and routing are authored; kind 5 model-only. See docs/element246-fx-input.md.
+No firmware executable, private dump or decompiler pseudocode is distributed.

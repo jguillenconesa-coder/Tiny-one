@@ -7,6 +7,7 @@
 #include <vector>
 #include "Phase246.h"
 #include "Manual246FxAudio.h"
+#include "Element246FxAudio.h"
 #include "SharedDrum246.h"
 #include "Fm246Voice.h"
 #include "Digital246Voice.h"
@@ -83,6 +84,10 @@ public:
     void midiController(int number,int value) noexcept {if(number>=1&&number<=4)midiCC[size_t(number-1)]=uint32_t(std::clamp(value,0,127));}
     float element246Level() const noexcept {return elementControl.level();}
     float crank246Phase() const noexcept {return crankControl.phase();}
+    Element246FxAudio elementFxAudio() const noexcept {
+        if(elementControl.active&&elementControl.destination==3&&(elementControl.colour==2||elementControl.colour==3))return {elementControl.inputs,elementControl.source,int16_t(elementControl.amount),elementControl.colour};
+        return {};
+    }
     Manual246FxAudio manualFxAudio() const noexcept {
         if(crankControl.active&&crankControl.destination==3&&crankControl.colour>=2&&crankControl.colour<=3)return {reference::saturate16((reference::crank246Level(crankControl.state)-64)*512),crankControl.controls[1],crankControl.colour};
         if(bendControl.active&&bendControl.destination==3&&bendControl.colour>=2&&bendControl.colour<=3)return {reference::saturate16(int(int16_t(bendControl.state.words[0]))*256),bendControl.controls[2],bendControl.colour};

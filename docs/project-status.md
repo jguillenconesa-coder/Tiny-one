@@ -39,32 +39,32 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: Bend/Crank hacia la entrada FX (0.49.0)
+## Entrega actual: Element hacia la entrada FX (0.50.0)
 
-[FX Gain/Shape](manual246-fx-input.md) añade dos curvas en los siete efectos del
-bus mono, con mezcla/cinta/audio externo monitorizado, automatización, controles
-y proyectos/slots/clipboard. Level/Pitch conservados en Voice / FX Input;
+[Multiply/Subtract](element246-fx-input.md) conecta cuatro fuentes a los siete
+FX mono: sensor virtual, entrada externa firmada por muestra, envolvente del
+host y Self sobre el audio. Automatización, controles, proyectos/slots/clipboard;
 Punch/bypass y targets inválidos rechazados.
 
-16.384 llamadas originales nuevas: 6.986 aceptadas y 9.398 rechazadas, estado,
-controles/retorno y buffers completos; dos extracciones independientes idénticas
-por fuente. 447.104 muestras contrastan también el puente. Clock, ownership,
-muestreo de fuente y composición en el host son propios; productores/scheduler
-originales pendientes. [Evidencia y CI](releases/v0.49.0-validation.json).
+8192 callbacks originales adicionales: 3494 procesados, 4698 rechazados y
+874 Self con retorno cero conservado. 223616 muestras transformadas comparadas;
+el puente kind 2 coincide con otras 111936 muestras de esos mismos fixtures.
+Dos extracciones independientes idénticas. Kind 5 está contrastado en el modelo,
+sin otro bus drum en el host. Frontend, remuestreo alineado, ubicación, clock y
+lifecycle son propios; no recuperan productores ni scheduler.
 
-La prueba independiente pasa 392 combinaciones de tasa/FX/fuente/curva/bypass.
-**136/136 suites**, **1.290 cargas sin heap rastreado**, ASan/UBSan y revisión
-visual aprobados. Los dos verificadores nuevos y las nueve regresiones
-específicas pasan en Linux, Windows/MSVC y macOS Intel.
-[Plugins e instaladores 0.49](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773570)
-siguen en curso.
-El CI completo 0.48.0 ya pasó en Linux, Windows y macOS universal (runtime Intel).
-El CI nativo Crank Voice 0.48 pasó en los tres sistemas; cuatro regresiones
-anteriores quedaron sin runner macOS tras pasar Linux/Windows (ningún paso macOS
-ejecutado). No se atribuye un fallo de DSP ni aprobación macOS a esas ejecuciones.
-Se mantiene **≈69 % ±10 de planificación**, sin medición acústica nueva.
-Siguen especiales Element/consumidores, dinámica drum, productores/ruteo,
-Pulse/L1, Ableton real, firma/notarización y presets originales al final.
+La prueba independiente pasa 784 combinaciones tasa/FX/fuente/curva/bypass y
+alineación de carrier/sidechain a siete tasas. ASan/UBSan aprobados en núcleo,
+puente y adaptador. **138 suites verificadas** y **1338 cargas sin heap
+rastreado**. La evidencia distingue la corrección del estímulo ADSR del test
+del producto, cuyo DSP y política de colas no cambiaron por ese fallo. [Evidencia y CI](releases/v0.50.0-validation.json).
+El CI completo 0.49.0 está aprobado en Linux, Windows y macOS universal
+(runtime Intel), así como sus verificadores nativos y regresiones específicas.
+
+Se mantiene **≈69 % ±10 de planificación**, sin nueva medición acústica.
+Siguen Gain/Pitch de Element y consumidores, Envelope auxiliar sin contrato
+activo, dinámica drum, productores/ruteo, Pulse/L1, Ableton real,
+firma/notarización y presets originales completos al final.
 
 ## Entrega anterior: Random hacia los ocho FX (0.46.0)
 

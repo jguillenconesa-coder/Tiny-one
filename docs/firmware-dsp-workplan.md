@@ -825,3 +825,16 @@ reinterpretan como scheduler o productores recuperados. Siguiente frente:
 especiales de Element y consumidores activos, dinámica drum y productores/ruteo.
 Mantener Envelope de Element fuera del plugin sin llamada activa verificable.
 Pulse/L1, acústica, Live y presets finales siguen pendientes.
+
+
+## Element FX Input — 0.50.0
+
+[Multiply/Subtract](element246-fx-input.md): callback 0x019cdf22, kinds 2/5,
+destino 3, colores 2/3, cuatro fuentes. 8192 llamadas; 3494 procesadas, incluidas
+874 Self con retorno cero; 223616 muestras originales y 111936 del puente kind 2.
+La fuente externa usa muestras firmadas, no el pico de parámetros; Self usa el
+propio audio, no la palabra Level. Frontend, remuestreo alineado y ubicación del
+bus son propios. No recupera productores ni scheduler. Siguiente: especiales
+Gain/Pitch de Element y consumidores, dinámica drum y ruteo/productores de voz.
+Mantener Envelope auxiliar fuera del plugin sin contrato activo validable.
+Pulse/L1, acústica/Live y presets originales completos siguen pendientes.

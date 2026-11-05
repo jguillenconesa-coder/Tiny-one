@@ -1,0 +1,40 @@
+name: Validate Element FX input audio
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/element-fx/**'
+      - 'research/blackfin/element-fx-stream.s.in'
+      - 'Source/Element246*.h'
+      - 'Source/Bend246*.h'
+      - 'Source/Crank246*.h'
+      - 'Source/Engine.h'
+      - 'Source/Filter246Effect.h'
+      - 'Source/Midi246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Source/Filter246*.h'
+      - 'Source/Nitro246*.h'
+      - 'Source/Delay246*.h'
+      - 'Source/Grid246*.h'
+      - 'Source/Phone246*.h'
+      - 'Source/Spring246*.h'
+      - 'Source/Cwo246*.h'
+      - 'Tests/Element246Fx*'
+      - 'Tests/RunElement246FxTests.py'
+      - 'Tests/ReferenceVectors/element-fx246-*.gz'
+      - 'scripts/verify-element-fx246.py'
+      - '.github/workflows/element-fx246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S research/element-fx -B build-element-fx -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-element-fx --config Release --parallel 2
+      - run: ctest --test-dir build-element-fx -C Release --output-on-failure

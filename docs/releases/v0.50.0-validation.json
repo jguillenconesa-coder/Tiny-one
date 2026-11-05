@@ -1,0 +1,78 @@
+{
+  "version": "0.50.0",
+  "date": "2026-11-05",
+  "original_reference": {
+    "calls": 8192,
+    "processed": 3494,
+    "rejected": 4698,
+    "processed_return_zero": 874,
+    "transformed_audio_samples": 223616,
+    "host_bridge_kind": 2,
+    "host_bridge_calls": 1749,
+    "host_bridge_samples": 111936,
+    "independent_repeat": "identical numeric input/output",
+    "evidence": "../firmware/element-fx246-validation.json",
+    "scope": "original return word compared separately from routing: source 3 processes audio and returns zero"
+  },
+  "linux_build": "success: Release Standalone and VST3",
+  "linux_ctest": {
+    "status": "137/138 baseline; corrected plugin fixture passed complete targeted rerun; all 138 suites verified",
+    "plugin_fixture_failure": "Original Element editor-free proxy probe used normalized 0.5 for ADSR with three choices; fourth choice maps that probe to FX, so Release-tail expectation was wrong",
+    "correction": "Only the test probe changed to normalized 1/3 for ADSR; tail policy and product DSP unchanged",
+    "targeted_plugin_rerun": "success: complete rebuilt plugin_smoke binary with screenshot generation",
+    "baseline_seconds": 672.2,
+    "validated_suites": 138
+  },
+  "realtime": {
+    "status": "success",
+    "workloads": 1338,
+    "tracked_heap_calls": 0,
+    "scope": "48 new Element FX input workloads with source/amount/target/sensor automation; timings diagnostic on shared host, not dropout certification"
+  },
+  "host_integration": {
+    "native": "success: 784 rate/effect/source/curve/bypass cases, seven rates; exact 64/257 audio, sample-aligned signed external input with exact Q15 FX histories at 44.1 kHz, equal carrier/sidechain versus Self at seven rates, automation boundary, PDC, reset and non-finite guards",
+    "plugin": "success: 112 source/effect/curve/rate cases on seven FX/two rates, exact 64/257 stereo audio, amount automation boundary, fixed PDC, panic, target availability, editor-free proxies and exact project/slot/clipboard values; complete plugin smoke passed after correcting legacy ADSR probe"
+  },
+  "sanitizers": {
+    "core": "success: ASan/UBSan final 8192 fixtures including signed audio extremes and exact kind-2 sample bridge",
+    "adapter": "success: ASan/UBSan 112 effect/source/curve/bypass cases at 48 kHz, exact sidechain histories at 44.1 kHz, equal carrier/sidechain at seven rates, source-3 self, reset and non-finite guards",
+    "leak_detection": "disabled due managed ptrace restrictions"
+  },
+  "native_ci": {
+    "status": "not yet submitted"
+  },
+  "plugins_installers_ci": {
+    "status": "not yet submitted"
+  },
+  "previous_product": {
+    "version": "0.49.0",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42022773570",
+    "status": "success: Linux, Windows/MSVC and macOS universal; runtime Intel"
+  },
+  "estimated_progress": "approximately 69% +/-10 planning points; no new acoustic calibration",
+  "limits": [
+    "Original FX callback kinds 2/5 destination 3 colours 2/3; host bus uses kind 2 only",
+    "Host frontend, envelope mapping, external resampling, clock, placement, automation and lifecycle are authored adaptations",
+    "Element gain/pitch, auxiliary kind-4 Envelope and its active producer contract remain outside plugin",
+    "Original physical/IPC producers, allocator, scheduler and drum dynamics not recovered",
+    "No new real Ableton, native ARM64, signing/notarization, acoustic equivalence or complete original preset claim",
+    "Original source-3 return consumer is not recovered; core preserves zero return while host explicitly applies Self as a hybrid routing policy"
+  ],
+  "host_source_sha256": {
+    "Source/Engine.h": "0414adb379a0934bcbc5fd4669c3dffcae7a49a9d3372dc2950cb6e7c99c6df4",
+    "Source/Filter246Effect.h": "b6227a685946e01d3a1ebb8ec6d660ca845b2152e83ff44c0f9d64c310ec20a2",
+    "Source/Element246Control.h": "537ea8d5002e9a1638ac00dea0430440f91d764b5820c876c2562f22fb2c7a0b",
+    "Source/Element246FxAudio.h": "a185f291e4359ac4e990de95e326b8f250e8792be82fc43c219bcfea7689eda7",
+    "Source/PluginProcessor.cpp": "4402379aa3dc6b14625dcae8c80e4916a7e74f5094794dc0668451657702d660",
+    "Source/PluginProcessor.h": "27754e39f70ee21074745093017895e0a34704db0e7b0807c641d9277c0c0cbe",
+    "Source/ScreenAnimations.cpp": "490c38cfd964cf2fecc68682b1746245aaf387d685e4d0a7227cd6f9bb58f412",
+    "Tests/Element246FxIntegrationTests.cpp": "68caf4b1dbc7eb5acf7069effe9fe5dc98c215c39b76463d4a4877b15e13bb6f",
+    "Tests/Element246FxPluginSupport.h": "7f9a1ef40c7ec642934bd7cc798f98b3fee63431c8de2e24eb01a07556cc2bc3",
+    "Tests/PluginSmoke.cpp": "514d844b4b4ad77e30db6419d2494ee68deaf2944f973480bc33e9a07ab8fdec",
+    "Tests/RealtimeTests.cpp": "67086a9dc66005af74d1c11a3c0d75b4a666c73cd9a448ea1a99ca592553ceb2"
+  },
+  "visual": {
+    "status": "reviewed ELEMENT / FX INPUT, FX INPUT SELF, SELF source, FX IN destination, FX SUB target and Amount",
+    "sha256": "4d517fcf7e600d00abf6f44b1bc5eb16cc4374797185e15aa10422f17ca406df"
+  }
+}

@@ -19,7 +19,7 @@ struct Element246Control {
  void next(bool enabled,int selected,int depth,int dest,int target,int sensor,float external,float envelope,float instrument,double step,bool isDrum=false) noexcept {
   if(!enabled){if(active)*this={};return;}
   if(!active){*this={};active=true;}
-  source=std::clamp(selected,0,3);amount=std::clamp(depth,-32767,32767);destination=std::clamp(dest,0,2);colour=std::clamp(target,0,7);drum=isDrum;
+  source=std::clamp(selected,0,3);amount=std::clamp(depth,-32767,32767);destination=std::clamp(dest,0,3);colour=std::clamp(target,0,7);drum=isDrum;
   externalPeak=std::max(externalPeak,finite(external));instrumentPeak=std::max(instrumentPeak,std::abs(finite(instrument)));
   position+=step;
   if(position>=1){
