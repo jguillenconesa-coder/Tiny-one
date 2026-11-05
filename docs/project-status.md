@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 4 de noviembre de 2026
+# Estado y entregas del proyecto — 5 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -49,8 +49,10 @@ El estado global del bus, reloj, seed y lifecycle son adaptaciones propias.
 Linux Release: **130/130 suites**, **1.146 cargas de tiempo real sin llamadas
 al heap rastreadas**, cuatro suites Random y tres suites ASan/UBSan del núcleo/FX
 aprobadas; revisión visual aprobada. Las cuatro suites Random pasan también en
-Windows/MSVC y macOS Intel. El CI completo de plugins/instaladores sigue en curso;
-ARM64 continúa en cola sin pruebas ejecutadas.
+Windows/MSVC y macOS Intel. El CI completo de plugins/instaladores pasa en Linux,
+Windows/MSVC y macOS universal (runtime Intel). El intento ARM64 terminó sin
+adquirir runner ni ejecutar pruebas por falta de capacidad; no es un fallo
+observado del producto.
 [Pruebas y CI](releases/v0.46.0-validation.json). La estimación sigue en **≈69 % ±10**:
 se cierra una ruta ausente, sin medir nueva equivalencia acústica ni recuperar
 el scheduler original. No hacen falta nuevas grabaciones para este bloque.
