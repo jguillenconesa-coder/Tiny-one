@@ -193,6 +193,14 @@ secuencia de llamada visible y carga de dirección del pitch drum localizadas,
 sin ejecución L1 ni recuperación del llamador/ruteo/productores. Investigación
 separada del plugin 0.54.0; dinámica y acústica pendientes, sin instaladores.
 
+### Sincronización de selección Core
+
+[Bucles exteriores](core246-selection-sync.md): 4096 escenarios / 8192 entradas
+originales completas bajo respuestas L1 **propias**, con retarget, cambio de flag
+y repetición ya lista. El servicio que reconstruye la parte no está recuperado;
+no es una activación original completa ni un timeout para el host. Sin audio,
+plugin o instaladores nuevos.
+
 ### Refresco conjunto Core
 
 [Audio, FX y modulación](core246-refresh.md): función completa en perfil Sampler

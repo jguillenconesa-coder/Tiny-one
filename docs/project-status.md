@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: sincronización de selección
+
+[Protocolo exterior](core246-selection-sync.md): 4096 escenarios / 8192 entradas
+originales, reintentos, retarget, flag cambiante y salida inmediata cuando ya
+está listo. 12285 respuestas **propias** del harness; las entradas L1 no están
+recuperadas y no construyen objetos en este ensayo. Dos ejecuciones coinciden;
+Release/ASan/UBSan y regresiones relacionadas aprobados. No confundir igualdad
+de índices con recuperación de la parte activa. El servicio L1, scheduler,
+pitch/gain y acústica siguen pendientes; producto 0.54.0 y ≈70 % ±10 sin cambios,
+sin instaladores.
+
 ## Bloque de investigación: refresco conjunto Core
 
 [Audio, FX y moduladores](core246-refresh.md): rutina completa y helpers originales

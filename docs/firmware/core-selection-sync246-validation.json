@@ -1,0 +1,79 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "input_record_bytes": 308,
+  "output_record_bytes": 392,
+  "routines": {
+    "synth_sync": "0x01967f68",
+    "drum_sync": "0x01967e90"
+  },
+  "authored_L1_endpoints": [
+    "0xffa0bd2c",
+    "0xffa017ec"
+  ],
+  "windows": [
+    [
+      "0x01aaac0c",
+      68
+    ],
+    [
+      "0xff8016cc",
+      32
+    ],
+    [
+      "0xff801038",
+      32
+    ]
+  ],
+  "max_authored_callbacks_per_case": 6,
+  "artifacts": {
+    "core-selection-sync246-input.bin.gz": {
+      "bytes": 810668,
+      "raw_bytes": 1261568,
+      "sha256": "1e1c9fc475512579149556f1dd575febce671a9cc9dfe1af9b55973027c4b6e7"
+    },
+    "core-selection-sync246-output.bin.gz": {
+      "bytes": 640809,
+      "raw_bytes": 1605632,
+      "sha256": "070b6d6c6d8aee6b67877c6b72afe65e3d12146b8172948380f8bfe12d2dad91"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original outer synchronizers; both L1 entries are authored schedule endpoints, not original code or recovered reactivation.",
+    "Explicit finite callback schedules model bank/mode/selection changes and R2 clobbering. Original loops have no demonstrated timeout; own harness/native budgets are not original behavior.",
+    "No audio/FX/modulator reconstruction, rendering, host integration, physical scheduling or gain/pitch producer recovery. No installers."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent original outer executions with authored L1 responses, frozen native and ASan/UBSan reproduction",
+  "independent_original_executions": 2,
+  "original_outer_entries": 8192,
+  "initially_ready_scenarios": 586,
+  "repeated_ready_calls": 4096,
+  "ready_entries_without_callbacks": 4682,
+  "authored_response_calls": 12285,
+  "drum_responses": 6141,
+  "synth_responses": 6144,
+  "generic_responses": 11058,
+  "special_responses": 1227,
+  "selection_changes": 8190,
+  "unchanged_selection_responses": 4095,
+  "flag_changes": 6143,
+  "unchanged_flag_responses": 6142,
+  "routine_sha256": {
+    "drum": "c51c62f9d80a88a610a30afdab3928ceb306392f05add0e08878c29256b1212c",
+    "synth": "e9fcb3559576407e60dd7f9ab2b0b8cc90d6b93ec8926d18cf1b37cc3d09f048"
+  },
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  }
+}

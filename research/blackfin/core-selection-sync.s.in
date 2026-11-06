@@ -1,0 +1,221 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Original outer code, authored L1 response endpoints; no private L1 bytes loaded.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+P1.H=current;
+P1.L=current;
+[P1]=P4;
+P1=P4;
+P1+=32;
+imm32 P2,27962380
+P3=17;
+LSETUP(load0,load0end) LC0=P3;
+load0: R0=[P1++];
+load0end: [P2++]=R0;
+imm32 P2,4286584524
+P3=8;
+LSETUP(load1,load1end) LC0=P3;
+load1: R0=[P1++];
+load1end: [P2++]=R0;
+imm32 P2,4286582840
+P3=8;
+LSETUP(load2,load2end) LC0=P3;
+load2: R0=[P1++];
+load2end: [P2++]=R0;
+R0=[P4+8];
+imm32 P1,4286582848
+[P1]=R0;
+R0=[P4+12];
+imm32 P1,27962380
+[P1]=R0;
+R0=[P4+16];
+imm32 P1,27962384
+[P1]=R0;
+R0=[P4+20];
+imm32 P1,4286584532
+[P1]=R0;
+R0=[P4+24];
+imm32 P1,4286584536
+[P1]=R0;
+P1.H=trace;
+P1.L=trace;
+imm32 R0,0x5a5a5a5a
+P0=60;
+LSETUP(poison,poison_end) LC0=P0;
+poison: [P1++]=R0;
+poison_end: NOP;
+P1.H=count;
+P1.L=count;
+R0=0;
+[P1]=R0;
+R2=[P4+28];
+R0=[P4];
+CC=R0==0;
+IF CC JUMP synth;
+imm32 P3,0x01967e90
+JUMP sync_ready;
+synth: imm32 P3,0x01967f68
+sync_ready: CALL(P3);
+P1.H=returns;
+P1.L=returns;
+[P1]=R0;
+[P1+4]=R2;
+CALL(P3);
+P1.H=returns;
+P1.L=returns;
+[P1+8]=R0;
+[P1+12]=R2;
+imm32 P1,27962380
+P3=17;
+LSETUP(save0,save0end) LC0=P3;
+save0: R0=[P1++];
+save0end: [P5++]=R0;
+imm32 P1,4286584524
+P3=8;
+LSETUP(save1,save1end) LC0=P3;
+save1: R0=[P1++];
+save1end: [P5++]=R0;
+imm32 P1,4286582840
+P3=8;
+LSETUP(save2,save2end) LC0=P3;
+save2: R0=[P1++];
+save2end: [P5++]=R0;
+P1.H=trace;
+P1.L=trace;
+P3=60;
+LSETUP(save_trace,save_trace_end) LC0=P3;
+save_trace: R0=[P1++];
+save_trace_end: [P5++]=R0;
+P1.H=count;
+P1.L=count;
+P3=1;
+LSETUP(save_count,save_count_end) LC0=P3;
+save_count: R0=[P1++];
+save_count_end: [P5++]=R0;
+P1.H=returns;
+P1.L=returns;
+P3=4;
+LSETUP(save_returns,save_returns_end) LC0=P3;
+save_returns: R0=[P1++];
+save_returns_end: [P5++]=R0;
+imm32 P0,308
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF CC JUMP done;
+JUMP.L next_case;
+done:
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+hook:
+P0.H=args;
+P0.L=args;
+[P0]=R0;
+[P0+4]=R1;
+[P0+8]=R2;
+[P0+12]=R3;
+P0.H=count;
+P0.L=count;
+R0=[P0];
+R1=6;
+CC=R0<R1 (IU);
+IF CC JUMP hook_valid;
+exit 1
+hook_valid: R1=40;
+R0*=R1;
+P1.H=trace;
+P1.L=trace;
+P2=R0;
+P2=P1+P2;
+P0.H=args;
+P0.L=args;
+R0=[P0+12];
+[P2++]=R0;
+R0=[P0];
+[P2++]=R0;
+R0=[P0+4];
+[P2++]=R0;
+R0=[P0+8];
+[P2++]=R0;
+imm32 P0,27962380
+R0=[P0];
+[P2++]=R0;
+imm32 P0,27962384
+R0=[P0];
+[P2++]=R0;
+imm32 P0,4286584532
+R0=[P0];
+[P2++]=R0;
+imm32 P0,4286584536
+R0=[P0];
+[P2++]=R0;
+imm32 P0,4286582848
+R0=[P0];
+[P2++]=R0;
+P0.H=count;
+P0.L=count;
+R0=[P0];
+R1=24;
+R1*=R0;
+R0+=1;
+[P0]=R0;
+P0.H=current;
+P0.L=current;
+P1=[P0];
+imm32 P2,164
+P1=P1+P2;
+P2=R1;
+P1=P1+P2;
+R0=[P1++];
+imm32 P2,27962380
+[P2]=R0;
+R0=[P1++];
+imm32 P2,27962384
+[P2]=R0;
+R0=[P1++];
+imm32 P2,4286584532
+[P2]=R0;
+R0=[P1++];
+imm32 P2,4286584536
+[P2]=R0;
+R0=[P1++];
+imm32 P2,4286582848
+[P2]=R0;
+R2=[P1];
+imm32 R0,0x24681357
+imm32 R1,0x13579bdf
+RTS;
+.data
+.align 4
+current: .space 4
+args: .space 16
+trace: .space 240
+count: .space 4
+returns: .space 16
+io_args: .long 1,results,@BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"
+.section .request,"ax"
+R3=0;
+P0.H=hook;
+P0.L=hook;
+JUMP(P0);
+.section .synth_request,"ax"
+R3=1;
+P0.H=hook;
+P0.L=hook;
+JUMP(P0);

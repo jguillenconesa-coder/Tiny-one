@@ -107,3 +107,7 @@ notas/render, y componer esa frontera con los eventos ya contrastados. Mantener
 el método híbrido donde L1 siga protegida, sin atribuirle comportamiento deducido
 de estos pools. Acústica y Ableton real siguen pendientes. Estimación **≈70 % ±10**
 de planificación, presets al final y sin instaladores hasta nueva petición.
+
+La [investigación posterior de sincronización](core246-selection-sync.md)
+contrasta dos bucles exteriores bajo respuestas L1 explícitas. La igualdad de
+selecciones no recupera por sí misma el servicio que reconstruye los pools.

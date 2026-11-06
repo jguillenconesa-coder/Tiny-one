@@ -1097,3 +1097,18 @@ Cierre de refresco: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
 sobre `729e7dd`, sin build del producto. Candidato CALL SDRAM `0x019f04a6` con
 lecturas de ciclos alrededor; contexto estático de medición, no llamador activo
 contrastado. Mantener esa distinción al investigar la reactivación de la parte.
+
+
+## Sincronización exterior Core — frontera L1 explícita
+
+[Contrato](core246-selection-sync.md): dos rutinas completas esperan igualdad
+Core/editor. Synth relee flag y elige dos entradas L1; drum usa la común.
+4096 escenarios / 8192 entradas, 4682 salidas ya listas sin callbacks y 12285
+respuestas programadas; trazas, ventanas y registros diagnósticos coinciden.
+Las dos entradas L1 son trampolines propios, sin código original L1 cargado;
+no se recupera reconstrucción activa por igualar índices. Dos extracciones,
+Release/ASan/UBSan y regresiones de refresco/bancos/factories aprobados.
+Siguiente: cambiador exterior legible y notas retenidas, conservando explícita
+la sustitución del servicio L1 desconocido. No asumir timeout original o meter
+esta espera en audio. Producto 0.54.0, ≈70 % ±10 y acústica sin cambios;
+sin instaladores hasta nueva petición.
