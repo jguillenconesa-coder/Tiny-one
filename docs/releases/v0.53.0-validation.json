@@ -64,10 +64,30 @@
     "metrics_sha256": "b7f163382267367c5546367e38b6ad36865daf6af8ec59c638535e294dba1bae"
   },
   "native_ci": {
-    "status": "pending push"
+    "status": "success: reader/adapter 7/7 suites and both original reference suites on Linux, Windows/MSVC and macOS Intel",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809",
+    "reader_adapter_suites_per_platform": 7,
+    "reader_adapter_platforms": {
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809/job/127613687318"
+      },
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809/job/127613687491"
+      },
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809/job/127613687577"
+      }
+    },
+    "voice_reference_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902781",
+    "bank_reference_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902793"
   },
   "plugins_installers_ci": {
-    "status": "pending push"
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842",
+    "scope": "Full Linux/Windows/MSVC/macOS universal builds, plugin suites and installers are still running; not claimed approved by native-only results."
   },
   "estimated_progress": "approximately 70% +/-10 planning points; voice/routing area 37% to 40%, total weighted 69.60; not acoustic fidelity",
   "limits": [
@@ -81,5 +101,44 @@
   "source_sha256": {
     "Source/Drum246Allocator.h": "6d07df43e822cb7bac4943af8b955c80032b8417a2608c5c30f4abe0a3f9bb61",
     "Source/Drum246Voice.h": "228cf15ce090356df45a004887b954daabc6e46c6177a4babcf2645d6da3ba63"
-  }
+  },
+  "implementation_commit": "c38cb7100ce95f4a20c0a9c11f08086d08316c0d",
+  "regression_ci": [
+    {
+      "name": "Validate Element voice pitch",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902806"
+    },
+    {
+      "name": "Validate melodic sampler reader and host adapter",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902791"
+    },
+    {
+      "name": "Validate Crank voice gain and pitch",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902778"
+    },
+    {
+      "name": "Validate Bend voice gain and pitch",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902765"
+    },
+    {
+      "name": "Validate drum VoiceCtl lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902781"
+    },
+    {
+      "name": "Validate drum bank and held registry lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902793"
+    },
+    {
+      "name": "Validate drum sampler reader and host adapter",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809"
+    }
+  ],
+  "ci_snapshot_utc": "2026-11-06 00:02 UTC"
 }

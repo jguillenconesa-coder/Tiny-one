@@ -51,7 +51,8 @@ pendientes; no se integra la limpieza de registro como pánico de audio.
 Pruebas nativas: 84 composiciones a siete tasas, todos los modos y cuatro
 configuraciones LFO, con ASan/UBSan completos aprobados. Linux: **143/143 suites**,
 **1.446 cargas sin heap rastreado** y cuatro casos de plugin 48/96 kHz, buffers
-64/257. CI nativo y paquetes en preparación;
+64/257. CI nativo y regresiones aprobados en Linux, Windows/MSVC y macOS Intel.
+Plugins/instaladores completos siguen en CI;
 [evidencia](releases/v0.53.0-validation.json).
 **≈70 % ±10 de planificación**, por el área de voz/ruteo 37→40 %, sin medición
 acústica nueva. Esta integración aplica el método híbrido autorizado y acota la

@@ -923,7 +923,8 @@ clear registry como retirada normal. Aplica la decisión híbrida del propietari
 se integra un contrato probado sin atribuir sus fronteras al scheduler original.
 84 composiciones de lector y ASan/UBSan aprobados; Linux 143/143 suites,
 1.446 cargas sin heap rastreado y cuatro casos de plugin 48/96 kHz / 64/257
-aprobados. CI nativo y paquetes pendientes de push.
+aprobados. CI nativo y regresiones aprobados en Linux, Windows/MSVC y macOS
+Intel; plugins/instaladores completos siguen en CI.
 Siguiente: llamador de render y productores de buffers; mantener curva dinámica,
 frontend y cadencia del host identificados como propios. No repetir búsquedas de
 inmediatos bajos como prueba de L1; presets completos permanecen al final.
