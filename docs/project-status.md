@@ -7,6 +7,13 @@ Esta cuenta es la coordinadora principal según la instrucción del propietario.
 Las notas de coordinación entre cuentas anteriores se conservan como historial,
 no como reservas indefinidas de tareas ya entregadas o sin PR abierto.
 
+## Cadencia acordada
+
+El propietario pide bloques largos y no generar más instaladores hasta que
+vuelva a solicitarlos. Los pushes conservan compilaciones y regresiones; el
+empaquetado solo se activa mediante workflow_dispatch con `installers: true`
+cuando haya una nueva petición. No se crean releases ni tags automáticamente.
+
 ## Avance estimado: aproximadamente 70 % del objetivo completo
 
 Es una estimación de planificación, **no una medición de equivalencia sonora**,
@@ -49,7 +56,8 @@ amplitud, pitch fino, bend y normalización son puentes propios explícitos.
 La curva dinámica y los productores por muestra siguen pendientes.
 Linux **145/145 suites**, **1.446 cargas sin heap rastreado**, doce casos de
 plugin y ASan/UBSan aprobados. [CI multiplataforma en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259);
-paquetes nuevos aún sin aprobar.
+ejecución de empaquetado cancelada por la petición posterior del propietario.
+Las pruebas nativas siguen y los próximos builds omiten instaladores por defecto.
 [Validación de entrega](releases/v0.54.0-validation.json).
 Avance sin cambio: **≈70 % ±10 de planificación**, fidelidad acústica sin medir.
 

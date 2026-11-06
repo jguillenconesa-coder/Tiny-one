@@ -74,9 +74,9 @@
     ]
   },
   "plugins_installers_ci": {
-    "status": "in_progress",
+    "status": "cancelled at owner request before completion",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259",
-    "scope": "New full builds and installers for 0.54.0; not claimed approved from local results or 0.53.0 CI"
+    "scope": "Owner requested no more installers until explicitly asked; in-progress full package run cancelled. Native CI remains active. Replacement full build/test workflow will run with installer generation opt-in only."
   },
   "installer_request": {
     "delivered_version": "0.53.0",

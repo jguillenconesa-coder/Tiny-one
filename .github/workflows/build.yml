@@ -13,6 +13,12 @@ on:
       - '.github/workflows/build.yml'
   pull_request:
   workflow_dispatch:
+    inputs:
+      installers:
+        description: 'Generate installers when explicitly requested'
+        type: boolean
+        required: false
+        default: false
 jobs:
   build:
     # Keep required check names stable when pinning the underlying runner image.
@@ -79,18 +85,18 @@ jobs:
         shell: pwsh
         run: ./packaging/windows/test-startup.ps1 -BuildDir build
       - name: Install NSIS
-        if: runner.os == 'Windows'
+        if: github.event_name == 'workflow_dispatch' && inputs.installers && runner.os == 'Windows'
         run: choco install nsis --no-progress -y
       - name: Build Windows installer
-        if: runner.os == 'Windows'
+        if: github.event_name == 'workflow_dispatch' && inputs.installers && runner.os == 'Windows'
         shell: pwsh
         run: ./packaging/windows/build-installer.ps1 -BuildDir build
       - name: Test Windows install and uninstall
-        if: runner.os == 'Windows'
+        if: github.event_name == 'workflow_dispatch' && inputs.installers && runner.os == 'Windows'
         shell: pwsh
         run: ./packaging/windows/test-installer.ps1 -BuildDir build
       - name: Package and inspect macOS universal installer
-        if: runner.os == 'macOS'
+        if: github.event_name == 'workflow_dispatch' && inputs.installers && runner.os == 'macOS'
         run: bash packaging/macos/build-package.sh build dist
       - uses: actions/upload-artifact@v4
         if: always()
