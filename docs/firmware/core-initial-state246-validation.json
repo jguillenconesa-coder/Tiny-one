@@ -1,0 +1,84 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 256,
+  "input_prefix_bytes": 3072,
+  "input_record_bytes": 5880,
+  "output_record_bytes": 11736,
+  "initializer": {
+    "entry": "0x01967fcc",
+    "end_exclusive": "0x01968766",
+    "sha256": "d4752f539f12bca40311cbd0892b2492d7963477a177f0d583b945ff2827e3db"
+  },
+  "shared_workspace_initializer": "0x01968774",
+  "initializer_pointer_references": [
+    "0x0100010c"
+  ],
+  "shared_initializer_pointer_references": [
+    "0x01000110"
+  ],
+  "windows": [
+    {
+      "address": "0xff800ff8",
+      "bytes": 2024
+    },
+    {
+      "address": "0x1aaabd4",
+      "bytes": 3560
+    },
+    {
+      "address": "0x1bab538",
+      "bytes": 16
+    },
+    {
+      "address": "0xffb00000",
+      "bytes": 256
+    }
+  ],
+  "constant_bytes": 4641,
+  "preserved_bytes": 1215,
+  "derived_spans": 185,
+  "derived_table_sha256": "6a287a65f24fe5340f112a2259cbbca4e9670a83ba72e0fcaa090b5dd8bd9b23",
+  "artifacts": {
+    "core-initial-state246-input.bin.gz": {
+      "bytes": 1489910,
+      "raw_bytes": 1508352,
+      "sha256": "be00ad322c3412ab1e9efccff04cf00c7e8a9ce5e70a1e2aa6a7097a39d887d9"
+    },
+    "core-initial-state246-output.bin.gz": {
+      "bytes": 380043,
+      "raw_bytes": 3004416,
+      "sha256": "b27c7340ac8e6682e90ed5b519d9d9fe8389e7f04fd56464fe8ac0b8680c8649"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete initializer under fixed firmware ROM inputs; observed four windows, not a whole-machine write trace or general soft-float port.",
+    "Then shared workspace initializer 0x01968774 and explicit control banks, selected sound, type-8 factory, drum mode 1, cleared occupancy/list, preview -1 and null LFO/FX before original note-on.",
+    "Object pool and guards are observed; no render or produced pitch/gain streams, scheduler, hardware or plugin integration."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent identical original executions, full Release and ASan/UBSan comparator",
+  "independent_original_executions": 2,
+  "instrument_version_unchanged": "0.54.0",
+  "plugin_integration": false,
+  "audio_rendered": false,
+  "generated_installers": false,
+  "native": {
+    "status": "success",
+    "suites": 1,
+    "seconds": 0.09
+  },
+  "sanitizers": {
+    "status": "success: complete ASan/UBSan comparator",
+    "leak_detection": "disabled due managed ptrace",
+    "seconds": 0.44
+  },
+  "native_ci": {
+    "status": "not yet triggered"
+  },
+  "derived_model": "Default write spans derived from original numeric observations, not an independent general implementation of initializer soft-float arithmetic"
+}

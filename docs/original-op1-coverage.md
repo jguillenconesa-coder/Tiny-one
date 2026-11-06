@@ -175,3 +175,11 @@ completos, dominio íntegro de velocidad int16 y transposición −128…127.
 Tabla derivada de salidas, no ROM; puente integrado con MIDI/fino/bend propios.
 No recupera productores por muestra, scheduler ni envolvente dinámica.
 Planificación se mantiene ≈70 % ±10; acústica pendiente.
+
+### Inicialización Core y composición explícita de batería
+
+[Estado inicial](core246-initial-state.md): 256 cadenas con inicializador amplio,
+workspace, factory y note-on originales; cuatro ventanas completas contrastadas.
+Spans derivados de defaults, sin port general de soft-float. Conserva ocupación
+y objetos, no sustituye pánico, scheduler ni productores pitch/gain. Sin cambio
+del instrumento 0.54.0 ni nueva medición acústica; sin instaladores.

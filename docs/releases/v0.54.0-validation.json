@@ -63,7 +63,7 @@
     "metrics_sha256": "24f790d160d336848b9a38dbab8176fbde7c8031b78041751dfc240b4f1937b1"
   },
   "native_ci": {
-    "status": "queued/in_progress: not yet approved",
+    "status": "success: event, reader/adapter, voice, bank and melodic regressions on Linux, Windows/MSVC and macOS Intel",
     "event_words_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620287",
     "reader_adapter_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620376",
     "expected_reader_adapter_suites_per_platform": 8,
@@ -71,7 +71,8 @@
       "Linux",
       "Windows/MSVC",
       "macOS Intel"
-    ]
+    ],
+    "reader_adapter_suites_per_platform": 8
   },
   "plugins_installers_ci": {
     "status": "cancelled at owner request before completion",
@@ -108,44 +109,49 @@
   "ci_snapshot_utc": "2026-11-06",
   "regression_ci": [
     {
-      "name": "Validate Crank voice gain and pitch",
-      "status": "queued",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620411"
-    },
-    {
-      "name": "Validate Bend voice gain and pitch",
-      "status": "queued",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620237"
-    },
-    {
-      "name": "Validate drum event words",
-      "status": "queued",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620287"
-    },
-    {
-      "name": "Validate drum bank and held registry lifecycle",
-      "status": "queued",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620334"
-    },
-    {
-      "name": "Validate drum sampler reader and host adapter",
-      "status": "queued",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620376"
-    },
-    {
-      "name": "Validate drum VoiceCtl lifecycle",
-      "status": "in_progress",
-      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620308"
-    },
-    {
       "name": "Validate melodic sampler reader and host adapter",
-      "status": "in_progress",
+      "status": "success",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620225"
     },
     {
       "name": "Validate Element voice pitch",
-      "status": "in_progress",
+      "status": "success",
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620280"
+    },
+    {
+      "name": "Validate drum VoiceCtl lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620308"
+    },
+    {
+      "name": "Validate Bend voice gain and pitch",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620237"
+    },
+    {
+      "name": "Validate drum bank and held registry lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620334"
+    },
+    {
+      "name": "Validate drum event words",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620287"
+    },
+    {
+      "name": "Validate drum sampler reader and host adapter",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620376"
+    },
+    {
+      "name": "Validate Crank voice gain and pitch",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620411"
     }
-  ]
+  ],
+  "replacement_full_ci_without_installers": {
+    "status": "in_progress",
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142957706",
+    "scope": "Full builds/tests with opt-in packaging disabled by default; no new installers requested"
+  }
 }

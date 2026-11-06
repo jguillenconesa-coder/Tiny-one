@@ -46,6 +46,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: inicialización Core y cadena de batería
+
+[Estado inicial y composición](core246-initial-state.md): 256 cadenas originales
+con dos inicializadores, factory y note-on. Se comparan cuatro ventanas completas:
+4.641 bytes fijados y 1.215 conservados por el inicializador amplio, además de
+los eventos posteriores. Todos los pares banco/pad y transposiciones enteras;
+dos extracciones idénticas y comparadores Release/ASan/UBSan aprobados.
+Los spans son datos derivados del oráculo, sin implementación general de
+soft-float ni integración en el plugin. El inicializador conserva ocupación y
+objetos de audio: no se usa como pánico o productor de dinámica. Versión 0.54.0
+sin cambio; avance ≈70 % ±10 y acústica pendiente.
+
 ## Entrega actual: velocidad y transposición de batería (0.54.0)
 
 [Palabras de evento](drum246-event-words.md): 65.536 note-on completos
@@ -54,6 +66,7 @@ La tabla de pitch contiene salidas derivadas, no datos ROM recuperados.
 Instrumento y verificadores comparten las conversiones; cuantización MIDI,
 amplitud, pitch fino, bend y normalización son puentes propios explícitos.
 La curva dinámica y los productores por muestra siguen pendientes.
+CI nativo y regresiones de 0.54.0 aprobados en Linux, Windows/MSVC y macOS Intel.
 Linux **145/145 suites**, **1.446 cargas sin heap rastreado**, doce casos de
 plugin y ASan/UBSan aprobados. [CI multiplataforma en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259);
 ejecución de empaquetado cancelada por la petición posterior del propietario.

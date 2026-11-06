@@ -1,0 +1,160 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored harness: full original initializer, then explicit factory/note-on.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+imm32 P1,0x01cc10cc
+imm32 R0,0x02010000
+R1=8;
+P0=8;
+LSETUP(refs,refs_end) LC0=P0;
+refs: [P1++]=R0;
+refs_end: R0=R0+R1;
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+P1=P4;
+imm32 P2,0xff800ff8
+imm32 P3,506
+LSETUP(in0,in0end) LC0=P3;
+in0: R0=[P1++];
+in0end: [P2++]=R0;
+imm32 P2,0x1aaabd4
+imm32 P3,890
+LSETUP(in1,in1end) LC0=P3;
+in1: R0=[P1++];
+in1end: [P2++]=R0;
+imm32 P2,0x1bab538
+imm32 P3,4
+LSETUP(in2,in2end) LC0=P3;
+in2: R0=[P1++];
+in2end: [P2++]=R0;
+imm32 P2,0xffb00000
+imm32 P3,64
+LSETUP(in3,in3end) LC0=P3;
+in3: R0=[P1++];
+in3end: [P2++]=R0;
+imm32 P0,0x01967fcc
+CALL(P0);
+imm32 P1,0xff800ff8
+imm32 P3,506
+LSETUP(first0,first0end) LC0=P3;
+first0: R0=[P1++];
+first0end: [P5++]=R0;
+imm32 P1,0x1aaabd4
+imm32 P3,890
+LSETUP(first1,first1end) LC0=P3;
+first1: R0=[P1++];
+first1end: [P5++]=R0;
+imm32 P1,0x1bab538
+imm32 P3,4
+LSETUP(first2,first2end) LC0=P3;
+first2: R0=[P1++];
+first2end: [P5++]=R0;
+imm32 P1,0xffb00000
+imm32 P3,64
+LSETUP(first3,first3end) LC0=P3;
+first3: R0=[P1++];
+first3end: [P5++]=R0;
+imm32 P0,0x01968774
+CALL(P0);
+P1.H=controls;
+P1.L=controls;
+imm32 P2,0x01aaadb4
+imm32 P3,768
+LSETUP(control_copy,control_copy_end) LC0=P3;
+control_copy: R0=[P1++];
+control_copy_end: [P2++]=R0;
+imm32 P0,5856
+P1=P4+P0;
+R0=[P1];
+imm32 P2,0x01aaac10
+[P2]=R0;
+R0=8;
+imm32 P0,0x01967984
+CALL(P0);
+imm32 P1,0x01aaac48
+R0=0;
+[P1]=R0;
+imm32 P1,0x01aaad84
+P0=12;
+LSETUP(clear_mod,clear_mod_end) LC0=P0;
+clear_mod: [P1++]=R0;
+clear_mod_end: NOP;
+imm32 P1,0xff801038
+R0=1;
+[P1]=R0;
+imm32 P1,0xff801070
+R0=0;
+[P1++]=R0;
+[P1++]=R0;
+[P1]=R0;
+imm32 P1,0x01dff134
+[P1]=R0;
+imm32 P1,0x01dfe734
+imm32 R0,0x5a5a5a5a
+P0=5;
+LSETUP(row_clear,row_clear_end) LC0=P0;
+row_clear: [P1++]=R0;
+row_clear_end: NOP;
+imm32 P1,0x018c2180
+R0=-1;
+[P1]=R0;
+imm32 P0,5856
+P1=P4+P0;
+R1=[P1+4];
+R0=P1;
+R0+=8;
+imm32 P0,0x01a84ba0
+CALL(P0);
+imm32 P1,0xff800ff8
+imm32 P3,506
+LSETUP(second0,second0end) LC0=P3;
+second0: R0=[P1++];
+second0end: [P5++]=R0;
+imm32 P1,0x1aaabd4
+imm32 P3,890
+LSETUP(second1,second1end) LC0=P3;
+second1: R0=[P1++];
+second1end: [P5++]=R0;
+imm32 P1,0x1bab538
+imm32 P3,4
+LSETUP(second2,second2end) LC0=P3;
+second2: R0=[P1++];
+second2end: [P5++]=R0;
+imm32 P1,0xffb00000
+imm32 P3,64
+LSETUP(second3,second3end) LC0=P3;
+second3: R0=[P1++];
+second3end: [P5++]=R0;
+imm32 P1,0x01dfe734
+P3=5;
+LSETUP(row_copy,row_copy_end) LC0=P3;
+row_copy: R0=[P1++];
+row_copy_end: [P5++]=R0;
+imm32 P1,0x01dff134
+R0=[P1];
+[P5++]=R0;
+imm32 P0,5880
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF !CC JUMP next_case;
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+controls: .incbin "@WORK@/inputs.bin",0,3072
+inputs: .incbin "@WORK@/inputs.bin",3072
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

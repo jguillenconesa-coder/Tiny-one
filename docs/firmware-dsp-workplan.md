@@ -944,3 +944,15 @@ seguir el llamador de render. Mantener avance ≈70 % ±10, sin medición acúst
 Validación local 0.54.0: Linux 145/145 suites, doce casos de plugin, 1.446
 cargas sin heap rastreado, ASan/UBSan del corpus y puente completos aprobados.
 CI nativo y paquetes de esta versión en curso tras el push; no aprobados todavía.
+
+## Inicialización Core y cadena de eventos — investigación tras 0.54.0
+
+[Contrato](core246-initial-state.md): inicializador amplio 0x01967fcc, workspace
+0x01968774, factory tipo 8 y note-on completos en 256 cadenas originales.
+Cuatro ventanas observadas, 4.641 bytes fijos y 1.215 preservados; los objetos y
+ocupación no se vacían. Tabla derivada de defaults, no port general de soft-float.
+Todos los pares banco/pad y transposiciones, Release y ASan/UBSan aprobados;
+CI separado sin compilación del producto. No cambia versión, DSP ni instaladores.
+Siguiente: consumidor activo de velocidad/pitch y llamador de render; no usar
+esta inicialización como productor de buffers o pánico. Avance sin cambio.
+El propietario pide bloques más largos y empaquetado solo cuando vuelva a pedirlo.
