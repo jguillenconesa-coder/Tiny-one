@@ -1058,3 +1058,18 @@ con esa frontera explícita. No cambia producto 0.54.0 o ≈70 % ±10; sin insta
 
 Cierre de factories: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
 sobre `67c5298`; sin build del producto ni instaladores.
+
+
+## Siete familias Core — extensión agrupada 0..6
+
+[Contrato](core246-modulator-factory-all.md): Element, MIDI, Bend y Crank añadidos
+al modelo de factories synth/drum. Objetos de cuatro bytes, resets no-op; los
+helpers de factory Bend/Crank limpian un byte del backend y conservan el resto
+de su ventana. 7168 escenarios nuevos, 3472 filas retenidas, 5824 factories y
+rejilla aceptada de 1008 combinaciones; 28 cambios de familia sin recargar memoria.
+3577 llamadas a familias con reset no trivial, 5716 a resets vacíos, sin contarlas
+como render. Dos ejecuciones originales coinciden; ambas suites Release/ASan/UBSan
+y regresiones de resets/note-on/render retenido aprobadas. Corpus previo intacto.
+Siguiente: refresco Core que enlaza audio, FX y moduladores y composición con
+eventos, manteniendo explícita la frontera del scheduler/productores protegidos.
+No cambia producto 0.54.0, acústica o estimación ≈70 % ±10; sin instaladores.

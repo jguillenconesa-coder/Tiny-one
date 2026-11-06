@@ -1,6 +1,7 @@
 # Core rev246 modulator factories: six/twelve voices
 
-Research-only types 0 (Tremolo), 1 (Value), 2 (Random). No plugin changes.
+Research-only types 0..6: Tremolo, Value, Random, Element, MIDI, Bend and Crank.
+No plugin changes. The first corpus below remains limited to 0..2.
 See [contract and limits](../../docs/core246-modulator-factory.md).
 
 ```sh
@@ -40,8 +41,8 @@ variable bytes. Constructors preserve padding and unused capacity; synth/drum
 factories share physical storage. Selected-type changes are not concurrent pools.
 
 The native comparator reuses the original-reset reconstruction and compares every
-window byte. Its guard for types outside 0..2 is authored; IDs 3..6 exist in the
-original selector but are outside this model's scope. No invalid original index
+window byte. The model now accepts all seven valid IDs; its guard for IDs outside 0..6 is
+authored. The original error/log branches are outside the observed domain. No invalid original index
 or logging/error path is executed.
 
 Private reproduction: `scripts/verify-core-modulator-factory246.py` requires
@@ -50,3 +51,24 @@ external `--output`. Original factories, selectors, constructors, vector helpers
 clear and reset dispatchers run without replacement endpoints. Firmware hash and
 both simulator probes are required. `--record` intentionally replaces numeric
 fixtures; ordinary repetition must match them. No original code or ELF is shipped.
+
+## All-family extension (second CTest suite)
+
+`vectors-all` contains 7168 records with the same metadata/windows, followed by
+48 backend bytes at 0xff907aa8. Input record 1136 bytes, output record 1116.
+The first 1792 rows request reload/factory/reset with enable 0xA5; later rows
+also disable sound-zero resets. 3696 reloads / 3472 retained rows, including
+28 family changes and four route changes without reloading windows. Coverage is
+all 1008 accepted route/type/sound/voice combinations across IDs 0..6.
+
+Constructors for IDs 3..6 write only their vtable (four bytes) in each primary
+and shared object. Their original reset callbacks are no-op. Factory type 5
+clears backend offset 8, type 6 offset 37; all other backend bytes are preserved.
+The C++ model has a separate backend window; the old numeric fixtures need no
+new bytes. Its invalid-ID guard is tested at 7 and 8, preserving all model state.
+
+Reproduce privately with `scripts/verify-core-modulator-factory-all246.py`, the
+same arguments as above, and another fresh external output directory. It executes
+`research/blackfin/core-modulator-factory-all.s.in`. Both native suites run from
+the same standalone CMake project; no firmware or emulator needed in native CI.
+[Expanded contract](../../docs/core246-modulator-factory-all.md).

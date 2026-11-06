@@ -84,8 +84,10 @@ en Linux, Windows/MSVC y macOS Intel sobre `67c5298`, sin build del producto.
 Se cierra la asignación de familias para estas dos factories bajo IDs suministrados
 0..2, incluida la construcción Tremolo que antes solo se enlazaba explícitamente.
 No recupera la decisión física de UI, el llamador completo del cambio de modo,
-las rutas de IDs 3..6 o la llamada activa desde el scheduler protegido. El guard
-para otros IDs es del modelo, no un comportamiento original contrastado.
+la llamada activa desde el scheduler protegido. La [ampliación posterior](core246-modulator-factory-all.md)
+contrasta además las rutas de IDs 3..6 con su preparación de backend. El modelo
+ampliado acepta 0..6; su guard para IDs inválidos es propio,
+no un comportamiento original contrastado.
 
 Este corpus compone factory→clear opcional→reset original, sin render de audio.
 El corpus previo de modulación/render mantiene sus entradas explícitas y no se

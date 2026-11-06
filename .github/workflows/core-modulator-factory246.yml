@@ -10,9 +10,11 @@ on:
       - 'Source/Random246.h'
       - 'Source/Tremolo246.h'
       - 'research/blackfin/core-modulator-factory.s.in'
+      - 'research/blackfin/core-modulator-factory-all.s.in'
       - 'research/blackfin/drum-render.ld'
       - 'Source/ReferenceDsp.h'
       - 'scripts/verify-core-modulator-factory246.py'
+      - 'scripts/verify-core-modulator-factory-all246.py'
       - '.github/workflows/core-modulator-factory246.yml'
   workflow_dispatch:
 jobs:

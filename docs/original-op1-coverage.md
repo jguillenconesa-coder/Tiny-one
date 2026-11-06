@@ -195,11 +195,12 @@ separada del plugin 0.54.0; dinámica y acústica pendientes, sin instaladores.
 
 ### Factorías Core de moduladores
 
-[Seis/doce voces](core246-modulator-factory.md): IDs 0 Tremolo, 1 Value y 2 Random,
-constructores reales, pool común y secundario compartido, clear y reset compuestos.
-3072 escenarios / 1488 retenidos, 2496 factories y 3604 cuerpos de reset, sin
-render nuevo ni integración al plugin. IDs 3..6, llamador activo, productores
-pitch/gain y acústica pendientes.
+[Seis/doce voces, IDs 0..6](core246-modulator-factory-all.md): siete familias,
+constructores reales, pool común, secundario compartido, preparación puntual de
+backend en Bend/Crank, clear y resets compuestos. Corpus anterior de 3072 casos
+conservado y 7168 adicionales / 3472 retenidos para las siete familias. Los resets
+de Element/MIDI/Bend/Crank son no-op. Sin render nuevo ni integración al plugin;
+llamador activo, productores pitch/gain, scheduler y acústica pendientes.
 
 ### Reinicios Core de modulación
 

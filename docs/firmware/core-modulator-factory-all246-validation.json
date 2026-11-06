@@ -1,0 +1,137 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 7168,
+  "input_record_bytes": 1136,
+  "output_record_bytes": 1116,
+  "routines": {
+    "synth_factory": "0x01967a58",
+    "drum_factory": "0x01967ac0",
+    "shared_selector": "0x019c99ac",
+    "synth_selector": "0x019c9a24",
+    "drum_selector": "0x019c9ac0"
+  },
+  "types": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "voices": {
+    "synth": 6,
+    "drum": 12
+  },
+  "windows": [
+    [
+      "0x01aaac0c",
+      68
+    ],
+    [
+      "0x01aaad60",
+      84
+    ],
+    [
+      "0xffb009f8",
+      588
+    ],
+    [
+      "0xff8014c4",
+      128
+    ],
+    [
+      "0xff801644",
+      128
+    ],
+    [
+      "0x01dd5d04",
+      32
+    ],
+    [
+      "0x01dd5a88",
+      32
+    ],
+    [
+      "0x01dd5c6c",
+      4
+    ],
+    [
+      "0xff802bc8",
+      4
+    ],
+    [
+      "0xff907aa8",
+      48
+    ]
+  ],
+  "artifacts": {
+    "core-modulator-factory-all246-input.bin.gz": {
+      "bytes": 4296819,
+      "raw_bytes": 8142848,
+      "sha256": "62224db06aa5250bdb05df2a49fd16b95893a3aabcb9dd0b46ce0305b1eec188"
+    },
+    "core-modulator-factory-all246-output.bin.gz": {
+      "bytes": 2158072,
+      "raw_bytes": 7999488,
+      "sha256": "b7664d7e01212c49b1743e90934df4c0a226dcf838b0cf831a0a3d2d356053f6"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original factories/selectors/constructors and optional clear/reset dispatchers under explicit selection, enable flags and controls. All seven valid selector IDs 0..6.",
+    "Synth and drum constructors reuse the same physical primary pool and shared object; this is not simultaneous independent storage.",
+    "No original render scheduler, active pitch/gain producers, complete audio composition or plugin integration established here. No installers."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent original extractions, frozen native and ASan/UBSan reproduction",
+  "independent_original_executions": 2,
+  "reloads": 3696,
+  "retained_rows": 3472,
+  "factories": 5824,
+  "primary_constructions": 52416,
+  "primary_constructions_by_family": [
+    7488,
+    7488,
+    7488,
+    7488,
+    7488,
+    7488,
+    7488
+  ],
+  "shared_constructions": 4992,
+  "clears": 316,
+  "reset_dispatches": 6093,
+  "accepted_dispatches": 5004,
+  "primary_reset_calls": 5004,
+  "secondary_reset_calls": 4289,
+  "reset_calls_by_family": {
+    "tremolo": 715,
+    "value": 1434,
+    "random": 1428,
+    "element": 1422,
+    "midi": 1432,
+    "bend": 1430,
+    "crank": 1432
+  },
+  "noop_reset_calls": 5716,
+  "accepted_grid_combinations": 1008,
+  "retained_family_changes": 28,
+  "retained_route_changes": 4,
+  "backend_prepare_calls": {
+    "bend": 832,
+    "crank": 832
+  },
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  }
+}

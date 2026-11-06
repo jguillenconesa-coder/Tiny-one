@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: las siete familias de modulación
+
+[Factory completa 0..6](core246-modulator-factory-all.md): Element/MIDI/Bend/Crank
+se añaden a Tremolo/Value/Random. 7168 escenarios adicionales, 3472 filas
+retenidas, 5824 factories y rejilla de 1008 combinaciones contrastadas. Las cuatro
+familias añadidas construyen objetos de cuatro bytes y sus resets son no-op;
+Bend/Crank limpian un flag de backend al seleccionarse. Dos extracciones originales,
+ambos corpus en Release/ASan/UBSan y regresiones relacionadas aprobados. El
+llamador completo, scheduler, pitch/gain activos y acústica siguen pendientes.
+Producto 0.54.0 y ≈70 % ±10 sin cambios; sin instaladores.
+
 ## Bloque de investigación: factorías de modulación synth/drum
 
 [Selección y construcción](core246-modulator-factory.md): IDs 0 Tremolo, 1 Value
@@ -55,7 +66,8 @@ padding, cambios de familia/ruta, clear y gates contrastados en la rejilla de
 432 combinaciones. Dos ejecuciones originales, Release y ASan/UBSan aprobados;
 regresiones de resets, note-on y render retenido conservadas. CI nativo aprobado
 en Linux, Windows/MSVC y macOS Intel sobre `67c5298`. Falta el llamador
-activo, IDs 3..6, productores pitch/gain y acústica. No cambia plugin 0.54.0,
+activo, productores pitch/gain y acústica; IDs 3..6 contrastados en la ampliación.
+No cambia plugin 0.54.0,
 ≈70 % ±10 o instaladores.
 
 ## Bloque de investigación: arranque de buffers y frontera de dinámica
