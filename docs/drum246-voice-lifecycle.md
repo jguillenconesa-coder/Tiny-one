@@ -92,3 +92,10 @@ Agrupar la integración con esa composición evita confundir un registro vacío
 con audio detenido. Dinámica, scheduler y frontend híbridos permanecen propios;
 D-box, Live real, acústica y presets completos no quedan validados por estos
 estudios. Avance **≈69 % ±10 de planificación**.
+
+## Composición posterior con auxiliares activos
+
+[Note-on y reset de lector](drum246-active-note-chain.md) añade un hook explícito
+al modelo y contrasta el note-on completo con resets reales de modulación. La
+ruta por defecto de este corpus conserva sus entradas nulas y sus resultados;
+los nuevos casos no se cuentan como audio ni completan los productores de buffers.

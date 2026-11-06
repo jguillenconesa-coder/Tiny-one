@@ -1,0 +1,470 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored tracing endpoints tail-call complete original reset callbacks.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+imm32 P1,0x01cc10cc
+imm32 R0,0x02010000
+R1=8;
+P0=8;
+LSETUP(refs,refs_end) LC0=P0;
+refs: [P1++]=R0;
+refs_end: R0=R0+R1;
+P1.H=controls;
+P1.L=controls;
+imm32 P2,0x01aaadb4
+P0=768;
+LSETUP(controls_copy,controls_copy_end) LC0=P0;
+controls_copy: R0=[P1++];
+controls_copy_end: [P2++]=R0;
+imm32 P1,0x02010140
+R0=0;
+[P1+0x18]=R0;
+[P1+0x20]=R0;
+R0.H=audio_endpoint;
+R0.L=audio_endpoint;
+[P1+0x1c]=R0;
+imm32 R0,0x019788b0
+[P1+0x24]=R0;
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+P0.H=input_ptr;
+P0.L=input_ptr;
+[P0]=P4;
+P1=P4;
+P1+=36;
+imm32 P2,0x1aaac0c
+P3=17;
+LSETUP(in0,in0end) LC0=P3;
+in0: R0=[P1++];
+in0end: [P2++]=R0;
+imm32 P2,0x1aaad60
+P3=21;
+LSETUP(in1,in1end) LC0=P3;
+in1: R0=[P1++];
+in1end: [P2++]=R0;
+imm32 P2,0x2010000
+P3=32;
+LSETUP(in2,in2end) LC0=P3;
+in2: R0=[P1++];
+in2end: [P2++]=R0;
+imm32 P2,0x2010080
+P3=32;
+LSETUP(in3,in3end) LC0=P3;
+in3: R0=[P1++];
+in3end: [P2++]=R0;
+imm32 P2,0x1dd5a88
+P3=8;
+LSETUP(in4,in4end) LC0=P3;
+in4: R0=[P1++];
+in4end: [P2++]=R0;
+imm32 P2,0xff8014c4
+P3=32;
+LSETUP(in5,in5end) LC0=P3;
+in5: R0=[P1++];
+in5end: [P2++]=R0;
+imm32 P2,0xff801644
+P3=32;
+LSETUP(in6,in6end) LC0=P3;
+in6: R0=[P1++];
+in6end: [P2++]=R0;
+imm32 P2,0xff802bc8
+P3=2;
+LSETUP(in7,in7end) LC0=P3;
+in7: R0=[P1++];
+in7end: [P2++]=R0;
+imm32 P1,0x02010040
+imm32 R0,0x02010100
+[P1]=R0;
+imm32 P1,0x020100c0
+imm32 R0,0x02010120
+[P1]=R0;
+imm32 P1,0x02010100
+R0=[P4+20];
+W[P1+0x18]=R0;
+R0.H=primary_endpoint;
+R0.L=primary_endpoint;
+[P1+0x1c]=R0;
+imm32 P1,0x02010120
+R0=[P4+24];
+W[P1+0x18]=R0;
+R0.H=secondary_endpoint;
+R0.L=secondary_endpoint;
+[P1+0x1c]=R0;
+P1.H=reset_functions;
+P1.L=reset_functions;
+P0=[P4+12];
+P0=P1+(P0<<2);
+R0=[P0];
+P0.H=primary_reset;
+P0.L=primary_reset;
+[P0]=R0;
+P0=[P4+16];
+P0=P1+(P0<<2);
+R0=[P0];
+P0.H=secondary_reset;
+P0.L=secondary_reset;
+[P0]=R0;
+R0=[P4];
+CC=R0==0;
+IF CC JUMP synth_setup;
+imm32 P1,0x01aaad84
+imm32 P2,0x01aaac48
+imm32 P3,0x01aaac10
+JUMP.S setup;
+synth_setup:
+imm32 P1,0x01aaad6c
+imm32 P2,0x01aaac44
+imm32 P3,0x01aaac0c
+setup:
+P0.H=selector;
+P0.L=selector;
+[P0]=P3;
+R0=[P4+8];
+[P3]=R0;
+P0=[P4+4];
+P1=P1+(P0<<2);
+R0=0;
+R1=[P4+12];
+CC=R1==0;
+IF CC JUMP no_primary;
+imm32 R0,0x02010040
+no_primary: [P1]=R0;
+R0=0;
+R1=[P4+16];
+CC=R1==0;
+IF CC JUMP no_secondary;
+imm32 R0,0x020100c0
+no_secondary: [P2]=R0;
+P1.H=trace;
+P1.L=trace;
+P0=46;
+R0=0;
+LSETUP(clear_trace,clear_trace_end) LC0=P0;
+clear_trace: [P1++]=R0;
+clear_trace_end: NOP;
+R0=[P4+768];
+imm32 P1,0xff801038
+P2=203;
+LSETUP(voice_globals,voice_globals_end) LC0=P2;
+voice_globals: [P1++]=R0;
+voice_globals_end: NOP;
+imm32 P1,0xff801038
+R0=1;
+[P1]=R0;
+imm32 P1,0xff801070
+P2=12;
+LSETUP(busy,busy_end) LC0=P2;
+busy: B[P1++]=R0;
+busy_end: NOP;
+R0=[P4+4];
+R1=[P4+764];
+CC=BITTST(R1,1);
+IF !CC JUMP use_free;
+R0=0;
+JUMP.S target_set;
+use_free:
+P2=R0;
+imm32 P1,0xff801070
+P1=P1+P2;
+R1=0;
+B[P1]=R1;
+target_set:
+P1.H=target_slot;
+P1.L=target_slot;
+[P1]=R0;
+P2=R0;
+imm32 P1,0x01aaad84
+R0=0;
+P0=12;
+LSETUP(mod_table_clear,mod_table_clear_end) LC0=P0;
+mod_table_clear: [P1++]=R0;
+mod_table_clear_end: NOP;
+imm32 P1,0x01aaad84
+P1=P1+(P2<<2);
+R1=[P4+12];
+CC=R1==0;
+IF CC JUMP mod_target;
+imm32 R0,0x02010040
+mod_target: [P1]=R0;
+imm32 P1,0x01dfe734
+imm32 R0,0x5a5a5a5a
+imm32 P2,641
+LSETUP(held_init,held_init_end) LC0=P2;
+held_init: [P1++]=R0;
+held_init_end: NOP;
+R0=[P4+764];
+CC=BITTST(R0,0);
+R0=0;
+IF !CC JUMP held_count;
+R0=[P4+744];
+imm32 P1,0x01dfe734
+[P1]=R0;
+R0=1;
+held_count:
+imm32 P1,0x01dff134
+[P1]=R0;
+R0=[P4+760];
+imm32 P1,0x018c2180
+[P1]=R0;
+R0=[P4+768];
+imm32 P1,0xffb00000
+P2=60;
+LSETUP(pool_init,pool_init_end) LC0=P2;
+pool_init: [P1++]=R0;
+pool_init_end: NOP;
+R0=8;
+imm32 P0,0x01967984
+CALL(P0);
+imm32 P1,0xffb00000
+imm32 R0,0x02010140
+P2=12;
+LSETUP(audio_tags,audio_tags_end) LC0=P2;
+audio_tags: [P1]=R0;
+audio_tags_end: P1+=20;
+R0=[P4+28];
+CC=BITTST(R0,0);
+IF !CC JUMP dispatch;
+R0=[P4];
+CC=R0==0;
+IF CC JUMP clear_synth;
+imm32 P0,0x01967330
+JUMP.S clear_call;
+clear_synth:
+imm32 P0,0x0196745a
+clear_call: CALL(P0);
+dispatch:
+imm32 P0,744
+P0=P4+P0;
+R0=P0;
+R1=[P4+740];
+imm32 P0,0x01a84ba0
+CALL(P0);
+imm32 P1,0x1aaac0c
+P3=17;
+LSETUP(out0,out0end) LC0=P3;
+out0: R0=[P1++];
+out0end: [P5++]=R0;
+imm32 P1,0x1aaad60
+P3=21;
+LSETUP(out1,out1end) LC0=P3;
+out1: R0=[P1++];
+out1end: [P5++]=R0;
+imm32 P1,0x2010000
+P3=32;
+LSETUP(out2,out2end) LC0=P3;
+out2: R0=[P1++];
+out2end: [P5++]=R0;
+imm32 P1,0x2010080
+P3=32;
+LSETUP(out3,out3end) LC0=P3;
+out3: R0=[P1++];
+out3end: [P5++]=R0;
+imm32 P1,0x1dd5a88
+P3=8;
+LSETUP(out4,out4end) LC0=P3;
+out4: R0=[P1++];
+out4end: [P5++]=R0;
+imm32 P1,0xff8014c4
+P3=32;
+LSETUP(out5,out5end) LC0=P3;
+out5: R0=[P1++];
+out5end: [P5++]=R0;
+imm32 P1,0xff801644
+P3=32;
+LSETUP(out6,out6end) LC0=P3;
+out6: R0=[P1++];
+out6end: [P5++]=R0;
+imm32 P1,0xff802bc8
+P3=2;
+LSETUP(out7,out7end) LC0=P3;
+out7: R0=[P1++];
+out7end: [P5++]=R0;
+imm32 P1,0xff801038
+imm32 P3,203
+LSETUP(ctx0,ctx0end) LC0=P3;
+ctx0: R0=[P1++];
+ctx0end: [P5++]=R0;
+imm32 P1,0xffb00000
+imm32 P3,60
+LSETUP(ctx1,ctx1end) LC0=P3;
+ctx1: R0=[P1++];
+ctx1end: [P5++]=R0;
+imm32 P1,0x1aaad30
+imm32 P3,12
+LSETUP(ctx2,ctx2end) LC0=P3;
+ctx2: R0=[P1++];
+ctx2end: [P5++]=R0;
+imm32 P1,0x1dfe734
+imm32 P3,641
+LSETUP(ctx3,ctx3end) LC0=P3;
+ctx3: R0=[P1++];
+ctx3end: [P5++]=R0;
+imm32 P1,0x1aaadb4
+imm32 P3,768
+LSETUP(ctx4,ctx4end) LC0=P3;
+ctx4: R0=[P1++];
+ctx4end: [P5++]=R0;
+P1.H=trace;
+P1.L=trace;
+P3=46;
+LSETUP(trace_copy,trace_copy_end) LC0=P3;
+trace_copy: R0=[P1++];
+trace_copy_end: [P5++]=R0;
+imm32 P0,772
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF !CC JUMP next_case;
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+primary_endpoint:
+P0.H=trace;
+P0.L=trace;
+R2=[P0];
+R2+=1;
+[P0]=R2;
+[P0+4]=R0;
+[P0+8]=R1;
+P1.H=selector;
+P1.L=selector;
+P1=[P1];
+R2=[P1];
+[P0+12]=R2;
+[--SP]=RETS;
+P0.H=trace;
+P0.L=trace;
+P0+=40;
+CALL order_snapshot;
+RETS=[SP++];
+P1.H=input_ptr;
+P1.L=input_ptr;
+P1=[P1];
+R2=[P1+28];
+CC=BITTST(R2,1);
+IF !CC JUMP primary_tail;
+P1.H=input_ptr;
+P1.L=input_ptr;
+P1=[P1];
+R2=[P1+32];
+P1.H=selector;
+P1.L=selector;
+P1=[P1];
+[P1]=R2;
+primary_tail:
+P0.H=primary_reset;
+P0.L=primary_reset;
+P0=[P0];
+JUMP(P0);
+secondary_endpoint:
+P0.H=trace;
+P0.L=trace;
+R2=[P0];
+R2+=1;
+[P0]=R2;
+[P0+16]=R0;
+[P0+20]=R1;
+P1.H=selector;
+P1.L=selector;
+P1=[P1];
+R2=[P1];
+[P0+24]=R2;
+[--SP]=RETS;
+P0.H=trace;
+P0.L=trace;
+imm32 P2,88
+P0=P0+P2;
+CALL order_snapshot;
+RETS=[SP++];
+P0.H=secondary_reset;
+P0.L=secondary_reset;
+P0=[P0];
+JUMP(P0);
+audio_endpoint:
+P0.H=trace;
+P0.L=trace;
+R2=[P0];
+R2+=1;
+[P0]=R2;
+[P0+28]=R0;
+[P0+32]=R1;
+imm32 P1,0x01aaac10
+R2=[P1];
+[P0+36]=R2;
+[--SP]=RETS;
+P0.H=trace;
+P0.L=trace;
+imm32 P2,136
+P0=P0+P2;
+CALL order_snapshot;
+RETS=[SP++];
+imm32 P0,0x01978926
+JUMP(P0);
+order_snapshot:
+P1.H=trace;
+P1.L=trace;
+R2=[P1];
+[P0++]=R2;
+P1.H=target_slot;
+P1.L=target_slot;
+R3=[P1];
+P2=R3;
+imm32 P1,0xff801070
+P1=P1+P2;
+R2=B[P1](Z);
+[P0++]=R2;
+imm32 P1,0xff8010f4
+P1=P1+(P2<<2);
+R2=[P1];
+[P0++]=R2;
+imm32 P1,0xff8012ec
+P1=P1+(P2<<1);
+R2=W[P1](Z);
+[P0++]=R2;
+imm32 P1,0xff801304
+P1=P1+(P2<<2);
+R2=[P1];
+[P0++]=R2;
+imm32 P1,0xff801334
+P1=P1+(P2<<2);
+R2=[P1];
+[P0++]=R2;
+imm32 P1,0x01dff134
+R2=[P1];
+[P0++]=R2;
+R2=20;
+R2*=R3;
+P2=R2;
+imm32 P1,0xffb00000
+P1=P1+P2;
+P2=5;
+LSETUP(order_pool,order_pool_end) LC0=P2;
+order_pool: R2=[P1++];
+order_pool_end: [P0++]=R2;
+RTS;
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+reset_functions: .long 0,0x019cfd5a,0x019cff16,0x019ced74,0x019cef66,0x019cbdca
+primary_reset: .long 0
+secondary_reset: .long 0
+selector: .long 0
+input_ptr: .long 0
+target_slot: .long 0
+trace: .space 184
+controls: .incbin "@WORK@/inputs.bin",0,3072
+inputs: .incbin "@WORK@/inputs.bin",3072
+inputs_end:
+.section .handles,"aw"
+.space 0x170
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

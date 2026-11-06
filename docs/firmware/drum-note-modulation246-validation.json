@@ -1,0 +1,92 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4096,
+  "input_prefix_bytes": 3072,
+  "input_record_bytes": 772,
+  "output_record_bytes": 7624,
+  "note_on": "0x01a84ba0",
+  "modulator_dispatch": "0x0196735e",
+  "sampler_reset": "0x01978926",
+  "query": "0x019788b0",
+  "artifacts": {
+    "drum-note-modulation246-input.bin.gz": {
+      "bytes": 2863477,
+      "raw_bytes": 3165184,
+      "sha256": "64c4adbd75aeae6a8d6e9fead20831f64c9287e670796dc03a9c084a0f5f0927"
+    },
+    "drum-note-modulation246-output.bin.gz": {
+      "bytes": 3089145,
+      "raw_bytes": 31227904,
+      "sha256": "88b6a09fcb4d2aa88246159efa72ead21d4c9d7a8817f6027144289d7e1a3c29"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original note-on, active reset dispatcher and original modulator/sampler resets; explicit control banks, type-8 factory, references, occupancy/list, event order and normal register context.",
+    "Authored argument/order endpoints tail-call complete original reset bodies. Signed modulator this adjustments, own audio tracing vtable and synthetic selection mutation; no LFO factory/type-selection mapping claim.",
+    "No audio render, per-sample pitch/gain producers, original scheduler, physical inputs, plugin integration or installer generation."
+  ],
+  "date": "2026-11-06",
+  "status": "success: independent original extractions, ordinary frozen reproduction, complete native and ASan/UBSan comparison",
+  "independent_original_executions": 2,
+  "audio_factory": "0x01967984",
+  "audio_type": 8,
+  "lfo_factory_executed": false,
+  "counts": {
+    "accepted": 3826,
+    "ignored": 270,
+    "invalid_note": 118,
+    "valid_held_duplicate": 152,
+    "modulator_resets": 4138,
+    "primary_resets": 2253,
+    "secondary_resets": 1885,
+    "sampler_resets": 3826,
+    "changed_selection_sampler_controls": 459,
+    "occupied_flag_allocations_with_mode_zero": 216,
+    "accepted_voice_sound_pad_grid": 2304,
+    "integer_transpositions": 256,
+    "reset_profiles": {
+      "value_synth": 852,
+      "value_drum": 812,
+      "random_synth": 828,
+      "random_drum": 832,
+      "tremolo": 814
+    }
+  },
+  "native": {
+    "status": "success",
+    "suites": 1,
+    "seconds": 0.32
+  },
+  "sanitizers": {
+    "status": "success: complete ASan/UBSan comparator",
+    "seconds": 4.68,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "previous_frozen_regressions": {
+    "status": "success",
+    "voice_records": 4096,
+    "bank_records": 8192,
+    "event_word_records": 65536,
+    "core_initialization_records": 256,
+    "total_records": 78080
+  },
+  "native_ci": {
+    "status": "not yet triggered"
+  },
+  "instrument_version_unchanged": "0.54.0",
+  "plugin_integration": false,
+  "audio_rendered": false,
+  "generated_installers": false,
+  "estimated_progress": "approximately 70% +/-10 planning points; unchanged; acoustic fidelity unmeasured",
+  "source_sha256": {
+    "research/drum-voice/DrumVoice246.h": "f0a43cea7bfc901da8e2e260290703596729313ce69edb3f676f6f2cf1394bd0",
+    "research/drum-note-modulation/DrumNoteModulation246Tests.cpp": "b17088e90a4ff287cebd81de6508cc92d9710843eb88ccbefbed5fa5364ffcdb",
+    "research/core-modulator-reset/CoreModulatorReset246.h": "3d3cff612e64be2604fb434c251be6e5605c7f03a076e6a76da7f2b077e69198",
+    "research/blackfin/drum-note-modulation.s.in": "8a04076008a8b3ca7bfcb7e7a60549dccf2ca3ece385d055e0132b1d5afc0629"
+  }
+}

@@ -990,3 +990,16 @@ Sin instaladores hasta nueva petición; planificación ≈70 % ±10 sin medir ac
 
 Cierre del reinicio Core: CI nativo aprobado, 1/1 suite en Linux, Windows/MSVC
 y macOS Intel. No se reconstruye el producto ni se generan instaladores.
+
+## Note-on con auxiliares activos y lector — composición agrupada
+
+[Contrato](drum246-active-note-chain.md): 4.096 note-on completos con dispatcher
+y resets originales activos, 3.826 notas aceptadas, 4.138 resets LFO y 3.826 del
+sampler. Orden de palabras, ocupación/lista y estado del lector observado en
+cada callback; 459 cambios sintéticos de selección alcanzan los controles del
+lector sin cambiar su referencia enlazada. Rejilla 12×8×24 y 256 transposiciones.
+Hook explícito en el modelo; la ruta por defecto mantiene 78.080 registros de
+regresión. Release/ASan/UBSan y reproducción congelada aprobados. No ejecuta la
+factory LFO ni render, no cambia plugin/versión o instaladores. Siguiente bloque:
+callbacks de modulación por bloque + lector bajo entradas/cadencia explícitas,
+sin confundir esa composición con productores pitch/gain o scheduler del aparato.

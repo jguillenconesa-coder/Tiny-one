@@ -4,8 +4,9 @@
 #include "Drum246Allocator.h"
 #include "Drum246Event.h"
 namespace pocket::research {
-// Research domain: type-1 drum mode, no modulation objects/FX and supplied
-// event transposition domain -128..127. No scheduler or gain buffer producer.
+// Research domain: type-1 drum mode and event transposition -128..127.
+// Default path has null auxiliaries; the explicit hook models reset composition.
+// No scheduler or gain buffer producer.
 struct DrumVoice246 {
     CoreDrumSampler246 audio;
     std::array<unsigned char,812> globals{};
@@ -19,6 +20,9 @@ struct DrumVoice246 {
     uint32_t query(unsigned voice) noexcept {return audio.pool[voice].active();}
     // Returns selected voice for research diagnostics; original callback is void.
     int on(const std::array<uint32_t,4>& event,int transpose,int preview,unsigned sound,const Controls& controls) noexcept {
+        return on(event,transpose,preview,sound,controls,[](unsigned,unsigned selected){return selected;});
+    }
+    template<class BeforeAudio> int on(const std::array<uint32_t,4>& event,int transpose,int preview,unsigned sound,const Controls& controls,BeforeAudio&& beforeAudio) {
         const auto note=reference::signedPhase(event[0]);if(note<53||note>76)return -1;
         const auto count=get(held.data()+2560);
         for(unsigned i=0;i<count;++i)if(get(held.data()+i*20)==event[0])return -1;
@@ -35,7 +39,9 @@ struct DrumVoice246 {
         put(at(0x12ec+voice*2),uint16_t(reference::drum246EventVelocityWord(event[1])),2);
         put(at(0x1304+voice*4),pitchWord);
         put(at(0x1334+voice*4),pad);
-        audio.dispatch(voice,sound,pad,false,controls[sound][pad]);
+        const unsigned currentSound=beforeAudio(voice,sound);
+        if(currentSound>=8)return -1; // Authored guard; valid selections in oracle.
+        audio.dispatch(voice,currentSound,pad,false,controls[currentSound][pad]);
         auto* row=held.data()+count*20;
         put(row,event[0]);put(row+4,event[1]);row[8]=static_cast<unsigned char>(event[2]);put(row+12,event[3]);put(row+16,voice);
         put(held.data()+2560,count+1);*at(0x1070+voice)=1;return selected;

@@ -1,0 +1,36 @@
+name: Validate active drum note-on and modulator reset composition
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/drum-note-modulation/**'
+      - 'research/drum-voice/DrumVoice246.h'
+      - 'research/drum-core/CoreDrumSampler246.h'
+      - 'research/core-modulator-reset/CoreModulatorReset246.h'
+      - 'research/blackfin/drum-note-modulation.s.in'
+      - 'research/blackfin/drum-render.ld'
+      - 'Source/Drum246*.h'
+      - 'Source/Random246.h'
+      - 'Source/Tremolo246*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-drum-note-modulation246.py'
+      - '.github/workflows/drum-note-modulation246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/drum-note-modulation -B build-drum-note-modulation -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-drum-note-modulation --config Release --parallel 2
+      - run: ctest --test-dir build-drum-note-modulation -C Release --output-on-failure

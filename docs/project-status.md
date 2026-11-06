@@ -46,6 +46,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: note-on con modulación activa y lector
+
+[Cadena completa](drum246-active-note-chain.md): 4.096 note-on originales,
+3.826 aceptados, 4.138 resets de modulación y 3.826 resets del sampler. Rejilla
+aceptada de 12 voces × 8 sonidos × 24 pads, 256 transposiciones, ignorados y
+cambios sintéticos de selección. Se observa palabras → modulación → lector →
+lista/ocupación final; el lector usa el banco actual conservando el handle
+inicial. Dos extracciones, reproducción congelada, Release y ASan/UBSan aprobados.
+Las cuatro regresiones por defecto (78.080 registros) siguen coincidiendo.
+Investigación sin render ni integración de audio; no recupera productores o
+reloj originales. Versión 0.54.0 y avance ≈70 % ±10 sin cambios; sin instaladores.
+
 ## Bloque de investigación: reinicio Core de moduladores
 
 [Dispatchers de seis y doce voces](core246-modulator-reset.md): 8.192 casos y

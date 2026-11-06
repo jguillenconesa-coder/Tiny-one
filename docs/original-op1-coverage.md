@@ -200,3 +200,11 @@ limpiezas completos, 8.830 llamadas a cinco resets originales de tres familias,
 gating/this/selección y guardas contrastados. Modelos de investigación; endpoints
 y mutación sintética explícitos. No valida factory, note-on completo con LFO activo,
 productores pitch/gain o ruteo de audio. Sin cambios en el plugin ni instaladores.
+
+### Note-on drum con reinicios activos y lector
+
+[Composición](drum246-active-note-chain.md): 4.096 note-on originales completos,
+4.138 resets LFO y 3.826 del sampler, con orden de palabras/lista/ocupación y
+selección observados. Perfiles de callback suministrados, factory audio tipo 8,
+sin factory LFO o render. Preserva la regresión de auxiliares nulos. No recupera
+productores pitch/gain, reloj o dinámica; sin cambios en el plugin ni instaladores.

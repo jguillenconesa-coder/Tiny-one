@@ -108,3 +108,9 @@ La siguiente composición es note-on completo → dispatcher activo → reset re
 respecto a selección, lista retenida y ocupación. El consumidor de pitch visible
 en L1 y la dinámica original siguen pendientes. No se sustituyen por este reset.
 Avance **≈70 % ±10 de planificación**, sin aumentar por número de llamadas.
+
+## Composición posterior
+
+La [cadena activa de note-on y lector](drum246-active-note-chain.md) ya ejecuta
+el note-on exterior con estos resets. Añade observación de orden y selección;
+no amplía este corpus aislado ni recupera render, reloj o productores de buffers.
