@@ -203,6 +203,12 @@ productores pitch/gain o ruteo de audio. Sin cambios en el plugin ni instaladore
 
 ### Note-on drum con reinicios activos y lector
 
+[Composición retenida con render](drum246-modulated-render.md): 288 sesiones,
+4608 pasos de modulación y 4464 renders / 571392 muestras contrastados, con
+note-on/off completos y resets activos. Incluye Value/Random drum y Tremolo común
+bajo selección/cadencia/buffers explícitos. No recupera productores pitch/gain,
+scheduler o factory/ruteo Tremolo; no añade integración al plugin.
+
 [Composición](drum246-active-note-chain.md): 4.096 note-on originales completos,
 4.138 resets LFO y 3.826 del sampler, con orden de palabras/lista/ocupación y
 selección observados. Perfiles de callback suministrados, factory audio tipo 8,

@@ -1,0 +1,36 @@
+name: Validate retained drum modulation and render composition
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/drum-modulated-render/**'
+      - 'research/drum-voice/DrumVoice246.h'
+      - 'research/drum-core/CoreDrumSampler246.h'
+      - 'research/core-modulator-reset/CoreModulatorReset246.h'
+      - 'research/blackfin/drum-render.ld'
+      - 'Source/Drum246*.h'
+      - 'Tests/ReferenceVectors/verified-sine.bin'
+      - 'Source/Random246.h'
+      - 'Source/Tremolo246*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-drum-modulated-render246.py'
+      - '.github/workflows/drum-modulated-render246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/drum-modulated-render -B build-drum-modulated-render -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-drum-modulated-render --config Release --parallel 2
+      - run: ctest --test-dir build-drum-modulated-render -C Release --output-on-failure

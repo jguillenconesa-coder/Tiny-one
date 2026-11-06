@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: modulación retenida y render de batería
+
+[Composición](drum246-modulated-render.md): 288 sesiones / 4608 callbacks con
+note-on y note-off completos, resets activos, tres perfiles de modulación y
+lector original. Coinciden 4464 renders / 571392 muestras, estados, buffers y
+144 renders omitidos. Dos ejecuciones originales independientes, Release y
+ASan/UBSan aprobados; regresiones previas conservadas. Cadencia, PCM, controles,
+selección y buffers iniciales explícitos: productores pitch/gain, scheduler y
+factory/ruteo Tremolo originales siguen pendientes. Investigación sin integración
+nueva en el plugin; 0.54.0 y ≈70 % ±10 sin cambios. Sin instaladores.
+
 ## Bloque de investigación: note-on con modulación activa y lector
 
 [Cadena completa](drum246-active-note-chain.md): 4.096 note-on originales,

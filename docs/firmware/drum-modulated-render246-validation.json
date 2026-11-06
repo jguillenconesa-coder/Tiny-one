@@ -1,0 +1,65 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "blocks": 4608,
+  "sessions": 288,
+  "input_prefix_bytes": 8470784,
+  "input_record_bytes": 988,
+  "output_prefix_bytes": 18596,
+  "output_record_bytes": 8728,
+  "output_suffix_bytes": 8467712,
+  "artifacts": {
+    "drum-modulated-render246-input.bin.gz": {
+      "bytes": 6111467,
+      "raw_bytes": 13023488,
+      "sha256": "f536393b772bf5767cb42ba1cb46a61ee979cabeb71fc9eba560dc43a54c9cb4"
+    },
+    "drum-modulated-render246-output.bin.gz": {
+      "bytes": 7916884,
+      "raw_bytes": 48704932,
+      "sha256": "3d7fed35b02031c88a5156906bc713475c25f7fdbdd9d42fddbba741300913ae"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Explicit 16-block cadence: note-on, retained modulation each block, note-off at block 12, render except final block of odd sessions. Not recovered original scheduling.",
+    "Pitch and gain buffers, PCM, controls and kinds are supplied. Original pitch/gain producers and Tremolo factory routing are not recovered.",
+    "No plugin changes, acoustic equivalence, installers or presets claimed."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent original executions, frozen reproduction, native Release and ASan/UBSan",
+  "independent_original_executions": 2,
+  "rendered_blocks": 4464,
+  "output_samples": 571392,
+  "skipped_renders": 144,
+  "note_ons": 288,
+  "note_offs": 288,
+  "callback_counts": {
+    "value_drum": {
+      "accepted": 1316,
+      "rejected": 220,
+      "nonzero_renders": 1009
+    },
+    "random_drum": {
+      "accepted": 1317,
+      "rejected": 219,
+      "nonzero_renders": 904
+    },
+    "tremolo_common": {
+      "accepted": 1316,
+      "rejected": 220,
+      "nonzero_renders": 789
+    }
+  },
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  }
+}

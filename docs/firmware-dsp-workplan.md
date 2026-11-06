@@ -1006,3 +1006,17 @@ sin confundir esa composición con productores pitch/gain o scheduler del aparat
 
 Cierre de note-on activo: suite nueva y cinco regresiones CI aprobadas en Linux,
 Windows/MSVC y macOS Intel; sin build del producto ni instaladores nuevos.
+
+
+## Modulación retenida y render de batería — composición agrupada
+
+[Contrato](drum246-modulated-render.md): 288 sesiones con 16 bloques retenidos,
+4608 callbacks Value/Random drum y Tremolo común, 288 note-on/off completos y
+4464 renders / 571392 muestras; 144 omisiones conservan los buffers esperados.
+Pool, globals, estados/displays/RNG, controles, punteros, lista retenida,
+pitch/gain/derivada y audio coinciden. Dos ejecuciones originales independientes,
+Release y ASan/UBSan aprobados, sin alterar modelos previos. No demuestra el
+reloj del aparato, productores de pitch/gain o factory Tremolo: todo eso se
+suministra explícitamente. Próximo frente: productores/consumidores activos y
+ruteo protegido; usar esta composición como regresión de la ruta híbrida.
+Sin cambios en producto 0.54.0, estimación ≈70 % ±10 o instaladores.

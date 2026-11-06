@@ -109,12 +109,12 @@ Se cierra la frontera auxiliar nula para esta composición de note-on en modo
 drum 1 / sampler 8. Los perfiles anteriores conservan sus límites y sus
 regresiones no se reinterpretan como si hubieran usado LFO activos.
 
-Faltan los callbacks de modulación por bloque compuestos con el render, los
-productores de buffers pitch/gain, el reloj/scheduler y su enlace activo con los
-tramos L1 protegidos. No se infieren a partir de las palabras del evento ni de
-la coincidencia de los resets. La próxima composición usará los callbacks y el
-lector contrastados con entradas/cadencia explícitas, manteniendo esa frontera
-respecto al aparato. No se enlaza todavía este modelo al plugin.
+La [composición posterior](drum246-modulated-render.md) añade callbacks de
+modulación retenidos, note-off y render bajo entradas/cadencia explícitas.
+Siguen pendientes los productores de buffers pitch/gain, el reloj/scheduler y
+su enlace activo con los tramos L1 protegidos. No se infieren a partir de las
+palabras del evento ni de la coincidencia de los resets. No se enlaza todavía
+este modelo al plugin.
 
 No hay medición acústica o Ableton real nuevos. Estimación sin cambio:
 **≈70 % ±10 de planificación**. Instaladores desactivados hasta nueva petición.
