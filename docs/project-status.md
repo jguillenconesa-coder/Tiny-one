@@ -53,6 +53,7 @@ con dos inicializadores, factory y note-on. Se comparan cuatro ventanas completa
 4.641 bytes fijados y 1.215 conservados por el inicializador amplio, además de
 los eventos posteriores. Todos los pares banco/pad y transposiciones enteras;
 dos extracciones idénticas y comparadores Release/ASan/UBSan aprobados.
+CI nuevo aprobado en Linux y Windows/MSVC; macOS Intel sigue en curso.
 Los spans son datos derivados del oráculo, sin implementación general de
 soft-float ni integración en el plugin. El inicializador conserva ocupación y
 objetos de audio: no se usa como pánico o productor de dinámica. Versión 0.54.0
@@ -68,9 +69,11 @@ amplitud, pitch fino, bend y normalización son puentes propios explícitos.
 La curva dinámica y los productores por muestra siguen pendientes.
 CI nativo y regresiones de 0.54.0 aprobados en Linux, Windows/MSVC y macOS Intel.
 Linux **145/145 suites**, **1.446 cargas sin heap rastreado**, doce casos de
-plugin y ASan/UBSan aprobados. [CI multiplataforma en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259);
+plugin y ASan/UBSan aprobados. [CI de empaquetado anterior](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259);
 ejecución de empaquetado cancelada por la petición posterior del propietario.
-Las pruebas nativas siguen y los próximos builds omiten instaladores por defecto.
+Las pruebas nativas están aprobadas. El [CI completo de reemplazo sin instaladores](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142957706)
+ya aprobó Windows/MSVC y sigue en Linux/macOS; los cuatro pasos de empaquetado
+Windows constan como omitidos.
 [Validación de entrega](releases/v0.54.0-validation.json).
 Avance sin cambio: **≈70 % ±10 de planificación**, fidelidad acústica sin medir.
 
