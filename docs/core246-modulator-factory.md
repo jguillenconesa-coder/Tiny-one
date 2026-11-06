@@ -76,6 +76,9 @@ regresiones de dispatcher de resets, note-on activo y modulación/render retenid
 [Formato/reproducción](../research/core-modulator-factory/README.md) y
 [evidencia](firmware/core-modulator-factory246-validation.json).
 
+[CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42217446384)
+en Linux, Windows/MSVC y macOS Intel sobre `67c5298`, sin build del producto.
+
 ## Límites y siguiente bloque
 
 Se cierra la asignación de familias para estas dos factories bajo IDs suministrados

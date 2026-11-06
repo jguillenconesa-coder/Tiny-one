@@ -53,7 +53,8 @@ y 2 Random, seis/doce voces y objeto compartido. 3072 escenarios, 1488 filas
 retenidas, 2496 factories y 3604 cuerpos de reset coinciden. Constructores,
 padding, cambios de familia/ruta, clear y gates contrastados en la rejilla de
 432 combinaciones. Dos ejecuciones originales, Release y ASan/UBSan aprobados;
-regresiones de resets, note-on y render retenido conservadas. Falta el llamador
+regresiones de resets, note-on y render retenido conservadas. CI nativo aprobado
+en Linux, Windows/MSVC y macOS Intel sobre `67c5298`. Falta el llamador
 activo, IDs 3..6, productores pitch/gain y acústica. No cambia plugin 0.54.0,
 ≈70 % ±10 o instaladores.
 

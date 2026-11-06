@@ -1055,3 +1055,6 @@ conservan. Dos ejecuciones originales coinciden; Release y ASan/UBSan aprobados.
 Regresiones anteriores conservadas. Sigue pendiente el llamador activo de cambio
 de modo/scheduler, IDs 3..6, producción de pitch/gain y acústica; ampliar el enlace
 con esa frontera explícita. No cambia producto 0.54.0 o ≈70 % ±10; sin instaladores.
+
+Cierre de factories: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
+sobre `67c5298`; sin build del producto ni instaladores.

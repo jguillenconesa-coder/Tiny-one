@@ -99,13 +99,37 @@
   "secondary_reset_calls": 1460,
   "accepted_grid_combinations": 432,
   "ci": {
-    "status": "pending implementation push",
+    "status": "success",
+    "run_id": 42217446384,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42217446384",
+    "head_sha": "67c5298e976e9a1ae916c9f6ca605acd9892e369",
     "platforms": [
       "Linux",
       "Windows/MSVC",
       "macOS Intel"
+    ],
+    "jobs": [
+      {
+        "id": 127890882790,
+        "name": "validate (ubuntu-latest)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42217446384/job/127890882790"
+      },
+      {
+        "id": 127890883271,
+        "name": "validate (windows-2022)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42217446384/job/127890883271"
+      },
+      {
+        "id": 127890883285,
+        "name": "validate (macos-15-intel)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42217446384/job/127890883285"
+      }
     ]
   },
   "retained_family_changes": 12,
-  "retained_route_changes": 4
+  "retained_route_changes": 4,
+  "implementation_commit": "67c5298e976e9a1ae916c9f6ca605acd9892e369"
 }
