@@ -59,7 +59,23 @@
     "scope": "Complete final output history word only; not total clipped samples"
   },
   "native_ci": {
-    "status": "not yet triggered"
+    "status": "success",
+    "suites_per_platform": 2,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42195502490",
+    "platforms": {
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42195502490/job/127817661174"
+      },
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42195502490/job/127817661481"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42195502490/job/127817661575"
+      }
+    }
   },
   "instrument_version_unchanged": "0.54.0",
   "plugin_integration": false,
@@ -71,5 +87,7 @@
     "research/core-initial-state/CoreInitialState246.h": "6a287a65f24fe5340f112a2259cbbca4e9670a83ba72e0fcaa090b5dd8bd9b23",
     "Source/ReferenceDsp.h": "6f237e97236494636a71ae47582b4b9b0f75357176bdf102a45c87d230808acd",
     "research/blackfin/core-signal-stream.s.in": "f3291a3efb32724ab4c670b43f97b167d1e570606188c9d94b4c1bb780095a35"
-  }
+  },
+  "implementation_commit": "3cce7014d1cdc58a946aa03c2c8204c124d58798",
+  "ci_snapshot_utc": "2026-11-06 09:33 UTC"
 }

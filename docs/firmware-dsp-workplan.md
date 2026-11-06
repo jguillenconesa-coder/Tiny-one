@@ -971,3 +971,6 @@ ni calendario contrastados. No se clasifica el kernel como productor de dinámic
 Queda fuera del plugin hasta recuperar su ruteo. Siguiente: consumidor del pitch
 y contexto de esas llamadas; mantener contrato híbrido, sin rellenar dependencia
 con ceros o deducir L1 por ausencia de CALL directos. Avance y versión sin cambios.
+
+Cierre del bloque: CI nativo aprobado, 2/2 suites por plataforma en Linux,
+Windows/MSVC y macOS Intel. Sin cambios en el instrumento ni instaladores.

@@ -107,7 +107,8 @@ con llamadas propias explícitas mientras no exista el contrato activo.
 
 El CI previo de 0.54.0 y de inicialización Core ha terminado aprobado en las tres
 plataformas. El CI completo de reemplazo omitió los cuatro pasos de instaladores
-en todas ellas. Este bloque usa dos suites nativas separadas: no aumenta la
+en todas ellas. El CI de este bloque aprobó 2/2 suites en Linux, Windows/MSVC y macOS Intel.
+Son suites de investigación separadas: no aumenta la
 cuenta de 145 del producto ni requiere una nueva compilación del instrumento.
 Avance **≈70 % ±10 de planificación**, sin medición acústica, Live real o presets
 originales completos nuevos.

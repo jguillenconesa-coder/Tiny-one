@@ -52,6 +52,7 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 originales, 311.296 muestras, historia retenida y 256 composiciones con el
 inicializador Core. Dos extracciones idénticas, dos suites Release y comparador
 ASan/UBSan aprobados; nueve casos sintéticos verifican los límites del auditor.
+CI nuevo aprobado: 2/2 suites en Linux, Windows/MSVC y macOS Intel.
 Se localiza una secuencia lineal visible de llamada L1 al kernel y una carga
 visible de la dirección del pitch drum. No recupera el llamador completo,
 productores de buffers o ruteo. Modelo de investigación, sin enlazar al plugin.
