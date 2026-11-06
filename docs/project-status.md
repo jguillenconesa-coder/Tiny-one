@@ -55,6 +55,7 @@ cambios sintéticos de selección. Se observa palabras → modulación → lecto
 lista/ocupación final; el lector usa el banco actual conservando el handle
 inicial. Dos extracciones, reproducción congelada, Release y ASan/UBSan aprobados.
 Las cuatro regresiones por defecto (78.080 registros) siguen coincidiendo.
+CI nuevo y cinco regresiones aprobados en Linux, Windows/MSVC y macOS Intel.
 Investigación sin render ni integración de audio; no recupera productores o
 reloj originales. Versión 0.54.0 y avance ≈70 % ±10 sin cambios; sin instaladores.
 

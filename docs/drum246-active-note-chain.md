@@ -99,6 +99,8 @@ pasan las cuatro regresiones que reutilizan la ruta por defecto: VoiceCtl
 
 [Formato y reproducción](../research/drum-note-modulation/README.md) ·
 [Evidencia y hashes](firmware/drum-note-modulation246-validation.json).
+CI nativo nuevo y cinco workflows de regresión aprobados en Linux, Windows/MSVC
+y macOS Intel. No se activa una nueva compilación del producto.
 Firmware, ELF, instrucciones originales y pseudocódigo permanecen privados.
 
 ## Límites y siguiente bloque

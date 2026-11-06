@@ -1003,3 +1003,6 @@ regresión. Release/ASan/UBSan y reproducción congelada aprobados. No ejecuta l
 factory LFO ni render, no cambia plugin/versión o instaladores. Siguiente bloque:
 callbacks de modulación por bloque + lector bajo entradas/cadencia explícitas,
 sin confundir esa composición con productores pitch/gain o scheduler del aparato.
+
+Cierre de note-on activo: suite nueva y cinco regresiones CI aprobadas en Linux,
+Windows/MSVC y macOS Intel; sin build del producto ni instaladores nuevos.

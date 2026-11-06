@@ -76,7 +76,23 @@
     "total_records": 78080
   },
   "native_ci": {
-    "status": "not yet triggered"
+    "status": "success",
+    "suites_per_platform": 1,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208415",
+    "platforms": {
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208415/job/127846650735"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208415/job/127846650960"
+      },
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208415/job/127846650983"
+      }
+    }
   },
   "instrument_version_unchanged": "0.54.0",
   "plugin_integration": false,
@@ -88,5 +104,60 @@
     "research/drum-note-modulation/DrumNoteModulation246Tests.cpp": "b17088e90a4ff287cebd81de6508cc92d9710843eb88ccbefbed5fa5364ffcdb",
     "research/core-modulator-reset/CoreModulatorReset246.h": "3d3cff612e64be2604fb434c251be6e5605c7f03a076e6a76da7f2b077e69198",
     "research/blackfin/drum-note-modulation.s.in": "8a04076008a8b3ca7bfcb7e7a60549dccf2ca3ece385d055e0132b1d5afc0629"
-  }
+  },
+  "implementation_commit": "9104b7a64037e69036774ea5a9af9f79b2243dd4",
+  "frozen_reproductions": 1,
+  "regression_ci": [
+    {
+      "name": "Validate Core initial state and drum event composition",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208496",
+      "platforms": {
+        "validate (ubuntu-latest)": "success",
+        "validate (windows-2022)": "success",
+        "validate (macos-15-intel)": "success"
+      }
+    },
+    {
+      "name": "Validate drum event words",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208486",
+      "platforms": {
+        "validate (ubuntu-latest)": "success",
+        "validate (windows-2022)": "success",
+        "validate (macos-15-intel)": "success"
+      }
+    },
+    {
+      "name": "Validate drum sampler reader and host adapter",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208485",
+      "platforms": {
+        "validate (macos-15-intel)": "success",
+        "validate (ubuntu-latest)": "success",
+        "validate (windows-2022)": "success"
+      }
+    },
+    {
+      "name": "Validate drum VoiceCtl lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208460",
+      "platforms": {
+        "validate (macos-15-intel)": "success",
+        "validate (windows-2022)": "success",
+        "validate (ubuntu-latest)": "success"
+      }
+    },
+    {
+      "name": "Validate drum bank and held registry lifecycle",
+      "status": "success",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42204208430",
+      "platforms": {
+        "validate (macos-15-intel)": "success",
+        "validate (ubuntu-latest)": "success",
+        "validate (windows-2022)": "success"
+      }
+    }
+  ],
+  "ci_snapshot_utc": "2026-11-06 10:45 UTC"
 }
