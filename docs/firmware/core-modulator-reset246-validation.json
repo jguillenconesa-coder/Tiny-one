@@ -76,7 +76,23 @@
     "leak_detection": "disabled due managed ptrace"
   },
   "native_ci": {
-    "status": "not yet triggered"
+    "status": "success",
+    "suites_per_platform": 1,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42199056702",
+    "platforms": {
+      "validate (macos-15-intel)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42199056702/job/127829517179"
+      },
+      "validate (ubuntu-latest)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42199056702/job/127829517485"
+      },
+      "validate (windows-2022)": {
+        "status": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42199056702/job/127829517587"
+      }
+    }
   },
   "instrument_version_unchanged": "0.54.0",
   "plugin_integration": false,
@@ -90,5 +106,7 @@
     "Source/Value246.h": "2ed22967c1bec2776fe4f77946b2bf28f0f281fa680e95f4a2bfa4641d75b6a6",
     "Source/Random246.h": "90695b67b9ec28edfa213514274476c5f3c13b00ef562068fc5a6f4395393201",
     "Source/Tremolo246.h": "e1bc287b0cae36edbd0a77910c0521a57e89914bda03820e4fa7e648f8d49791"
-  }
+  },
+  "implementation_commit": "f939d5fac3e9a57b2edceaddea4008062b0298af",
+  "ci_snapshot_utc": "2026-11-06 10:03 UTC"
 }

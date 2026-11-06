@@ -52,7 +52,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 8.830 resets originales de Value/Random synth/drum y Tremolo. Incluye gates,
 punteros nulos, ajustes this firmados, limpieza de punteros y recarga de selección
 antes del callback secundario. Dos extracciones idénticas, Release y ASan/UBSan
-aprobados. Endpoints de trazado y mutaciones son propios; no prueba la factory
+aprobados. CI nativo aprobado en Linux, Windows/MSVC y macOS Intel.
+Endpoints de trazado y mutaciones son propios; no prueba la factory
 ni el note-on exterior. No hay render ni integración de audio nuevos.
 Siguiente: componer note-on completo, dispatcher activo, reset de modulación y
 lector; el consumidor de pitch L1 y la dinámica siguen pendientes. Versión y

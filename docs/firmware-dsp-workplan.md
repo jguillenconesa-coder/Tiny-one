@@ -987,3 +987,6 @@ sigue interrumpido: se avanza este contrato SDRAM sin inventar el productor.
 Siguiente bloque agrupado: note-on exterior con reset activo y lector, orden de
 palabras/ocupación/lista y cambios de selección; después consumidor/render/gain.
 Sin instaladores hasta nueva petición; planificación ≈70 % ±10 sin medir acústica.
+
+Cierre del reinicio Core: CI nativo aprobado, 1/1 suite en Linux, Windows/MSVC
+y macOS Intel. No se reconstruye el producto ni se generan instaladores.

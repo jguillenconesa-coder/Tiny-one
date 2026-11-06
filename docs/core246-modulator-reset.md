@@ -90,6 +90,7 @@ Guardas de índices inválidos son propias y quedan fuera del dominio original.
 Dos extracciones independientes coinciden, con hash del firmware y de las
 herramientas y probes de los tres arreglos writeback previos. Release y
 ASan/UBSan completos aprobados; leaks desactivados por ptrace del entorno.
+CI nativo: 1/1 suite aprobada en Linux, Windows/MSVC y macOS Intel.
 [Formato y reproducción](../research/core-modulator-reset/README.md) ·
 [Evidencia y hashes](firmware/core-modulator-reset246-validation.json).
 No se distribuyen firmware, ELF, desensamblado o pseudocódigo original.
