@@ -1073,3 +1073,6 @@ y regresiones de resets/note-on/render retenido aprobadas. Corpus previo intacto
 Siguiente: refresco Core que enlaza audio, FX y moduladores y composición con
 eventos, manteniendo explícita la frontera del scheduler/productores protegidos.
 No cambia producto 0.54.0, acústica o estimación ≈70 % ±10; sin instaladores.
+
+Cierre de las siete familias: CI nativo 2/2 suites aprobado en Linux, Windows/MSVC
+y macOS Intel sobre `0e0b9c4`; sin build del producto o instaladores.

@@ -53,7 +53,8 @@ se añaden a Tremolo/Value/Random. 7168 escenarios adicionales, 3472 filas
 retenidas, 5824 factories y rejilla de 1008 combinaciones contrastadas. Las cuatro
 familias añadidas construyen objetos de cuatro bytes y sus resets son no-op;
 Bend/Crank limpian un flag de backend al seleccionarse. Dos extracciones originales,
-ambos corpus en Release/ASan/UBSan y regresiones relacionadas aprobados. El
+ambos corpus en Release/ASan/UBSan y regresiones relacionadas aprobados. CI
+2/2 suites aprobado en Linux, Windows/MSVC y macOS Intel sobre `0e0b9c4`. El
 llamador completo, scheduler, pitch/gain activos y acústica siguen pendientes.
 Producto 0.54.0 y ≈70 % ±10 sin cambios; sin instaladores.
 

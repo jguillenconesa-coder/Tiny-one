@@ -83,6 +83,10 @@ Release y ASan/UBSan. También pasan dispatcher de resets, note-on activo y
 modulación/render retenidos de batería. [Formato y reproducción](../research/core-modulator-factory/README.md)
 y [evidencia](firmware/core-modulator-factory-all246-validation.json).
 
+[CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42219816546):
+2/2 suites en Linux, Windows/MSVC y macOS Intel sobre `0e0b9c4`, sin build del
+producto ni instaladores.
+
 No se ha recuperado aquí el llamador completo del cambio de modo, la selección
 física de controles, el scheduler de render o los productores activos de pitch y
 ganancia. Los índices inválidos se rechazan en el modelo con una guarda propia;
