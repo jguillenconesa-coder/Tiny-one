@@ -943,4 +943,4 @@ seguir el llamador de render. Mantener avance ≈70 % ±10, sin medición acúst
 
 Validación local 0.54.0: Linux 145/145 suites, doce casos de plugin, 1.446
 cargas sin heap rastreado, ASan/UBSan del corpus y puente completos aprobados.
-CI nativo y paquetes de esta versión pendientes tras el push.
+CI nativo y paquetes de esta versión en curso tras el push; no aprobados todavía.

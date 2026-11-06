@@ -48,7 +48,8 @@ Instrumento y verificadores comparten las conversiones; cuantización MIDI,
 amplitud, pitch fino, bend y normalización son puentes propios explícitos.
 La curva dinámica y los productores por muestra siguen pendientes.
 Linux **145/145 suites**, **1.446 cargas sin heap rastreado**, doce casos de
-plugin y ASan/UBSan aprobados. CI multiplataforma pendiente tras el push.
+plugin y ASan/UBSan aprobados. [CI multiplataforma en curso](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142620259);
+paquetes nuevos aún sin aprobar.
 [Validación de entrega](releases/v0.54.0-validation.json).
 Avance sin cambio: **≈70 % ±10 de planificación**, fidelidad acústica sin medir.
 
