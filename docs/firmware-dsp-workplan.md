@@ -1038,3 +1038,6 @@ posteriores separados de los valores cargados y 16 pruebas sintéticas.
 Siguen pendientes productores activos, scheduler y ruteo protegido; el borrado
 inicial no rellena esas dependencias. Producto 0.54.0 y ≈70 % ±10 sin cambios;
 sin instaladores. Regresiones Core y render retenido conservadas.
+
+Cierre de buffers compartidos: CI nuevo y Core/auditor aprobados en Linux,
+Windows/MSVC y macOS Intel sobre `8c4d588`; sin build del producto o instaladores.

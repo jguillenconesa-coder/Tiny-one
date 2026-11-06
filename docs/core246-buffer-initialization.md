@@ -47,6 +47,11 @@ También pasan Core signal/auditor, inicialización Core amplia y modulación/re
 retenidos de batería. [Formato](../research/core-buffer-init/README.md) y
 [evidencia](firmware/core-buffer-init246-validation.json).
 
+CI nativo nuevo y regresión Core/auditor aprobados en Linux, Windows/MSVC y
+macOS Intel sobre `8c4d588`: [inicializador](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365129)
+y [Core/auditor](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365053).
+No se activa una compilación nueva del producto.
+
 ## Auditoría ampliada y productores pendientes
 
 El [inventario ampliado](firmware/core-buffer246-reference-audit.json) cubre 22

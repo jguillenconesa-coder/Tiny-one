@@ -53,7 +53,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 retienen ventanas. Borra cuatro buffers y fija seis bytes de defaults, conserva
 la historia del kernel: 64 filas compuestas siguen produciendo salida con entrada
 borrada. Tres ejecuciones originales coinciden, Release y ASan/UBSan aprobados.
-Auditor ampliado a 22 direcciones y 16 pruebas sintéticas; los productores activos
+CI nuevo y Core/auditor aprobados en Linux, Windows/MSVC y macOS Intel sobre
+`8c4d588`. Auditor ampliado a 22 direcciones y 16 pruebas sintéticas; los productores activos
 pitch/gain y el ruteo protegido siguen pendientes. No es un pánico ni un reset
 completo; no cambia plugin 0.54.0, avance ≈70 % ±10 o instaladores.
 

@@ -70,11 +70,67 @@
   "composed_rows": 256,
   "nonzero_composed_rows_after_input_clear": 64,
   "ci": {
-    "status": "pending implementation push",
+    "status": "success",
     "platforms": [
       "Linux",
       "Windows/MSVC",
       "macOS Intel"
+    ],
+    "runs": [
+      {
+        "run_id": 42213365129,
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365129",
+        "head_sha": "8c4d588d3836e4de74ab2fddf45fc209bb9704ec",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "id": 127877220707,
+            "name": "validate (windows-2022)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365129/job/127877220707"
+          },
+          {
+            "id": 127877220916,
+            "name": "validate (macos-15-intel)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365129/job/127877220916"
+          },
+          {
+            "id": 127877220928,
+            "name": "validate (ubuntu-latest)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365129/job/127877220928"
+          }
+        ]
+      },
+      {
+        "run_id": 42213365053,
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365053",
+        "head_sha": "8c4d588d3836e4de74ab2fddf45fc209bb9704ec",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "id": 127877223872,
+            "name": "validate (macos-15-intel)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365053/job/127877223872"
+          },
+          {
+            "id": 127877224286,
+            "name": "validate (windows-2022)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365053/job/127877224286"
+          },
+          {
+            "id": 127877224352,
+            "name": "validate (ubuntu-latest)",
+            "conclusion": "success",
+            "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42213365053/job/127877224352"
+          }
+        ]
+      }
     ]
-  }
+  },
+  "implementation_commit": "8c4d588d3836e4de74ab2fddf45fc209bb9704ec",
+  "prior_13_target_inventory_preserved": true
 }
