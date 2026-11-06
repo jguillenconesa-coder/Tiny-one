@@ -114,3 +114,7 @@ Avance **≈70 % ±10 de planificación**, sin aumentar por número de llamadas.
 La [cadena activa de note-on y lector](drum246-active-note-chain.md) ya ejecuta
 el note-on exterior con estos resets. Añade observación de orden y selección;
 no amplía este corpus aislado ni recupera render, reloj o productores de buffers.
+
+La [composición posterior con factories](core246-modulator-factory.md) ejecuta
+los constructores y enlaza vtables originales de IDs 0..2 antes de estos resets.
+No recupera el llamador activo, scheduler o las otras familias.

@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: factorías de modulación synth/drum
+
+[Selección y construcción](core246-modulator-factory.md): IDs 0 Tremolo, 1 Value
+y 2 Random, seis/doce voces y objeto compartido. 3072 escenarios, 1488 filas
+retenidas, 2496 factories y 3604 cuerpos de reset coinciden. Constructores,
+padding, cambios de familia/ruta, clear y gates contrastados en la rejilla de
+432 combinaciones. Dos ejecuciones originales, Release y ASan/UBSan aprobados;
+regresiones de resets, note-on y render retenido conservadas. Falta el llamador
+activo, IDs 3..6, productores pitch/gain y acústica. No cambia plugin 0.54.0,
+≈70 % ±10 o instaladores.
+
 ## Bloque de investigación: arranque de buffers y frontera de dinámica
 
 [Inicializador compartido](core246-buffer-initialization.md): 1024 escenarios,
@@ -67,7 +78,7 @@ lector original. Coinciden 4464 renders / 571392 muestras, estados, buffers y
 ASan/UBSan aprobados; regresiones previas conservadas. CI nuevo aprobado en
 Linux, Windows/MSVC y macOS Intel sobre `70ac42a`. Cadencia, PCM, controles,
 selección y buffers iniciales explícitos: productores pitch/gain, scheduler y
-factory/ruteo Tremolo originales siguen pendientes. Investigación sin integración
+su enlace activo desde el scheduler original sigue pendiente. Investigación sin integración
 nueva en el plugin; 0.54.0 y ≈70 % ±10 sin cambios. Sin instaladores.
 
 ## Bloque de investigación: note-on con modulación activa y lector

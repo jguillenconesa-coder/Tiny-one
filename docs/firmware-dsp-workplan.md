@@ -1041,3 +1041,17 @@ sin instaladores. Regresiones Core y render retenido conservadas.
 
 Cierre de buffers compartidos: CI nuevo y Core/auditor aprobados en Linux,
 Windows/MSVC y macOS Intel sobre `8c4d588`; sin build del producto o instaladores.
+
+
+## Factorías Core de moduladores — selección/construcción agrupada
+
+[Contrato](core246-modulator-factory.md): las dos factories synth/drum, selectores,
+constructores y helpers originales para IDs 0 Tremolo, 1 Value y 2 Random.
+3072 escenarios, 1488 filas retenidas, 2496 factories, 135 clear y 3604 cuerpos
+de reset; rejilla aceptada completa de 432 combinaciones ruta/ID/banco/voz.
+Los primarios comparten base con stride por familia y el secundario otra base
+común; no son pools synth/drum independientes. Padding y bytes no usados se
+conservan. Dos ejecuciones originales coinciden; Release y ASan/UBSan aprobados.
+Regresiones anteriores conservadas. Sigue pendiente el llamador activo de cambio
+de modo/scheduler, IDs 3..6, producción de pitch/gain y acústica; ampliar el enlace
+con esa frontera explícita. No cambia producto 0.54.0 o ≈70 % ±10; sin instaladores.

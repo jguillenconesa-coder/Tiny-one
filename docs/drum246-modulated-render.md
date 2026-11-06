@@ -62,8 +62,9 @@ palabras de evento, inicialización Core y las ocho suites de lector/adaptador.
 
 La cadencia, PCM, selección de perfil, controles y buffers iniciales son entradas
 del ensayo. No se ha recuperado el scheduler del aparato, los productores de
-pitch/ganancia, la factory que asigna Tremolo a esa ruta ni el consumidor L1
-protegido. Modificar el control 0 con Value/Random no demuestra su conversión a
+pitch/ganancia ni el consumidor L1 protegido. La [factory posterior](core246-modulator-factory.md)
+contrasta IDs 0..2, incluido Tremolo, sin recuperar el llamador activo ni cambiar
+las entradas explícitas de este corpus. Modificar el control 0 con Value/Random no demuestra su conversión a
 pitch por muestra. Continuar llamando al lector tras release, incluso en modo
 cero, prueba este llamador explícito. No demuestra que el scheduler real lo haga.
 

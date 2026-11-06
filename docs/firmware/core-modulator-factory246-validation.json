@@ -1,0 +1,111 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 3072,
+  "input_record_bytes": 1088,
+  "output_record_bytes": 1068,
+  "routines": {
+    "synth_factory": "0x01967a58",
+    "drum_factory": "0x01967ac0",
+    "shared_selector": "0x019c99ac",
+    "synth_selector": "0x019c9a24",
+    "drum_selector": "0x019c9ac0"
+  },
+  "types": [
+    0,
+    1,
+    2
+  ],
+  "voices": {
+    "synth": 6,
+    "drum": 12
+  },
+  "windows": [
+    [
+      "0x01aaac0c",
+      68
+    ],
+    [
+      "0x01aaad60",
+      84
+    ],
+    [
+      "0xffb009f8",
+      588
+    ],
+    [
+      "0xff8014c4",
+      128
+    ],
+    [
+      "0xff801644",
+      128
+    ],
+    [
+      "0x01dd5d04",
+      32
+    ],
+    [
+      "0x01dd5a88",
+      32
+    ],
+    [
+      "0x01dd5c6c",
+      4
+    ],
+    [
+      "0xff802bc8",
+      4
+    ]
+  ],
+  "artifacts": {
+    "core-modulator-factory246-input.bin.gz": {
+      "bytes": 1693315,
+      "raw_bytes": 3342336,
+      "sha256": "f2e36788fb8bae2f30ae7ff4fbebf28f571cbe2dc90400dca8c88014aca4dd4b"
+    },
+    "core-modulator-factory246-output.bin.gz": {
+      "bytes": 830176,
+      "raw_bytes": 3280896,
+      "sha256": "212c1fadb32872cb0f18ce2725d1649d57a339b34248686ee1c519e05e60b0fc"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original factories/selectors/constructors and optional clear/reset dispatchers under explicit selection, enable flags and controls. Types 0..2 only.",
+    "Synth and drum constructors reuse the same physical primary pool and shared object; this is not simultaneous independent storage.",
+    "No original render scheduler, active pitch/gain producers, complete audio composition or plugin integration established here. No installers."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent original executions, frozen native and ASan/UBSan reproduction",
+  "independent_original_executions": 2,
+  "reloads": 1584,
+  "retained_rows": 1488,
+  "factories": 2496,
+  "primary_constructions": 22464,
+  "primary_constructions_by_family": [
+    7488,
+    7488,
+    7488
+  ],
+  "shared_constructions": 1664,
+  "clears": 135,
+  "reset_dispatches": 2611,
+  "accepted_dispatches": 2144,
+  "primary_reset_calls": 2144,
+  "secondary_reset_calls": 1460,
+  "accepted_grid_combinations": 432,
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  },
+  "retained_family_changes": 12,
+  "retained_route_changes": 4
+}
