@@ -1116,3 +1116,13 @@ sin instaladores hasta nueva petición.
 Cierre de sincronización: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
 sobre `a59e95e`, sin build del producto o instaladores. Las respuestas L1 siguen
 siendo propias del ensayo, no una recuperación del servicio protegido.
+
+
+## Cambio de banco drum con frontera L1 explícita — 2026-11-06
+
+[Contraste del cambiador completo](drum246-bank-switch.md): 2.048 casos en
+contextos 1/2, 19.398 resets de lector y siete familias LFO. Release y ASan/UBSan
+aprobados; CI nativo pendiente. La espera usa un servicio L1 propio que invoca
+factorías originales; no recupera el servicio protegido ni mide fidelidad acústica.
+Plugin 0.54.0, avance ≈70 % ±10, sin instaladores. Siguiente frente: rama synth
+y servicio activo/scheduler, manteniendo explícitas las sustituciones.

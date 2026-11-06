@@ -92,3 +92,7 @@ frontera explícita, manteniendo propio el servicio que no se haya recuperado.
 Scheduler, productores activos pitch/gain, acústica y Ableton real siguen
 pendientes. Avance **≈70 % ±10 de planificación**, presets al final y sin
 instaladores hasta nueva petición.
+
+
+Actualización: el [bloque posterior drum](drum246-bank-switch.md) ejecuta ya
+el cambiador exterior en contextos 1/2 con servicio L1 propio explícito.

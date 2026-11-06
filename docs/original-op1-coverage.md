@@ -248,3 +248,13 @@ scheduler o factory/ruteo Tremolo; no añade integración al plugin.
 selección observados. Perfiles de callback suministrados, factory audio tipo 8,
 sin factory LFO o render. Preserva la regresión de auxiliares nulos. No recupera
 productores pitch/gain, reloj o dinámica; sin cambios en el plugin ni instaladores.
+
+
+## Cambio de banco drum con frontera L1 explícita — 2026-11-06
+
+[Contraste del cambiador completo](drum246-bank-switch.md): 2.048 casos en
+contextos 1/2, 19.398 resets de lector y siete familias LFO. Release y ASan/UBSan
+aprobados; CI nativo pendiente. La espera usa un servicio L1 propio que invoca
+factorías originales; no recupera el servicio protegido ni mide fidelidad acústica.
+Plugin 0.54.0, avance ≈70 % ±10, sin instaladores. Siguiente frente: rama synth
+y servicio activo/scheduler, manteniendo explícitas las sustituciones.

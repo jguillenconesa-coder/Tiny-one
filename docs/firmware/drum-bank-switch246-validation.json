@@ -1,0 +1,144 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 2048,
+  "input_record_bytes": 8828,
+  "output_record_bytes": 8928,
+  "observed_window_bytes": 8796,
+  "routine": {
+    "entry": "0x01a86420",
+    "end_exclusive": "0x01a86660",
+    "sha256": "832034ec97497e775f87c786b438650f274ae3a5a90647df5e99e472250f1f0a"
+  },
+  "profile": {
+    "ui_modes": [
+      1,
+      2
+    ],
+    "audio_type": 8,
+    "modulator_types": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "held_count_max": 24
+  },
+  "authored_L1_endpoint": "0xffa0bd2c",
+  "windows": [
+    [
+      "0x1aaac0c",
+      68
+    ],
+    [
+      "0x1aaad18",
+      156
+    ],
+    [
+      "0xffb00000",
+      256
+    ],
+    [
+      "0xffb005f8",
+      48
+    ],
+    [
+      "0xffb009f8",
+      588
+    ],
+    [
+      "0xff907aa8",
+      48
+    ],
+    [
+      "0xff801374",
+      1024
+    ],
+    [
+      "0x1cc10cc",
+      32
+    ],
+    [
+      "0x1df6f78",
+      32
+    ],
+    [
+      "0x1dfe734",
+      2564
+    ],
+    [
+      "0xff801038",
+      812
+    ],
+    [
+      "0x1aaadb4",
+      3072
+    ],
+    [
+      "0x1ab3148",
+      12
+    ],
+    [
+      "0x1de4c3c",
+      12
+    ],
+    [
+      "0x1dd5a88",
+      32
+    ],
+    [
+      "0x1dd5d04",
+      32
+    ],
+    [
+      "0x1dd5c6c",
+      4
+    ],
+    [
+      "0xff802bc8",
+      4
+    ]
+  ],
+  "artifacts": {
+    "drum-bank-switch246-input.bin.gz": {
+      "bytes": 6320034,
+      "raw_bytes": 18079744,
+      "sha256": "451b1e03d294a9c4e1bdc4871f98dc134a07907eb5619d99c5bdcc05c1f7c7f3"
+    },
+    "drum-bank-switch246-output.bin.gz": {
+      "bytes": 6063897,
+      "raw_bytes": 18284544,
+      "sha256": "5f324738e84c3ac319f5babb547a1c11967cc621d9d32e969aa219236ce88ddb"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original bank changer in UI drum mode 1 and no-op mode 2, original wait loop, setter, factories, modulator/reader resets. No synth mode-0 branch exercised.",
+    "L1 service is authored: delays one to four calls, writes actual bank, invokes original drum audio and modulator factories. Its service order and completion are not recovered L1 behavior.",
+    "Opaque nonzero references and valid supplied rows/pad maps/controls; no PCM rendering, normal scheduler, gain/pitch producer or acoustic recovery. No plugin changes or installers."
+  ],
+  "date": "2026-11-06",
+  "original_extractions": 2,
+  "validation": {
+    "release": "passed",
+    "asan_ubsan": "passed",
+    "native_ci": "pending"
+  },
+  "counts": {
+    "changed": 1617,
+    "same_bank": 231,
+    "ui2_noop": 200,
+    "authored_service_calls": 4305,
+    "reader_resets": 19398,
+    "primary_resets": 12961,
+    "secondary_resets": 11127,
+    "reloads": 1056,
+    "partial_retention": 992
+  }
+}

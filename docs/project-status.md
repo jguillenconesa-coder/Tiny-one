@@ -1108,3 +1108,13 @@ El propietario autoriza en esta sesión push directo de los cambios verificados
 a main; no equivale a publicar releases o reconfigurar/publicar el entorno.
 Antes de cada push comprobar main remoto, trabajo concurrente, cambios propios y
 resultados; conservar las contribuciones y nunca forzar el historial.
+
+
+## Cambio de banco drum con frontera L1 explícita — 2026-11-06
+
+[Contraste del cambiador completo](drum246-bank-switch.md): 2.048 casos en
+contextos 1/2, 19.398 resets de lector y siete familias LFO. Release y ASan/UBSan
+aprobados; CI nativo pendiente. La espera usa un servicio L1 propio que invoca
+factorías originales; no recupera el servicio protegido ni mide fidelidad acústica.
+Plugin 0.54.0, avance ≈70 % ±10, sin instaladores. Siguiente frente: rama synth
+y servicio activo/scheduler, manteniendo explícitas las sustituciones.
