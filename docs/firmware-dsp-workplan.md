@@ -924,7 +924,23 @@ se integra un contrato probado sin atribuir sus fronteras al scheduler original.
 84 composiciones de lector y ASan/UBSan aprobados; Linux 143/143 suites,
 1.446 cargas sin heap rastreado y cuatro casos de plugin 48/96 kHz / 64/257
 aprobados. CI nativo y regresiones aprobados en Linux, Windows/MSVC y macOS
-Intel; plugins/instaladores completos siguen en CI.
+Intel; plugins e instaladores completos de 0.53.0 también aprobados.
 Siguiente: llamador de render y productores de buffers; mantener curva dinámica,
 frontend y cadencia del host identificados como propios. No repetir búsquedas de
 inmediatos bajos como prueba de L1; presets completos permanecen al final.
+
+## Palabras de evento drum — 0.54.0
+
+[Velocidad y transposición](drum246-event-words.md): 65.536 note-on originales
+completos, todos los halfwords de velocidad y 256 transposiciones enteras,
+con cruce independiente del byte bajo. Dos extracciones idénticas; tabla de
+salidas derivadas, no ROM recuperada. Helpers compartidos con VoiceCtl/bancos.
+El host usa códigos MIDI, anclas de pitch entero e interpolación geométrica
+propia, con bend y factor dos propios. No se recuperan productores por muestra,
+curva dinámica ni scheduler. No cambia parámetros, proyectos, D-box o kit legacy.
+Siguiente: consumidor activo de estas palabras y composición con pitch/gain;
+seguir el llamador de render. Mantener avance ≈70 % ±10, sin medición acústica.
+
+Validación local 0.54.0: Linux 145/145 suites, doce casos de plugin, 1.446
+cargas sin heap rastreado, ASan/UBSan del corpus y puente completos aprobados.
+CI nativo y paquetes de esta versión pendientes tras el push.

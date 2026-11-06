@@ -1,4 +1,9 @@
-# Pocket One 0.53.0
+# Pocket One 0.54.0
+
+**Velocidad y transposición de batería contrastadas**: palabras de evento
+originales, con 65.536 note-on completos verificados. Pitch fino, normalización,
+bend y dinámica mantienen fronteras propias explícitas.
+[Guía](docs/drum246-event-words.md) · [Validación](docs/releases/v0.54.0-validation.json).
 
 **Asignación de batería contrastada**: primera voz libre, robo por contador de
 bloques y pertenencia/propietario de nota. Los duplicados retenidos no reinician

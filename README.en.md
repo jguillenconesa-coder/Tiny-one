@@ -1,4 +1,8 @@
-# Pocket One 0.53.0
+# Pocket One 0.54.0
+
+**Verified drum event velocity and transposition**: original event words,
+checked against 65,536 complete note-ons. Fine pitch, normalization, bend and
+dynamics retain explicit authored boundaries. [Scope](docs/drum246-event-words.md).
 
 **Verified drum allocation**: first free voice, greatest block count stealing,
 held duplicates and release checks against the current owner. Sustain, channels, retirement,

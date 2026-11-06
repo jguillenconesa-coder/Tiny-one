@@ -9,3 +9,5 @@
 # Original factory WAVs are source assets, not generated audio renders.
 !/Assets/Factory/*.wav
 __pycache__/
+
+/downloads/installers/

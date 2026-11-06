@@ -1,0 +1,58 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 65536,
+  "input_prefix_bytes": 3072,
+  "input_record_bytes": 24,
+  "output_record_bytes": 1076,
+  "note_on": "0x01a84ba0",
+  "velocity_word": "0xff8012ec",
+  "pitch_word": "0xff801304",
+  "transpose_domain": [
+    -128,
+    127
+  ],
+  "velocity_domain": "all 65536 low-halfword patterns with varied upper bits",
+  "derived_table": {
+    "path": "Source/Drum246EventTables.h",
+    "sha256": "fa971e08833056a878b7c6954baf04a44e55a1817e8d21817a6f73e5ed40a558",
+    "unique_pitch_words": 189
+  },
+  "artifacts": {
+    "drum-event246-input.bin.gz": {
+      "bytes": 1078679,
+      "raw_bytes": 1575936,
+      "sha256": "b7dc63cf98cdff86986e9435c919df23101a51da33608a392ec76373a32b6c4e"
+    },
+    "drum-event246-output.bin.gz": {
+      "bytes": 1619174,
+      "raw_bytes": 70516736,
+      "sha256": "ad0281a0faa9b852c709ce275445d1ee925298cde7831492aab852c1b5d53ede"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete unmodified note-on with type-1 drum mode, type-8 sampler, empty held registry and busy flags, preview -1 and null LFO/FX; factory sound 0 references supplied.",
+    "Explicit control banks and event order; state, 812 global bytes, first retained row/count recorded. No render or produced pitch/gain buffers.",
+    "Lookup table is derived output for a bounded integer domain, not an original firmware table; no claim outside -128..127 semitones."
+  ],
+  "status": "success: two independent identical original executions and complete native/ASan/UBSan comparisons",
+  "date": "2026-11-06",
+  "pairing": "Latin permutation: ((n & 255)*73 + (n >> 8)*19 + 37) %256; every velocity low byte crossed once with every transpose",
+  "native": {
+    "status": "success",
+    "passed": 1,
+    "seconds": 0.69
+  },
+  "sanitizers": {
+    "status": "success: ASan/UBSan entire corpus",
+    "seconds": 33.48,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "original_execution_outputs_identical": true,
+  "negative_velocity_words": 32768,
+  "saturated_pitch_words": 17408
+}

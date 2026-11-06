@@ -4,10 +4,11 @@
 #include <memory>
 #include <stdexcept>
 inline void testDrum246AllocationPlugin(){
- for(double rate:{48000.,96000.})for(int quantum:{64,257}){
+ for(double rate:{48000.,96000.})for(int quantum:{64,257})for(float pitch:{0.f,-7.75f,12.25f}){
   auto baseline=std::make_unique<PocketProcessor>(),duplicates=std::make_unique<PocketProcessor>();
   for(auto* p:{baseline.get(),duplicates.get()}){
    p->applyDrum246Init();auto& raw=p->phaseParameters();for(int pad=0;pad<24;++pad)raw.getParameter(PocketProcessor::drum246ModeId(pad))->setValueNotifyingHost(1);
+   auto* pitchParameter=p->state.getParameter(PocketProcessor::padParameterId(0,"pitch"));pitchParameter->setValueNotifyingHost(pitchParameter->convertTo0to1(pitch));
    p->state.getParameter("effect")->setValueNotifyingHost(0);p->prepareToPlay(rate,quantum);
   }
   double energy=0;float tail=0;

@@ -85,9 +85,14 @@
     "bank_reference_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902793"
   },
   "plugins_installers_ci": {
-    "status": "in_progress",
+    "status": "success",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842",
-    "scope": "Full Linux/Windows/MSVC/macOS universal builds, plugin suites and installers are still running; not claimed approved by native-only results."
+    "scope": "All full Linux/Windows/MSVC/macOS universal builds, plugin suites and installers approved; macOS runtime tests on Intel.",
+    "jobs": {
+      "build (windows-2022)": "success",
+      "build (macos-latest)": "success",
+      "build (ubuntu-latest)": "success"
+    }
   },
   "estimated_progress": "approximately 70% +/-10 planning points; voice/routing area 37% to 40%, total weighted 69.60; not acoustic fidelity",
   "limits": [
@@ -140,5 +145,19 @@
       "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902809"
     }
   ],
-  "ci_snapshot_utc": "2026-11-06 00:02 UTC"
+  "ci_snapshot_utc": "2026-11-06",
+  "installer_downloads": [
+    {
+      "platform": "Windows x64",
+      "artifact_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842/artifacts/13463909929",
+      "installer": "Pocket-One-0.53.0-Windows-x64-Setup.exe",
+      "sha256": "c2841b0f9a00667e3cc7317cdf45017f39771ce5c74c17e89f38b3b793a11d42"
+    },
+    {
+      "platform": "macOS universal",
+      "artifact_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842/artifacts/13466462141",
+      "installer": "Pocket-One-0.53.0-macOS-universal.pkg",
+      "sha256": "c4ba6dc986c4ca4859994ccdb76f7999fb891e420ef780fdd1796173c437c602"
+    }
+  ]
 }

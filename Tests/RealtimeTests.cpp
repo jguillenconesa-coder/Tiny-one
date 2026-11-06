@@ -98,7 +98,7 @@ int main(int argc,char** argv) {
     // Strengthen the existing native drum workloads without adding product builds:
     // dense simultaneous hits, held duplicates, stolen-owner offs and channel sustain.
     if(preset==-80||preset==-81||(preset<=-92&&preset>=-95)){
-     if(iteration%32==0)for(int n=60;n<84;++n){midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,.8f),0);midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,.2f),0);}
+     if(iteration%32==0)for(int n=60;n<84;++n){midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,float(1+(iteration/32*24+n-60)%127)/127.f),0);midi.addEvent(juce::MidiMessage::noteOn(1+n%3,n,.2f),0);}
      if(iteration%32==16)for(int n=60;n<84;++n)midi.addEvent(juce::MidiMessage::noteOff(1+n%3,n),31);
      if(iteration%64==0)midi.addEvent(juce::MidiMessage::controllerEvent(1,64,127),0);
      if(iteration%64==48)midi.addEvent(juce::MidiMessage::controllerEvent(1,64,0),0);

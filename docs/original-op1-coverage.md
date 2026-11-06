@@ -167,3 +167,11 @@ de hasta decenas de dB en determinados armónicos relativos; la grabación y las
 rutas incompletas impiden atribuirlas a un algoritmo concreto. Se añade una
 [tabla de dependencias de los 32 presets CORE](../research/blackfin/preset-audio-readiness.json).
 No se han retocado motores, filtros ni envolventes a partir de este piloto.
+
+### Batería 0.54.0: palabras del evento
+
+[Velocidad y transposición](drum246-event-words.md): 65.536 note-on originales
+completos, dominio íntegro de velocidad int16 y transposición −128…127.
+Tabla derivada de salidas, no ROM; puente integrado con MIDI/fino/bend propios.
+No recupera productores por muestra, scheduler ni envolvente dinámica.
+Planificación se mantiene ≈70 % ±10; acústica pendiente.

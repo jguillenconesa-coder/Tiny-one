@@ -1,0 +1,97 @@
+{
+  "version": "0.54.0",
+  "date": "2026-11-06",
+  "base_commit": "9473d7c",
+  "change": "Original drum event velocity and integer transposition words integrated through explicit authored MIDI/fine/bend policies",
+  "original_reference": {
+    "status": "success: two independent byte-identical original executions; complete native and ASan/UBSan comparison",
+    "cases": 65536,
+    "velocity_low16_patterns": 65536,
+    "integer_transpositions": 256,
+    "evidence": "../firmware/drum-event246-validation.json",
+    "audio_rendered": false
+  },
+  "host_bridge": {
+    "status": "success",
+    "midi_note_on_codes": 127,
+    "integer_anchors": 49,
+    "fine_bend_checks": 245765,
+    "reader_compositions": 56,
+    "host_rates": 7
+  },
+  "sanitizers": {
+    "original_corpus": "success: all 65536 complete note-on records, ASan/UBSan, 33.48 s",
+    "host_bridge": "success: complete event bridge suite, ASan/UBSan, 0.14 s",
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 145,
+    "total": 145,
+    "runs": [
+      {
+        "scope": "All 142 suites independent of plugin shared library, while product compilation finished",
+        "passed": 142,
+        "total": 142,
+        "seconds": 405.13
+      },
+      {
+        "scope": "All three product suites after the complete Release build",
+        "passed": 3,
+        "total": 3,
+        "seconds": 263.25
+      }
+    ],
+    "recorded_seconds": 668.38
+  },
+  "plugin": {
+    "status": "success: all twelve cases within complete plugin_smoke",
+    "cases": 12,
+    "scope": "A/B exact held-duplicate audio, release/tail; 48/96 kHz; buffers 64/257; pitches 0, -7.75, 12.25",
+    "plugin_smoke_seconds": 101.48,
+    "output_routing_seconds": 4.55,
+    "module_version": "0.54.0"
+  },
+  "realtime": {
+    "status": "success",
+    "strengthened_existing_native_drum_workloads": 36,
+    "expected_workloads": 1446,
+    "scope": "Existing dense drum note bursts now vary MIDI velocities across 1..127; no additional workload counted",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 157.18,
+    "metrics_sha256": "24f790d160d336848b9a38dbab8176fbde7c8031b78041751dfc240b4f1937b1"
+  },
+  "native_ci": {
+    "status": "not yet triggered"
+  },
+  "plugins_installers_ci": {
+    "status": "not yet triggered"
+  },
+  "installer_request": {
+    "delivered_version": "0.53.0",
+    "ci_status": "success: all full package jobs",
+    "ci_url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842",
+    "delivery": "GitHub artifact links supplied after local panel download error; Windows x64 Setup.exe and macOS universal .pkg; downloaded archive hashes match GitHub digests"
+  },
+  "estimated_progress": "approximately 70% +/-10 planning points; unchanged; acoustic fidelity unmeasured",
+  "limits": [
+    "Complete original note-on under supplied type-1 drum mode, sampler type 8, null LFO/FX, empty registry/flags per call, preview -1 and supplied factory sound-0 references; no render or per-sample producers in this corpus.",
+    "Derived lookup of soft-float outputs for -128..127 semitones; not an original ROM table or general port of soft-float/pow.",
+    "Host MIDI quantization and amplitude division by 32512, pad pitch mapping, geometric interpolation, bend and factor-two normalization are authored policies.",
+    "Original per-sample pitch/gain producers, region dynamics and scheduler remain pending. Existing LFO/FIR/SRC and ownership composition preserved.",
+    "No new parameters/state format, D-box or legacy drum change. No new acoustic/actual Ableton/ARM64 runtime/signing/notarization/full preset validation.",
+    "No release/tag/cloud configuration publication."
+  ],
+  "source_sha256": {
+    "Source/Drum246Event.h": "5aa6baa4036b427b894b8d825322dcbbac37bd44f0bbabb5e8792a8674f70903",
+    "Source/Drum246EventTables.h": "fa971e08833056a878b7c6954baf04a44e55a1817e8d21817a6f73e5ed40a558",
+    "Source/Drum246Voice.h": "cf50d439f8526386d445e8e9efd59feecf7172fdfdcc60acf7152e988529bc0f",
+    "research/drum-voice/DrumVoice246.h": "07e6f83621a2f38c35318356be20e982d7d5540bb0009025f4e77d264ea91b38"
+  },
+  "existing_original_regressions": {
+    "voice_records": 4096,
+    "bank_records": 8192,
+    "status": "success: original numeric fixtures still match shared event helpers"
+  }
+}

@@ -2,6 +2,7 @@
 #pragma once
 #include "Drum246.h"
 #include "Drum246Allocator.h"
+#include "Drum246Event.h"
 #include "Drum246Modulation.h"
 #include "Drum246Tables.h"
 #include "Phase246.h"
@@ -43,8 +44,8 @@ struct Drum246Voice {
             if(length==0||end<=start)draining=true;
             if(draining){block.fill(0);if(tail==0)tail=512;}
             else {
-                const auto ratio=.5*std::exp2(std::clamp(modulated?(double(controls[0])-256)/1024.:double(pad.pitch),-24.,24.)/12.)*bend;
-                std::array<uint32_t,128> pitch{};pitch.fill(uint32_t(std::clamp(std::llround(ratio*268435456.),0ll,2147483647ll)));output.tremolo.pitchBlock(pitch,rate.table);
+                const auto semitones=modulated?(double(controls[0])-256)/1024.:double(pad.pitch);
+                std::array<uint32_t,128> pitch{};pitch.fill(drum246HostPitchIncrement(semitones,bend));output.tremolo.pitchBlock(pitch,rate.table);
                 auto position=state.position;const bool loop=playMode==2&&state.mode==1;
                 for(size_t i=0;i<128;++i){const auto fraction=std::clamp(double(position-start)/std::max(1.,double(end-start)),0.,1.);const auto level=drum246DynamicLevel(reverse?1-fraction:fraction,dynamics);gain[i]=int16_t(std::clamp(std::lround(16384.*std::sqrt(level)),0l,16384l));gain[i]=output.tremolo.amplitude(gain[i],rate.table);envelope=level;progress=float(fraction);const auto step=reference::floorDivide(reference::signedPhase(pitch[i]),131072);position=reference::saturate32(int64_t(position)+(reverse?-step:step));if(loop&&(reverse?position<start:position>=end))position=reverse?end:start;}
                 // Eight-frame alignment compensates the supplied FIR window's
@@ -63,7 +64,7 @@ struct Drum246Voice {
     }
 };
 struct Drum246Bank {
-    struct Hit {Drum246Voice voice;Drum246ModulationControl modulation;bool active=false,keyDown=false,released=false;int note=0,channel=1,pad=0;float velocity=0,last=0,stolen=0;uint64_t age=0;unsigned fade=0;};
+    struct Hit {Drum246Voice voice;Drum246ModulationControl modulation;bool active=false,keyDown=false,released=false;int note=0,channel=1,pad=0;float velocity=0,last=0,stolen=0;int16_t velocityWord=0;uint64_t age=0;unsigned fade=0;};
     using Registry=std::array<std::array<int8_t,128>,17>;
     static Registry emptyRegistry() noexcept {Registry r{};for(auto& channel:r)channel.fill(-1);return r;}
     std::array<Hit,12> hits{};std::array<bool,17> pedals{};uint64_t age=0;
@@ -80,7 +81,7 @@ struct Drum246Bank {
         if(slot<0)slot=0;
         auto* hit=&hits[size_t(slot)];const auto tail=hit->active?hit->last:0.f;const auto modulation=hit->modulation;
         *hit={};hit->modulation=modulation;hit->modulation.noteOn();hit->active=hit->keyDown=true;
-        hit->note=note;hit->pad=pad;hit->channel=channel;hit->velocity=std::clamp(velocity,0.f,1.f);
+        hit->note=note;hit->pad=pad;hit->channel=channel;hit->velocityWord=drum246HostVelocityWord(velocity);hit->velocity=float(hit->velocityWord)/reference::drum246MaximumMidiVelocityWord;
         hit->age=++age;hit->stolen=tail;hit->fade=tail!=0?unsigned(hostRate*.003):0;held=int8_t(slot);return true;
     }
     void noteOff(int note,int channel) noexcept {

@@ -1,0 +1,111 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored harness; original firmware remains private.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+imm32 P1,0xffb00000
+R0=0;
+P0=60;
+LSETUP(clear_pool,clear_pool_end) LC0=P0;
+clear_pool: [P1++]=R0;
+clear_pool_end: NOP;
+imm32 P1,0x01cc10cc
+imm32 R0,0x02010000
+R1=8;
+P0=8;
+LSETUP(refs,refs_end) LC0=P0;
+refs: [P1++]=R0;
+refs_end: R0=R0+R1;
+P1.H=initial_controls;
+P1.L=initial_controls;
+imm32 P2,0x01aaadb4
+P0=768;
+LSETUP(init_controls,init_controls_end) LC0=P0;
+init_controls: R0=[P1++];
+init_controls_end: [P2++]=R0;
+imm32 P1,0x01aaac48
+R0=0;
+[P1]=R0;
+imm32 P1,0x01aaad84
+P0=12;
+LSETUP(clear_mod,clear_mod_end) LC0=P0;
+clear_mod: [P1++]=R0;
+clear_mod_end: NOP;
+imm32 P1,0x01aaac10
+R0=0;
+[P1]=R0;
+imm32 P1,0x018c2180
+R0=-1;
+[P1]=R0;
+R0=8;
+imm32 P0,0x01967984
+CALL(P0);
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+imm32 P1,0xff801038
+R0=0;
+P0=203;
+LSETUP(clear_globals,clear_globals_end) LC0=P0;
+clear_globals: [P1++]=R0;
+clear_globals_end: NOP;
+imm32 P1,0xff801038
+R0=1;
+[P1]=R0;
+imm32 P1,0x01dfe734
+imm32 R0,0x5a5a5a5a
+P0=5;
+LSETUP(clear_row,clear_row_end) LC0=P0;
+clear_row: [P1++]=R0;
+clear_row_end: NOP;
+imm32 P1,0x01dff134
+R0=0;
+[P1]=R0;
+R0=[P4];
+imm32 P1,0x01aaac10
+[P1]=R0;
+R0=P4;
+R0+=8;
+R1=[P4+4];
+imm32 P0,0x01a84ba0
+CALL(P0);
+imm32 P1,0xffb00000
+P0=60;
+LSETUP(save_pool,save_pool_end) LC0=P0;
+save_pool: R0=[P1++];
+save_pool_end: [P5++]=R0;
+imm32 P1,0xff801038
+P0=203;
+LSETUP(save_globals,save_globals_end) LC0=P0;
+save_globals: R0=[P1++];
+save_globals_end: [P5++]=R0;
+imm32 P1,0x01dfe734
+P0=5;
+LSETUP(save_row,save_row_end) LC0=P0;
+save_row: R0=[P1++];
+save_row_end: [P5++]=R0;
+imm32 P1,0x01dff134
+R0=[P1];
+[P5++]=R0;
+P4+=24;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF !CC JUMP next_case;
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+initial_controls: .incbin "@WORK@/inputs.bin",0,3072
+inputs: .incbin "@WORK@/inputs.bin",3072
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

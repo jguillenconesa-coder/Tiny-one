@@ -27,3 +27,7 @@ add_test(NAME shared_drum246 COMMAND shared_drum246_tests)
 add_executable(drum246_allocation_tests ../../Tests/Drum246AllocationTests.cpp)
 target_include_directories(drum246_allocation_tests PRIVATE ../../Source)
 add_test(NAME drum246_allocation COMMAND drum246_allocation_tests)
+
+add_executable(drum246_event_bridge_tests ../../Tests/Drum246EventBridgeTests.cpp)
+target_include_directories(drum246_event_bridge_tests PRIVATE ../../Source)
+add_test(NAME drum246_event_bridge COMMAND drum246_event_bridge_tests)

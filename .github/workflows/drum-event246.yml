@@ -1,0 +1,30 @@
+name: Validate drum event words
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/drum-event/**'
+      - 'research/drum-voice/DrumVoice246.h'
+      - 'research/drum-core/CoreDrumSampler246.h'
+      - 'research/blackfin/drum-event-stream.s.in'
+      - 'Source/Drum246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-drum-event246.py'
+      - '.github/workflows/drum-event246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/drum-event -B build-drum-event -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-drum-event --config Release --parallel 2
+      - run: ctest --test-dir build-drum-event -C Release --output-on-failure

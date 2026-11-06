@@ -2,9 +2,10 @@
 #pragma once
 #include "../drum-core/CoreDrumSampler246.h"
 #include "Drum246Allocator.h"
+#include "Drum246Event.h"
 namespace pocket::research {
 // Research domain: type-1 drum mode, no modulation objects/FX and supplied
-// octave transposition only. Does not provide a scheduler or gain producer.
+// event transposition domain -128..127. No scheduler or gain buffer producer.
 struct DrumVoice246 {
     CoreDrumSampler246 audio;
     std::array<unsigned char,812> globals{};
@@ -21,7 +22,8 @@ struct DrumVoice246 {
         const auto note=reference::signedPhase(event[0]);if(note<53||note>76)return -1;
         const auto count=get(held.data()+2560);
         for(unsigned i=0;i<count;++i)if(get(held.data()+i*20)==event[0])return -1;
-        if(count>=128||sound>=8||transpose<-24||transpose>24||transpose%12)return -1;
+        uint32_t pitchWord=0;
+        if(count>=128||sound>=8||!reference::drum246EventPitchWord(transpose,pitchWord))return -1;
         std::array<uint8_t,12> occupied{};
         for(unsigned v=0;v<12;++v)occupied[v]=*at(0x1070+v);
         const int selected=reference::drum246SelectVoice(occupied,[&](unsigned v){return query(v);});
@@ -30,9 +32,8 @@ struct DrumVoice246 {
         *at(0x1070+voice)=0;
         if(preview==-1){put(at(0x1044),pad);put(at(0x1048),voice);}else if(preview==int(pad))put(at(0x1048),voice);
         put(at(0x10f4+voice*4),pad);*at(0x1124+pad)=1;
-        const auto low=event[1]&65535;const auto velocity=low<32768?int(low):int(low)-65536;
-        put(at(0x12ec+voice*2),uint16_t(reference::saturate16(velocity*256)),2);
-        put(at(0x1304+voice*4),uint32_t(1)<<(26+transpose/12));
+        put(at(0x12ec+voice*2),uint16_t(reference::drum246EventVelocityWord(event[1])),2);
+        put(at(0x1304+voice*4),pitchWord);
         put(at(0x1334+voice*4),pad);
         audio.dispatch(voice,sound,pad,false,controls[sound][pad]);
         auto* row=held.data()+count*20;

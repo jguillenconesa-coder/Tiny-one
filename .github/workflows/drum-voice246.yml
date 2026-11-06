@@ -8,6 +8,7 @@ on:
       - 'research/drum-core/CoreDrumSampler246.h'
       - 'research/blackfin/drum-voice-stream.s.in'
       - 'research/blackfin/drum-render.ld'
+      - 'Source/Drum246Event*.h'
       - 'Source/Drum246Allocator.h'
       - 'Source/Drum246.h'
       - 'Source/Drum246Tables.h'

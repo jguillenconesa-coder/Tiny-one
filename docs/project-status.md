@@ -39,7 +39,24 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
-## Entrega actual: asignador de batería híbrido (0.53.0)
+## Entrega actual: velocidad y transposición de batería (0.54.0)
+
+[Palabras de evento](drum246-event-words.md): 65.536 note-on completos
+originales, todos los patrones de velocidad de 16 bits y 256 transposiciones.
+La tabla de pitch contiene salidas derivadas, no datos ROM recuperados.
+Instrumento y verificadores comparten las conversiones; cuantización MIDI,
+amplitud, pitch fino, bend y normalización son puentes propios explícitos.
+La curva dinámica y los productores por muestra siguen pendientes.
+Linux **145/145 suites**, **1.446 cargas sin heap rastreado**, doce casos de
+plugin y ASan/UBSan aprobados. CI multiplataforma pendiente tras el push.
+[Validación de entrega](releases/v0.54.0-validation.json).
+Avance sin cambio: **≈70 % ±10 de planificación**, fidelidad acústica sin medir.
+
+Los instaladores 0.53.0 solicitados están disponibles como artifacts del
+[CI aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42132902842),
+sin crear releases ni tags: Windows x64 Setup.exe y macOS universal .pkg.
+
+## Entrega anterior: asignador de batería híbrido (0.53.0)
 
 [Asignación de doce voces](drum246-voice-allocation.md) integrada: selector original
 por primera libre/mayor contador firmado, empates por índice, duplicados retenidos
@@ -52,7 +69,7 @@ Pruebas nativas: 84 composiciones a siete tasas, todos los modos y cuatro
 configuraciones LFO, con ASan/UBSan completos aprobados. Linux: **143/143 suites**,
 **1.446 cargas sin heap rastreado** y cuatro casos de plugin 48/96 kHz, buffers
 64/257. CI nativo y regresiones aprobados en Linux, Windows/MSVC y macOS Intel.
-Plugins/instaladores completos siguen en CI;
+Plugins/instaladores completos de 0.53.0 aprobados;
 [evidencia](releases/v0.53.0-validation.json).
 **≈70 % ±10 de planificación**, por el área de voz/ruteo 37→40 %, sin medición
 acústica nueva. Esta integración aplica el método híbrido autorizado y acota la
