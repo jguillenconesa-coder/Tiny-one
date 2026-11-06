@@ -192,3 +192,11 @@ inicialización Core y guardas. Auditoría SDRAM/L1 con nueve casos sintéticos;
 secuencia de llamada visible y carga de dirección del pitch drum localizadas,
 sin ejecución L1 ni recuperación del llamador/ruteo/productores. Investigación
 separada del plugin 0.54.0; dinámica y acústica pendientes, sin instaladores.
+
+### Reinicios Core de modulación
+
+[Seis/doce voces](core246-modulator-reset.md): 8.192 casos con dispatchers y
+limpiezas completos, 8.830 llamadas a cinco resets originales de tres familias,
+gating/this/selección y guardas contrastados. Modelos de investigación; endpoints
+y mutación sintética explícitos. No valida factory, note-on completo con LFO activo,
+productores pitch/gain o ruteo de audio. Sin cambios en el plugin ni instaladores.

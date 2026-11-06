@@ -1,0 +1,32 @@
+name: Validate Core modulator reset routing
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/core-modulator-reset/**'
+      - 'research/blackfin/core-modulator-reset.s.in'
+      - 'research/blackfin/drum-render.ld'
+      - 'Source/Random246.h'
+      - 'Source/Tremolo246*.h'
+      - 'Source/Value246*.h'
+      - 'Source/ValueVoice246*.h'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-core-modulator-reset246.py'
+      - '.github/workflows/core-modulator-reset246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/core-modulator-reset -B build-core-modulator-reset -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-core-modulator-reset --config Release --parallel 2
+      - run: ctest --test-dir build-core-modulator-reset -C Release --output-on-failure

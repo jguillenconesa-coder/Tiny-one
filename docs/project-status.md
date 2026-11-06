@@ -46,6 +46,18 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: reinicio Core de moduladores
+
+[Dispatchers de seis y doce voces](core246-modulator-reset.md): 8.192 casos y
+8.830 resets originales de Value/Random synth/drum y Tremolo. Incluye gates,
+punteros nulos, ajustes this firmados, limpieza de punteros y recarga de selección
+antes del callback secundario. Dos extracciones idénticas, Release y ASan/UBSan
+aprobados. Endpoints de trazado y mutaciones son propios; no prueba la factory
+ni el note-on exterior. No hay render ni integración de audio nuevos.
+Siguiente: componer note-on completo, dispatcher activo, reset de modulación y
+lector; el consumidor de pitch L1 y la dinámica siguen pendientes. Versión y
+avance sin cambios, sin instaladores nuevos.
+
 ## Bloque de investigación: kernel Core y referencias del render
 
 [Kernel de 64 muestras y auditoría](core246-signal-kernel.md): 4.864 callbacks

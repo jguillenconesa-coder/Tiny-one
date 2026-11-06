@@ -974,3 +974,16 @@ con ceros o deducir L1 por ausencia de CALL directos. Avance y versión sin camb
 
 Cierre del bloque: CI nativo aprobado, 2/2 suites por plataforma en Linux,
 Windows/MSVC y macOS Intel. Sin cambios en el instrumento ni instaladores.
+
+## Despacho Core de reinicios — investigación tras referencias L1
+
+[Contrato](core246-modulator-reset.md): dos dispatchers completos y dos limpiezas,
+8.192 casos / 8.830 llamadas a cinco resets originales Value/Random/Tremolo.
+Gate primario, bytes no canónicos, this firmado y recarga de selección para el
+secundario contrastados. La limpieza borra punteros, conserva objetos; no pánico.
+Dos extracciones iguales y Release/ASan/UBSan aprobados. No ejecuta la factory ni
+el note-on exterior, no cambia audio o versión. El contexto visible de pitch L1
+sigue interrumpido: se avanza este contrato SDRAM sin inventar el productor.
+Siguiente bloque agrupado: note-on exterior con reset activo y lector, orden de
+palabras/ocupación/lista y cambios de selección; después consumidor/render/gain.
+Sin instaladores hasta nueva petición; planificación ≈70 % ±10 sin medir acústica.

@@ -1,0 +1,94 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 8192,
+  "input_record_bytes": 740,
+  "output_record_bytes": 732,
+  "dispatchers": {
+    "synth": "0x019673dc",
+    "drum": "0x0196735e"
+  },
+  "clears": {
+    "synth": "0x0196745a",
+    "drum": "0x01967330"
+  },
+  "resets": [
+    "0x019cfd5a",
+    "0x019cff16",
+    "0x019ced74",
+    "0x019cef66",
+    "0x019cbdca"
+  ],
+  "artifacts": {
+    "core-modulator-reset246-input.bin.gz": {
+      "bytes": 5504487,
+      "raw_bytes": 6062080,
+      "sha256": "0c24541d1ca7683c719b3632bcd4f8eac4ecb67584a01f4d0bb6bcf685b188d0"
+    },
+    "core-modulator-reset246-output.bin.gz": {
+      "bytes": 5320907,
+      "raw_bytes": 5996544,
+      "sha256": "cdb823963c874eb457dafa448a8e0242838c4e87fa5a067065dc9d36bbed68d0"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original six/twelve-slot dispatchers and clears with explicit pointer tables, selected sounds, enable bytes, valid indices and controls.",
+    "Authored tracing endpoints preserve R0/R1 and tail-call the five complete original Value/Random synth/drum and Tremolo resets. Signed this adjustments and synthetic selector mutation are supplied; no factory/type-choice claim.",
+    "No audio render, modulation-step cadence, physical inputs, pitch/gain buffer producers or original full note-on composition claimed; research-only."
+  ],
+  "routine_sha256": {
+    "0x1967330": "b39ea72930de64b5e5d669cd2937532f0d10a00cc03708c8bcbf9c0b3b35a456",
+    "0x196735e": "81cb3e35b0ae2c1fde1453e10186ad02360bfccda77532dfefd77bc630ceea77",
+    "0x19673dc": "ebb6168e6f372e58401aa52f98f877bbb29168425f067037a057006ae1fc9a19",
+    "0x196745a": "e357bf229f510883239d4a1c77686bee7f50d21003258acde7b70ccde7042afb"
+  },
+  "date": "2026-11-06",
+  "status": "success: two independent identical original extractions and full native/ASan/UBSan comparison",
+  "independent_original_executions": 2,
+  "counts": {
+    "no_callbacks": 3379,
+    "one_callback": 796,
+    "two_callbacks": 4017,
+    "accepted": 4813,
+    "clears": 482,
+    "synthetic_selector_mutations_reaching_callback": 957,
+    "original_reset_calls": 8830,
+    "profiles": {
+      "value_synth": 1764,
+      "value_drum": 1769,
+      "random_synth": 1774,
+      "random_drum": 1768,
+      "tremolo": 1755
+    }
+  },
+  "native": {
+    "status": "success",
+    "suites": 1,
+    "seconds": 0.18
+  },
+  "sanitizers": {
+    "status": "success: complete ASan/UBSan comparator",
+    "seconds": 1.2,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "native_ci": {
+    "status": "not yet triggered"
+  },
+  "instrument_version_unchanged": "0.54.0",
+  "plugin_integration": false,
+  "audio_rendered": false,
+  "generated_installers": false,
+  "estimated_progress": "approximately 70% +/-10 planning points; unchanged; acoustic fidelity unmeasured",
+  "source_sha256": {
+    "research/core-modulator-reset/CoreModulatorReset246.h": "3d3cff612e64be2604fb434c251be6e5605c7f03a076e6a76da7f2b077e69198",
+    "research/core-modulator-reset/CoreModulatorReset246Tests.cpp": "492cbeaa916a21a03386101a7ca82bf0ce4a7e4a8ed3f132dd68bfb0bb18bb95",
+    "research/blackfin/core-modulator-reset.s.in": "72a03ed0f83d64477edceb63cd173e33b457b8f542ababcea487bf4f05c7aa69",
+    "Source/Value246.h": "2ed22967c1bec2776fe4f77946b2bf28f0f281fa680e95f4a2bfa4641d75b6a6",
+    "Source/Random246.h": "90695b67b9ec28edfa213514274476c5f3c13b00ef562068fc5a6f4395393201",
+    "Source/Tremolo246.h": "e1bc287b0cae36edbd0a77910c0521a57e89914bda03820e4fa7e648f8d49791"
+  }
+}
