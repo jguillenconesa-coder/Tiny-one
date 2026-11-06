@@ -1112,3 +1112,7 @@ Siguiente: cambiador exterior legible y notas retenidas, conservando explícita
 la sustitución del servicio L1 desconocido. No asumir timeout original o meter
 esta espera en audio. Producto 0.54.0, ≈70 % ±10 y acústica sin cambios;
 sin instaladores hasta nueva petición.
+
+Cierre de sincronización: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
+sobre `a59e95e`, sin build del producto o instaladores. Las respuestas L1 siguen
+siendo propias del ensayo, no una recuperación del servicio protegido.

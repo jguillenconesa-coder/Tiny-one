@@ -74,6 +74,9 @@ de refresco Core, lifecycle de bancos drum y las dos suites de factories.
 [Formato/reproducción](../research/core-selection-sync/README.md) y
 [evidencia](firmware/core-selection-sync246-validation.json).
 
+[CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42238923574)
+en Linux, Windows/MSVC y macOS Intel sobre `a59e95e`. Sin build del producto.
+
 ## Relación con el cambio de banco y siguiente bloque
 
 En el tramo legible de cambio de banco drum se observa una llamada en

@@ -69,11 +69,35 @@
     "synth": "e9fcb3559576407e60dd7f9ab2b0b8cc90d6b93ec8926d18cf1b37cc3d09f048"
   },
   "ci": {
-    "status": "pending implementation push",
+    "status": "success",
+    "run_id": 42238923574,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42238923574",
+    "head_sha": "a59e95ea21f49373df2f8fd166ec0ee784b71e76",
     "platforms": [
       "Linux",
       "Windows/MSVC",
       "macOS Intel"
+    ],
+    "jobs": [
+      {
+        "id": 127963788765,
+        "name": "validate (windows-2022)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42238923574/job/127963788765"
+      },
+      {
+        "id": 127963789278,
+        "name": "validate (macos-15-intel)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42238923574/job/127963789278"
+      },
+      {
+        "id": 127963789374,
+        "name": "validate (ubuntu-latest)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42238923574/job/127963789374"
+      }
     ]
-  }
+  },
+  "implementation_commit": "a59e95ea21f49373df2f8fd166ec0ee784b71e76"
 }

@@ -52,7 +52,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 originales, reintentos, retarget, flag cambiante y salida inmediata cuando ya
 está listo. 12285 respuestas **propias** del harness; las entradas L1 no están
 recuperadas y no construyen objetos en este ensayo. Dos ejecuciones coinciden;
-Release/ASan/UBSan y regresiones relacionadas aprobados. No confundir igualdad
+Release/ASan/UBSan y regresiones relacionadas aprobados. CI nativo aprobado en
+Linux, Windows/MSVC y macOS Intel sobre `a59e95e`. No confundir igualdad
 de índices con recuperación de la parte activa. El servicio L1, scheduler,
 pitch/gain y acústica siguen pendientes; producto 0.54.0 y ≈70 % ±10 sin cambios,
 sin instaladores.
