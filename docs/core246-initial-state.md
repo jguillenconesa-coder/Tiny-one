@@ -78,7 +78,7 @@ a calibraciones modificadas, estados fuera de las ventanas o ejecución de audio
 [Modelo y formato](../research/core-initial-state/README.md) ·
 [Evidencia y hashes](firmware/core-initial-state246-validation.json).
 Release y ASan/UBSan del comparador completos aprobados; CI nativo separado
-comprueba Linux, Windows/MSVC y macOS Intel. No aumenta la cuenta de 145 suites
+aprobado en Linux, Windows/MSVC y macOS Intel. No aumenta la cuenta de 145 suites
 del producto: es una suite de investigación independiente.
 
 ## Consecuencia para la integración

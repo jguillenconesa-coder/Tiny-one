@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored caller of complete original Core 64-word callback; explicit clock.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+R0=[P4];
+CC=R0==0;
+P1=P4;
+P1+=4;
+imm32 P2,0x01bab538
+P3=3;
+LSETUP(coef_in,coef_in_end) LC0=P3;
+coef_in: R0=[P1++];
+coef_in_end: [P2++]=R0;
+IF CC JUMP retained;
+imm32 P2,0x01aaac0c
+P3=7;
+LSETUP(state_in,state_in_end) LC0=P3;
+state_in: R0=[P1++];
+state_in_end: [P2++]=R0;
+JUMP.S copy_buffers;
+retained: P1+=28;
+copy_buffers:
+imm32 P2,0xff801e48
+P3=36;
+LSETUP(in0,in0end) LC0=P3;
+in0: R0=[P1++];
+in0end: [P2++]=R0;
+imm32 P2,0xff800bac
+P3=36;
+LSETUP(in1,in1end) LC0=P3;
+in1: R0=[P1++];
+in1end: [P2++]=R0;
+R0=[P4];
+CC=R0==2;
+IF !CC JUMP signal_callback;
+imm32 P0,0x01967fcc
+CALL(P0);
+signal_callback:
+imm32 P0,0x019674f8
+CALL(P0);
+imm32 P1,0x1bab538
+P3=3;
+LSETUP(out0,out0end) LC0=P3;
+out0: R0=[P1++];
+out0end: [P5++]=R0;
+imm32 P1,0x1aaac0c
+P3=7;
+LSETUP(out1,out1end) LC0=P3;
+out1: R0=[P1++];
+out1end: [P5++]=R0;
+imm32 P1,0xff801e48
+P3=36;
+LSETUP(out2,out2end) LC0=P3;
+out2: R0=[P1++];
+out2end: [P5++]=R0;
+imm32 P1,0xff800bac
+P3=36;
+LSETUP(out3,out3end) LC0=P3;
+out3: R0=[P1++];
+out3end: [P5++]=R0;
+imm32 P0,332
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF !CC JUMP next_case;
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

@@ -1,0 +1,1061 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "sdram": {
+    "base": "0x1000000",
+    "bytes": 11169912,
+    "known_bytes": 11169912,
+    "relative_calls_scanned": true,
+    "targets": {
+      "core_mode": {
+        "target": "0xff801038",
+        "low_half_candidates": [
+          {
+            "address": "0x19671ea",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19676c8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ac41c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c2d84",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e0c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e1c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a299e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a29a28",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a8466c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84bf0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84dc6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a85070",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_occupancy": {
+        "target": "0xff801070",
+        "low_half_candidates": [
+          {
+            "address": "0x1976edc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc1070",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e2e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84bfe",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c3c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84e1a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a856ee",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a85e16",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a86254",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a865cc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_event_velocity": {
+        "target": "0xff8012ec",
+        "low_half_candidates": [
+          {
+            "address": "0x196865e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff8012ec",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19fbdee",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18f12ec",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84cb0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff8012ec",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_event_pitch": {
+        "target": "0xff801304",
+        "low_half_candidates": [
+          {
+            "address": "0x191d0a4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1001304",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1968678",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801304",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c99b6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18e1304",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c88",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801304",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_voice_pad": {
+        "target": "0xff801334",
+        "low_half_candidates": [
+          {
+            "address": "0x19599e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1334",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967d08",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967da0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19fc324",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18f1334",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a1c7da",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1911334",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a1c822",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1911334",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c94",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_audio_objects": {
+        "target": "0x1aaad30",
+        "low_half_candidates": [
+          {
+            "address": "0x196730a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967992",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967b58",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967ce0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967d78",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_vtable": {
+        "target": "0x190fac4",
+        "low_half_candidates": [
+          {
+            "address": "0x1978e1e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x190fac4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_render": {
+        "target": "0x19789ec",
+        "low_half_candidates": [],
+        "high_first_pairs": [],
+        "literal_words": [
+          "0x190fad8"
+        ],
+        "relative_calls": []
+      },
+      "core_signal_callback": {
+        "target": "0x19674f8",
+        "low_half_candidates": [],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_coefficient": {
+        "target": "0x1bab53c",
+        "low_half_candidates": [
+          {
+            "address": "0x1967502",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1bab53c",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967fde",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1bab53c",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_history": {
+        "target": "0x1aaac14",
+        "low_half_candidates": [
+          {
+            "address": "0x19674fa",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaac14",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46bf4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46c5c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46f38",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46fa8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_input": {
+        "target": "0xff801e50",
+        "low_half_candidates": [
+          {
+            "address": "0x195c134",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ce28",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d1e0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d348",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d4e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e6f4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e7d8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e90c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e9fc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195eb7c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ebdc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ed24",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ed84",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195eed4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195f040",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195f0a0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x196751e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19713b4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1971560",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e70e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e860",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a3b3c4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a52038",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_output": {
+        "target": "0xff800bb4",
+        "low_half_candidates": [
+          {
+            "address": "0x1959a72",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1963b6a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x196757c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19722f6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19723f8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197241c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ca47a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb416",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd120",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ce078",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "literal_words": [],
+        "relative_calls": []
+      }
+    }
+  },
+  "l1": [
+    {
+      "header_offset": "0x206214",
+      "destination": "0xffa00000",
+      "bytes": 49076,
+      "flags": "0xaddb2406",
+      "relative_calls_scanned": false,
+      "targets": {
+        "core_mode": {
+          "target": "0xff801038",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_occupancy": {
+          "target": "0xff801070",
+          "low_half_candidates": [
+            {
+              "address": "0xffa0074a",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00738",
+                  "0xffa00740"
+                ],
+                [
+                  "0xffa00750",
+                  "0xffa00758"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_event_velocity": {
+          "target": "0xff8012ec",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_event_pitch": {
+          "target": "0xff801304",
+          "low_half_candidates": [
+            {
+              "address": "0xffa00718",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801304",
+              "matches_target": true,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00708",
+                  "0xffa00710"
+                ],
+                [
+                  "0xffa00720",
+                  "0xffa00728"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_voice_pad": {
+          "target": "0xff801334",
+          "low_half_candidates": [
+            {
+              "address": "0xffa006f8",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801334",
+              "matches_target": true,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa006f0",
+                  "0xffa006f8"
+                ],
+                [
+                  "0xffa00708",
+                  "0xffa00710"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_audio_objects": {
+          "target": "0x1aaad30",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_vtable": {
+          "target": "0x190fac4",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_render": {
+          "target": "0x19789ec",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_callback": {
+          "target": "0x19674f8",
+          "low_half_candidates": [
+            {
+              "address": "0xffa01eb8",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0x19674f8",
+              "matches_target": true,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa01ea8",
+                  "0xffa01eb0"
+                ],
+                [
+                  "0xffa01ec0",
+                  "0xffa01ec8"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa0245a",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa02448",
+                  "0xffa02450"
+                ],
+                [
+                  "0xffa02460",
+                  "0xffa02468"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa0288c",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0x19674f8",
+              "matches_target": true,
+              "adjacent_indirect_call": "0xffa02894",
+              "neighboring_protected_spans": [
+                [
+                  "0xffa02880",
+                  "0xffa02888"
+                ],
+                [
+                  "0xffa02898",
+                  "0xffa028a0"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_coefficient": {
+          "target": "0x1bab53c",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_history": {
+          "target": "0x1aaac14",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_input": {
+          "target": "0xff801e50",
+          "low_half_candidates": [
+            {
+              "address": "0xffa0060c",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801e50",
+              "matches_target": true,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00600",
+                  "0xffa00608"
+                ],
+                [
+                  "0xffa00618",
+                  "0xffa00620"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_output": {
+          "target": "0xff800bb4",
+          "low_half_candidates": [
+            {
+              "address": "0xffa00912",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00900",
+                  "0xffa00908"
+                ],
+                [
+                  "0xffa00918",
+                  "0xffa00920"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa00d2e",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff800bb4",
+              "matches_target": true,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00d20",
+                  "0xffa00d28"
+                ],
+                [
+                  "0xffa00d38",
+                  "0xffa00d40"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa01b72",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa01b60",
+                  "0xffa01b68"
+                ],
+                [
+                  "0xffa01b78",
+                  "0xffa01b80"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "literal_words": [],
+          "relative_calls": []
+        }
+      }
+    }
+  ],
+  "protection_assumption": "For the inventoried 49076-byte L1 block only: first 8 bytes in each 24-byte group protected. Protected bytes are never decoded; visibility does not establish executable instructions.",
+  "limits": [
+    "Only adjacent low/high or high/low immediate pairs, aligned literal words and SDRAM relative CALL encodings are inventoried. Gapped pairs, arithmetic, aliases, indirect calls and data flow are not reconstructed.",
+    "A low half alone or a resolved different high half is not a reference to the requested target. Full pairs and pointers remain candidates, not verified reads/writes or callers.",
+    "Relative CALL encodings may occur in data; absence of direct calls does not prove absence of a caller or an L1 dependency. No L1 instructions executed or decrypted.",
+    "Input/output buffer roles, sample rate, routing, per-sample drum gain/pitch producers and scheduling remain unproven."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two identical bounded static inventories; nine synthetic decoder cases passed",
+  "script_sha256": "5aa115de6b05009108231c8f93c2f159a88373b70658e8d2d2c2d26d44d68373"
+}

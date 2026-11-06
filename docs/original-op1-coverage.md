@@ -183,3 +183,12 @@ workspace, factory y note-on originales; cuatro ventanas completas contrastadas.
 Spans derivados de defaults, sin port general de soft-float. Conserva ocupación
 y objetos, no sustituye pánico, scheduler ni productores pitch/gain. Sin cambio
 del instrumento 0.54.0 ni nueva medición acústica; sin instaladores.
+
+### Kernel Core de señal y referencias de render
+
+[Kernel 64 palabras](core246-signal-kernel.md): reconstrucción aritmética
+contrastada con 4.864 callbacks originales / 311.296 muestras, estados retenidos,
+inicialización Core y guardas. Auditoría SDRAM/L1 con nueve casos sintéticos;
+secuencia de llamada visible y carga de dirección del pitch drum localizadas,
+sin ejecución L1 ni recuperación del llamador/ruteo/productores. Investigación
+separada del plugin 0.54.0; dinámica y acústica pendientes, sin instaladores.

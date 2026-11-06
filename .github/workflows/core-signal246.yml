@@ -1,0 +1,30 @@
+name: Validate Core signal kernel and bounded reference inventory
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/core-signal/**'
+      - 'research/core-initial-state/CoreInitialState246.h'
+      - 'research/blackfin/core-signal-stream.s.in'
+      - 'research/blackfin/drum-render.ld'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-core-signal246.py'
+      - 'scripts/audit-drum246-render-references.py'
+      - '.github/workflows/core-signal246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/core-signal -B build-core-signal -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-core-signal --config Release --parallel 2
+      - run: ctest --test-dir build-core-signal -C Release --output-on-failure

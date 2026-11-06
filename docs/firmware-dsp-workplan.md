@@ -943,7 +943,8 @@ seguir el llamador de render. Mantener avance ≈70 % ±10, sin medición acúst
 
 Validación local 0.54.0: Linux 145/145 suites, doce casos de plugin, 1.446
 cargas sin heap rastreado, ASan/UBSan del corpus y puente completos aprobados.
-CI nativo y paquetes de esta versión en curso tras el push; no aprobados todavía.
+CI nativo aprobado. El empaquetado anterior se canceló por petición del propietario;
+el CI completo de reemplazo pasó en las tres plataformas sin generar instaladores.
 
 ## Inicialización Core y cadena de eventos — investigación tras 0.54.0
 
@@ -956,3 +957,17 @@ CI separado sin compilación del producto. No cambia versión, DSP ni instalador
 Siguiente: consumidor activo de velocidad/pitch y llamador de render; no usar
 esta inicialización como productor de buffers o pánico. Avance sin cambio.
 El propietario pide bloques más largos y empaquetado solo cuando vuelva a pedirlo.
+
+## Kernel Core de 64 muestras y referencias — investigación tras inicialización
+
+[Contrato y auditoría](core246-signal-kernel.md): rutina 0x019674f8 completa,
+4.864 llamadas / 311.296 muestras, 512 bloques retenidos y 256 compuestos con
+inicializador. Historia, truncado, saturaciones y guardas coinciden; Release y
+ASan/UBSan aprobados, dos extracciones idénticas. Nueve casos sintéticos del
+auditor protegen la separación de bytes conocidos/protegidos y alias parciales.
+Carga de pitch drum en 0xffa00718 y secuencia visible de llamada al kernel en
+0xffa0288c/0xffa02894 localizadas; contexto vecino protegido, sin llamador completo
+ni calendario contrastados. No se clasifica el kernel como productor de dinámica.
+Queda fuera del plugin hasta recuperar su ruteo. Siguiente: consumidor del pitch
+y contexto de esas llamadas; mantener contrato híbrido, sin rellenar dependencia
+con ceros o deducir L1 por ausencia de CALL directos. Avance y versión sin cambios.

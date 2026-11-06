@@ -106,7 +106,7 @@
     "status": "success: original numeric fixtures still match shared event helpers"
   },
   "implementation_commit": "f724fa49048a1cd6bb2ae21804e9ec225438760e",
-  "ci_snapshot_utc": "2026-11-06",
+  "ci_snapshot_utc": "2026-11-06 09:28 UTC",
   "regression_ci": [
     {
       "name": "Validate melodic sampler reader and host adapter",
@@ -150,19 +150,39 @@
     }
   ],
   "replacement_full_ci_without_installers": {
-    "status": "in_progress",
+    "status": "success",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42142957706",
-    "scope": "Full builds/tests with opt-in packaging disabled by default; no new installers requested",
+    "scope": "Full Linux/Windows/MSVC/macOS universal builds/tests approved; macOS runtime on Intel. All four packaging steps skipped on all platforms. No new installers generated.",
     "platforms": {
-      "build (ubuntu-latest)": "in_progress",
+      "build (ubuntu-latest)": "success",
       "build (windows-2022)": "success",
-      "build (macos-latest)": "in_progress"
+      "build (macos-latest)": "success"
     },
     "windows_packaging_steps": {
       "Install NSIS": "skipped",
       "Build Windows installer": "skipped",
       "Test Windows install and uninstall": "skipped",
       "Package and inspect macOS universal installer": "skipped"
+    },
+    "packaging_steps_all_platforms": {
+      "build (ubuntu-latest)": {
+        "Install NSIS": "skipped",
+        "Build Windows installer": "skipped",
+        "Test Windows install and uninstall": "skipped",
+        "Package and inspect macOS universal installer": "skipped"
+      },
+      "build (windows-2022)": {
+        "Install NSIS": "skipped",
+        "Build Windows installer": "skipped",
+        "Test Windows install and uninstall": "skipped",
+        "Package and inspect macOS universal installer": "skipped"
+      },
+      "build (macos-latest)": {
+        "Install NSIS": "skipped",
+        "Build Windows installer": "skipped",
+        "Test Windows install and uninstall": "skipped",
+        "Package and inspect macOS universal installer": "skipped"
+      }
     }
   }
 }

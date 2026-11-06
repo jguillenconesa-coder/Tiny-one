@@ -78,11 +78,11 @@
     "seconds": 0.44
   },
   "native_ci": {
-    "status": "in_progress",
+    "status": "success",
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42144492537",
     "platforms": {
       "validate (macos-15-intel)": {
-        "status": "in_progress",
+        "status": "success",
         "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42144492537/job/127652559082"
       },
       "validate (ubuntu-latest)": {
@@ -97,5 +97,5 @@
   },
   "derived_model": "Default write spans derived from original numeric observations, not an independent general implementation of initializer soft-float arithmetic",
   "implementation_commit": "43bb78b7ecb1a4410aa226cf7d601892fe0b8490",
-  "ci_snapshot_utc": "2026-11-06 01:35 UTC"
+  "ci_snapshot_utc": "2026-11-06 09:28 UTC"
 }

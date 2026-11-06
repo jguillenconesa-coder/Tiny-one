@@ -1,0 +1,75 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4864,
+  "independent": 4096,
+  "retained": 512,
+  "initializer_composed": 256,
+  "samples": 311296,
+  "input_record_bytes": 332,
+  "output_record_bytes": 328,
+  "routine": {
+    "entry": "0x019674f8",
+    "end_exclusive": "0x01967614",
+    "sha256": "3574116f8ede56269c612d445e78b607d26c799f890fdc22ac2af78f30117889"
+  },
+  "coefficient": "0x01bab53c",
+  "state": "0x01aaac14",
+  "input": "0xff801e50",
+  "output": "0xff800bb4",
+  "artifacts": {
+    "core-signal246-input.bin.gz": {
+      "bytes": 1152663,
+      "raw_bytes": 1614848,
+      "sha256": "fce266768f76c88200435e5c38186cc017172a19b4a301bc3180d72ae2e86f5c"
+    },
+    "core-signal246-output.bin.gz": {
+      "bytes": 723012,
+      "raw_bytes": 1595392,
+      "sha256": "39d071e124d6bdc292d6b279ea5e46c1fa9d0846cc210665c74a643bc099068d"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original callback with explicitly supplied coefficient, three history words, input buffer and call order; all buffers/guards captured.",
+    "No recovered input producer, original caller, clock/sample rate, semantic role of buffers or routing to drum voices; no per-sample drum pitch/gain producer recovered.",
+    "Research-only; no plugin or installer generation.",
+    "256 cases execute the complete Core initializer before the callback; input order and normal circular/ASTAT register context are supplied by the harness."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two identical independent original extractions; complete Release and ASan/UBSan numeric comparison",
+  "independent_original_executions": 2,
+  "native": {
+    "status": "success",
+    "suites": 2,
+    "seconds": 0.38,
+    "synthetic_reference_cases": 9
+  },
+  "sanitizers": {
+    "status": "success: full numeric comparator ASan/UBSan; reference suite uses Python",
+    "seconds": 0.7,
+    "leak_detection": "disabled due managed ptrace"
+  },
+  "final_history_saturation": {
+    "INT32_MAX_records": 1095,
+    "INT32_MIN_records": 550,
+    "scope": "Complete final output history word only; not total clipped samples"
+  },
+  "native_ci": {
+    "status": "not yet triggered"
+  },
+  "instrument_version_unchanged": "0.54.0",
+  "plugin_integration": false,
+  "generated_installers": false,
+  "estimated_progress": "approximately 70% +/-10 planning points; unchanged; acoustic fidelity unmeasured",
+  "source_sha256": {
+    "research/core-signal/CoreSignal246.h": "b0f718ae709dca47472e49d420616b9975065e2e3d97fd723645d775f951ce6c",
+    "research/core-signal/CoreSignal246Tests.cpp": "c0618ad4319a3e317e85b61f41ae8c293ac89642965f608b027c469b8a2def19",
+    "research/core-initial-state/CoreInitialState246.h": "6a287a65f24fe5340f112a2259cbbca4e9670a83ba72e0fcaa090b5dd8bd9b23",
+    "Source/ReferenceDsp.h": "6f237e97236494636a71ae47582b4b9b0f75357176bdf102a45c87d230808acd",
+    "research/blackfin/core-signal-stream.s.in": "f3291a3efb32724ab4c670b43f97b167d1e570606188c9d94b4c1bb780095a35"
+  }
+}
