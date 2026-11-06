@@ -54,7 +54,9 @@ en perfil Sampler synth 6 / drum 8 / Delay FX 0, con siete familias por ruta.
 coinciden. Confirma pools compartidos: synth puede sobrescribir objetos aún
 referenciados por drum; no demuestra rutas concurrentes ni sustituye al scheduler.
 Dos ejecuciones originales, Release/ASan/UBSan y regresiones relacionadas aprobados.
-Faltan llamador/reactivación de la parte activa, pitch/gain originales y acústica.
+CI nativo aprobado en Linux, Windows/MSVC y macOS Intel sobre `729e7dd`.
+La referencia directa encontrada está en un contexto estático de medición; no
+prueba uso normal al tocar. Faltan llamador/reactivación de la parte activa, pitch/gain originales y acústica.
 Producto 0.54.0, ≈70 % ±10 y política de instaladores sin cambios.
 
 ## Bloque de investigación: las siete familias de modulación

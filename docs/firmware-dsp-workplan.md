@@ -1092,3 +1092,8 @@ retenido aprobadas. Siguiente: llamador y reactivación de la parte activa antes
 de eventos/render, con entradas explícitas donde el contexto siga protegido.
 No se recuperan scheduler o productores pitch/gain, no cambia audio 0.54.0,
 ≈70 % ±10 o instaladores.
+
+Cierre de refresco: CI nativo aprobado en Linux, Windows/MSVC y macOS Intel
+sobre `729e7dd`, sin build del producto. Candidato CALL SDRAM `0x019f04a6` con
+lecturas de ciclos alrededor; contexto estático de medición, no llamador activo
+contrastado. Mantener esa distinción al investigar la reactivación de la parte.

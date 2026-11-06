@@ -82,6 +82,18 @@ drum y modulación/render retenidos de batería.
 [Formato/reproducción](../research/core-refresh/README.md) y
 [evidencia](firmware/core-refresh246-validation.json).
 
+[CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42227862984)
+en Linux, Windows/MSVC y macOS Intel sobre `729e7dd`, sin build del producto.
+
+### Referencia estática de llamada
+
+Aplicando el auditor existente a `0x01967b28` se encuentra una llamada relativa
+candidata en SDRAM, `0x019f04a6`. Su vecindad visible lee CYCLES/CYCLES2 antes
+(`0x019f0494/496`) y después (`0x019f04b2/4`), y opera sobre las diferencias.
+Es un contexto estático de medición; no se ha ejecutado ese llamador ni se ha
+establecido que sea el camino normal al tocar. No se deduce ausencia de otros
+llamadores indirectos o protegidos. El inventario publica direcciones, no código.
+
 ## Frontera pendiente
 
 Este perfil no valida otras combinaciones de motores/FX, el llamador físico,

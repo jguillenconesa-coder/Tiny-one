@@ -103,11 +103,49 @@
   "audio_overlay_cases": 3956,
   "different_family_modulation_alias_cases": 3391,
   "ci": {
-    "status": "pending implementation push",
+    "status": "success",
+    "run_id": 42227862984,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42227862984",
+    "head_sha": "729e7dd38c8f8e87e484dc75799e0e8c06b4875c",
     "platforms": [
       "Linux",
       "Windows/MSVC",
       "macOS Intel"
+    ],
+    "jobs": [
+      {
+        "id": 127925848297,
+        "name": "validate (windows-2022)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42227862984/job/127925848297"
+      },
+      {
+        "id": 127925848501,
+        "name": "validate (ubuntu-latest)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42227862984/job/127925848501"
+      },
+      {
+        "id": 127925848620,
+        "name": "validate (macos-15-intel)",
+        "conclusion": "success",
+        "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42227862984/job/127925848620"
+      }
     ]
+  },
+  "implementation_commit": "729e7dd38c8f8e87e484dc75799e0e8c06b4875c",
+  "static_caller_candidate": {
+    "scan": "scripts/audit-drum246-render-references.py::scan with core_refresh target 0x01967b28 and relative SDRAM calls enabled",
+    "address": "0x019f04a6",
+    "preceding_cycles_reads": [
+      "0x019f0494",
+      "0x019f0496"
+    ],
+    "following_cycles_reads": [
+      "0x019f04b2",
+      "0x019f04b4"
+    ],
+    "observation": "Visible neighborhood reads CYCLES/CYCLES2 before and after the call and computes differences. Static timing context; original caller not executed or established as normal playback path.",
+    "objdump_sha256": "92fd04e1dfb9fa643f6fee00a1823060e5c90cb48fc5be6d2696f78c279b4bc9"
   }
 }
