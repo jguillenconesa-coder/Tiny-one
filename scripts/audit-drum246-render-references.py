@@ -13,10 +13,24 @@ TARGETS={
  'drum_vtable':0x0190fac4,'drum_render':0x019789ec,
  'core_signal_callback':0x019674f8,'core_signal_coefficient':0x01bab53c,
  'core_signal_history':0x01aaac14,'core_signal_input':0xff801e50,
- 'core_signal_output':0xff800bb4}
-FUNCTIONS={'drum_render','core_signal_callback'}
+ 'core_signal_output':0xff800bb4,
+ 'drum_pitch_buffer':0xff801950,'drum_gain_buffer':0xff801d50,
+ 'drum_derived_gain_buffer':0xff801b50,'drum_modulation_workspace':0xff801724,
+ 'core_buffer_initializer':0x01a3b34c,'core_buffer_defaults':0x01df4df4,
+ 'vector_constructor':0x01aa3862,'zero_word_callback':0x01a3b308,
+ 'zero_halfword_callback':0x01a3b310}
+FUNCTIONS={'drum_render','core_signal_callback','core_buffer_initializer','vector_constructor','zero_word_callback','zero_halfword_callback'}
+def following_relative_call(image,offset,base,visible):
+ # A following call is independent of the loaded address: it may receive an
+ # argument, not call that address. No reachability/data-flow inference.
+ if not visible(offset,4):return None
+ opcode,low=struct.unpack_from('<HH',image,offset)
+ if opcode&0xff00!=0xe300:return None
+ delta=((opcode&255)<<16)|low
+ if delta&0x800000:delta-=0x1000000
+ return {'address':hex(base+offset),'destination':hex((base+offset+2*delta)&0xffffffff)}
 def scan(image,base,visible,relative_calls):
- result={name:{'target':hex(target),'low_half_candidates':[],'high_first_pairs':[],'literal_words':[],'relative_calls':[]} for name,target in TARGETS.items()}
+ result={name:{'target':hex(target),'low_half_candidates':[],'high_first_pairs':[],'high_first_following_calls':[],'literal_words':[],'relative_calls':[]} for name,target in TARGETS.items()}
  bylow={}
  for name,target in TARGETS.items():bylow.setdefault(target&65535,[]).append(name)
  for offset in range(0,len(image)-3,2):
@@ -30,6 +44,7 @@ def scan(image,base,visible,relative_calls):
      same=highop==opcode+0x40
      item.update(adjacent_same_register_high=same,resolved_address=hex((high<<16)|low) if same else None,matches_target=((high<<16)|low)==TARGETS[name] if same else False)
     else:item.update(adjacent_same_register_high=None,resolved_address=None,matches_target=None)
+    item['following_relative_call']=following_relative_call(image,offset+8,base,visible) if item['matches_target'] else None
     item['adjacent_indirect_call']=None
     register=opcode&31
     if item['matches_target'] and 8<=register<=13 and visible(offset+8,2):
@@ -41,7 +56,10 @@ def scan(image,base,visible,relative_calls):
    if lowop==opcode-0x40:
     target=(low<<16)|value
     for name,wanted in TARGETS.items():
-     if target==wanted:result[name]['high_first_pairs'].append(hex(base+offset))
+     if target==wanted:
+      result[name]['high_first_pairs'].append(hex(base+offset))
+      call=following_relative_call(image,offset+8,base,visible)
+      if call:result[name]['high_first_following_calls'].append({'pair_address':hex(base+offset),'call':call})
   if offset%4==0:
    literal=struct.unpack_from('<I',image,offset)[0]
    for name,target in TARGETS.items():
@@ -78,6 +96,6 @@ def main():
    for item in target['low_half_candidates']:
     group=(int(item['address'],16)-0xffa00000)//24*24+0xffa00000
     item['neighboring_protected_spans']=[[hex(group),hex(group+8)],[hex(group+24),hex(group+32)]]
- report={'ldr_sha256':digest,'sdram':{'base':hex(base),'bytes':len(image),'known_bytes':sum(known),'relative_calls_scanned':True,'targets':scan(image,base,visible_sdram,True)},'l1':l1,'protection_assumption':'For the inventoried 49076-byte L1 block only: first 8 bytes in each 24-byte group protected. Protected bytes are never decoded; visibility does not establish executable instructions.','limits':['Only adjacent low/high or high/low immediate pairs, aligned literal words and SDRAM relative CALL encodings are inventoried. Gapped pairs, arithmetic, aliases, indirect calls and data flow are not reconstructed.','A low half alone or a resolved different high half is not a reference to the requested target. Full pairs and pointers remain candidates, not verified reads/writes or callers.','Relative CALL encodings may occur in data; absence of direct calls does not prove absence of a caller or an L1 dependency. No L1 instructions executed or decrypted.','Input/output buffer roles, sample rate, routing, per-sample drum gain/pitch producers and scheduling remain unproven.']}
- out.mkdir(parents=True,mode=0o700);(out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS: bounded SDRAM/L1 inventory for 13 drum/Core targets; no protected-byte decoding')
+ report={'ldr_sha256':digest,'sdram':{'base':hex(base),'bytes':len(image),'known_bytes':sum(known),'relative_calls_scanned':True,'targets':scan(image,base,visible_sdram,True)},'l1':l1,'protection_assumption':'For the inventoried 49076-byte L1 block only: first 8 bytes in each 24-byte group protected. Protected bytes are never decoded; visibility does not establish executable instructions.','limits':['Only adjacent low/high or high/low immediate pairs, aligned literal words and SDRAM relative CALL encodings are inventoried. Gapped pairs, arithmetic, aliases, general indirect calls and data flow are not reconstructed.','A low half alone or a resolved different high half is not a reference to the requested target. Full pairs and pointers remain candidates, not verified reads/writes or callers.','Relative CALL encodings may occur in data; absence of direct calls does not prove absence of a caller or an L1 dependency. No L1 instructions executed or decrypted.','A following relative call after a loaded target is separate metadata: the loaded address is not assumed to be the callee.','Input/output buffer roles, sample rate, routing, per-sample drum gain/pitch producers and scheduling remain unproven.']}
+ out.mkdir(parents=True,mode=0o700);(out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(f'PASS: bounded SDRAM/L1 inventory for {len(TARGETS)} drum/Core targets; no protected-byte decoding')
 if __name__=='__main__':main()

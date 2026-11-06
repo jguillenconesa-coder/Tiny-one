@@ -39,4 +39,29 @@ class InventoryTests(unittest.TestCase):
  def test_literal_alignment_is_explicit(self):
   needle=struct.pack('<I',audit.TARGETS['drum_render']);self.assertEqual(inventory(needle)['drum_render']['literal_words'],['0x1000000']);self.assertEqual(inventory(b'\0\0'+needle)['drum_render']['literal_words'],[])
 
+ def test_loaded_buffer_followed_by_call_is_not_callee(self):
+  target=audit.TARGETS['drum_pitch_buffer'];base=0x1000000;destination=audit.TARGETS['vector_constructor'];delta=((destination-base-8)//2)&0xffffff
+  data=pair(target,0)+struct.pack('<HH',0xe300|(delta>>16),delta&65535)
+  item=inventory(data)['drum_pitch_buffer']['low_half_candidates'][0]
+  self.assertIsNone(item['adjacent_indirect_call']);self.assertEqual(item['following_relative_call'],{'address':hex(base+8),'destination':hex(destination)})
+ def test_following_relative_call_signed(self):
+  data=pair(audit.TARGETS['drum_gain_buffer'])+struct.pack('<HH',0xe3ff,0xfffc)
+  self.assertEqual(inventory(data)['drum_gain_buffer']['low_half_candidates'][0]['following_relative_call']['destination'],'0x1000000')
+ def test_following_call_cannot_cross_protected_span(self):
+  data=pair(audit.TARGETS['drum_gain_buffer'])+struct.pack('<HH',0xe300,4)
+  visible=lambda i,n:i>=0 and i+n<=len(data) and not(i<12 and i+n>10)
+  self.assertIsNone(inventory(data,visible)['drum_gain_buffer']['low_half_candidates'][0]['following_relative_call'])
+ def test_different_high_half_has_no_following_call(self):
+  data=pair(0x01cc1950)+struct.pack('<HH',0xe300,4)
+  self.assertIsNone(inventory(data)['drum_pitch_buffer']['low_half_candidates'][0]['following_relative_call'])
+ def test_noncall_after_pair(self):
+  data=pair(audit.TARGETS['drum_gain_buffer'])+bytes(4)
+  self.assertIsNone(inventory(data)['drum_gain_buffer']['low_half_candidates'][0]['following_relative_call'])
+ def test_high_first_following_relative_call(self):
+  data=struct.pack('<6H',0xe140,0xff80,0xe100,0x1950,0xe300,4)
+  entry=inventory(data)['drum_pitch_buffer']['high_first_following_calls'][0]
+  self.assertEqual(entry,{'pair_address':'0x1000000','call':{'address':'0x1000008','destination':'0x1000010'}})
+ def test_new_targets_are_distinct(self):
+  self.assertEqual(len(audit.TARGETS),22);self.assertEqual(len(set(audit.TARGETS.values())),22)
+
 if __name__=='__main__':unittest.main()

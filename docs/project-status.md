@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: arranque de buffers y frontera de dinámica
+
+[Inicializador compartido](core246-buffer-initialization.md): 1024 escenarios,
+512 inicializaciones originales y 512 kernels Core / 32768 muestras; 496 filas
+retienen ventanas. Borra cuatro buffers y fija seis bytes de defaults, conserva
+la historia del kernel: 64 filas compuestas siguen produciendo salida con entrada
+borrada. Tres ejecuciones originales coinciden, Release y ASan/UBSan aprobados.
+Auditor ampliado a 22 direcciones y 16 pruebas sintéticas; los productores activos
+pitch/gain y el ruteo protegido siguen pendientes. No es un pánico ni un reset
+completo; no cambia plugin 0.54.0, avance ≈70 % ±10 o instaladores.
+
 ## Bloque de investigación: modulación retenida y render de batería
 
 [Composición](drum246-modulated-render.md): 288 sesiones / 4608 callbacks con

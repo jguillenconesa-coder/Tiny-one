@@ -1,0 +1,2688 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "sdram": {
+    "base": "0x1000000",
+    "bytes": 11169912,
+    "known_bytes": 11169912,
+    "relative_calls_scanned": true,
+    "targets": {
+      "core_mode": {
+        "target": "0xff801038",
+        "low_half_candidates": [
+          {
+            "address": "0x19671ea",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19676c8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ac41c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c2d84",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e0c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e1c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a299e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a29a28",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a8466c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84bf0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84dc6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a85070",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801038",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_occupancy": {
+        "target": "0xff801070",
+        "low_half_candidates": [
+          {
+            "address": "0x1976edc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc1070",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a27e2e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84bfe",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c3c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84e1a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a856ee",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a85e16",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a86254",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a865cc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801070",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_event_velocity": {
+        "target": "0xff8012ec",
+        "low_half_candidates": [
+          {
+            "address": "0x196865e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff8012ec",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1968666",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19fbdee",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18f12ec",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84cb0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff8012ec",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_event_pitch": {
+        "target": "0xff801304",
+        "low_half_candidates": [
+          {
+            "address": "0x191d0a4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1001304",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1968678",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801304",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1968680",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c99b6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18e1304",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c88",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801304",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_voice_pad": {
+        "target": "0xff801334",
+        "low_half_candidates": [
+          {
+            "address": "0x19599e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1334",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967d08",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967da0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19fc324",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18f1334",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a1c7da",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1911334",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a1c822",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1911334",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a84c94",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801334",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_audio_objects": {
+        "target": "0x1aaad30",
+        "low_half_candidates": [
+          {
+            "address": "0x196730a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967992",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x196799a",
+              "destination": "0x1a1b9c0"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967b58",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1967b60",
+              "destination": "0x1a1b9c0"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967ce0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967d78",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaad30",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_vtable": {
+        "target": "0x190fac4",
+        "low_half_candidates": [
+          {
+            "address": "0x1978e1e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x190fac4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_render": {
+        "target": "0x19789ec",
+        "low_half_candidates": [],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [
+          "0x190fad8"
+        ],
+        "relative_calls": []
+      },
+      "core_signal_callback": {
+        "target": "0x19674f8",
+        "low_half_candidates": [],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_coefficient": {
+        "target": "0x1bab53c",
+        "low_half_candidates": [
+          {
+            "address": "0x1967502",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1bab53c",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1967fde",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1bab53c",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_history": {
+        "target": "0x1aaac14",
+        "low_half_candidates": [
+          {
+            "address": "0x19674fa",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1aaac14",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46bf4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46c5c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46f38",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a46fa8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18fac14",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_input": {
+        "target": "0xff801e50",
+        "low_half_candidates": [
+          {
+            "address": "0x195c134",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ce28",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d1e0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d348",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195d4e8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e6f4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e7d8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e90c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195e9fc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195eb7c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ebdc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ed24",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195ed84",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195eed4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195f040",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x195f0a0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18d1e50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x196751e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19713b4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1971560",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e70e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e860",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a3b3c4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1a3b3cc",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a52038",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801e50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_signal_output": {
+        "target": "0xff800bb4",
+        "low_half_candidates": [
+          {
+            "address": "0x1959a72",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1959a7a",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1963b6a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x196757c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19722f6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19723f8",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197241c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1cc0bb4",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ca47a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb416",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd120",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ce078",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff800bb4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_pitch_buffer": {
+        "target": "0xff801950",
+        "low_half_candidates": [
+          {
+            "address": "0x1960420",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1971116",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1978ac4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197c91a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e4ec",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19a2494",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19b48e6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19b9aa0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c9ea6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb132",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cbf7e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cceca",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cdb52",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cf5fa",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18e1950",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a0bcd0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a3b380",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1a3b388",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a49ca6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a4f0cc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a51b72",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a51f82",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801950",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_gain_buffer": {
+        "target": "0xff801d50",
+        "low_half_candidates": [
+          {
+            "address": "0x19715e2",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1978a96",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e968",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c9f6e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb202",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cc0b6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ccf56",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cda1e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a05818",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18f1d50",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a3b3b0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801d50",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1a3b3b8",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_derived_gain_buffer": {
+        "target": "0xff801b50",
+        "low_half_candidates": [
+          {
+            "address": "0x19711fa",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1978a82",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197d95a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197dce6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x197e508",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19a6470",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19d921e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a3b394",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x1a3b39c",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x1a51fde",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801b50",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "drum_modulation_workspace": {
+        "target": "0xff801724",
+        "low_half_candidates": [
+          {
+            "address": "0x1968798",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": {
+              "address": "0x19687a0",
+              "destination": "0x1aa3862"
+            },
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19c9e74",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ca266",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ca45e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb102",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb37a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cb3e6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cce72",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd000",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd0bc",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd1f0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cd2aa",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cda36",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cdea6",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cdf52",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cea8e",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19ceec2",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cefc4",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cfb04",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cfe68",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          },
+          {
+            "address": "0x19cff8a",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0xff801724",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "core_buffer_initializer": {
+        "target": "0x1a3b34c",
+        "low_half_candidates": [
+          {
+            "address": "0x194a08c",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x18cb34c",
+            "matches_target": false,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [
+          "0x100033c"
+        ],
+        "relative_calls": []
+      },
+      "core_buffer_defaults": {
+        "target": "0x1df4df4",
+        "low_half_candidates": [
+          {
+            "address": "0x1a3b356",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1df4df4",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "vector_constructor": {
+        "target": "0x1aa3862",
+        "low_half_candidates": [],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": [
+          "0x19126d2",
+          "0x191270c",
+          "0x191272a",
+          "0x191398c",
+          "0x19139bc",
+          "0x19139f2",
+          "0x1913a2c",
+          "0x1913b22",
+          "0x1913bd2",
+          "0x1913c74",
+          "0x1915b8c",
+          "0x1915dc8",
+          "0x1915ee6",
+          "0x1915ff0",
+          "0x191610a",
+          "0x1916d20",
+          "0x19170b8",
+          "0x1917d26",
+          "0x1917d3a",
+          "0x191d914",
+          "0x191ddbc",
+          "0x191dea6",
+          "0x191dffa",
+          "0x191f8ba",
+          "0x191f90c",
+          "0x19221a8",
+          "0x1922410",
+          "0x192499e",
+          "0x1924da2",
+          "0x1924dbe",
+          "0x1928f84",
+          "0x1928fac",
+          "0x1928fc6",
+          "0x19295c2",
+          "0x19295e4",
+          "0x1929600",
+          "0x192f5b0",
+          "0x192f818",
+          "0x192fc52",
+          "0x192fe8c",
+          "0x193118a",
+          "0x19311ac",
+          "0x19311ba",
+          "0x19316c6",
+          "0x193b3c4",
+          "0x193bad8",
+          "0x193bbb2",
+          "0x193bdfa",
+          "0x193d17c",
+          "0x193d534",
+          "0x193d652",
+          "0x193d75c",
+          "0x193d876",
+          "0x193e57a",
+          "0x1941f98",
+          "0x19420b4",
+          "0x194215e",
+          "0x1942270",
+          "0x1942386",
+          "0x1942490",
+          "0x19425aa",
+          "0x1942706",
+          "0x1942722",
+          "0x1943510",
+          "0x1943ee6",
+          "0x1943efa",
+          "0x1943f12",
+          "0x1943f28",
+          "0x1943f40",
+          "0x1943f5c",
+          "0x1943f72",
+          "0x1943f88",
+          "0x1944192",
+          "0x19441a6",
+          "0x19441b2",
+          "0x19441c6",
+          "0x1944c7c",
+          "0x1944c9c",
+          "0x194569a",
+          "0x19456b6",
+          "0x19456dc",
+          "0x19456ee",
+          "0x19462a4",
+          "0x19462c0",
+          "0x19462dc",
+          "0x19462f0",
+          "0x1959a7a",
+          "0x1959a8e",
+          "0x1959aa2",
+          "0x1959ab6",
+          "0x1959ad2",
+          "0x1959ae6",
+          "0x195bc00",
+          "0x195be0c",
+          "0x195bf20",
+          "0x195c056",
+          "0x195c2d8",
+          "0x195c4ba",
+          "0x195c51a",
+          "0x195c662",
+          "0x195c6c2",
+          "0x195c80c",
+          "0x195c868",
+          "0x195c9ae",
+          "0x195ca12",
+          "0x195cc32",
+          "0x195cc76",
+          "0x195d5a8",
+          "0x195d5dc",
+          "0x195d7c2",
+          "0x195dbb6",
+          "0x195e332",
+          "0x195e366",
+          "0x195e484",
+          "0x195f14a",
+          "0x195f186",
+          "0x195f23c",
+          "0x195f8c0",
+          "0x195f9de",
+          "0x195fae8",
+          "0x195fc02",
+          "0x196083a",
+          "0x1960856",
+          "0x1960872",
+          "0x1960928",
+          "0x196093a",
+          "0x1960998",
+          "0x1960d34",
+          "0x1960e3c",
+          "0x1960f48",
+          "0x19614a8",
+          "0x19614b6",
+          "0x19614d2",
+          "0x19615de",
+          "0x19623da",
+          "0x19685d4",
+          "0x19685e6",
+          "0x19685f8",
+          "0x196862c",
+          "0x1968646",
+          "0x1968654",
+          "0x1968666",
+          "0x1968680",
+          "0x19686a6",
+          "0x19686ba",
+          "0x19686ce",
+          "0x19686e2",
+          "0x19686f6",
+          "0x196870a",
+          "0x1968720",
+          "0x1968738",
+          "0x196874c",
+          "0x19687a0",
+          "0x19687b2",
+          "0x19687fc",
+          "0x196891a",
+          "0x1968a24",
+          "0x1968b3e",
+          "0x1969384",
+          "0x1971922",
+          "0x1971936",
+          "0x197196c",
+          "0x1971a8a",
+          "0x1971b94",
+          "0x1971cae",
+          "0x1972cda",
+          "0x1972e12",
+          "0x1973a52",
+          "0x1973f4c",
+          "0x19766dc",
+          "0x1978880",
+          "0x19798da",
+          "0x197998e",
+          "0x1979aca",
+          "0x1979b76",
+          "0x197a7ee",
+          "0x197ab6c",
+          "0x197ada2",
+          "0x197adf4",
+          "0x197d7a0",
+          "0x197d7be",
+          "0x197eee6",
+          "0x197eefa",
+          "0x197ef8c",
+          "0x197f0aa",
+          "0x197f1b4",
+          "0x197f2ce",
+          "0x1980206",
+          "0x1980360",
+          "0x1981326",
+          "0x1981514",
+          "0x1982276",
+          "0x1982356",
+          "0x1982446",
+          "0x198268c",
+          "0x1982794",
+          "0x198286a",
+          "0x1982928",
+          "0x1982aac",
+          "0x1982b82",
+          "0x1982c40",
+          "0x1982d36",
+          "0x1982e4c",
+          "0x1982f6a",
+          "0x19842f2",
+          "0x19843a6",
+          "0x1984444",
+          "0x19844ec",
+          "0x1984588",
+          "0x1984620",
+          "0x19847d8",
+          "0x1984806",
+          "0x198483a",
+          "0x1984874",
+          "0x19848ae",
+          "0x1984ce8",
+          "0x1984d04",
+          "0x198528a",
+          "0x1985328",
+          "0x19853bc",
+          "0x198545e",
+          "0x19854f8",
+          "0x198558c",
+          "0x1985738",
+          "0x1986e88",
+          "0x198702a",
+          "0x198713c",
+          "0x198756a",
+          "0x1987748",
+          "0x19877a0",
+          "0x19884d0",
+          "0x1989c64",
+          "0x1989c7c",
+          "0x1989c8e",
+          "0x1989ca2",
+          "0x1989cb6",
+          "0x1989cca",
+          "0x198a2e4",
+          "0x198a3a6",
+          "0x198a462",
+          "0x198c2ac",
+          "0x198c378",
+          "0x198c7c6",
+          "0x198d6a8",
+          "0x198db8e",
+          "0x19a2224",
+          "0x19a2232",
+          "0x19a3f42",
+          "0x19a4cba",
+          "0x19a4cce",
+          "0x19a50b2",
+          "0x19a5158",
+          "0x19a5248",
+          "0x19a5350",
+          "0x19a5e5a",
+          "0x19a6192",
+          "0x19a61a4",
+          "0x19a6908",
+          "0x19a6a24",
+          "0x19a6ace",
+          "0x19a6be0",
+          "0x19a6cf6",
+          "0x19a6e00",
+          "0x19a6f1a",
+          "0x19a7120",
+          "0x19a7392",
+          "0x19a73e0",
+          "0x19a79b4",
+          "0x19a819a",
+          "0x19a8286",
+          "0x19a83e2",
+          "0x19a8642",
+          "0x19ab674",
+          "0x19af322",
+          "0x19afd1a",
+          "0x19afd38",
+          "0x19b0a26",
+          "0x19b3330",
+          "0x19b345e",
+          "0x19b34fe",
+          "0x19b3828",
+          "0x19b394e",
+          "0x19b4d84",
+          "0x19b4db8",
+          "0x19b4fac",
+          "0x19b4fc0",
+          "0x19b534e",
+          "0x19b53e6",
+          "0x19b54fc",
+          "0x19b563e",
+          "0x19b573a",
+          "0x19b5836",
+          "0x19b9cc2",
+          "0x19b9d0c",
+          "0x19b9fa6",
+          "0x19ba0aa",
+          "0x19ba1bc",
+          "0x19ba362",
+          "0x19be5e2",
+          "0x19be756",
+          "0x19c38f8",
+          "0x19c49e4",
+          "0x19c5b34",
+          "0x19c7c94",
+          "0x19c7dca",
+          "0x19c7f28",
+          "0x19c80d4",
+          "0x19c8e74",
+          "0x19cd940",
+          "0x19cf390",
+          "0x19cf39e",
+          "0x19cf420",
+          "0x19cf42e",
+          "0x19cf4a0",
+          "0x19cf4b4",
+          "0x19d3b96",
+          "0x19d593a",
+          "0x19d94d8",
+          "0x19d95ec",
+          "0x19d9600",
+          "0x19d9614",
+          "0x19d962a",
+          "0x19d9a3a",
+          "0x19dc1de",
+          "0x19dc1fa",
+          "0x19dc21c",
+          "0x19dc238",
+          "0x19dc3dc",
+          "0x19dc4de",
+          "0x19dc5e2",
+          "0x19dc6da",
+          "0x19dcb3a",
+          "0x19dcbf6",
+          "0x19dccaa",
+          "0x19dcd68",
+          "0x19dce22",
+          "0x19dced6",
+          "0x19de3fc",
+          "0x19dfa70",
+          "0x19e0738",
+          "0x19e07e4",
+          "0x19e0904",
+          "0x19e0a70",
+          "0x19e0b60",
+          "0x19e3ea0",
+          "0x19e423c",
+          "0x19e4258",
+          "0x19e4d2e",
+          "0x19e4e32",
+          "0x19e4f4e",
+          "0x19e50ae",
+          "0x19e5480",
+          "0x19e559e",
+          "0x19e56a8",
+          "0x19e57c2",
+          "0x19e58fe",
+          "0x19e5916",
+          "0x19e5932",
+          "0x19e6112",
+          "0x19e6124",
+          "0x19e66b8",
+          "0x19e6b18",
+          "0x19e6c22",
+          "0x19e6d3a",
+          "0x19e7136",
+          "0x19e7254",
+          "0x19e737e",
+          "0x19e749e",
+          "0x19e75c4",
+          "0x19e77f2",
+          "0x19e7892",
+          "0x19e78b6",
+          "0x19e8044",
+          "0x19e83e2",
+          "0x19e84f4",
+          "0x19e860e",
+          "0x19eac80",
+          "0x19eaff8",
+          "0x19eb09e",
+          "0x19eb1b2",
+          "0x19ebae2",
+          "0x19eed24",
+          "0x19ef516",
+          "0x19ef690",
+          "0x19ef81c",
+          "0x19ef8f0",
+          "0x19efa3c",
+          "0x19efb14",
+          "0x19fc286",
+          "0x19fc4e8",
+          "0x19fc580",
+          "0x19fc7b8",
+          "0x19fc930",
+          "0x19fca04",
+          "0x19fd9aa",
+          "0x19fdc9a",
+          "0x19fdf8a",
+          "0x19fe2ee",
+          "0x19feaa6",
+          "0x19fec5a",
+          "0x1a05fc6",
+          "0x1a05fe2",
+          "0x1a06006",
+          "0x1a06020",
+          "0x1a06e64",
+          "0x1a06f3e",
+          "0x1a0704e",
+          "0x1a070f4",
+          "0x1a071f0",
+          "0x1a072ae",
+          "0x1a097ba",
+          "0x1a0bf90",
+          "0x1a0bfc4",
+          "0x1a0c24e",
+          "0x1a0c2f2",
+          "0x1a0c3c6",
+          "0x1a0c47a",
+          "0x1a0c514",
+          "0x1a0c61e",
+          "0x1a0c728",
+          "0x1a0c820",
+          "0x1a0c90c",
+          "0x1a0c9f8",
+          "0x1a0ca92",
+          "0x1a0cb82",
+          "0x1a0dfa4",
+          "0x1a0dfc8",
+          "0x1a0dfdc",
+          "0x1a0e104",
+          "0x1a0e220",
+          "0x1a0e2ca",
+          "0x1a0e3dc",
+          "0x1a0e72e",
+          "0x1a0e7de",
+          "0x1a0ec8e",
+          "0x1a0f10a",
+          "0x1a0f536",
+          "0x1a0fec8",
+          "0x1a10000",
+          "0x1a10274",
+          "0x1a103c4",
+          "0x1a15684",
+          "0x1a16266",
+          "0x1a1632a",
+          "0x1a163ce",
+          "0x1a1656e",
+          "0x1a16654",
+          "0x1a166f8",
+          "0x1a16898",
+          "0x1a16ea0",
+          "0x1a16eb2",
+          "0x1a1bb3e",
+          "0x1a1c1b2",
+          "0x1a1c222",
+          "0x1a1c500",
+          "0x1a1c54e",
+          "0x1a1c584",
+          "0x1a1d152",
+          "0x1a1d258",
+          "0x1a1d36c",
+          "0x1a1d666",
+          "0x1a232b0",
+          "0x1a2340a",
+          "0x1a2372a",
+          "0x1a23834",
+          "0x1a23958",
+          "0x1a23a62",
+          "0x1a23bca",
+          "0x1a27d18",
+          "0x1a27dc8",
+          "0x1a27dda",
+          "0x1a2c864",
+          "0x1a2d7aa",
+          "0x1a2d8c4",
+          "0x1a2d9e6",
+          "0x1a30128",
+          "0x1a30d0a",
+          "0x1a30daa",
+          "0x1a30ec6",
+          "0x1a31038",
+          "0x1a3136c",
+          "0x1a31448",
+          "0x1a31756",
+          "0x1a31788",
+          "0x1a31880",
+          "0x1a3194e",
+          "0x1a319fc",
+          "0x1a31b7e",
+          "0x1a31c54",
+          "0x1a31d04",
+          "0x1a326ae",
+          "0x1a32fc6",
+          "0x1a3389e",
+          "0x1a338b4",
+          "0x1a338ca",
+          "0x1a338e0",
+          "0x1a338f6",
+          "0x1a3390c",
+          "0x1a33922",
+          "0x1a33938",
+          "0x1a3394e",
+          "0x1a339a2",
+          "0x1a339c0",
+          "0x1a339d6",
+          "0x1a339ec",
+          "0x1a33a02",
+          "0x1a33a18",
+          "0x1a33a2e",
+          "0x1a33a44",
+          "0x1a33a5a",
+          "0x1a33a70",
+          "0x1a3403a",
+          "0x1a340d4",
+          "0x1a34248",
+          "0x1a35894",
+          "0x1a3593e",
+          "0x1a35a6c",
+          "0x1a35b08",
+          "0x1a35c28",
+          "0x1a35cce",
+          "0x1a35df0",
+          "0x1a35e9c",
+          "0x1a36192",
+          "0x1a3aae8",
+          "0x1a3ad4c",
+          "0x1a3ae4a",
+          "0x1a3af72",
+          "0x1a3b388",
+          "0x1a3b39c",
+          "0x1a3b3b8",
+          "0x1a3b3cc",
+          "0x1a3b568",
+          "0x1a4336c",
+          "0x1a43aa4",
+          "0x1a43bc2",
+          "0x1a43ccc",
+          "0x1a43de6",
+          "0x1a443a6",
+          "0x1a44a98",
+          "0x1a44b34",
+          "0x1a44c48",
+          "0x1a4725c",
+          "0x1a47c66",
+          "0x1a47d4a",
+          "0x1a47fd8",
+          "0x1a480f6",
+          "0x1a48200",
+          "0x1a4831a",
+          "0x1a49714",
+          "0x1a49fb8",
+          "0x1a49fec",
+          "0x1a4a2c2",
+          "0x1a4a2d6",
+          "0x1a4a400",
+          "0x1a4a500",
+          "0x1a4a612",
+          "0x1a4a7e2",
+          "0x1a4a8b0",
+          "0x1a4f418",
+          "0x1a4f794",
+          "0x1a4f7aa",
+          "0x1a4f7c8",
+          "0x1a4f7de",
+          "0x1a4f7f4",
+          "0x1a4fa00",
+          "0x1a4fab0",
+          "0x1a4fe28",
+          "0x1a5007c",
+          "0x1a52504",
+          "0x1a5251a",
+          "0x1a52530",
+          "0x1a52d48",
+          "0x1a52e12",
+          "0x1a52ef2",
+          "0x1a52fce",
+          "0x1a5347e",
+          "0x1a534ae",
+          "0x1a534e2",
+          "0x1a53516",
+          "0x1a5354a",
+          "0x1a5357e",
+          "0x1a535b2",
+          "0x1a551ea",
+          "0x1a55200",
+          "0x1a55216",
+          "0x1a5522c",
+          "0x1a55268",
+          "0x1a5527c",
+          "0x1a55290",
+          "0x1a552a4",
+          "0x1a552b8",
+          "0x1a55604",
+          "0x1a55722",
+          "0x1a5582c",
+          "0x1a55946",
+          "0x1a567ec",
+          "0x1a59b48",
+          "0x1a59c66",
+          "0x1a59d70",
+          "0x1a59e8a",
+          "0x1a5a36c",
+          "0x1a5a434",
+          "0x1a5a51e",
+          "0x1a5a626",
+          "0x1a5a8d6",
+          "0x1a5a920",
+          "0x1a5a9c8",
+          "0x1a5ab44",
+          "0x1a5bb1e",
+          "0x1a5bdf4",
+          "0x1a5c576",
+          "0x1a5e302",
+          "0x1a5f264",
+          "0x1a5f9bc",
+          "0x1a5fa6a",
+          "0x1a5fb8c",
+          "0x1a5fde4",
+          "0x1a5ff1e",
+          "0x1a60066",
+          "0x1a607a0",
+          "0x1a611be",
+          "0x1a61264",
+          "0x1a6137e",
+          "0x1a6432c",
+          "0x1a646dc",
+          "0x1a65832",
+          "0x1a65e62",
+          "0x1a6604c",
+          "0x1a661ce",
+          "0x1a668b6",
+          "0x1a866fc",
+          "0x1a8673e",
+          "0x1a9c1ae"
+        ]
+      },
+      "zero_word_callback": {
+        "target": "0x1a3b308",
+        "low_half_candidates": [
+          {
+            "address": "0x1a3b370",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1a3b308",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      },
+      "zero_halfword_callback": {
+        "target": "0x1a3b310",
+        "low_half_candidates": [
+          {
+            "address": "0x1a3b3a0",
+            "adjacent_high_visible": true,
+            "adjacent_same_register_high": true,
+            "resolved_address": "0x1a3b310",
+            "matches_target": true,
+            "following_relative_call": null,
+            "adjacent_indirect_call": null
+          }
+        ],
+        "high_first_pairs": [],
+        "high_first_following_calls": [],
+        "literal_words": [],
+        "relative_calls": []
+      }
+    }
+  },
+  "l1": [
+    {
+      "header_offset": "0x206214",
+      "destination": "0xffa00000",
+      "bytes": 49076,
+      "flags": "0xaddb2406",
+      "relative_calls_scanned": false,
+      "targets": {
+        "core_mode": {
+          "target": "0xff801038",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_occupancy": {
+          "target": "0xff801070",
+          "low_half_candidates": [
+            {
+              "address": "0xffa0074a",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00738",
+                  "0xffa00740"
+                ],
+                [
+                  "0xffa00750",
+                  "0xffa00758"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_event_velocity": {
+          "target": "0xff8012ec",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_event_pitch": {
+          "target": "0xff801304",
+          "low_half_candidates": [
+            {
+              "address": "0xffa00718",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801304",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00708",
+                  "0xffa00710"
+                ],
+                [
+                  "0xffa00720",
+                  "0xffa00728"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_voice_pad": {
+          "target": "0xff801334",
+          "low_half_candidates": [
+            {
+              "address": "0xffa006f8",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801334",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa006f0",
+                  "0xffa006f8"
+                ],
+                [
+                  "0xffa00708",
+                  "0xffa00710"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_audio_objects": {
+          "target": "0x1aaad30",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_vtable": {
+          "target": "0x190fac4",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_render": {
+          "target": "0x19789ec",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_callback": {
+          "target": "0x19674f8",
+          "low_half_candidates": [
+            {
+              "address": "0xffa01eb8",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0x19674f8",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa01ea8",
+                  "0xffa01eb0"
+                ],
+                [
+                  "0xffa01ec0",
+                  "0xffa01ec8"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa0245a",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa02448",
+                  "0xffa02450"
+                ],
+                [
+                  "0xffa02460",
+                  "0xffa02468"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa0288c",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0x19674f8",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": "0xffa02894",
+              "neighboring_protected_spans": [
+                [
+                  "0xffa02880",
+                  "0xffa02888"
+                ],
+                [
+                  "0xffa02898",
+                  "0xffa028a0"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_coefficient": {
+          "target": "0x1bab53c",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_history": {
+          "target": "0x1aaac14",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_input": {
+          "target": "0xff801e50",
+          "low_half_candidates": [
+            {
+              "address": "0xffa0060c",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801e50",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00600",
+                  "0xffa00608"
+                ],
+                [
+                  "0xffa00618",
+                  "0xffa00620"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_signal_output": {
+          "target": "0xff800bb4",
+          "low_half_candidates": [
+            {
+              "address": "0xffa00912",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00900",
+                  "0xffa00908"
+                ],
+                [
+                  "0xffa00918",
+                  "0xffa00920"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa00d2e",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff800bb4",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa00d20",
+                  "0xffa00d28"
+                ],
+                [
+                  "0xffa00d38",
+                  "0xffa00d40"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa01b72",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa01b60",
+                  "0xffa01b68"
+                ],
+                [
+                  "0xffa01b78",
+                  "0xffa01b80"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_pitch_buffer": {
+          "target": "0xff801950",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_gain_buffer": {
+          "target": "0xff801d50",
+          "low_half_candidates": [
+            {
+              "address": "0xffa00700",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801d50",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa006f0",
+                  "0xffa006f8"
+                ],
+                [
+                  "0xffa00708",
+                  "0xffa00710"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_derived_gain_buffer": {
+          "target": "0xff801b50",
+          "low_half_candidates": [
+            {
+              "address": "0xffa043c2",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa043b0",
+                  "0xffa043b8"
+                ],
+                [
+                  "0xffa043c8",
+                  "0xffa043d0"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "drum_modulation_workspace": {
+          "target": "0xff801724",
+          "low_half_candidates": [
+            {
+              "address": "0xffa006ca",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801724",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa006c0",
+                  "0xffa006c8"
+                ],
+                [
+                  "0xffa006d8",
+                  "0xffa006e0"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa009ce",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0xff801724",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa009c0",
+                  "0xffa009c8"
+                ],
+                [
+                  "0xffa009d8",
+                  "0xffa009e0"
+                ]
+              ]
+            },
+            {
+              "address": "0xffa01d22",
+              "adjacent_high_visible": false,
+              "adjacent_same_register_high": null,
+              "resolved_address": null,
+              "matches_target": null,
+              "following_relative_call": null,
+              "adjacent_indirect_call": null,
+              "neighboring_protected_spans": [
+                [
+                  "0xffa01d10",
+                  "0xffa01d18"
+                ],
+                [
+                  "0xffa01d28",
+                  "0xffa01d30"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_buffer_initializer": {
+          "target": "0x1a3b34c",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "core_buffer_defaults": {
+          "target": "0x1df4df4",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "vector_constructor": {
+          "target": "0x1aa3862",
+          "low_half_candidates": [
+            {
+              "address": "0xffa06d10",
+              "adjacent_high_visible": true,
+              "adjacent_same_register_high": true,
+              "resolved_address": "0x1aa3862",
+              "matches_target": true,
+              "following_relative_call": null,
+              "adjacent_indirect_call": "0xffa06d18",
+              "neighboring_protected_spans": [
+                [
+                  "0xffa06d08",
+                  "0xffa06d10"
+                ],
+                [
+                  "0xffa06d20",
+                  "0xffa06d28"
+                ]
+              ]
+            }
+          ],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "zero_word_callback": {
+          "target": "0x1a3b308",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        },
+        "zero_halfword_callback": {
+          "target": "0x1a3b310",
+          "low_half_candidates": [],
+          "high_first_pairs": [],
+          "high_first_following_calls": [],
+          "literal_words": [],
+          "relative_calls": []
+        }
+      }
+    }
+  ],
+  "protection_assumption": "For the inventoried 49076-byte L1 block only: first 8 bytes in each 24-byte group protected. Protected bytes are never decoded; visibility does not establish executable instructions.",
+  "limits": [
+    "Only adjacent low/high or high/low immediate pairs, aligned literal words and SDRAM relative CALL encodings are inventoried. Gapped pairs, arithmetic, aliases, general indirect calls and data flow are not reconstructed.",
+    "A low half alone or a resolved different high half is not a reference to the requested target. Full pairs and pointers remain candidates, not verified reads/writes or callers.",
+    "Relative CALL encodings may occur in data; absence of direct calls does not prove absence of a caller or an L1 dependency. No L1 instructions executed or decrypted.",
+    "A following relative call after a loaded target is separate metadata: the loaded address is not assumed to be the callee.",
+    "Input/output buffer roles, sample rate, routing, per-sample drum gain/pitch producers and scheduling remain unproven."
+  ]
+}

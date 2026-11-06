@@ -1023,3 +1023,18 @@ Sin cambios en producto 0.54.0, estimación ≈70 % ±10 o instaladores.
 
 Cierre de modulación/render retenidos: CI nativo aprobado en Linux, Windows/MSVC
 y macOS Intel sobre `70ac42a`; sin build del producto ni instaladores.
+
+
+## Arranque de buffers compartidos — investigación tras render retenido
+
+[Contrato](core246-buffer-initialization.md): inicializador completo 0x01a3b34c,
+con constructor y callbacks originales, 1024 escenarios, 512 inicializaciones,
+512 kernels / 32768 muestras y 496 filas retenidas. Cuatro buffers a cero y seis
+bytes de defaults; historia/coeficiente/salida del kernel se conservan por init.
+64 filas compuestas producen salida pese a entrada borrada. No usar como pánico
+ni productor de dinámica. Tres ejecuciones originales coinciden; Release y
+ASan/UBSan aprobados. Auditor de 22 direcciones, con destinos de llamadas
+posteriores separados de los valores cargados y 16 pruebas sintéticas.
+Siguen pendientes productores activos, scheduler y ruteo protegido; el borrado
+inicial no rellena esas dependencias. Producto 0.54.0 y ≈70 % ±10 sin cambios;
+sin instaladores. Regresiones Core y render retenido conservadas.

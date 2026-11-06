@@ -112,3 +112,7 @@ Son suites de investigación separadas: no aumenta la
 cuenta de 145 del producto ni requiere una nueva compilación del instrumento.
 Avance **≈70 % ±10 de planificación**, sin medición acústica, Live real o presets
 originales completos nuevos.
+
+La [investigación posterior de buffers](core246-buffer-initialization.md) contrasta
+un inicializador separado y amplía el inventario a 22 direcciones / 16 pruebas.
+Conserva la historia de este kernel; no identifica su productor activo o ruteo.

@@ -1,0 +1,80 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 1024,
+  "input_record_bytes": 1764,
+  "output_record_bytes": 1760,
+  "startup_pointer": {
+    "address": "0x0100033c",
+    "value": "0x01a3b34c"
+  },
+  "initializer_sha256": "f9d08df4c6f20206d1c0eed2e862aabc0ae38fcbafb1f5d266f4d88401b976c9",
+  "routines": {
+    "buffer_initializer": "0x01a3b34c",
+    "vector_constructor": "0x01aa3862",
+    "zero_word": "0x01a3b308",
+    "zero_halfword": "0x01a3b310",
+    "signal_kernel": "0x019674f8"
+  },
+  "windows": [
+    [
+      "0x01df4dec",
+      24
+    ],
+    [
+      "0xff801948",
+      1552
+    ],
+    [
+      "0x01aaac0c",
+      28
+    ],
+    [
+      "0x01bab538",
+      12
+    ],
+    [
+      "0xff800bac",
+      144
+    ]
+  ],
+  "artifacts": {
+    "core-buffer-init246-input.bin.gz": {
+      "bytes": 1137683,
+      "raw_bytes": 1806336,
+      "sha256": "93317b06275a4e716899341cb0b0e3c97f18251be749c5ad619afefc0ca799ad"
+    },
+    "core-buffer-init246-output.bin.gz": {
+      "bytes": 367138,
+      "raw_bytes": 1802240,
+      "sha256": "43a764f50f935378bebfc0f39e4a6c86e48d5d73f4ebf30e6693b7510167838e"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete buffer initializer and optional Core signal kernel under supplied state and call order; windows include guards.",
+    "Zero initial buffers do not establish active gain/pitch production, scheduler, rates or whole-machine reset. Core kernel history is separate.",
+    "Research-only; no plugin changes or installers."
+  ],
+  "date": "2026-11-06",
+  "status": "success: three independent original executions, frozen native and ASan/UBSan reproduction",
+  "independent_original_executions": 3,
+  "window_reloads": 528,
+  "retained_rows": 496,
+  "initializations": 512,
+  "kernel_blocks": 512,
+  "kernel_output_samples": 32768,
+  "composed_rows": 256,
+  "nonzero_composed_rows_after_input_clear": 64,
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  }
+}

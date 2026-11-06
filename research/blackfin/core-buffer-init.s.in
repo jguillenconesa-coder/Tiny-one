@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored caller; original routines remain private.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+R0=[P4];
+CC=BITTST(R0,0);
+IF !CC JUMP loaded;
+P1=P4;
+P1+=4;
+imm32 P2,31411692
+P3=6;
+LSETUP(load0,load0end) LC0=P3;
+load0: R0=[P1++];
+load0end: [P2++]=R0;
+imm32 P2,4286585160
+P3=388;
+LSETUP(load1,load1end) LC0=P3;
+load1: R0=[P1++];
+load1end: [P2++]=R0;
+imm32 P2,27962380
+P3=7;
+LSETUP(load2,load2end) LC0=P3;
+load2: R0=[P1++];
+load2end: [P2++]=R0;
+imm32 P2,29013304
+P3=3;
+LSETUP(load3,load3end) LC0=P3;
+load3: R0=[P1++];
+load3end: [P2++]=R0;
+imm32 P2,4286581676
+P3=36;
+LSETUP(load4,load4end) LC0=P3;
+load4: R0=[P1++];
+load4end: [P2++]=R0;
+loaded: R0=[P4];
+CC=BITTST(R0,1);
+IF !CC JUMP initialized;
+imm32 P0,0x01a3b34c
+CALL(P0);
+initialized: R0=[P4];
+CC=BITTST(R0,2);
+IF !CC JUMP processed;
+imm32 P0,0x019674f8
+CALL(P0);
+processed:
+imm32 P1,31411692
+P3=6;
+LSETUP(save0,save0end) LC0=P3;
+save0: R0=[P1++];
+save0end: [P5++]=R0;
+imm32 P1,4286585160
+P3=388;
+LSETUP(save1,save1end) LC0=P3;
+save1: R0=[P1++];
+save1end: [P5++]=R0;
+imm32 P1,27962380
+P3=7;
+LSETUP(save2,save2end) LC0=P3;
+save2: R0=[P1++];
+save2end: [P5++]=R0;
+imm32 P1,29013304
+P3=3;
+LSETUP(save3,save3end) LC0=P3;
+save3: R0=[P1++];
+save3end: [P5++]=R0;
+imm32 P1,4286581676
+P3=36;
+LSETUP(save4,save4end) LC0=P3;
+save4: R0=[P1++];
+save4end: [P5++]=R0;
+imm32 P0,1764
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF CC JUMP done;
+JUMP.L next_case;
+done:
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

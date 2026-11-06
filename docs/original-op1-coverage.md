@@ -201,6 +201,14 @@ gating/this/selección y guardas contrastados. Modelos de investigación; endpoi
 y mutación sintética explícitos. No valida factory, note-on completo con LFO activo,
 productores pitch/gain o ruteo de audio. Sin cambios en el plugin ni instaladores.
 
+### Inicialización de buffers compartidos Core
+
+[Contrato](core246-buffer-initialization.md): cuatro buffers a cero y seis bytes
+de defaults contrastados en 1024 escenarios, con kernel posterior opcional y
+496 filas retenidas. La historia se conserva; no es reset completo ni productor
+activo de pitch/gain. Auditor ampliado a 22 direcciones y 16 pruebas sintéticas.
+Sin cambios en producto, acústica o instaladores.
+
 ### Note-on drum con reinicios activos y lector
 
 [Composición retenida con render](drum246-modulated-render.md): 288 sesiones,

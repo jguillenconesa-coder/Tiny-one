@@ -9,7 +9,7 @@ cmake --build build-core-signal --config Release --parallel 2
 ctest --test-dir build-core-signal -C Release --output-on-failure
 ```
 
-Two suites: numeric comparison of 4864 complete original callbacks and nine
+Two suites: numeric comparison of 4864 complete original callbacks and sixteen
 synthetic reference-decoder cases (no firmware). Inputs/outputs are gzip-packed
 numeric observations. All words are little endian. No prefix; 4864 records:
 
@@ -37,3 +37,7 @@ address metadata only. It scans only known SDRAM bytes and the visible bytes of
 the one inventoried L1 block under its stated protection assumption. No L1
 execution, decryption, whole-caller analysis or producer recovery is claimed.
 Firmware, ELF, original instruction bytes and decompilation stay private.
+
+The expanded inventory now includes 22 targets and separately records a relative
+call immediately after a full pair. That callee is not assumed to be the loaded
+address. See [buffer initialization](../../docs/core246-buffer-initialization.md).
