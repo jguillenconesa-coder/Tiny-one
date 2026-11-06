@@ -51,6 +51,8 @@ y audio, incluidos los datos que deberían permanecer intactos.
 
 ## Validación y frontera pendiente
 
+[CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42211309446)
+en Linux, Windows/MSVC y macOS Intel sobre `70ac42a`, sin build del producto.
 Dos ejecuciones originales independientes coinciden; la segunda reproduce los
 fixtures congelados sin `--record`. Release y ASan/UBSan aprobados. También
 pasan las regresiones de note-on activo, VoiceCtl, Core de sampler, bancos,

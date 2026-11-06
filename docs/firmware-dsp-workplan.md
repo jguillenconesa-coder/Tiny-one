@@ -1020,3 +1020,6 @@ reloj del aparato, productores de pitch/gain o factory Tremolo: todo eso se
 suministra explícitamente. Próximo frente: productores/consumidores activos y
 ruteo protegido; usar esta composición como regresión de la ruta híbrida.
 Sin cambios en producto 0.54.0, estimación ≈70 % ±10 o instaladores.
+
+Cierre de modulación/render retenidos: CI nativo aprobado en Linux, Windows/MSVC
+y macOS Intel sobre `70ac42a`; sin build del producto ni instaladores.

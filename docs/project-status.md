@@ -52,7 +52,8 @@ latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 note-on y note-off completos, resets activos, tres perfiles de modulación y
 lector original. Coinciden 4464 renders / 571392 muestras, estados, buffers y
 144 renders omitidos. Dos ejecuciones originales independientes, Release y
-ASan/UBSan aprobados; regresiones previas conservadas. Cadencia, PCM, controles,
+ASan/UBSan aprobados; regresiones previas conservadas. CI nuevo aprobado en
+Linux, Windows/MSVC y macOS Intel sobre `70ac42a`. Cadencia, PCM, controles,
 selección y buffers iniciales explícitos: productores pitch/gain, scheduler y
 factory/ruteo Tremolo originales siguen pendientes. Investigación sin integración
 nueva en el plugin; 0.54.0 y ≈70 % ±10 sin cambios. Sin instaladores.
