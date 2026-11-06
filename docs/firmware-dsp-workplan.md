@@ -1122,7 +1122,8 @@ siendo propias del ensayo, no una recuperación del servicio protegido.
 
 [Contraste del cambiador completo](drum246-bank-switch.md): 2.048 casos en
 contextos 1/2, 19.398 resets de lector y siete familias LFO. Release y ASan/UBSan
-aprobados; CI nativo pendiente. La espera usa un servicio L1 propio que invoca
+aprobados, junto con CI nativo Linux, Windows/MSVC y macOS Intel
+([ejecución 42297956886](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42297956886)). La espera usa un servicio L1 propio que invoca
 factorías originales; no recupera el servicio protegido ni mide fidelidad acústica.
 Plugin 0.54.0, avance ≈70 % ±10, sin instaladores. Siguiente frente: rama synth
 y servicio activo/scheduler, manteniendo explícitas las sustituciones.

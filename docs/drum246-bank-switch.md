@@ -35,7 +35,8 @@ pone el marcador a 0. El contexto 2 conserva el marcador, incluso no nulo.
 Cada salida compara 8.796 bytes de ventanas más 128 de trace propio y contador
 (8.928 bytes). Dos extracciones independientes coinciden con los fixtures.
 Release y ASan/UBSan aprobados; regresiones de sincronización, refresco Core,
-factorías LFO y lifecycle drum aprobadas. CI nativo pendiente al registrar el bloque.
+factorías LFO y lifecycle drum aprobadas. [CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42297956886)
+en Linux, Windows/MSVC y macOS Intel sobre `142a018`.
 
 [Reproducción y formato](../research/drum-bank-switch/README.md).
 [Evidencia](firmware/drum-bank-switch246-validation.json).

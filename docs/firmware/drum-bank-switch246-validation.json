@@ -128,7 +128,8 @@
   "validation": {
     "release": "passed",
     "asan_ubsan": "passed",
-    "native_ci": "pending"
+    "native_ci": "passed",
+    "regression_suites": 5
   },
   "counts": {
     "changed": 1617,
@@ -140,5 +141,26 @@
     "secondary_resets": 11127,
     "reloads": 1056,
     "partial_retention": 992
+  },
+  "native_ci": {
+    "databaseId": 42297956886,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/42297956886",
+    "headSha": "142a018bac2211d6a2d09a04455c75f1b0e175cc",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "validate (windows-2022)",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (macos-15-intel)",
+        "conclusion": "success"
+      }
+    ]
   }
 }
