@@ -1,0 +1,219 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Authored caller; complete original refresh and dependencies execute unchanged.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+R0=[P4];
+CC=BITTST(R0,0);
+IF !CC JUMP loaded;
+P1=P4;
+P1+=32;
+imm32 P2,27962380
+P3=17;
+LSETUP(load0,load0end) LC0=P3;
+load0: R0=[P1++];
+load0end: [P2++]=R0;
+imm32 P2,27962648
+P3=39;
+LSETUP(load1,load1end) LC0=P3;
+load1: R0=[P1++];
+load1end: [P2++]=R0;
+imm32 P2,4289724416
+P3=64;
+LSETUP(load2,load2end) LC0=P3;
+load2: R0=[P1++];
+load2end: [P2++]=R0;
+imm32 P2,4289725944
+P3=12;
+LSETUP(load3,load3end) LC0=P3;
+load3: R0=[P1++];
+load3end: [P2++]=R0;
+imm32 P2,4289726968
+P3=147;
+LSETUP(load4,load4end) LC0=P3;
+load4: R0=[P1++];
+load4end: [P2++]=R0;
+imm32 P2,4287658664
+P3=12;
+LSETUP(load5,load5end) LC0=P3;
+load5: R0=[P1++];
+load5end: [P2++]=R0;
+imm32 P2,4286583668
+P3=256;
+LSETUP(load6,load6end) LC0=P3;
+load6: R0=[P1++];
+load6end: [P2++]=R0;
+imm32 P2,30150860
+P3=8;
+LSETUP(load7,load7end) LC0=P3;
+load7: R0=[P1++];
+load7end: [P2++]=R0;
+imm32 P2,31420280
+P3=8;
+LSETUP(load8,load8end) LC0=P3;
+load8: R0=[P1++];
+load8end: [P2++]=R0;
+imm32 P2,31450932
+P3=641;
+LSETUP(load9,load9end) LC0=P3;
+load9: R0=[P1++];
+load9end: [P2++]=R0;
+imm32 P2,4286582840
+P3=203;
+LSETUP(load10,load10end) LC0=P3;
+load10: R0=[P1++];
+load10end: [P2++]=R0;
+loaded:
+R0=[P4+12];
+imm32 P1,27962384
+[P1]=R0;
+R0=[P4+16];
+imm32 P1,27962380
+[P1]=R0;
+R0=[P4+20];
+imm32 P1,4286584536
+[P1]=R0;
+R0=[P4+24];
+imm32 P1,4286584532
+[P1]=R0;
+imm32 P1,4286584548
+R0=6;
+P0=8;
+LSETUP(sa,saend) LC0=P0;
+sa: [P1++]=R0;
+saend: NOP;
+imm32 P1,4286584580
+R0=8;
+P0=8;
+LSETUP(da,daend) LC0=P0;
+da: [P1++]=R0;
+daend: NOP;
+imm32 P1,4286584628
+R0=0;
+P0=8;
+LSETUP(sf,sfend) LC0=P0;
+sf: [P1++]=R0;
+sfend: NOP;
+imm32 P1,4286584660
+R0=0;
+P0=8;
+LSETUP(df,dfend) LC0=P0;
+df: [P1++]=R0;
+dfend: NOP;
+R0=[P4+20];
+R0<<=2;
+P0=R0;
+imm32 P1,4286583716
+P1=P1+P0;
+R0=[P4+4];
+[P1]=R0;
+R0=[P4+24];
+R0<<=2;
+P0=R0;
+imm32 P1,4286583684
+P1=P1+P0;
+R0=[P4+8];
+[P1]=R0;
+imm32 P1,30150860
+imm32 R0,33619968
+R1=8;
+P0=8;
+LSETUP(dr,drend) LC0=P0;
+dr: [P1++]=R0;
+drend: R0=R0+R1;
+imm32 P1,31420280
+imm32 R0,33685504
+R1=8;
+P0=8;
+LSETUP(sr,srend) LC0=P0;
+sr: [P1++]=R0;
+srend: R0=R0+R1;
+R0=[P4];
+CC=BITTST(R0,1);
+IF !CC JUMP refreshed;
+imm32 P0,0x01967b28
+CALL(P0);
+refreshed:
+imm32 P1,27962380
+P3=17;
+LSETUP(save0,save0end) LC0=P3;
+save0: R0=[P1++];
+save0end: [P5++]=R0;
+imm32 P1,27962648
+P3=39;
+LSETUP(save1,save1end) LC0=P3;
+save1: R0=[P1++];
+save1end: [P5++]=R0;
+imm32 P1,4289724416
+P3=64;
+LSETUP(save2,save2end) LC0=P3;
+save2: R0=[P1++];
+save2end: [P5++]=R0;
+imm32 P1,4289725944
+P3=12;
+LSETUP(save3,save3end) LC0=P3;
+save3: R0=[P1++];
+save3end: [P5++]=R0;
+imm32 P1,4289726968
+P3=147;
+LSETUP(save4,save4end) LC0=P3;
+save4: R0=[P1++];
+save4end: [P5++]=R0;
+imm32 P1,4287658664
+P3=12;
+LSETUP(save5,save5end) LC0=P3;
+save5: R0=[P1++];
+save5end: [P5++]=R0;
+imm32 P1,4286583668
+P3=256;
+LSETUP(save6,save6end) LC0=P3;
+save6: R0=[P1++];
+save6end: [P5++]=R0;
+imm32 P1,30150860
+P3=8;
+LSETUP(save7,save7end) LC0=P3;
+save7: R0=[P1++];
+save7end: [P5++]=R0;
+imm32 P1,31420280
+P3=8;
+LSETUP(save8,save8end) LC0=P3;
+save8: R0=[P1++];
+save8end: [P5++]=R0;
+imm32 P1,31450932
+P3=641;
+LSETUP(save9,save9end) LC0=P3;
+save9: R0=[P1++];
+save9end: [P5++]=R0;
+imm32 P1,4286582840
+P3=203;
+LSETUP(save10,save10end) LC0=P3;
+save10: R0=[P1++];
+save10end: [P5++]=R0;
+imm32 P0,5660
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF CC JUMP done;
+JUMP.L next_case;
+done:
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+.data
+.align 4
+io_args: .long 1,results,@BYTES@
+.section .inputs,"aw"
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"

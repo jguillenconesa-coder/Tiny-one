@@ -98,3 +98,7 @@ y su composición con eventos bajo un estado explícito. Mantener separadas las
 rutas legibles del scheduler protegido, sin deducir que un callback no-op o una
 factory pequeña resuelve esa frontera. Avance **≈70 % ±10 de planificación**;
 presets al final, sin instaladores hasta nueva petición.
+
+La [composición posterior con refresco Core](core246-refresh.md) ejecuta el
+llamador legible que enlaza audio, FX y ambas rutas de modulación dentro de un
+perfil acotado. El llamador físico y la reactivación previa a render siguen pendientes.

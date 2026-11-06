@@ -46,6 +46,17 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Bloque de investigación: refresco conjunto Core
+
+[Audio, FX y moduladores](core246-refresh.md): rutina completa y helpers originales
+en perfil Sampler synth 6 / drum 8 / Delay FX 0, con siete familias por ruta.
+4160 escenarios, 3956 refrescos, 992 filas retenidas y rejilla de 3136 combinaciones
+coinciden. Confirma pools compartidos: synth puede sobrescribir objetos aún
+referenciados por drum; no demuestra rutas concurrentes ni sustituye al scheduler.
+Dos ejecuciones originales, Release/ASan/UBSan y regresiones relacionadas aprobados.
+Faltan llamador/reactivación de la parte activa, pitch/gain originales y acústica.
+Producto 0.54.0, ≈70 % ±10 y política de instaladores sin cambios.
+
 ## Bloque de investigación: las siete familias de modulación
 
 [Factory completa 0..6](core246-modulator-factory-all.md): Element/MIDI/Bend/Crank

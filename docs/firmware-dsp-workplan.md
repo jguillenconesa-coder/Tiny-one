@@ -1076,3 +1076,19 @@ No cambia producto 0.54.0, acústica o estimación ≈70 % ±10; sin instaladore
 
 Cierre de las siete familias: CI nativo 2/2 suites aprobado en Linux, Windows/MSVC
 y macOS Intel sobre `0e0b9c4`; sin build del producto o instaladores.
+
+
+## Refresco conjunto Core — audio/FX/moduladores en perfil acotado
+
+[Contrato](core246-refresh.md): 0x01967b28 completo, helpers originales sin
+sustituciones, Sampler synth 6 / drum 8 / Delay FX 0, siete familias por lado.
+4160 escenarios, 3956 llamadas completas, 992 filas retenidas y 3136 combinaciones;
+globals, punteros, pools, controles, referencias, lista y palabras de voz coinciden.
+Pool de audio común sobrescrito al construir synth después de drum; FX común
+termina en contexto 0, moduladores también comparten sus bases. No usar este
+refresco aislado como evidencia de ejecución concurrente o pánico. Dos extracciones
+originales coinciden; Release/ASan/UBSan y regresiones de factories/Core/render
+retenido aprobadas. Siguiente: llamador y reactivación de la parte activa antes
+de eventos/render, con entradas explícitas donde el contexto siga protegido.
+No se recuperan scheduler o productores pitch/gain, no cambia audio 0.54.0,
+≈70 % ±10 o instaladores.

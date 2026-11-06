@@ -193,6 +193,15 @@ secuencia de llamada visible y carga de dirección del pitch drum localizadas,
 sin ejecución L1 ni recuperación del llamador/ruteo/productores. Investigación
 separada del plugin 0.54.0; dinámica y acústica pendientes, sin instaladores.
 
+### Refresco conjunto Core
+
+[Audio, FX y modulación](core246-refresh.md): función completa en perfil Sampler
+synth 6 / drum 8 / Delay 0, con siete familias por lado, 4160 escenarios y 3956
+llamadas completas. Pools compartidos y sobrescritura final synth contrastados;
+lista/ocupación/palabras de voz conservadas en ventanas observadas. No demuestra
+activación concurrente, llamador físico, scheduler o productores pitch/gain.
+Sin render nuevo, integración de audio o instaladores.
+
 ### Factorías Core de moduladores
 
 [Seis/doce voces, IDs 0..6](core246-modulator-factory-all.md): siete familias,

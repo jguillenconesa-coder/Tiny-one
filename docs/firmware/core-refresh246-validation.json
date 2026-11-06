@@ -1,0 +1,113 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 4160,
+  "input_record_bytes": 5660,
+  "output_record_bytes": 5628,
+  "routine": {
+    "entry": "0x01967b28",
+    "end_exclusive": "0x01967ccc",
+    "sha256": "53c153e889b683bfca0de3463c1507804971cbec518223fd86bc69c331d85ac4"
+  },
+  "profile": {
+    "drum_audio_type": 8,
+    "synth_audio_type": 6,
+    "fx_type": 0,
+    "modulator_types": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "windows": [
+    [
+      "0x1aaac0c",
+      68
+    ],
+    [
+      "0x1aaad18",
+      156
+    ],
+    [
+      "0xffb00000",
+      256
+    ],
+    [
+      "0xffb005f8",
+      48
+    ],
+    [
+      "0xffb009f8",
+      588
+    ],
+    [
+      "0xff907aa8",
+      48
+    ],
+    [
+      "0xff801374",
+      1024
+    ],
+    [
+      "0x1cc10cc",
+      32
+    ],
+    [
+      "0x1df6f78",
+      32
+    ],
+    [
+      "0x1dfe734",
+      2564
+    ],
+    [
+      "0xff801038",
+      812
+    ]
+  ],
+  "artifacts": {
+    "core-refresh246-input.bin.gz": {
+      "bytes": 6015941,
+      "raw_bytes": 23545600,
+      "sha256": "5b9ae03ba2b7969fdb2b48ff3b9aa43956181a70427126eafc362720412061db"
+    },
+    "core-refresh246-output.bin.gz": {
+      "bytes": 4151020,
+      "raw_bytes": 23412480,
+      "sha256": "5eafb4cbee562c99570936d2563877b2fe2eec794a5bf7cc0e222cd29f5a709f"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Complete original refresh and all helpers in the stated sampler/FX-0 profile; bank selections, references and call order are explicit.",
+    "Both routes reuse physical audio, FX and modulation pools. Final synth construction can overwrite objects still referenced by drum pointers.",
+    "No render, scheduler, active pitch/gain producers, physical mode-switch caller or acoustic equivalence recovered. No plugin changes or installers."
+  ],
+  "date": "2026-11-06",
+  "status": "success: two independent original extractions, frozen native and ASan/UBSan reproduction",
+  "independent_original_executions": 2,
+  "reloads": 3168,
+  "retained_rows": 992,
+  "complete_refresh_calls": 3956,
+  "skipped_calls": 204,
+  "modulator_bank_grid": 3136,
+  "editor_core_bank_differences": 2967,
+  "editor_core_bank_matches": 989,
+  "audio_overlay_cases": 3956,
+  "different_family_modulation_alias_cases": 3391,
+  "ci": {
+    "status": "pending implementation push",
+    "platforms": [
+      "Linux",
+      "Windows/MSVC",
+      "macOS Intel"
+    ]
+  }
+}

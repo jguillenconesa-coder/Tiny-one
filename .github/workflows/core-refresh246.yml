@@ -1,0 +1,33 @@
+name: Validate complete Core sampler and FX refresh composition
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/core-refresh/**'
+      - 'research/core-modulator-factory/CoreModulatorFactory246.h'
+      - 'research/core-modulator-reset/CoreModulatorReset246.h'
+      - 'Source/Drum246.h'
+      - 'Source/Sampler246.h'
+      - 'Source/Delay246.h'
+      - 'research/blackfin/core-refresh.s.in'
+      - 'research/blackfin/core-refresh.ld'
+      - 'Source/ReferenceDsp.h'
+      - 'scripts/verify-core-refresh246.py'
+      - '.github/workflows/core-refresh246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/core-refresh -B build-core-refresh -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-core-refresh --config Release --parallel 2
+      - run: ctest --test-dir build-core-refresh -C Release --output-on-failure
