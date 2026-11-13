@@ -1134,6 +1134,6 @@ y servicio activo/scheduler, manteniendo explícitas las sustituciones.
 [Contraste del cambiador original](synth246-bank-switch.md): 2.048 entradas,
 seis resets de envolvente, inicialización y transposición diferida, sincronizador
 con dos entradas L1 propias. Release, ASan/UBSan y dos regresiones aprobadas;
-CI nativo pendiente. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
+[CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux y Windows/MSVC aprobados; macOS Intel pendiente. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
 L1. Siguiente bloque: traducción/reactivación con notas y frontera MIDI.
 Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medida.

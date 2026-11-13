@@ -72,7 +72,7 @@
     "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
   },
   "limits": [
-    "Original complete outer changer in synth context, held registry empty, instrument mode 0..3 (mode4 excluded).",
+    "Original complete outer changer in synth context, held registry empty, supplied module types 0..3 (type4 excluded). Raw transpose table stress data supplied directly, not through original setter.",
     "Both L1 endpoints authored: complete active-bank write after 1..4 calls, no factories or protected payload.",
     "No held-note translation/reactivation, PCM, product integration or acoustic equivalence."
   ],
@@ -90,6 +90,30 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 2,
-    "native_ci": "pending"
+    "native_ci": "Linux and Windows passed; macOS pending"
+  },
+  "native_ci": {
+    "databaseId": 43464759166,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166",
+    "headSha": "7eaf388879b34713286e4526e471b51ef47ba773",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (macos-15-intel)",
+        "status": "queued",
+        "conclusion": ""
+      }
+    ]
   }
 }

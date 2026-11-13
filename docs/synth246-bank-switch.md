@@ -1,7 +1,7 @@
 # Cambiador de banco synth 246 con registro vacío
 
 El cambiador original completo `0x01a86420..0x01a86660` se ejecuta en contexto
-synth (0), registro de notas retenidas vacío y modos de instrumento 0–3.
+synth (0), registro de notas retenidas vacío y tipos de módulo suministrados 0–3.
 El código legible del cambiador y sus helpers queda intacto. Las entradas L1
 `0xffa0bd2c` / `0xffa017ec` son trampolines propios: tras 1–4 llamadas copian el
 banco seleccionado al activo, sin reconstruir voces ni llamar a factorías.
@@ -33,9 +33,11 @@ note-off/on ni se modifica una nota; no se extrapola al caso con notas presentes
 - Cada salida compara 476 bytes de ventanas, 96 de trace propio y contador.
   Todas las filas recargan ventanas. Acumuladores 0/UINT32_MAX/INT32_MIN/INT32_MAX,
   deltas positivos/negativos/cero, flags no canónicos y guardas.
+  La tabla se precarga directamente con words de prueba (incluidos valores fuera
+  de −4…4); este bloque no ejecuta ni amplía el dominio del setter original.
 
 Dos extracciones originales independientes coinciden. Release y ASan/UBSan
-aprobados, junto con regresiones drum y del sincronizador Core. CI nativo pendiente.
+aprobados, junto con regresiones drum y del sincronizador Core. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux y Windows/MSVC aprobados; macOS Intel pendiente.
 [Formato y reproducción](../research/synth-bank-switch/README.md) y
 [evidencia](firmware/synth-bank-switch246-validation.json).
 
@@ -43,7 +45,7 @@ aprobados, junto con regresiones drum y del sincronizador Core. CI nativo pendie
 
 Servicio L1, orden y plazo propios; no se ejecuta ni recupera su payload protegido.
 Registro vacío y flag de envolventes inicializadas: no cubre inicialización
-perezosa, instrumento modo 4, notas retenidas, scheduler, PCM ni productores
+perezosa, tipo de módulo 4, notas retenidas, scheduler, PCM ni productores
 activos pitch/gain. Siguiente frente: traducción/reactivación con notas y frontera
 MIDI, antes de integrar un flujo equivalente en el plugin.
 Plugin 0.54.0 sin cambios ni instaladores. Avance ≈70 % ±10 de planificación;
