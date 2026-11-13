@@ -80,3 +80,9 @@ Este bloque es investigación aislada. Plugin 0.54.0, sin instaladores; avance
 
 Actualización: [eliminación fuera de rango y cola MIDI con bomba ocupada](synth246-range-bank-switch.md)
 contrastadas en el bloque posterior. Transporte físico y servicio L1 siguen pendientes.
+
+
+[CI de regresión aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787882)
+en Linux x64, Windows/MSVC x64 y macOS ARM64 sobre `cc79266`. La ejecución anterior
+con macOS cancelado permanece en la evidencia; este resultado valida la composición
+actual y conserva los mismos fixtures del perfil anterior.

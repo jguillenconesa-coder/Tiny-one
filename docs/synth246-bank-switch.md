@@ -37,7 +37,7 @@ note-off/on ni se modifica una nota; no se extrapola al caso con notas presentes
   de −4…4); este bloque no ejecuta ni amplía el dominio del setter original.
 
 Dos extracciones originales independientes coinciden. Release y ASan/UBSan
-aprobados, junto con regresiones drum y del sincronizador Core. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux y Windows/MSVC aprobados; macOS Intel pendiente.
+aprobados, junto con regresiones drum y del sincronizador Core. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux, Windows/MSVC y macOS Intel aprobados.
 [Formato y reproducción](../research/synth-bank-switch/README.md) y
 [evidencia](firmware/synth-bank-switch246-validation.json).
 

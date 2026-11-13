@@ -151,7 +151,7 @@
     "asan_ubsan": "passed",
     "regression_suites": 10,
     "prior_held_profile_asan_ubsan": "passed",
-    "native_ci": "pending"
+    "native_ci": "passed on Linux x64, Windows/MSVC x64 and macOS ARM64"
   },
   "counts": {
     "changed": 1792,
@@ -183,5 +183,59 @@
     ],
     "pump_executed": false,
     "physical_transport": false
+  },
+  "native_ci": {
+    "databaseId": 43504787812,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787812",
+    "headSha": "cc79266e839c0adac24564dc3bfe2931c881c94e",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "validate (macos-15)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "macOS ARM64"
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Linux X64"
+      },
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Windows X64"
+      }
+    ]
+  },
+  "prior_profile_native_ci": {
+    "databaseId": 43504787882,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787882",
+    "headSha": "cc79266e839c0adac24564dc3bfe2931c881c94e",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Windows X64"
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Linux X64"
+      },
+      {
+        "name": "validate (macos-15)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "macOS ARM64"
+      }
+    ]
   }
 }

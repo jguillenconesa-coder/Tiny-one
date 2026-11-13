@@ -80,7 +80,7 @@ de paquetes físicos. Se comparan toda la memoria de cola y los buffers de event
 
 Dos extracciones originales independientes coinciden. Release y ASan/UBSan
 aprobados, junto con diez suites de regresión; el perfil anterior también se
-recompila y pasa con sanitizadores. CI nativo pendiente.
+recompila y pasa con sanitizadores. [CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787812) en Linux x64, Windows/MSVC x64 y macOS ARM64 sobre `cc79266`.
 [Formato/reproducción](../research/synth-range-bank-switch/README.md),
 [evidencia](firmware/synth-range-bank-switch246-validation.json).
 

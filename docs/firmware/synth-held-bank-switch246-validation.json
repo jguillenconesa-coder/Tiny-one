@@ -134,7 +134,7 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 7,
-    "native_ci": "Linux and Windows passed; macOS cancelled without tests"
+    "native_ci": "followup passed on Linux x64, Windows/MSVC x64 and macOS ARM64"
   },
   "counts": {
     "changed": 1792,
@@ -169,6 +169,33 @@
         "name": "validate (windows-2022)",
         "status": "completed",
         "conclusion": "success"
+      }
+    ]
+  },
+  "followup_native_ci": {
+    "databaseId": 43504787882,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787882",
+    "headSha": "cc79266e839c0adac24564dc3bfe2931c881c94e",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Windows X64"
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Linux X64"
+      },
+      {
+        "name": "validate (macos-15)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "macOS ARM64"
       }
     ]
   }

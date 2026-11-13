@@ -1126,7 +1126,7 @@ y servicio activo/scheduler, manteniendo explícitas las sustituciones.
 [Contraste del cambiador original](synth246-bank-switch.md): 2.048 entradas,
 seis resets de envolvente, inicialización y transposición diferida, sincronizador
 con dos entradas L1 propias. Release, ASan/UBSan y dos regresiones aprobadas;
-[CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux y Windows/MSVC aprobados; macOS Intel pendiente. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
+[CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux, Windows/MSVC y macOS Intel aprobados. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
 L1. Siguiente bloque: traducción/reactivación con notas y frontera MIDI.
 Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medida.
 
@@ -1148,6 +1148,10 @@ Siguiente frente: eliminación de notas fuera de rango y frontera del transporte
 8.183 eliminaciones, productores MIDI y encolado con bomba ocupada. 418 encolados,
 620 rechazos por capacidad y cuatro wraps u32. Se conservan L1 propio y grafo
 Dr. Wave suministrado; sin consumidor, transporte físico ni render. Release,
-ASan/UBSan y diez regresiones aprobados; CI nativo pendiente.
+ASan/UBSan y diez regresiones aprobados; [CI nativo aprobado](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787812) en Linux x64, Windows/MSVC x64 y macOS ARM64 sobre `cc79266`.
 Plugin 0.54.0 sin cambios ni instaladores. Avance ≈70 % ±10, acústica pendiente.
 Siguiente frente: consumidor/bomba MIDI y composición con el servicio activo.
+
+El [CI de regresión del perfil retenido](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787882)
+aprobó también Linux, Windows/MSVC y macOS ARM64 sobre `cc79266`; el run anterior
+con macOS cancelado se conserva como historial en su evidencia.

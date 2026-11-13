@@ -90,14 +90,14 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 2,
-    "native_ci": "Linux and Windows passed; macOS pending"
+    "native_ci": "passed on Linux, Windows/MSVC and macOS Intel"
   },
   "native_ci": {
     "databaseId": 43464759166,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166",
     "headSha": "7eaf388879b34713286e4526e471b51ef47ba773",
-    "status": "queued",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "validate (windows-2022)",
@@ -111,8 +111,8 @@
       },
       {
         "name": "validate (macos-15-intel)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
     ]
   }
