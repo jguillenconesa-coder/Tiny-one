@@ -1,0 +1,95 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 2048,
+  "input_record_bytes": 484,
+  "output_record_bytes": 576,
+  "routine": {
+    "entry": "0x01a86420",
+    "end_exclusive": "0x01a86660",
+    "sha256": "832034ec97497e775f87c786b438650f274ae3a5a90647df5e99e472250f1f0a"
+  },
+  "windows": [
+    [
+      27962380,
+      68
+    ],
+    [
+      4286584524,
+      32
+    ],
+    [
+      4286582840,
+      32
+    ],
+    [
+      27996480,
+      16
+    ],
+    [
+      31450328,
+      40
+    ],
+    [
+      25911816,
+      4
+    ],
+    [
+      4286578900,
+      144
+    ],
+    [
+      28706108,
+      4
+    ],
+    [
+      31345728,
+      4
+    ],
+    [
+      31453492,
+      4
+    ],
+    [
+      28708592,
+      128
+    ]
+  ],
+  "artifacts": {
+    "synth-bank-switch246-input.bin.gz": {
+      "bytes": 874733,
+      "raw_bytes": 991232,
+      "sha256": "60ea2fc4a68c4e402b5b4f5392ebf118323967fffbc28faaa210d919649c6efb"
+    },
+    "synth-bank-switch246-output.bin.gz": {
+      "bytes": 827781,
+      "raw_bytes": 1179648,
+      "sha256": "02989707bda9a4d17a900c0200e5dfbb4d2191fddbc5e84021343dd6020a89fb"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Original complete outer changer in synth context, held registry empty, instrument mode 0..3 (mode4 excluded).",
+    "Both L1 endpoints authored: complete active-bank write after 1..4 calls, no factories or protected payload.",
+    "No held-note translation/reactivation, PCM, product integration or acoustic equivalence."
+  ],
+  "date": "2026-11-13",
+  "original_extractions": 2,
+  "counts": {
+    "changed": 1792,
+    "same_bank": 256,
+    "authored_service_calls": 4480,
+    "translation_initializations": 896,
+    "deferred_accumulator_updates": 893,
+    "envelope_resets": 10752
+  },
+  "validation": {
+    "release": "passed",
+    "asan_ubsan": "passed",
+    "regression_suites": 2,
+    "native_ci": "pending"
+  }
+}

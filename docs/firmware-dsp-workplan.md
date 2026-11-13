@@ -1127,3 +1127,13 @@ aprobados, junto con CI nativo Linux, Windows/MSVC y macOS Intel
 factorías originales; no recupera el servicio protegido ni mide fidelidad acústica.
 Plugin 0.54.0, avance ≈70 % ±10, sin instaladores. Siguiente frente: rama synth
 y servicio activo/scheduler, manteniendo explícitas las sustituciones.
+
+
+## Cambiador synth con registro vacío — 2026-11-13
+
+[Contraste del cambiador original](synth246-bank-switch.md): 2.048 entradas,
+seis resets de envolvente, inicialización y transposición diferida, sincronizador
+con dos entradas L1 propias. Release, ASan/UBSan y dos regresiones aprobadas;
+CI nativo pendiente. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
+L1. Siguiente bloque: traducción/reactivación con notas y frontera MIDI.
+Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medida.

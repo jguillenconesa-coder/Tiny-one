@@ -1,0 +1,28 @@
+name: Validate synth bank changer with empty held registry
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/synth-bank-switch/**'
+      - 'research/core-selection-sync/CoreSelectionSync246.h'
+      - 'research/blackfin/synth-bank-switch.s.in'
+      - 'research/blackfin/synth-bank-switch.ld'
+      - 'scripts/verify-synth-bank-switch246.py'
+      - '.github/workflows/synth-bank-switch246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/synth-bank-switch -B build-synth-bank-switch -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-synth-bank-switch --config Release --parallel 2
+      - run: ctest --test-dir build-synth-bank-switch -C Release --output-on-failure

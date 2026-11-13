@@ -50,3 +50,7 @@ original no aporta ese timeout. No se ha descifrado ni ejecutado la imagen L1.
 Quedan la rama synth, el servicio activo real, scheduler y productores pitch/gain.
 Este bloque es investigación aislada: plugin 0.54.0, sin instaladores ni integración
 nueva en el producto. Avance ≈70 % ±10 de planificación; acústica sin medir.
+
+
+Actualización: [rama synth con registro vacío](synth246-bank-switch.md)
+contrastada por separado; las notas retenidas synth siguen pendientes.
