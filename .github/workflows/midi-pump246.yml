@@ -1,0 +1,29 @@
+name: Validate original MIDI pump and completion
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/midi-pump/**'
+      - 'research/core-selection-sync/CoreSelectionSync246.h'
+      - 'research/blackfin/midi-pump.s.in'
+      - 'research/blackfin/midi-pump.ld'
+      - 'scripts/verify-midi-pump246.py'
+      - '.github/workflows/midi-pump246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo '${{ runner.os }} ${{ runner.arch }}'
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/midi-pump -B build-midi-pump -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-midi-pump --config Release --parallel 2
+      - run: ctest --test-dir build-midi-pump -C Release --output-on-failure

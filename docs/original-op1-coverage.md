@@ -295,3 +295,15 @@ Siguiente frente: consumidor/bomba MIDI y composición con el servicio activo.
 El [CI de regresión del perfil retenido](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43504787882)
 aprobó también Linux, Windows/MSVC y macOS ARM64 sobre `cc79266`; el run anterior
 con macOS cancelado se conserva como historial en su evidencia.
+
+
+## Bomba y finalización MIDI con endpoint ocupado — 2026-11-13
+
+[Encolado/bomba/callback original contrastados](midi246-pump.md): 4.096 casos,
+2.063 bombas, 387 submits en lista, 1.626 finalizaciones y 813 reinicios.
+Todos los tamaños contiguos 1–32 y copias 0–128; sin sustituciones de código/L1
+en este ensayo. Endpoint ocupado y finalizaciones suministrados: no se ejecuta
+driver físico ni se recupera su temporización/propiedad de requests.
+Release, ASan/UBSan y tres regresiones aprobados; CI nativo pendiente.
+Plugin 0.54.0 sin salida MIDI del host nueva, sin instaladores. Avance ≈70 % ±10,
+acústica pendiente. Siguiente frente: adaptación MIDI al host y servicio activo de voz.

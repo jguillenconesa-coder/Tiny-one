@@ -88,3 +88,7 @@ Límites pendientes: bomba/consumidor MIDI y transporte físico, modo de módulo
 auxiliares, inicialización perezosa, servicio L1 real, scheduler y productores
 activos pitch/gain. No se renderiza audio ni cambia el plugin 0.54.0.
 Sin instaladores. Avance ≈70 % ±10 de planificación; fidelidad acústica sin medir.
+
+
+Actualización: [bomba y callback de finalización con endpoint ocupado](midi246-pump.md)
+contrastados por separado; el driver físico y el ciclo de propiedad siguen pendientes.
