@@ -74,7 +74,7 @@ contrastado; no equivalen a bytes transmitidos o finalizaciones de hardware.
 Dos extracciones originales independientes coinciden. Release y ASan/UBSan
 aprobados, además de las regresiones del cambiador range, perfil retenido y
 sincronizador. Se calibran las watches PC con un programa propio: no se activan
-en la entrada al driver `0x01a6bf26..0x01a6bf53`, asserts ni rango L1. CI pendiente.
+en la entrada al driver `0x01a6bf26..0x01a6bf53`, asserts ni rango L1. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953): Linux x64 y Windows/MSVC x64 aprobados; macOS en cola.
 [Formato/reproducción](../research/midi-pump/README.md) y
 [evidencia](firmware/midi-pump246-validation.json).
 

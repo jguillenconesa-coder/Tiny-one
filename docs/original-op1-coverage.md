@@ -304,6 +304,6 @@ con macOS cancelado se conserva como historial en su evidencia.
 Todos los tamaños contiguos 1–32 y copias 0–128; sin sustituciones de código/L1
 en este ensayo. Endpoint ocupado y finalizaciones suministrados: no se ejecuta
 driver físico ni se recupera su temporización/propiedad de requests.
-Release, ASan/UBSan y tres regresiones aprobados; CI nativo pendiente.
+Release, ASan/UBSan y tres regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953): Linux x64 y Windows/MSVC x64 aprobados; macOS en cola.
 Plugin 0.54.0 sin salida MIDI del host nueva, sin instaladores. Avance ≈70 % ±10,
 acústica pendiente. Siguiente frente: adaptación MIDI al host y servicio activo de voz.

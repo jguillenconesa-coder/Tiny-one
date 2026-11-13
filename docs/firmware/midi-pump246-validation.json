@@ -108,7 +108,7 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 3,
-    "native_ci": "pending"
+    "native_ci": "Linux x64 and Windows/MSVC x64 passed; macOS queued"
   },
   "counts": {
     "pump_calls": 2063,
@@ -296,6 +296,32 @@
     "callback_events": [
       9,
       16
+    ]
+  },
+  "native_ci": {
+    "databaseId": 43508701953,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953",
+    "headSha": "9fef2ef085b5ba14f6483545bd100916177a570a",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "validate (macos-15)",
+        "status": "queued",
+        "conclusion": ""
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Linux X64"
+      },
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success",
+        "platform": "Windows X64"
+      }
     ]
   }
 }
