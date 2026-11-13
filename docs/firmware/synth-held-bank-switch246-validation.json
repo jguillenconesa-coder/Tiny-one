@@ -134,7 +134,7 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 7,
-    "native_ci": "pending"
+    "native_ci": "Linux and Windows passed; macOS queued"
   },
   "counts": {
     "changed": 1792,
@@ -147,5 +147,29 @@
     "drwave_resets": 7675,
     "fast_envelope_releases": 10752
   },
-  "note_table_header_sha256": "23bbaea7cb7c651cca1d8d36c851b635c34543d1da93f74da37ab24e9355b89e"
+  "note_table_header_sha256": "23bbaea7cb7c651cca1d8d36c851b635c34543d1da93f74da37ab24e9355b89e",
+  "native_ci": {
+    "databaseId": 43468582281,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281",
+    "headSha": "1139c5f8b5ec895f05c3c90627276fef709dbe06",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "validate (macos-15)",
+        "status": "queued",
+        "conclusion": ""
+      },
+      {
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "validate (windows-2022)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  }
 }

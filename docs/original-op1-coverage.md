@@ -277,6 +277,6 @@ Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medi
 entradas, listas de 0–128 notas, traducción inmediata y reactivación original.
 18.928 pares de helpers MIDI con salida deshabilitada y 7.675 resets de Dr. Wave.
 Ambas respuestas L1 siguen siendo propias; el grafo se suministra explícitamente.
-Release, ASan/UBSan y siete regresiones aprobados; CI nativo pendiente.
+Release, ASan/UBSan y siete regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281): Linux y Windows/MSVC aprobados; macOS 15 en cola.
 Sin PCM ni integración nueva en el plugin 0.54.0. Avance ≈70 % ±10, sin instaladores.
 Siguiente frente: eliminación de notas fuera de rango y frontera del transporte MIDI.
