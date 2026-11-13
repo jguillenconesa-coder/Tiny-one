@@ -1,0 +1,151 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 2048,
+  "input_record_bytes": 4164,
+  "output_record_bytes": 4256,
+  "routine": {
+    "entry": "0x01a86420",
+    "end_exclusive": "0x01a86660",
+    "sha256": "832034ec97497e775f87c786b438650f274ae3a5a90647df5e99e472250f1f0a"
+  },
+  "windows": [
+    [
+      27962380,
+      68
+    ],
+    [
+      4286584524,
+      32
+    ],
+    [
+      4286582840,
+      32
+    ],
+    [
+      27996480,
+      16
+    ],
+    [
+      31450328,
+      40
+    ],
+    [
+      25911816,
+      4
+    ],
+    [
+      4286578900,
+      144
+    ],
+    [
+      28706108,
+      4
+    ],
+    [
+      31345728,
+      4
+    ],
+    [
+      31453492,
+      4
+    ],
+    [
+      28708592,
+      128
+    ],
+    [
+      27962648,
+      24
+    ],
+    [
+      27962732,
+      24
+    ],
+    [
+      4289724416,
+      224
+    ],
+    [
+      31450932,
+      2564
+    ],
+    [
+      27983196,
+      136
+    ],
+    [
+      31449148,
+      4
+    ],
+    [
+      4286582876,
+      24
+    ],
+    [
+      4286583508,
+      24
+    ],
+    [
+      4286589896,
+      8
+    ],
+    [
+      31450416,
+      512
+    ],
+    [
+      25960836,
+      4
+    ],
+    [
+      41933280,
+      4
+    ],
+    [
+      4286583748,
+      128
+    ]
+  ],
+  "artifacts": {
+    "synth-held-bank-switch246-input.bin.gz": {
+      "bytes": 4332211,
+      "raw_bytes": 8527872,
+      "sha256": "2821c934bf0a41c5bd14e166f5d705c6e857b8e8ae9d00afd94e4fb636645a04"
+    },
+    "synth-held-bank-switch246-output.bin.gz": {
+      "bytes": 4397109,
+      "raw_bytes": 8716288,
+      "sha256": "d800f6bb3075bfe8f492658471a39bbd9a127fd37327b9c274f23c100726eb53"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Original complete synth changer with supplied held registry, Dr. Wave type2, common selectors0..4; both L1 completions authored.",
+    "Both L1 endpoints authored: complete active-bank write after 1..4 calls, no factories or protected payload.",
+    "Original MIDI note helpers run with output disabled; no invalid translated notes, mode-type4, PCM, scheduler, product integration or acoustic equivalence."
+  ],
+  "date": "2026-11-13",
+  "original_extractions": 2,
+  "validation": {
+    "release": "passed",
+    "asan_ubsan": "passed",
+    "regression_suites": 7,
+    "native_ci": "pending"
+  },
+  "counts": {
+    "changed": 1792,
+    "same_bank": 256,
+    "authored_service_calls": 4480,
+    "translation_initializations": 896,
+    "deferred_accumulator_updates": 986,
+    "midi_helper_pairs": 18928,
+    "refresh_entries": 560,
+    "drwave_resets": 7675,
+    "fast_envelope_releases": 10752
+  },
+  "note_table_header_sha256": "23bbaea7cb7c651cca1d8d36c851b635c34543d1da93f74da37ab24e9355b89e"
+}

@@ -50,3 +50,7 @@ activos pitch/gain. Siguiente frente: traducción/reactivación con notas y fron
 MIDI, antes de integrar un flujo equivalente en el plugin.
 Plugin 0.54.0 sin cambios ni instaladores. Avance ≈70 % ±10 de planificación;
 fidelidad acústica y Ableton real pendientes.
+
+
+Actualización: [registro de notas retenidas con Dr. Wave](synth246-held-bank-switch.md)
+contrastado en el bloque posterior; la eliminación fuera de rango sigue pendiente.

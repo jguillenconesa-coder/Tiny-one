@@ -1129,3 +1129,14 @@ con dos entradas L1 propias. Release, ASan/UBSan y dos regresiones aprobadas;
 [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43464759166): Linux y Windows/MSVC aprobados; macOS Intel pendiente. Sin notas retenidas, modo 4, PCM ni recuperación del servicio
 L1. Siguiente bloque: traducción/reactivación con notas y frontera MIDI.
 Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medida.
+
+
+## Cambiador synth con notas retenidas — 2026-11-13
+
+[Composición contrastada con Dr. Wave](synth246-held-bank-switch.md): 2.048
+entradas, listas de 0–128 notas, traducción inmediata y reactivación original.
+18.928 pares de helpers MIDI con salida deshabilitada y 7.675 resets de Dr. Wave.
+Ambas respuestas L1 siguen siendo propias; el grafo se suministra explícitamente.
+Release, ASan/UBSan y siete regresiones aprobados; CI nativo pendiente.
+Sin PCM ni integración nueva en el plugin 0.54.0. Avance ≈70 % ±10, sin instaladores.
+Siguiente frente: eliminación de notas fuera de rango y frontera del transporte MIDI.

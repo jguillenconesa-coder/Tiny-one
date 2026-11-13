@@ -1,0 +1,36 @@
+name: Validate synth held bank changer with explicit L1 completion
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'research/synth-held-bank-switch/**'
+      - 'research/synth-bank-switch/SynthBankSwitch246.h'
+      - 'Source/DrWave246*.h'
+      - 'Source/Voice246*.h'
+      - 'Source/Envelope246*.h'
+      - 'Source/Fractional246.h'
+      - 'Source/ReferenceDsp.h'
+      - 'Tests/ReferenceVectors/drwave246-activation-output.bin'
+      - 'research/core-selection-sync/CoreSelectionSync246.h'
+      - 'research/blackfin/synth-held-bank-switch.s.in'
+      - 'research/blackfin/synth-held-bank-switch.ld'
+      - 'scripts/verify-synth-held-bank-switch246.py'
+      - '.github/workflows/synth-held-bank-switch246.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo '${{ runner.os }} ${{ runner.arch }}'
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: cmake -S research/synth-held-bank-switch -B build-synth-held-bank-switch -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build-synth-held-bank-switch --config Release --parallel 2
+      - run: ctest --test-dir build-synth-held-bank-switch -C Release --output-on-failure
