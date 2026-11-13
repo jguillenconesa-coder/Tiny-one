@@ -134,7 +134,7 @@
     "release": "passed",
     "asan_ubsan": "passed",
     "regression_suites": 7,
-    "native_ci": "Linux and Windows passed; macOS queued"
+    "native_ci": "Linux and Windows passed; macOS cancelled without tests"
   },
   "counts": {
     "changed": 1792,
@@ -152,13 +152,13 @@
     "databaseId": 43468582281,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281",
     "headSha": "1139c5f8b5ec895f05c3c90627276fef709dbe06",
-    "status": "queued",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "failure",
     "jobs": [
       {
         "name": "validate (macos-15)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "cancelled"
       },
       {
         "name": "validate (ubuntu-latest)",

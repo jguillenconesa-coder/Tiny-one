@@ -68,7 +68,7 @@ original. No hay concurrencia ni temporización física/host.
 Los contadores de helpers/resets siguen el recorrido del modelo contrastado y
 la estructura del bucle original; no son paquetes MIDI ni muestras de audio.
 Dos extracciones originales independientes coinciden. Release, ASan/UBSan y siete
-suites de regresión aprobados. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281): Linux y Windows/MSVC aprobados; macOS 15 en cola.
+suites de regresión aprobados. [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281): Linux y Windows/MSVC aprobados; macOS 15 cancelado sin ejecutar pruebas.
 [Formato y reproducción](../research/synth-held-bank-switch/README.md),
 [evidencia](firmware/synth-held-bank-switch246-validation.json).
 
@@ -76,3 +76,7 @@ Quedan las traducciones fuera de rango, módulos auxiliares, tipo de módulo 4,
 servicio activo real, transporte MIDI, scheduler y productores pitch/gain.
 Este bloque es investigación aislada. Plugin 0.54.0, sin instaladores; avance
 ≈70 % ±10 de planificación. Fidelidad acústica y Ableton real pendientes.
+
+
+Actualización: [eliminación fuera de rango y cola MIDI con bomba ocupada](synth246-range-bank-switch.md)
+contrastadas en el bloque posterior. Transporte físico y servicio L1 siguen pendientes.

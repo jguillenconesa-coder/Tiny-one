@@ -1137,6 +1137,17 @@ Plugin 0.54.0, avance ≈70 % ±10, sin instaladores ni fidelidad acústica medi
 entradas, listas de 0–128 notas, traducción inmediata y reactivación original.
 18.928 pares de helpers MIDI con salida deshabilitada y 7.675 resets de Dr. Wave.
 Ambas respuestas L1 siguen siendo propias; el grafo se suministra explícitamente.
-Release, ASan/UBSan y siete regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281): Linux y Windows/MSVC aprobados; macOS 15 en cola.
+Release, ASan/UBSan y siete regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43468582281): Linux y Windows/MSVC aprobados; macOS 15 cancelado sin ejecutar pruebas.
 Sin PCM ni integración nueva en el plugin 0.54.0. Avance ≈70 % ±10, sin instaladores.
 Siguiente frente: eliminación de notas fuera de rango y frontera del transporte MIDI.
+
+
+## Eliminación synth y productores/cola MIDI — 2026-11-13
+
+[Composición original contrastada](synth246-range-bank-switch.md): 2.048 entradas,
+8.183 eliminaciones, productores MIDI y encolado con bomba ocupada. 418 encolados,
+620 rechazos por capacidad y cuatro wraps u32. Se conservan L1 propio y grafo
+Dr. Wave suministrado; sin consumidor, transporte físico ni render. Release,
+ASan/UBSan y diez regresiones aprobados; CI nativo pendiente.
+Plugin 0.54.0 sin cambios ni instaladores. Avance ≈70 % ±10, acústica pendiente.
+Siguiente frente: consumidor/bomba MIDI y composición con el servicio activo.

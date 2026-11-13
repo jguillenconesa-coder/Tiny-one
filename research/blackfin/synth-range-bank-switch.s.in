@@ -1,0 +1,403 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Original synth bank changer, supplied held registry, Dr. Wave, MIDI output disabled; authored L1 completion.
+.include "testutils.inc"
+start
+imm32 SP,0x07f00000
+P4.H=inputs;
+P4.L=inputs;
+P5.H=results;
+P5.L=results;
+next_case:
+P1.H=current;
+P1.L=current;
+[P1]=P4;
+P1=P4;
+P1+=8;
+imm32 P2,27962380
+imm32 P3,17
+LSETUP(load0,endload0) LC0=P3;
+load0: R0=[P1++];
+endload0: [P2++]=R0;
+imm32 P2,4286584524
+imm32 P3,8
+LSETUP(load1,endload1) LC0=P3;
+load1: R0=[P1++];
+endload1: [P2++]=R0;
+imm32 P2,4286582840
+imm32 P3,8
+LSETUP(load2,endload2) LC0=P3;
+load2: R0=[P1++];
+endload2: [P2++]=R0;
+imm32 P2,27996480
+imm32 P3,4
+LSETUP(load3,endload3) LC0=P3;
+load3: R0=[P1++];
+endload3: [P2++]=R0;
+imm32 P2,31450328
+imm32 P3,10
+LSETUP(load4,endload4) LC0=P3;
+load4: R0=[P1++];
+endload4: [P2++]=R0;
+imm32 P2,25911816
+imm32 P3,1
+LSETUP(load5,endload5) LC0=P3;
+load5: R0=[P1++];
+endload5: [P2++]=R0;
+imm32 P2,4286578900
+imm32 P3,36
+LSETUP(load6,endload6) LC0=P3;
+load6: R0=[P1++];
+endload6: [P2++]=R0;
+imm32 P2,28706108
+imm32 P3,1
+LSETUP(load7,endload7) LC0=P3;
+load7: R0=[P1++];
+endload7: [P2++]=R0;
+imm32 P2,31345728
+imm32 P3,1
+LSETUP(load8,endload8) LC0=P3;
+load8: R0=[P1++];
+endload8: [P2++]=R0;
+imm32 P2,31453492
+imm32 P3,1
+LSETUP(load9,endload9) LC0=P3;
+load9: R0=[P1++];
+endload9: [P2++]=R0;
+imm32 P2,28708592
+imm32 P3,32
+LSETUP(load10,endload10) LC0=P3;
+load10: R0=[P1++];
+endload10: [P2++]=R0;
+imm32 P2,27962648
+imm32 P3,6
+LSETUP(load11,endload11) LC0=P3;
+load11: R0=[P1++];
+endload11: [P2++]=R0;
+imm32 P2,27962732
+imm32 P3,6
+LSETUP(load12,endload12) LC0=P3;
+load12: R0=[P1++];
+endload12: [P2++]=R0;
+imm32 P2,4289724416
+imm32 P3,56
+LSETUP(load13,endload13) LC0=P3;
+load13: R0=[P1++];
+endload13: [P2++]=R0;
+imm32 P2,31450932
+imm32 P3,641
+LSETUP(load14,endload14) LC0=P3;
+load14: R0=[P1++];
+endload14: [P2++]=R0;
+imm32 P2,27983196
+imm32 P3,34
+LSETUP(load15,endload15) LC0=P3;
+load15: R0=[P1++];
+endload15: [P2++]=R0;
+imm32 P2,31449148
+imm32 P3,1
+LSETUP(load16,endload16) LC0=P3;
+load16: R0=[P1++];
+endload16: [P2++]=R0;
+imm32 P2,4286582876
+imm32 P3,6
+LSETUP(load17,endload17) LC0=P3;
+load17: R0=[P1++];
+endload17: [P2++]=R0;
+imm32 P2,4286583508
+imm32 P3,6
+LSETUP(load18,endload18) LC0=P3;
+load18: R0=[P1++];
+endload18: [P2++]=R0;
+imm32 P2,4286589896
+imm32 P3,2
+LSETUP(load19,endload19) LC0=P3;
+load19: R0=[P1++];
+endload19: [P2++]=R0;
+imm32 P2,31450416
+imm32 P3,128
+LSETUP(load20,endload20) LC0=P3;
+load20: R0=[P1++];
+endload20: [P2++]=R0;
+imm32 P2,25960836
+imm32 P3,1
+LSETUP(load21,endload21) LC0=P3;
+load21: R0=[P1++];
+endload21: [P2++]=R0;
+imm32 P2,41933280
+imm32 P3,1
+LSETUP(load22,endload22) LC0=P3;
+load22: R0=[P1++];
+endload22: [P2++]=R0;
+imm32 P2,4286583748
+imm32 P3,32
+LSETUP(load23,endload23) LC0=P3;
+load23: R0=[P1++];
+endload23: [P2++]=R0;
+imm32 P2,31450928
+imm32 P3,1
+LSETUP(load24,endload24) LC0=P3;
+load24: R0=[P1++];
+endload24: [P2++]=R0;
+imm32 P2,27974432
+imm32 P3,10
+LSETUP(load25,endload25) LC0=P3;
+load25: R0=[P1++];
+endload25: [P2++]=R0;
+imm32 P2,25911308
+imm32 P3,1
+LSETUP(load26,endload26) LC0=P3;
+load26: R0=[P1++];
+endload26: [P2++]=R0;
+imm32 P2,27990840
+imm32 P3,1030
+LSETUP(load27,endload27) LC0=P3;
+load27: R0=[P1++];
+endload27: [P2++]=R0;
+P1.H=count;
+P1.L=count;
+R0=0;
+[P1]=R0;
+P1.H=trace;
+P1.L=trace;
+imm32 R0,0x5a5a5a5a
+P3=24;
+LSETUP(poison,endpoison) LC0=P3;
+poison: [P1++]=R0;
+endpoison: NOP;
+R0=[P4];
+imm32 P0,0x01a86420
+CALL(P0);
+imm32 P1,27962380
+imm32 P3,17
+LSETUP(save0,endsave0) LC0=P3;
+save0: R0=[P1++];
+endsave0: [P5++]=R0;
+imm32 P1,4286584524
+imm32 P3,8
+LSETUP(save1,endsave1) LC0=P3;
+save1: R0=[P1++];
+endsave1: [P5++]=R0;
+imm32 P1,4286582840
+imm32 P3,8
+LSETUP(save2,endsave2) LC0=P3;
+save2: R0=[P1++];
+endsave2: [P5++]=R0;
+imm32 P1,27996480
+imm32 P3,4
+LSETUP(save3,endsave3) LC0=P3;
+save3: R0=[P1++];
+endsave3: [P5++]=R0;
+imm32 P1,31450328
+imm32 P3,10
+LSETUP(save4,endsave4) LC0=P3;
+save4: R0=[P1++];
+endsave4: [P5++]=R0;
+imm32 P1,25911816
+imm32 P3,1
+LSETUP(save5,endsave5) LC0=P3;
+save5: R0=[P1++];
+endsave5: [P5++]=R0;
+imm32 P1,4286578900
+imm32 P3,36
+LSETUP(save6,endsave6) LC0=P3;
+save6: R0=[P1++];
+endsave6: [P5++]=R0;
+imm32 P1,28706108
+imm32 P3,1
+LSETUP(save7,endsave7) LC0=P3;
+save7: R0=[P1++];
+endsave7: [P5++]=R0;
+imm32 P1,31345728
+imm32 P3,1
+LSETUP(save8,endsave8) LC0=P3;
+save8: R0=[P1++];
+endsave8: [P5++]=R0;
+imm32 P1,31453492
+imm32 P3,1
+LSETUP(save9,endsave9) LC0=P3;
+save9: R0=[P1++];
+endsave9: [P5++]=R0;
+imm32 P1,28708592
+imm32 P3,32
+LSETUP(save10,endsave10) LC0=P3;
+save10: R0=[P1++];
+endsave10: [P5++]=R0;
+imm32 P1,27962648
+imm32 P3,6
+LSETUP(save11,endsave11) LC0=P3;
+save11: R0=[P1++];
+endsave11: [P5++]=R0;
+imm32 P1,27962732
+imm32 P3,6
+LSETUP(save12,endsave12) LC0=P3;
+save12: R0=[P1++];
+endsave12: [P5++]=R0;
+imm32 P1,4289724416
+imm32 P3,56
+LSETUP(save13,endsave13) LC0=P3;
+save13: R0=[P1++];
+endsave13: [P5++]=R0;
+imm32 P1,31450932
+imm32 P3,641
+LSETUP(save14,endsave14) LC0=P3;
+save14: R0=[P1++];
+endsave14: [P5++]=R0;
+imm32 P1,27983196
+imm32 P3,34
+LSETUP(save15,endsave15) LC0=P3;
+save15: R0=[P1++];
+endsave15: [P5++]=R0;
+imm32 P1,31449148
+imm32 P3,1
+LSETUP(save16,endsave16) LC0=P3;
+save16: R0=[P1++];
+endsave16: [P5++]=R0;
+imm32 P1,4286582876
+imm32 P3,6
+LSETUP(save17,endsave17) LC0=P3;
+save17: R0=[P1++];
+endsave17: [P5++]=R0;
+imm32 P1,4286583508
+imm32 P3,6
+LSETUP(save18,endsave18) LC0=P3;
+save18: R0=[P1++];
+endsave18: [P5++]=R0;
+imm32 P1,4286589896
+imm32 P3,2
+LSETUP(save19,endsave19) LC0=P3;
+save19: R0=[P1++];
+endsave19: [P5++]=R0;
+imm32 P1,31450416
+imm32 P3,128
+LSETUP(save20,endsave20) LC0=P3;
+save20: R0=[P1++];
+endsave20: [P5++]=R0;
+imm32 P1,25960836
+imm32 P3,1
+LSETUP(save21,endsave21) LC0=P3;
+save21: R0=[P1++];
+endsave21: [P5++]=R0;
+imm32 P1,41933280
+imm32 P3,1
+LSETUP(save22,endsave22) LC0=P3;
+save22: R0=[P1++];
+endsave22: [P5++]=R0;
+imm32 P1,4286583748
+imm32 P3,32
+LSETUP(save23,endsave23) LC0=P3;
+save23: R0=[P1++];
+endsave23: [P5++]=R0;
+imm32 P1,31450928
+imm32 P3,1
+LSETUP(save24,endsave24) LC0=P3;
+save24: R0=[P1++];
+endsave24: [P5++]=R0;
+imm32 P1,27974432
+imm32 P3,10
+LSETUP(save25,endsave25) LC0=P3;
+save25: R0=[P1++];
+endsave25: [P5++]=R0;
+imm32 P1,25911308
+imm32 P3,1
+LSETUP(save26,endsave26) LC0=P3;
+save26: R0=[P1++];
+endsave26: [P5++]=R0;
+imm32 P1,27990840
+imm32 P3,1030
+LSETUP(save27,endsave27) LC0=P3;
+save27: R0=[P1++];
+endsave27: [P5++]=R0;
+P1.H=trace;
+P1.L=trace;
+P3=25;
+LSETUP(save_trace,end_trace) LC0=P3;
+save_trace: R0=[P1++];
+end_trace: [P5++]=R0;
+imm32 P0,8332
+P4=P4+P0;
+P0.H=inputs_end;
+P0.L=inputs_end;
+CC=P4==P0;
+IF CC JUMP done;
+JUMP.L next_case;
+done:
+R0.H=io_args;
+R0.L=io_args;
+P0=5;
+EXCPT 0;
+exit 0
+hook:
+P0.H=args;
+P0.L=args;
+[P0]=R0;
+[P0+4]=R1;
+[P0+8]=R2;
+[P0+12]=R3;
+P0.H=count;
+P0.L=count;
+R0=[P0];
+R1=4;
+CC=R0<R1 (IU);
+IF CC JUMP valid;
+exit 1
+valid:
+R1=24;
+R1*=R0;
+P1.H=trace;
+P1.L=trace;
+P2=R1;
+P2=P1+P2;
+P1.H=args;
+P1.L=args;
+R1=[P1+12];
+[P2++]=R1;
+R1=[P1];
+[P2++]=R1;
+R1=[P1+4];
+[P2++]=R1;
+R1=[P1+8];
+[P2++]=R1;
+imm32 P1,0x01aaac0c
+R1=[P1];
+[P2++]=R1;
+imm32 P1,0xff8016d4
+R1=[P1];
+[P2++]=R1;
+R0+=1;
+[P0]=R0;
+P1.H=current;
+P1.L=current;
+P1=[P1];
+R1=[P1+4];
+CC=R0==R1;
+IF !CC JUMP returning;
+imm32 P1,0xff8016d4
+R0=[P1];
+imm32 P1,0x01aaac0c
+[P1]=R0;
+returning:
+RTS;
+.data
+.align 4
+current: .space 4
+args: .space 16
+trace: .space 96
+count: .space 4
+io_args: .long 1,results,@BYTES@
+.section .inputs,"a"
+inputs: .incbin "@WORK@/inputs.bin"
+inputs_end:
+.section .results,"aw",@nobits
+results: .space @BYTES@
+.section .sdram,"awx"
+.incbin "@WORK@/sdram.bin"
+.section .request,"ax"
+R3=0;
+P0.H=hook;
+P0.L=hook;
+JUMP(P0);
+.section .synth_request,"ax"
+R3=1;
+P0.H=hook;
+P0.L=hook;
+JUMP(P0);

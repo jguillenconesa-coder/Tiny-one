@@ -1,0 +1,187 @@
+{
+  "ldr_sha256": "f79d299f6f9019c998013a4176223a6a1bc999a2d8c54451346861f6ea455c74",
+  "cases": 2048,
+  "input_record_bytes": 8332,
+  "output_record_bytes": 8424,
+  "routine": {
+    "entry": "0x01a86420",
+    "end_exclusive": "0x01a86660",
+    "sha256": "832034ec97497e775f87c786b438650f274ae3a5a90647df5e99e472250f1f0a"
+  },
+  "windows": [
+    [
+      27962380,
+      68
+    ],
+    [
+      4286584524,
+      32
+    ],
+    [
+      4286582840,
+      32
+    ],
+    [
+      27996480,
+      16
+    ],
+    [
+      31450328,
+      40
+    ],
+    [
+      25911816,
+      4
+    ],
+    [
+      4286578900,
+      144
+    ],
+    [
+      28706108,
+      4
+    ],
+    [
+      31345728,
+      4
+    ],
+    [
+      31453492,
+      4
+    ],
+    [
+      28708592,
+      128
+    ],
+    [
+      27962648,
+      24
+    ],
+    [
+      27962732,
+      24
+    ],
+    [
+      4289724416,
+      224
+    ],
+    [
+      31450932,
+      2564
+    ],
+    [
+      27983196,
+      136
+    ],
+    [
+      31449148,
+      4
+    ],
+    [
+      4286582876,
+      24
+    ],
+    [
+      4286583508,
+      24
+    ],
+    [
+      4286589896,
+      8
+    ],
+    [
+      31450416,
+      512
+    ],
+    [
+      25960836,
+      4
+    ],
+    [
+      41933280,
+      4
+    ],
+    [
+      4286583748,
+      128
+    ],
+    [
+      31450928,
+      4
+    ],
+    [
+      27974432,
+      40
+    ],
+    [
+      25911308,
+      4
+    ],
+    [
+      27990840,
+      4120
+    ]
+  ],
+  "artifacts": {
+    "synth-range-bank-switch246-input.bin.gz": {
+      "bytes": 6429145,
+      "raw_bytes": 17063936,
+      "sha256": "a3476d17e582bf7727bedef8abcc565e6024e78cdab02c2979b60600bd0279a4"
+    },
+    "synth-range-bank-switch246-output.bin.gz": {
+      "bytes": 6346375,
+      "raw_bytes": 17252352,
+      "sha256": "2366257d547ece1d9eef04aa02205e34751d9517d16e63f641362b3591f48861"
+    }
+  },
+  "tools": {
+    "bfin-elf-as": "e9844877e17d26d397e4646c14ed1946d85013a0e63af37fd0b26f5f03a23e7a",
+    "bfin-elf-ld": "11ce6b95eacd31e0e62a830423fc86eeca946ed81f99977753fc00cdecab58dc",
+    "run-fp": "80a0f22e48d3846ea4b0aa4679f34439c7c3ce8df8b4e2fee955ea601f9ca913"
+  },
+  "limits": [
+    "Original complete synth changer with supplied held registry, Dr. Wave type2, common selectors0..4; both L1 completions authored.",
+    "Both L1 endpoints authored: complete active-bank write after 1..4 calls, no factories or protected payload.",
+    "Original release/removal, MIDI producer and ring queue run; MIDI enable and transport gate supplied. DMA pump stays busy (>=1), no consumer or physical transport. No type4 module, auxiliary graph, PCM or plugin integration."
+  ],
+  "date": "2026-11-13",
+  "original_extractions": 2,
+  "validation": {
+    "release": "passed",
+    "asan_ubsan": "passed",
+    "regression_suites": 10,
+    "prior_held_profile_asan_ubsan": "passed",
+    "native_ci": "pending"
+  },
+  "counts": {
+    "changed": 1792,
+    "same_bank": 256,
+    "removed": 8183,
+    "valid_translation_pairs": 10828,
+    "off_events": 3297,
+    "on_events": 1744,
+    "queued": 418,
+    "capacity_rejections": 620,
+    "write_counter_wraps": 4,
+    "refresh_entries": 560,
+    "drwave_resets": 6063,
+    "fast_envelope_releases": 10752,
+    "authored_service_calls": 4480
+  },
+  "queue": {
+    "ring": "0x01ab1b44",
+    "read_counter": "0x01ab1b3c",
+    "write_counter": "0x01ab2b44",
+    "gate": "0x01ab2b48",
+    "in_flight": "0x01ab1b40",
+    "slots": 1024,
+    "occupied_max": 1023,
+    "in_flight_supplied": [
+      1,
+      2,
+      165
+    ],
+    "pump_executed": false,
+    "physical_transport": false
+  }
+}

@@ -15,9 +15,19 @@ struct SynthHeldBankSwitch246 {
  static int16_t half(const uint8_t* p){unsigned v=unsigned(p[0])|(unsigned(p[1])<<8);return int16_t(v<32768?int(v):int(v)-65536);}
  static void putHalf(uint8_t* p,int16_t v){p[0]=uint8_t(v);p[1]=uint8_t(uint16_t(v)>>8);}
  static bool change(Image& m,unsigned target,unsigned delay,Trace& trace,unsigned& calls,Stats& stats){
+  if(get(m.data()+3448))return false;
+  return changeWithCallbacks(m,target,delay,trace,calls,stats,
+   [](auto&,uint32_t){return false;},
+   [](auto& image,uint32_t note){image[3316+note]=0;return true;},
+   [](auto& image,uint32_t note,uint32_t velocity){if(!velocity)image[3316+note]=0;else if(!image[3316+note])image[3316+note]=1;return true;});
+ }
+ // Callback composition is own API policy; default profile rejects removal.
+ template<size_t N,class Remove,class Off,class On>
+ static bool changeWithCallbacks(std::array<uint8_t,N>& m,unsigned target,unsigned delay,Trace& trace,unsigned& calls,Stats& stats,Remove&& remove,Off&& off,On&& on){
+  static_assert(N>=4156);
   using namespace reference;trace.fill(0x5a);calls=0;
-  const auto old=get(m.data()+76),count=get(m.data()+344);
-  if(target>=8||old>=8||count>128||get(m.data()+3308)!=count||get(m.data()+340)!=0||get(m.data()+136)!=2||!get(m.data()+336)||get(m.data()+3448)||get(m.data()+4020)!=1200||delay<1||delay>4)return false;
+  const auto old=get(m.data()+76);auto count=get(m.data()+344);
+  if(target>=8||old>=8||count>128||get(m.data()+3308)!=count||get(m.data()+340)!=0||get(m.data()+136)!=2||!get(m.data()+336)||get(m.data()+4020)!=1200||delay<1||delay>4)return false;
   for(size_t v=0;v<6;++v)if(get(m.data()+476+v*4)!=0xffb00000+v*36||get(m.data()+500+v*4)||get(m.data()+524+v*36)!=0x0190fb2c)return false;
   for(size_t i=0;i<count;++i)if(get(m.data()+748+i*20)>=128||signedPhase(get(m.data()+764+i*20))<-2||signedPhase(get(m.data()+764+i*20))>=6)return false;
   if(old==target)return true;
@@ -27,12 +37,12 @@ struct SynthHeldBankSwitch246 {
   const auto delta=get(m.data()+156+target*4)-get(m.data()+156+old*4);
   if(delta){
    if(m[152]){put(m.data()+188,get(m.data()+188)+delta);++stats.deferred;}
-   else for(size_t i=0;i<count;++i){auto* row=m.data()+748+i*20;if(!row[8])continue;const auto before=get(row),after=before+delta*12u;if(after>=128)return false;
-    ++stats.midiOff;m[3316+before]=0;
+   else for(size_t i=0;i<count;){auto* row=m.data()+748+i*20;if(!row[8]){++i;continue;}const auto before=get(row),after=before+delta*12u;
+    if(after>=128){const auto previous=count;if(!remove(m,before))return false;count=get(m.data()+344);if(count>=previous)return false;continue;}
+    ++stats.midiOff;if(!off(m,before))return false;
     put(row,after);++stats.midiOn;
-    const auto velocity=get(row+4);
-    if(!velocity)m[3316+after]=0;else if(!m[3316+after])m[3316+after]=1;
-    ++stats.translated;
+    if(!on(m,after,get(row+4)))return false;
+    ++stats.translated;++i;
    }
   }
   put(m.data()+76,target);CoreSelectionSync246 sync;std::copy_n(m.begin(),132,sync.windows.begin());uint32_t r2=0;
