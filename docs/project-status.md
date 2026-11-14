@@ -46,6 +46,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega funcional 0.57.0: reinicio polifónico de Dr. Wave
+
+[Selección, rampa y transferencia de registros](drwave246-voice-restart.md): el
+robo polifónico usa el escaneo signed32 contrastado y la rampa ADSR original de
+128 muestras. Un consumidor propio entrega pitch/velocidad al terminarla,
+conserva la ganancia previa y cancela el ataque si la nueva nota se libera antes.
+Sustituye en este caso el relevo inmediato de 3 ms; Mono/Legato y otros motores
+conservan su política. No se recupera el servicio L1 ni su temporización.
+
+Oráculos de 768 y 4.552 registros conservados, seis streams Engine y pruebas del
+procesador real en nueve escenarios con callbacks 64/257. ASan/UBSan del servicio
+y ambos oráculos aprobados. 150/150 suites Linux, VST3/standalone compilados
+y 1.446 cargas de tiempo real sin heap rastreado. CI del producto pendiente de publicación.
+[Evidencia](releases/v0.57.0-validation.json). Sin instaladores; ≈70 % ±10.
+Fidelidad acústica y Ableton real pendientes. Siguiente: reinicio Mono y retirada
+por voz, conservando límites explícitos entre núcleo y servicio propio.
+
 ## Entrega funcional 0.56.0: dinámica de Dr. Wave
 
 [Velocidad y atenuación por nota](drwave246-voice-dynamics.md) pasan al ADSR de

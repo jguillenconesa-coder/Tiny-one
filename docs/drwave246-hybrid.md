@@ -1,5 +1,11 @@
 # Dr. Wave 246: integración híbrida
 
+**Actualización 0.57.0:** la [dinámica](drwave246-voice-dynamics.md) incorpora
+velocidad/atenuación por nota contrastadas. El [robo polifónico](drwave246-voice-restart.md)
+ya usa el escaneo por contador y la rampa ADSR contrastados con un consumidor
+propio explícito; sustituye en ese caso el relevo de 3 ms descrito abajo como
+historial de la integración inicial. No se ha recuperado el scheduler L1.
+
 El motor **07 / DR. WAVE** hace tocable el núcleo reconstruido sin esperar una
 captura de L1 descifrada. BROWSE → **Dr. Wave 246 Hybrid → Init / Dr. Wave** carga
 un punto de partida propio, sin efectos. No es una réplica de un preset original.

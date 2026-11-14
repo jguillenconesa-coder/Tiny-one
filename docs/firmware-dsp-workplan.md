@@ -1205,3 +1205,17 @@ Conversión float→MIDI y captura cada 128 muestras propias; no se recupera el
 servicio L1, clock físico ni la composición original completa. Sin instaladores;
 ≈70 % ±10, acústica y Ableton real pendientes. Siguiente: reinicios pendientes y
 transferencia de registros al render.
+
+
+## Reinicio polifónico de Dr. Wave — 2026-11-14, 0.57.0
+
+[Escaneo, rampa y registros pendientes](drwave246-voice-restart.md) integrados:
+selección por máximo signed32/primer empate y rampa ADSR contrastados, con
+transferencia de pitch/velocidad, cancelación y reset Core de un servicio propio.
+Se conserva la ganancia ocupada; Mono/Legato y demás motores no cambian de política.
+Los oráculos de robo/pitch explícito (768/4.552 registros) siguen pasando, junto a
+ASan/UBSan de ambos y del servicio. Se prueban seis streams Engine y nueve casos
+reales del procesador con callbacks 64/257 y retirada del propietario anterior.
+150/150 suites Linux, VST3/standalone compilados y 1.446 cargas sin heap rastreado.
+CI del producto pendiente de publicación. Sin instaladores, ≈70 % ±10; scheduler L1,
+acústica y Ableton real pendientes. Siguiente: reinicio Mono y retirada por voz.

@@ -2,6 +2,7 @@
 #pragma once
 #include "DrWave246Activation.h"
 #include "Envelope246Transition.h"
+#include "Voice246PolySelection.h"
 #include "Voice246NoteArgument.h"
 #include "Voice246PolyRelease.h"
 namespace pocket::reference {
@@ -33,9 +34,8 @@ inline DrWave246PolyExplicitPitchResult drWave246PolyExplicitPitch(
     while(voice<6&&registers.active[size_t(voice)]!=0)++voice;
     const bool busy=voice==6;
     if(busy){
-        voice=-1;int32_t greatest=-1;
-        for(size_t i=0;i<6;++i){const auto age=signedPhase(envelopes[i].blocks);
-            if(age>greatest){greatest=age;voice=int(i);}}
+        std::array<uint32_t,6> ages{};for(size_t i=0;i<6;++i)ages[i]=envelopes[i].blocks;
+        voice=voice246SelectBusy(ages);
         if(voice<0)return {}; // Excluded original assert, not an original fallback.
     }
     bool accepted=false;

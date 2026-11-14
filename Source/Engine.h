@@ -35,6 +35,7 @@
 #include "Drum246Voice.h"
 #include "Sampler246Voice.h"
 #include "HybridPerformance.h"
+#include "Voice246PolySelection.h"
 
 namespace pocket {
 constexpr double pi = 3.14159265358979323846;
@@ -150,7 +151,23 @@ public:
         }
         Voice* v=nullptr;
         for(size_t i=0;i<((hybridPerformance()||selectedSampler)?6u:voices.size());++i) if(auto& candidate=voices[i];!candidate.active) { v=&candidate; break; }
+        if(!v&&selectedEngine==6){
+            std::array<uint32_t,6> blocks{};for(size_t i=0;i<6;++i)blocks[i]=voices[i].drWave246.selectionBlocks();
+            const int selected=reference::voice246SelectBusy(blocks);
+            if(selected>=0)v=&voices[size_t(selected)];
+        }
+        // Safe authored fallback for the excluded all-negative counter domain.
         if(!v) v=&*std::min_element(voices.begin(),voices.begin()+((hybridPerformance()||selectedSampler)?6:polyphony),[](auto& a,auto& b){return a.age<b.age;});
+        if(selectedEngine==6&&v->active){
+            // Keep Dr. Wave and its envelope alive until the authored boundary
+            // service consumes the recovered restart request after its ramp.
+            v->drWave246.requestRestart(note,std::clamp(velocity,0.f,1.f));
+            v->note=note;v->channel=channel;v->velocity=std::clamp(velocity,0.f,1.f);
+            v->keyDown=true;v->released=false;v->age=++age;
+            v->frequency=440.0*std::pow(2.0,(note-69)/12.0);
+            v->randomLfo.noteOn();v->valueVoice.noteOn();v->stealRemaining=0;
+            return;
+        }
         const auto stolen=(hybridPerformance()||selectedSampler)&&v->active?v->lastOutput:0.f;
         const auto randomState=v->randomLfo;const auto valueState=v->valueVoice;*v={};v->randomLfo=randomState;v->randomLfo.noteOn();v->stealTail=stolen;v->stealRemaining=stolen!=0?unsigned(sampleRate*.003):0;v->valueVoice=valueState;v->valueVoice.noteOn();v->active=true; v->keyDown=true; v->note=note; v->channel=channel;
         v->velocity=std::clamp(velocity,0.f,1.f); v->age=++age;v->cluster246.context.random=uint32_t(v->age)*2654435761u;
@@ -332,7 +349,7 @@ public:
             else if(nativeDrWave){
                 v.drWave246.setDynamics(v.note,v.velocity);
                 s=v.drWave246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?modulated:drWaveRaw,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:midiAdsr,drWaveConfig,phaseConfig,v.released);
-                amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone())v.active=false;
+                amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone()&&!v.drWave246.restartPending())v.active=false;
             }
             else if(nativeDigital){
                 s=v.digital246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?reference::Digital246Coefficients(modulated):digitalCoefficients,phaseConfig,nativeEnvelopeActive?((nativeValueVoice||nativeRandom)&&modEnvelope?&modulated:&midiAdsr):nullptr,v.released);

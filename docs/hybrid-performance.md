@@ -9,7 +9,9 @@ sin glide. Los cuatro mandos de color siguen controlando ADSR en esta página.
 
 ## Comportamiento
 
-- **Poly** conserva las seis voces y el robo por antigüedad existentes. Glide no
+- **Poly** conserva seis voces. Desde 0.57.0, Dr. Wave usa [contador y rampa
+  ADSR contrastados con consumidor propio](drwave246-voice-restart.md) para el robo;
+  los demás mantienen la selección por antigüedad. Glide no
   actúa en este modo.
 - **Mono** usa una voz y reinicia osciladores, ADSR y Value en cada nueva nota o
   retorno a otra nota retenida. FREE de Value conserva su política de fase.

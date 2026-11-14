@@ -1,5 +1,9 @@
 # Dr. Wave: velocidad y ganancia por nota — 0.56.0
 
+Desde 0.57.0, el [robo polifónico](drwave246-voice-restart.md) conserva la
+ganancia previa mientras entrega pitch/velocidad pendientes. Esa ruta sustituye
+la política de reinicio inmediato descrita aquí para 0.56.0.
+
 Dr. Wave aplica ahora la velocidad y la atenuación por nota dentro de la ruta
 ADSR de punto fijo. El multiplicador flotante de velocidad posterior se elimina
 para este motor. No hay un mando nuevo: cambia la respuesta de las notas al tocar,

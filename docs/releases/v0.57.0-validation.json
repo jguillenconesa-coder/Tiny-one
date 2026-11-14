@@ -1,0 +1,117 @@
+{
+  "version": "0.57.0",
+  "date": "2026-11-14",
+  "base_commit": "2c6bf7b",
+  "change": "DrWave polyphonic busy selection, recovered ADSR restart ramp and authored pending pitch/velocity service with retained gain and cancellation",
+  "original_reference": {
+    "fixtures_regenerated": false,
+    "poly_steal_records": 768,
+    "poly_explicit_records": 4552,
+    "selection_helper_shared_with_original_models": true,
+    "source": [
+      "drwave246-poly-steal.md",
+      "drwave246-poly-explicit-pitch.md"
+    ],
+    "original_consumer_recovered": false
+  },
+  "unit_integration": {
+    "status": "success",
+    "checks": [
+      "Signed maximum and first tie",
+      "Deferred boundary request and original 128-frame ramp",
+      "Pending register words transferred at stage 7",
+      "Busy gain preserved",
+      "Core reset at quiet boundary",
+      "Queued replacement",
+      "Cancel before request and before commit",
+      "Six host-rate Engine streams with dense steals/release/panic"
+    ]
+  },
+  "processor_integration": {
+    "status": "success",
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "scenarios": 9,
+    "callback_sizes": [
+      64,
+      257
+    ],
+    "renderings_per_scenario": 3,
+    "checks": [
+      "Bit-identical audio across actual processor callback partitions",
+      "Bit-identical audio with/without old-owner note-off",
+      "Exact silence after All Sound Off during pending restart"
+    ],
+    "seconds": 0.51
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": [
+      "DrWave246RestartTests",
+      "DrWave246PolyStealTests",
+      "DrWave246PolyExplicitPitchTests"
+    ],
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false,
+    "full_plugin_sanitized": false,
+    "log_sha256": "13951e3e7a3e0cacb285839f6d725a77686ce3246161e2f874be8e6cb54065b9"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 150,
+    "total": 150,
+    "runs": [
+      {
+        "scope": "All 145 non-product suites",
+        "passed": 145,
+        "total": 145,
+        "seconds": 188.48
+      },
+      {
+        "scope": "All five product suites",
+        "passed": 5,
+        "total": 5,
+        "seconds": 139.01
+      }
+    ],
+    "products": [
+      "VST3",
+      "Standalone"
+    ],
+    "module_version": "0.57.0",
+    "log_sha256": {
+      "drwave-restart-core-ctest.log": "85bc51b15d08ae8c8b1ba2248e8c2179121d2227cebddc8573d8b5eb653f21d2",
+      "drwave-restart-product-ctest.log": "1ff123903ca5a13a08c540e960039ad69f4366a3476aa3adac24084ed06e4677"
+    }
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "authored_boundaries": [
+    "Host 88.2kHz/128-frame scheduling",
+    "Counter cadence and queued age reset",
+    "A440 pitch word producer",
+    "Pending consumer, core reset and cancellation",
+    "First-free ownership/duplicates/list/retirement composition and all-negative fallback",
+    "Mono/Legato, modulation clock, output filtering and SRC"
+  ],
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10,
+  "realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 84.19,
+    "metrics_sha256": "fcb6d80fe04c3f4436377f7b6df50e1b0ec15e9c9dfbdd964f1190b609105baf",
+    "additional_prepared_host_midi_workloads": 6,
+    "additional_prepared_host_midi_callbacks": 1536,
+    "limitation": "Prepared MIDI buffers; no universal absence of allocation for cold/replaced host buffers"
+  }
+}

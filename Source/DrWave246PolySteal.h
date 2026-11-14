@@ -3,6 +3,7 @@
 #include "Voice246Activation.h"
 #include "Voice246PolyRelease.h"
 #include "Envelope246Transition.h"
+#include "Voice246PolySelection.h"
 namespace pocket::reference {
 enum class DrWave246PolyStealStatus { unsupported, gated, duplicate, appended };
 struct DrWave246PolyStealResult { DrWave246PolyStealStatus status=DrWave246PolyStealStatus::unsupported;int voice=-1; };
@@ -20,9 +21,8 @@ inline DrWave246PolyStealResult drWave246PolySteal(
     for(size_t i=0;i<list.count;++i)if(word(i*20)==note.noteIndex)return {S::duplicate,-1};
     if(list.count==128)return {};
     for(auto active:registers.active)if(!active)return {};
-    int voice=-1;int32_t greatest=-1;
-    for(size_t i=0;i<6;++i){const auto age=signedPhase(envelopes[i].blocks);
-        if(age>greatest){greatest=age;voice=int(i);}}
+    std::array<uint32_t,6> ages{};for(size_t i=0;i<6;++i)ages[i]=envelopes[i].blocks;
+    const int voice=voice246SelectBusy(ages);
     if(voice<0)return {}; // Original assert path excluded when all ages are negative.
     const auto pitch=saturate32(int64_t(multiplyQ31(voice246NotePitch[note.noteIndex],tuning))*2);
     const auto low=note.velocity&65535u;

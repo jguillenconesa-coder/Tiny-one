@@ -1,4 +1,8 @@
-# Pocket One 0.56.0
+# Pocket One 0.57.0
+
+**Robo polifónico de Dr. Wave**: selección por contador ADSR y rampa de reinicio
+contrastadas, con servicio propio de pitch/velocidad pendientes y cancelación segura.
+[Guía](docs/drwave246-voice-restart.md) · [Validación](docs/releases/v0.57.0-validation.json).
 
 **Dinámica de Dr. Wave**: velocidad y atenuación por nota dentro del ADSR de
 punto fijo, sin multiplicar dos veces la velocidad. Reloj y modos de voz híbridos
