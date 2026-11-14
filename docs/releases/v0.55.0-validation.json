@@ -60,23 +60,23 @@
     "databaseId": 43549119962,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962",
     "headSha": "aeb211f26109d73767364f7579c1e50cfcf65363",
-    "status": "in_progress",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "build (ubuntu-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (macos-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (windows-2022)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
     ]
   },

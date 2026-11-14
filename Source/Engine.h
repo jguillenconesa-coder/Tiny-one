@@ -330,6 +330,7 @@ public:
                 amplitude=1;v.level=v.cluster246.output.envelopeLevel();if(v.cluster246.output.envelopeDone())v.active=false;
             }
             else if(nativeDrWave){
+                v.drWave246.setDynamics(v.note,v.velocity);
                 s=v.drWave246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?modulated:drWaveRaw,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:midiAdsr,drWaveConfig,phaseConfig,v.released);
                 amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone())v.active=false;
             }
@@ -385,7 +386,7 @@ public:
                 if(amplitude<.0001f) v.active=false;
             }
             v.time+=1/sampleRate;
-            float contribution=s*amplitude*v.velocity*.16f;
+            float contribution=s*amplitude*(nativeDrWave?1.f:v.velocity)*.16f;
             if((nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
             v.lastOutput=contribution;sum+=contribution;
         }

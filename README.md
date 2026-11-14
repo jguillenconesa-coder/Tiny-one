@@ -1,4 +1,9 @@
-# Pocket One 0.55.0
+# Pocket One 0.56.0
+
+**Dinámica de Dr. Wave**: velocidad y atenuación por nota dentro del ADSR de
+punto fijo, sin multiplicar dos veces la velocidad. Reloj y modos de voz híbridos
+explícitos. [Guía](docs/drwave246-voice-dynamics.md) ·
+[Validación](docs/releases/v0.56.0-validation.json).
 
 **Salida MIDI al host**: teclas y secuenciador/arpegiador desde COM, con automatización,
 guardado y limpieza de notas. Desactivada por defecto; adaptación propia del host.

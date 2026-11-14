@@ -27,6 +27,15 @@ int main(int argc,char** argv){try{
     std::array<size_t,9> stages{};
     for(size_t block=0;block<4096;++block){const auto in=block*48,out=1024+block*292;auto state=stateAt(input,in);++stages[state.stage];pocket::reference::Adsr246Noise noise{u32(input,in+36),pocket::reference::signedPhase(u32(input,in+40))};std::array<int16_t,128> actual{};
         pocket::reference::adsr246Block(state,{s16(input,in+24),s16(input,in+26),s16(input,in+28),s16(input,in+30)},s16(input,in+32),noise,actual);compare(state,noise,actual,output,out);
+        // Compare the product's per-sample gain path directly to original samples,
+        // with identity output filters and the exact original initial state/noise.
+        pocket::Phase246Voice product; pocket::Phase246Config identity;
+        product.envelope=stateAt(input,in);product.envelopeStarted=true;
+        product.envelopeVolume=s16(input,in+32);
+        product.envelopeNoise={u32(input,in+36),pocket::reference::signedPhase(u32(input,in+40))};
+        const std::array<int16_t,4> controls{{s16(input,in+24),s16(input,in+26),s16(input,in+28),s16(input,in+30)}};
+        for(size_t frame=0;frame<128;++frame){const auto sample=product.shapeSample(1,identity,&controls);check(sample==float(s16(output,out+frame*2))/16384.f,"Product envelope gain differs from original sample");}
+        check(product.envelope.stage==state.stage&&product.envelope.level==state.level&&product.envelope.blocks==state.blocks&&product.envelopeNoise.seed==noise.seed&&product.envelopeNoise.previous==noise.previous,"Product envelope state/dither differs");
     }
     for(auto count:stages)check(count>400,"Insufficient envelope branch coverage");
     const auto stream=read(root+"adsr246-stream-input.bin"),continuous=read(root+"adsr246-stream-output.bin");check(stream.size()==16384*48&&continuous.size()==16384*292,"Wrong continuous envelope oracle dimensions");

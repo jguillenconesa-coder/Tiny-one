@@ -33,6 +33,8 @@ struct Phase246Voice {
     reference::Adsr246State envelope;
     reference::Adsr246Noise envelopeNoise;
     reference::Adsr246Parameters envelopeParameters{{64,8064,32767,8192}};
+    // Default Q15 volume/gain retain the previous 0x7ffe0000 coefficient.
+    int16_t envelopeVolume=32767;int32_t envelopeGain=0x7ffe0000;
     bool envelopeStarted=false,envelopeReleased=false;
     bool envelopeDone() const noexcept {return envelopeStarted&&envelope.stage==0;}
     float envelopeLevel() const noexcept {return float(envelope.level/1073741824.);}
@@ -47,10 +49,10 @@ struct Phase246Voice {
         if(adsr){
             if(!envelopeStarted){envelope.noteOn();envelopeStarted=true;envelopeReleased=false;}
             if(released&&!envelopeReleased){envelope.noteOff((*adsr)[2]);envelopeReleased=true;}
-            if(envelope.frame==0)envelopeParameters=reference::Adsr246Parameters(*adsr);
+            if(envelope.frame==0){envelopeParameters=reference::Adsr246Parameters(*adsr);envelopeGain=int32_t(reference::multiplyQ15(envelopeVolume,int16_t(envelope.gain&65535)))*65536;}
             const bool active=envelope.stage!=0;
             const auto noise=envelopeNoise.next();const auto level=envelope.advance(envelopeParameters);
-            const auto gain=reference::multiplyQ31(level,int32_t(0x7ffe0000));
+            const auto gain=reference::multiplyQ31(level,envelopeGain);
             const auto quantized=reference::floorDivide(reference::saturate32(int64_t(gain)+noise),65536);
             sample*=active?bend.amplitude(midi.amplitude(tremolo.amplitude(int16_t(quantized),config.table)))/16384.:0;
             if(!active)bend.amplitude(midi.amplitude(tremolo.amplitude(0,config.table)));

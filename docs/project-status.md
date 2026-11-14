@@ -46,6 +46,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega funcional 0.56.0: dinámica de Dr. Wave
+
+[Velocidad y atenuación por nota](drwave246-voice-dynamics.md) pasan al ADSR de
+punto fijo; desaparece el multiplicador flotante de velocidad posterior en este
+motor. Las palabras VoiceCtl y la combinación Q15/Q31 ya contrastadas se usan
+con conversión de velocidad y cadencia de bloques propias del host. No implica
+recuperar el servicio L1 ni el scheduler original.
+
+El camino de ganancia del producto coincide con 524.288 posiciones del corpus
+ADSR original. 16.384 puentes nota/velocidad y nueve escenarios de ejecución
+comprueban cuantización, sustain, fallback, robo y ausencia de doble velocidad.
+Ambas suites pasan ASan/UBSan. 148/148 suites Linux y VST3/standalone compilados;
+1.446 cargas de tiempo real sin heap rastreado. CI del producto pendiente de publicación.
+[Evidencia](releases/v0.56.0-validation.json). Sin instaladores, ≈70 % ±10;
+calibración acústica y Ableton real pendientes. Siguiente frente: servicio de
+reinicios pendientes y transferencia de los registros de voz al render.
+
 ## Entrega funcional 0.55.0: salida MIDI al host
 
 [COM → Send keys and sequencer to host MIDI](host-midi-output.md) habilita teclas
@@ -60,7 +77,7 @@ como integración del transporte USB original.
 aprobados. Seis cargas nuevas con buffers preparados y 1.536 callbacks sin heap
 rastreado; las 1.446 cargas de regresión también pasan. Un buffer MIDI frío o
 sustituido por el host puede crecer: no se afirma ausencia universal de heap.
-VST3 y standalone compilados en Linux; [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962) en curso
+VST3 y standalone compilados en Linux; [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962) aprobado
 en Linux, Windows/MSVC y macOS universal (pruebas Intel) sobre `aeb211f`.
 [Evidencia](releases/v0.55.0-validation.json). Sin instaladores; ≈70 % ±10.
 Ableton real, fidelidad acústica y productores/scheduler originales pendientes.

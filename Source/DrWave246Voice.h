@@ -28,6 +28,18 @@ struct DrWave246Voice {
     unsigned cursor=128,counter=0;
     double previousInput=0,previousDc=0;
     bool initialized=false;
+    int dynamicsNote=-1;float dynamicsVelocity=-1;
+    // Verified VoiceCtl note attenuation and signed velocity words. Mapping the
+    // host float to MIDI codes and latching on our 128-frame clock are authored.
+    void setDynamics(int note,float velocity) noexcept {
+        if(note==dynamicsNote&&velocity==dynamicsVelocity)return;
+        dynamicsNote=note;dynamicsVelocity=velocity;
+        const int bounded=std::clamp(note,0,127);
+        const auto code=std::isfinite(velocity)?int(std::clamp(velocity,0.f,1.f)*127.f+.5f):0;
+        output.envelopeVolume=int16_t(code*256);
+        const uint32_t gain=bounded==0?32767u:32768u-uint32_t(bounded)*128u;
+        output.envelope.gain=(output.envelope.gain&0xffff0000u)|gain;
+    }
     float source(double frequency,const std::array<int16_t,4>& controls,
                  const std::array<int16_t,4>& adsr,const DrWave246Config& config,
                  const Phase246Config& rate,bool released) noexcept {

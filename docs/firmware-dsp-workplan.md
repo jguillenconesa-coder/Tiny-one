@@ -1186,6 +1186,22 @@ reserva fija y política de desbordamiento propios. El estudio original de MIDI
 no prueba equivalencia del scheduler, transporte USB ni hardware físico.
 147/147 suites Linux, router ASan/UBSan, COM gráfico y seis nuevas cargas de callback
 con buffers preparados aprobados; [CI multiplataforma del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962)
-en curso sobre `aeb211f` (Linux, Windows/MSVC y macOS universal/pruebas Intel).
+aprobado sobre `aeb211f` (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 Sin instaladores, planificación ≈70 % ±10; Ableton y acústica sin medir.
 Siguiente frente: productores y servicio activo de voz.
+
+
+## Dinámica de Dr. Wave integrada — 2026-11-14, 0.56.0
+
+[Velocidad y atenuación por nota](drwave246-voice-dynamics.md) se combinan en el
+ADSR de punto fijo contrastado. Se elimina la velocidad flotante posterior para
+Dr. Wave; otros motores conservan su respuesta. 524.288 posiciones originales
+comparan el camino de ganancia del producto; 16.384 puentes y nueve escenarios
+Engine prueban Mono/Legato/Poly, sustain, fallback, robo y cuantización única.
+ASan/UBSan de ambas suites y 148/148 suites Linux aprobados; VST3/standalone
+compilados y 1.446 cargas de tiempo real sin heap rastreado. CI del producto
+pendiente de publicación.
+Conversión float→MIDI y captura cada 128 muestras propias; no se recupera el
+servicio L1, clock físico ni la composición original completa. Sin instaladores;
+≈70 % ±10, acústica y Ableton real pendientes. Siguiente: reinicios pendientes y
+transferencia de registros al render.

@@ -1,0 +1,99 @@
+{
+  "version": "0.56.0",
+  "date": "2026-11-14",
+  "base_commit": "1a45c3f",
+  "change": "DrWave verified note attenuation and velocity words in fixed-point ADSR gain; external float velocity removed for this engine",
+  "original_reference": {
+    "fixtures_regenerated": false,
+    "product_gain_compared_positions": 524288,
+    "blocks": 4096,
+    "includes_inactive_positions": true,
+    "source": "Existing ADSR246 original fixtures; identity output filters and inactive modulators",
+    "host_velocity_register_bridges": 16384,
+    "bridge_reference": "Previously verified VoiceCtl activation model, not new original executions"
+  },
+  "integration": {
+    "status": "success",
+    "engine_performance_scenarios": 9,
+    "renders_per_scenario": 3,
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "modes": [
+      "Poly",
+      "Mono",
+      "Legato"
+    ],
+    "checks": [
+      "Exact audio equality for distinct floats mapping to the same MIDI code",
+      "Velocity 32/64 energy ratio",
+      "Sustain, fallback, voice stealing and release",
+      "Internal block gain latching"
+    ]
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": [
+      "DrWave246DynamicsTests",
+      "Envelope246Tests"
+    ],
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false,
+    "full_plugin_sanitized": false
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 148,
+    "total": 148,
+    "runs": [
+      {
+        "scope": "All 144 non-product suites",
+        "passed": 144,
+        "total": 144,
+        "seconds": 198.31
+      },
+      {
+        "scope": "All four product suites",
+        "passed": 4,
+        "total": 4,
+        "seconds": 140.38
+      }
+    ],
+    "products": [
+      "VST3",
+      "Standalone"
+    ],
+    "module_version": "0.56.0",
+    "log_sha256": {
+      "drwave-dynamics-core-ctest.log": "510fdbeea47f371e173e8ce3315e9038d7d9310ac253b92103994a7f638352bf",
+      "drwave-dynamics-product-ctest.log": "dce84358d3460927c83046a329d174545d836c2b9b3374431ce6c6f2023bc184"
+    }
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "authored_boundaries": [
+    "Float to MIDI velocity quantization",
+    "128-sample clock and gain latching",
+    "Voice modes/priority/sustain/glide/stealing and retirement",
+    "Output filtering, normalization and final mix"
+  ],
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10,
+  "realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 82.66,
+    "metrics_sha256": "38558a5b906af885134a8be27c32500cddb4a2d27ab32f08232f17442aea784e",
+    "additional_prepared_host_midi_workloads": 6,
+    "additional_prepared_host_midi_callbacks": 1536,
+    "limitation": "Prepared buffers; cold/replaced host MIDI buffer may grow"
+  }
+}
