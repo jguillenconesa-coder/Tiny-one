@@ -1,5 +1,8 @@
 # Dr. Wave: reinicio polifónico y entrega de registros — 0.57.0
 
+Desde 0.58.0 se amplía a [reinicio Mono y retirada con cola](drwave246-mono-retirement.md).
+Los detalles históricos siguientes deben leerse con esa actualización.
+
 Al agotar las seis voces polifónicas, Dr. Wave conserva ahora el estado de la
 víctima mientras ejecuta la rampa ADSR de reinicio contrastada. Después entrega
 pitch y velocidad pendientes al render. Sustituye el reinicio inmediato y el

@@ -15,7 +15,9 @@ sin glide. Los cuatro mandos de color siguen controlando ADSR en esta página.
   actúa en este modo.
 - **Mono** usa una voz y reinicia osciladores, ADSR y Value en cada nueva nota o
   retorno a otra nota retenida. FREE de Value conserva su política de fase.
-  El relevo de 3 ms evita sustituir de golpe la última contribución de la voz.
+  Desde 0.58.0, Dr. Wave usa [rampa y entrega pendiente](drwave246-mono-retirement.md)
+  en vez de reset inmediato; conserva el nivel hasta la rampa y actualiza dinámica.
+  Los demás motores conservan el relevo de 3 ms.
 - **Legato** mantiene los osciladores, ADSR y fase Value mientras haya notas
   solapadas y la voz siga activa. Una nota separada vuelve a iniciar la voz.
 - Prima la última nota retenida. Al soltarla se vuelve a la anterior con su

@@ -32,7 +32,10 @@ struct DrWave246Voice {
     int dynamicsNote=-1;float dynamicsVelocity=-1;
     int restartNote=0;float restartVelocity=0;
     uint32_t renderedPitch=0;
-    bool restartQueued=false,restartArmed=false,restartCancelled=false;
+    bool restartQueued=false,restartArmed=false,restartCancelled=false,restartMono=false;
+    unsigned drainSamples=0,quietSamples=0;
+    bool draining=false,drainComplete=false;
+    bool finished() const noexcept {return drainComplete&&!restartPending();}
     static uint32_t hostPitch(double frequency) noexcept {
         return uint32_t((std::isfinite(frequency)?std::clamp(frequency,0.,Phase246Config::internalRate*.49):0.)/Phase246Config::internalRate*4294967296.+.5);
     }
@@ -41,9 +44,10 @@ struct DrWave246Voice {
     }
     // Authored boundary service. The request/ramp are recovered, but the
     // consumer timing, core reset and cancellation policy are not original L1.
-    void requestRestart(int note,float velocity) noexcept {
+    void requestRestart(int note,float velocity,bool mono=false) noexcept {
+        draining=drainComplete=false;drainSamples=quietSamples=0;
         if(!output.envelopeStarted){setDynamics(note,velocity);return;}
-        restartNote=note;restartVelocity=velocity;restartQueued=true;restartCancelled=false;
+        restartNote=note;restartVelocity=velocity;restartQueued=true;restartCancelled=false;restartMono=mono;
     }
     bool restartPending() const noexcept {return restartQueued||restartArmed;}
     uint32_t selectionBlocks() const noexcept {return restartQueued?0:output.envelope.blocks;}
@@ -51,6 +55,9 @@ struct DrWave246Voice {
     // host float to MIDI codes and latching on our 128-frame clock are authored.
     void setDynamics(int note,float velocity) noexcept {
         if(restartPending()||restartCancelled||(note==dynamicsNote&&velocity==dynamicsVelocity))return;
+        applyDynamics(note,velocity);
+    }
+    void applyDynamics(int note,float velocity) noexcept {
         dynamicsNote=note;dynamicsVelocity=velocity;
         const int bounded=std::clamp(note,0,127);
         const auto code=velocityCode(velocity);
@@ -70,12 +77,15 @@ struct DrWave246Voice {
             bool committed=false;
             if(restartQueued){
                 reference::adsr246RequestRestart(output.envelope,hostPitch(frequency),uint16_t(velocityCode(restartVelocity)*256));
+                // The verified active mono-style branch writes new velocity and
+                // note gain with its request; busy poly preserves the old words.
+                if(restartMono)applyDynamics(restartNote,restartVelocity);
                 output.envelopeReleased=false;restartQueued=false;restartArmed=true;
             }else if(restartArmed&&output.envelope.stage==7){
                 renderedPitch=output.envelope.field12;
                 output.envelopeVolume=int16_t(output.envelope.field16>>16);
                 dynamicsNote=restartNote;dynamicsVelocity=restartVelocity;
-                // Preserve the old gain word, as the recovered busy poly helper does.
+                // Gain was preserved for poly, or updated at the mono request.
                 state.construct(0);waves={};runtime={};runtime.settings={0x100,0,32768,262144};counter=0;
                 restartArmed=false;committed=true;
             }
@@ -93,7 +103,15 @@ struct DrWave246Voice {
         // Our 15 Hz DC blocker removes offsets introduced by wave transforms.
         const double dc=input-previousInput+.998932000*previousDc;
         previousInput=input;previousDc=dc;
-        return output.shapeSample(dc,rate,&adsr,released);
+        const float shaped=output.shapeSample(dc,rate,&adsr,released);
+        // Authored retirement: drain filters/SRC instead of dropping a voice as
+        // soon as the envelope's lookahead sample reaches stage zero.
+        if(output.envelopeDone()&&!restartPending()){
+            draining=true;++drainSamples;
+            quietSamples=std::abs(shaped)<1.e-7f?quietSamples+1:0;
+            drainComplete=drainComplete||quietSamples>=64||drainSamples>=2048;
+        }else{draining=drainComplete=false;drainSamples=quietSamples=0;}
+        return shaped;
     }
     float next(double frequency,const std::array<int16_t,4>& controls,
                const std::array<int16_t,4>& adsr,const DrWave246Config& config,

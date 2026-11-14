@@ -1,4 +1,8 @@
-# Pocket One 0.57.0
+# Pocket One 0.58.0
+
+**Mono y retirada de Dr. Wave**: reinicio con rampa contrastada, dinámica por nota
+y finalización después de la cola de filtros/SRC, con servicio propio explícito.
+[Guía](docs/drwave246-mono-retirement.md) · [Validación](docs/releases/v0.58.0-validation.json).
 
 **Robo polifónico de Dr. Wave**: selección por contador ADSR y rampa de reinicio
 contrastadas, con servicio propio de pitch/velocidad pendientes y cancelación segura.

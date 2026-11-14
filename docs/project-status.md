@@ -46,6 +46,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega funcional 0.58.0: Mono y retirada de Dr. Wave
+
+[Reinicio y cola de salida](drwave246-mono-retirement.md): Mono conserva el nivel
+hasta la rampa contrastada, actualiza velocidad/ganancia y entrega los registros
+mediante el servicio propio. Las voces Dr. Wave esperan a que decaigan filtros y
+SRC antes de retirarse; una nota nueva revoca esa retirada. La cola anunciada al
+host incluye la cota y el margen del SRC. No se recupera el scheduler L1.
+
+A seis tasas se prueban palabras Mono, rampa, fallback, sustain, Panic y
+reutilización durante la cola. ASan/UBSan del ensayo nuevo y la regresión
+polifónica aprobados. 27 escenarios reales Poly/Mono/Legato aprobados con
+callbacks 64/257 y A/B de dueño anterior. 151/151 suites Linux, VST3/standalone
+compilados y 1.446 cargas sin heap rastreado. CI del producto pendiente de publicación.
+[Evidencia](releases/v0.58.0-validation.json). Sin instaladores; ≈70 % ±10.
+Fidelidad acústica y Ableton real pendientes. Siguiente: modo Unison y composición
+de las seis voces, manteniendo explícito el servicio propio.
+
 ## Entrega funcional 0.57.0: reinicio polifónico de Dr. Wave
 
 [Selección, rampa y transferencia de registros](drwave246-voice-restart.md): el
@@ -58,7 +75,7 @@ conservan su política. No se recupera el servicio L1 ni su temporización.
 Oráculos de 768 y 4.552 registros conservados, seis streams Engine y pruebas del
 procesador real en nueve escenarios con callbacks 64/257. ASan/UBSan del servicio
 y ambos oráculos aprobados. 150/150 suites Linux, VST3/standalone compilados
-y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185) en cola sobre `ddfb735`
+y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185) aprobado sobre `ddfb735`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.57.0-validation.json). Sin instaladores; ≈70 % ±10.
 Fidelidad acústica y Ableton real pendientes. Siguiente: reinicio Mono y retirada
@@ -76,7 +93,7 @@ El camino de ganancia del producto coincide con 524.288 posiciones del corpus
 ADSR original. 16.384 puentes nota/velocidad y nueve escenarios de ejecución
 comprueban cuantización, sustain, fallback, robo y ausencia de doble velocidad.
 Ambas suites pasan ASan/UBSan. 148/148 suites Linux y VST3/standalone compilados;
-1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) en curso sobre `365e3e6`
+1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) aprobado sobre `365e3e6`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.56.0-validation.json). Sin instaladores, ≈70 % ±10;
 calibración acústica y Ableton real pendientes. Siguiente frente: servicio de

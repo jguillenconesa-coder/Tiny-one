@@ -16,7 +16,7 @@ int main(){try{
   engine->noteOn(57,1,1);check(render(int(rate*.2))>.01,"Silent first mono note");note(57,1);const auto trigger=state().trigger;
   engine->noteOn(69,.7f,2);note(69,2);
   check((state().trigger>trigger)==(policy==1),"Mono/Legato envelope retrigger policy failed");
-  check(policy==1?state().envelope==0:state().envelope>.01,"Legato lost envelope / Mono failed to reset it");
+  check(policy==1&&mode!=6?state().envelope==0:state().envelope>.01,"Envelope reset/continuation policy failed");
   render(int(rate*.05));check(std::abs(state().frequency-std::sqrt(220.*440.))<.01,"Glide not linear in semitones / host-rate independent");
   render(int(rate*.05));check(std::abs(state().frequency-440)<1e-8,"Glide did not reach exact target");
   int crossings=0;float previous=0;

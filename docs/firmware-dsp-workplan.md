@@ -1199,7 +1199,7 @@ Dr. Wave; otros motores conservan su respuesta. 524.288 posiciones originales
 comparan el camino de ganancia del producto; 16.384 puentes y nueve escenarios
 Engine prueban Mono/Legato/Poly, sustain, fallback, robo y cuantización única.
 ASan/UBSan de ambas suites y 148/148 suites Linux aprobados; VST3/standalone
-compilados y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) en curso sobre `365e3e6`
+compilados y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) aprobado sobre `365e3e6`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 Conversión float→MIDI y captura cada 128 muestras propias; no se recupera el
 servicio L1, clock físico ni la composición original completa. Sin instaladores;
@@ -1217,6 +1217,19 @@ Los oráculos de robo/pitch explícito (768/4.552 registros) siguen pasando, jun
 ASan/UBSan de ambos y del servicio. Se prueban seis streams Engine y nueve casos
 reales del procesador con callbacks 64/257 y retirada del propietario anterior.
 150/150 suites Linux, VST3/standalone compilados y 1.446 cargas sin heap rastreado.
-[CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185) en cola sobre `ddfb735`
+[CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185) aprobado sobre `ddfb735`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel). Sin instaladores, ≈70 % ±10; scheduler L1,
 acústica y Ableton real pendientes. Siguiente: reinicio Mono y retirada por voz.
+
+
+## Mono y retirada con cola de Dr. Wave — 2026-11-14, 0.58.0
+
+[Rampa Mono y retirada](drwave246-mono-retirement.md): palabras de dinámica y
+rampa contrastadas dentro del servicio propio, con prioridad/fallback/sustain por
+canal. La retirada espera la cola de filtros/SRC y puede revocarse si llega otra
+nota; tiempo de cola del host ampliado. Se comprueba a seis tasas y se extiende la
+prueba real del procesador a 27 escenarios Poly/Mono/Legato, callbacks 64/257 y A/B
+del dueño anterior. ASan/UBSan nuevo, regresión polifónica y 151/151 suites Linux
+aprobados; VST3/standalone compilados y 1.446 cargas sin heap rastreado.
+CI del producto pendiente de publicación. Sin instaladores, ≈70 % ±10; acústica, Ableton real y scheduler
+L1 pendientes. Siguiente: Unison y composición de las seis voces.

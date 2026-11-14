@@ -349,7 +349,7 @@ public:
             else if(nativeDrWave){
                 v.drWave246.setDynamics(v.note,v.velocity);
                 s=v.drWave246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?modulated:drWaveRaw,(nativeValueVoice||nativeRandom)&&modEnvelope?modulated:midiAdsr,drWaveConfig,phaseConfig,v.released);
-                amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.output.envelopeDone()&&!v.drWave246.restartPending())v.active=false;
+                amplitude=1;v.level=v.drWave246.output.envelopeLevel();if(v.drWave246.finished())v.active=false;
             }
             else if(nativeDigital){
                 s=v.digital246.next(frequency,(nativeValueVoice||nativeRandom)&&!modEnvelope?reference::Digital246Coefficients(modulated):digitalCoefficients,phaseConfig,nativeEnvelopeActive?((nativeValueVoice||nativeRandom)&&modEnvelope?&modulated:&midiAdsr):nullptr,v.released);
@@ -462,7 +462,10 @@ private:
         const auto& n=held.notes[size_t(id)];
         const bool continuing=overlap&&v.active&&!v.released;
         const double from=v.glide.value;
-        if(hybridMode==1||!continuing){
+        if(hybridMode==1&&selectedEngine==6&&v.active){
+            v.drWave246.requestRestart(id%128,n.velocity,true);
+            v.randomLfo.noteOn();v.valueVoice.noteOn();v.age=++age;v.stealRemaining=0;
+        }else if(hybridMode==1||!continuing){
             const auto tail=v.active?v.lastOutput:0.f;const auto randomState=v.randomLfo;const auto valueState=v.valueVoice;
             v={};v.randomLfo=randomState;v.randomLfo.noteOn();v.valueVoice=valueState;v.valueVoice.noteOn();v.age=++age;
             v.cluster246.context.random=uint32_t(v.age)*2654435761u;

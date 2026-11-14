@@ -1,5 +1,8 @@
 # Dr. Wave 246: integración híbrida
 
+Desde 0.58.0 se amplía a [reinicio Mono y retirada con cola](drwave246-mono-retirement.md).
+Los detalles históricos siguientes deben leerse con esa actualización.
+
 **Actualización 0.57.0:** la [dinámica](drwave246-voice-dynamics.md) incorpora
 velocidad/atenuación por nota contrastadas. El [robo polifónico](drwave246-voice-restart.md)
 ya usa el escaneo por contador y la rampa ADSR contrastados con un consumidor

@@ -92,23 +92,23 @@
     "databaseId": 43631625185,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185",
     "headSha": "ddfb735af4fbad24d4489d9be5c7e20e72c35a35",
-    "status": "queued",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "build (windows-2022)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (ubuntu-latest)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (macos-latest)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
     ]
   },
@@ -135,5 +135,112 @@
     "additional_prepared_host_midi_callbacks": 1536,
     "limitation": "Prepared MIDI buffers; no universal absence of allocation for cold/replaced host buffers"
   },
-  "implementation_commit": "ddfb735af4fbad24d4489d9be5c7e20e72c35a35"
+  "implementation_commit": "ddfb735af4fbad24d4489d9be5c7e20e72c35a35",
+  "triggered_regression_ci": [
+    {
+      "databaseId": 43631625080,
+      "name": "Validate Element LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625080",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625087,
+      "name": "Validate Element voice pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625087",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625058,
+      "name": "Validate MIDI LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625058",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625110,
+      "name": "Validate Crank voice gain and pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625110",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625074,
+      "name": "Validate Crank LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625074",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625171,
+      "name": "Validate Element FX input audio",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625171",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625117,
+      "name": "Validate Element voice gain",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625117",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625291,
+      "name": "Validate melodic sampler reader and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625291",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625195,
+      "name": "Validate synth range removal and original MIDI queue",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625195",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625111,
+      "name": "Validate synth held bank changer with explicit L1 completion",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625111",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625231,
+      "name": "Validate Bend voice gain and pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625231",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625101,
+      "name": "Validate drum sampler reader and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625101",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625093,
+      "name": "Validate Bend LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625093",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625205,
+      "name": "Validate D-box reconstructed render and pad adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625205",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 43631625081,
+      "name": "Validate Bend and Crank FX input audio",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625081",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
 }

@@ -417,6 +417,8 @@ double PocketProcessor::getTailLengthSeconds() const {
         const double coefficient=pocket::reference::adsr246Decay[size_t(index)]/2147483648.;
         envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+128./88200.;
     }
+    // Dr. Wave keeps its output filters/SRC alive after the envelope finishes.
+    if(drWave246Enabled())envelopeTail+=(2048.+2.)/88200.+1./std::max(8000.,rate);
     if(sampler246EnvelopeEnabled()){const bool modulatedRelease=(valueVoice246Enabled()&&phaseAudio[34]->load()>.5f&&int(phaseAudio[35]->load())==3&&phaseAudio[33]->load()!=0)||(random246Enabled()&&int(phaseAudio[64]->load())==1&&phaseAudio[62]->load()!=0);const auto index=size_t(127-std::clamp(modulatedRelease?0:int(samplerAudio[15]->load())/128,0,127));const double coefficient=pocket::reference::adsr246Decay[index]/2147483648.;envelopeTail=std::log(16./1073741824.)/std::log(coefficient)/88200.+640./88200.;}
     // Instrument modulation can keep changing pitch, region and decay while
     // released. Report a conservative unbounded tail, not the static-pad bound.

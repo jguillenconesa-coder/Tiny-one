@@ -1,0 +1,130 @@
+{
+  "version": "0.58.0",
+  "date": "2026-11-14",
+  "base_commit": "5891b9c",
+  "change": "DrWave Mono restart through verified ADSR request and authored service, source filter/SRC drain before retirement and conservative host tail reporting",
+  "original_reference": {
+    "fixtures_regenerated": false,
+    "mono_words": "Previously verified active selector 1/3 velocity and note-gain writes",
+    "ramp": "Existing verified ADSR stage 6/7 arithmetic",
+    "commercial_mode_identity_inferred": false,
+    "original_pending_consumer_recovered": false
+  },
+  "mono_lifecycle": {
+    "status": "success",
+    "rates": [
+      8000,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "checks": [
+      "New Mono volume/gain at request boundary, upper gain preserved",
+      "Previous pitch retained during ramp and words delivered after it",
+      "Envelope/filter/SRC retirement and bounded residual output",
+      "Reuse during filter drain revokes retirement",
+      "Held-note fallback before pending commit",
+      "Per-channel sustain and panic"
+    ]
+  },
+  "processor_integration": {
+    "status": "success",
+    "scenarios": 27,
+    "renderings": 81,
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "modes": [
+      "Poly",
+      "Mono",
+      "Legato"
+    ],
+    "blocks": [
+      64,
+      257
+    ],
+    "checks": [
+      "Exact audio across callback partitions",
+      "Exact A/B with old-owner note-off removed",
+      "Exact silence after All Sound Off",
+      "Reported host tail covers observed release tail"
+    ],
+    "seconds": 1.3
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": [
+      "DrWave246MonoLifecycleTests",
+      "DrWave246RestartTests"
+    ],
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false,
+    "full_plugin_sanitized": false,
+    "log_sha256": "188cd648bc795b2934733419a3497e68d35391a13210f4cb5646125986abe601"
+  },
+  "retirement_policy": {
+    "authored": true,
+    "quiet_internal_samples": 64,
+    "absolute_threshold": 1e-07,
+    "max_internal_samples": 2048,
+    "internal_rate": 88200,
+    "host_tail_extra_seconds": "2050/88200 + 1/max(8000,hostRate)"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 151,
+    "total": 151,
+    "runs": [
+      {
+        "scope": "All 146 non-product suites",
+        "passed": 146,
+        "total": 146,
+        "seconds": 181.81
+      },
+      {
+        "scope": "All five product suites",
+        "passed": 5,
+        "total": 5,
+        "seconds": 130.75
+      }
+    ],
+    "products": [
+      "VST3",
+      "Standalone"
+    ],
+    "module_version": "0.58.0",
+    "log_sha256": {
+      "drwave-mono-core-ctest.log": "25acd27719e0d1a3585232262c4e9a901a9a6b4d2c542dbf9d37c0f1d42bf914",
+      "drwave-mono-product-ctest.log": "4b74f37867b80279b94ae5b8bdfd1894cce885dae3592997ebec54146855e3b4"
+    }
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "authored_boundaries": [
+    "Host Mono identity/priority and sustain/glide",
+    "128-sample scheduling and pending consumer",
+    "Core reset, replacement/cancellation and voice retirement",
+    "A440 pitch producer and output filtering/SRC"
+  ],
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10,
+  "realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 78.48,
+    "metrics_sha256": "e840ec1af0b75d050586dff712eaf397364bca004c5ffc01fa3071542b26c240",
+    "additional_prepared_host_midi_workloads": 6,
+    "additional_prepared_host_midi_callbacks": 1536,
+    "limitation": "Prepared buffers; cold/replaced host MIDI storage may allocate"
+  }
+}

@@ -76,13 +76,13 @@
     "databaseId": 43629319127,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127",
     "headSha": "365e3e6d72bd318f8999d8c514c894ae4116ff23",
-    "status": "in_progress",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "build (macos-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (windows-2022)",
