@@ -58,7 +58,8 @@ A seis tasas se prueban palabras Mono, rampa, fallback, sustain, Panic y
 reutilización durante la cola. ASan/UBSan del ensayo nuevo y la regresión
 polifónica aprobados. 27 escenarios reales Poly/Mono/Legato aprobados con
 callbacks 64/257 y A/B de dueño anterior. 151/151 suites Linux, VST3/standalone
-compilados y 1.446 cargas sin heap rastreado. CI del producto pendiente de publicación.
+compilados y 1.446 cargas sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) en cola sobre `f1917ff`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.58.0-validation.json). Sin instaladores; ≈70 % ±10.
 Fidelidad acústica y Ableton real pendientes. Siguiente: modo Unison y composición
 de las seis voces, manteniendo explícito el servicio propio.

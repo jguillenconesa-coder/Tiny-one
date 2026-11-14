@@ -1231,5 +1231,6 @@ nota; tiempo de cola del host ampliado. Se comprueba a seis tasas y se extiende 
 prueba real del procesador a 27 escenarios Poly/Mono/Legato, callbacks 64/257 y A/B
 del dueño anterior. ASan/UBSan nuevo, regresión polifónica y 151/151 suites Linux
 aprobados; VST3/standalone compilados y 1.446 cargas sin heap rastreado.
-CI del producto pendiente de publicación. Sin instaladores, ≈70 % ±10; acústica, Ableton real y scheduler
+[CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) en cola sobre `f1917ff`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel). Sin instaladores, ≈70 % ±10; acústica, Ableton real y scheduler
 L1 pendientes. Siguiente: Unison y composición de las seis voces.
