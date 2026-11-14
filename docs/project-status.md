@@ -58,7 +58,8 @@ El camino de ganancia del producto coincide con 524.288 posiciones del corpus
 ADSR original. 16.384 puentes nota/velocidad y nueve escenarios de ejecución
 comprueban cuantización, sustain, fallback, robo y ausencia de doble velocidad.
 Ambas suites pasan ASan/UBSan. 148/148 suites Linux y VST3/standalone compilados;
-1.446 cargas de tiempo real sin heap rastreado. CI del producto pendiente de publicación.
+1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) en curso sobre `365e3e6`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.56.0-validation.json). Sin instaladores, ≈70 % ±10;
 calibración acústica y Ableton real pendientes. Siguiente frente: servicio de
 reinicios pendientes y transferencia de los registros de voz al render.

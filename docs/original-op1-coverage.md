@@ -331,8 +331,8 @@ Dr. Wave; otros motores conservan su respuesta. 524.288 posiciones originales
 comparan el camino de ganancia del producto; 16.384 puentes y nueve escenarios
 Engine prueban Mono/Legato/Poly, sustain, fallback, robo y cuantización única.
 ASan/UBSan de ambas suites y 148/148 suites Linux aprobados; VST3/standalone
-compilados y 1.446 cargas de tiempo real sin heap rastreado. CI del producto
-pendiente de publicación.
+compilados y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43629319127) en curso sobre `365e3e6`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 Conversión float→MIDI y captura cada 128 muestras propias; no se recupera el
 servicio L1, clock físico ni la composición original completa. Sin instaladores;
 ≈70 % ±10, acústica y Ableton real pendientes. Siguiente: reinicios pendientes y
