@@ -60,7 +60,8 @@ como integración del transporte USB original.
 aprobados. Seis cargas nuevas con buffers preparados y 1.536 callbacks sin heap
 rastreado; las 1.446 cargas de regresión también pasan. Un buffer MIDI frío o
 sustituido por el host puede crecer: no se afirma ausencia universal de heap.
-VST3 y standalone compilados en Linux; CI del producto pendiente de publicación.
+VST3 y standalone compilados en Linux; [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962) en curso
+en Linux, Windows/MSVC y macOS universal (pruebas Intel) sobre `aeb211f`.
 [Evidencia](releases/v0.55.0-validation.json). Sin instaladores; ≈70 % ±10.
 Ableton real, fidelidad acústica y productores/scheduler originales pendientes.
 Siguiente bloque: servicio activo de voz y sus productores, manteniendo una

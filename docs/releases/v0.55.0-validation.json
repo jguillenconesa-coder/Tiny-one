@@ -57,12 +57,34 @@
     "screenshot_sha256": "c09f1ad70927af34987a80aa3d09b579aa61ba4a9dc28d3d2c5db044cd26c633"
   },
   "native_ci": {
-    "status": "pending publication"
+    "databaseId": 43549119962,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962",
+    "headSha": "aeb211f26109d73767364f7579c1e50cfcf65363",
+    "status": "in_progress",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "build (ubuntu-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (macos-latest)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "build (windows-2022)",
+        "status": "in_progress",
+        "conclusion": ""
+      }
+    ]
   },
   "installers_generated": false,
   "real_ableton_validated": false,
   "physical_midi_validated": false,
   "acoustic_fidelity_measured": false,
   "planning_percent": 70,
-  "planning_uncertainty_points": 10
+  "planning_uncertainty_points": 10,
+  "implementation_commit": "aeb211f26109d73767364f7579c1e50cfcf65363"
 }

@@ -317,6 +317,7 @@ Desactivada por defecto; no reenvía la entrada. Ownership, colisiones, limpieza
 reserva fija y política de desbordamiento propios. El estudio original de MIDI
 no prueba equivalencia del scheduler, transporte USB ni hardware físico.
 147/147 suites Linux, router ASan/UBSan, COM gráfico y seis nuevas cargas de callback
-con buffers preparados aprobados; CI multiplataforma del producto pendiente.
+con buffers preparados aprobados; [CI multiplataforma del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43549119962)
+en curso sobre `aeb211f` (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 Sin instaladores, planificación ≈70 % ±10; Ableton y acústica sin medir.
 Siguiente frente: productores y servicio activo de voz.
