@@ -1,4 +1,8 @@
-# Pocket One 0.54.0
+# Pocket One 0.55.0
+
+**Salida MIDI al host**: teclas y secuenciador/arpegiador desde COM, con automatización,
+guardado y limpieza de notas. Desactivada por defecto; adaptación propia del host.
+[Guía](docs/host-midi-output.md) · [Validación](docs/releases/v0.55.0-validation.json).
 
 **Velocidad y transposición de batería contrastadas**: palabras de evento
 originales, con 65.536 note-on completos verificados. Pitch fino, normalización,

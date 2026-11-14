@@ -9,6 +9,7 @@
 #include "Punch246Presets.h"
 #include "Tape.h"
 #include "NoteQueue.h"
+#include "HostMidiOutput.h"
 #include "SoundLibrary.h"
 #include "Sequencer.h"
 #include "ScreenKnobParameter.h"
@@ -18,14 +19,15 @@ public:
     ~PocketProcessor() override;
     void updateKeyboardDisplay();
     void prepareToPlay(double, int) override;
-    void releaseResources() override {}
+    void releaseResources() override {hostMidiReset.store(true);}
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     bool isBusesLayoutSupported(const BusesLayout&) const override;
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override { return true; }
     const juce::String getName() const override { return "Pocket One"; }
     bool acceptsMidi() const override { return true; }
-    bool producesMidi() const override { return false; }
+    bool producesMidi() const override { return true; }
+    juce::AudioParameterBool& hostMidiOutputParameter() {return *hostMidiOutput;}
     double getTailLengthSeconds() const override;
     int getNumPrograms() override { return 1; }
     int getCurrentProgram() override { return 0; }
@@ -189,6 +191,9 @@ private:
     void handleNoteOn(juce::MidiKeyboardState*,int,int,float) override;
     void handleNoteOff(juce::MidiKeyboardState*,int,int,float) override;
     pocket::NoteQueue uiToAudio,audioToUi;
+    juce::AudioParameterBool* hostMidiOutput=nullptr;
+    pocket::HostMidiOutput midiToHost;
+    std::atomic<bool> hostMidiReset{true};
     std::atomic<bool> keyboardOverflow{false},keyboardDisplayReset{false};
     bool reflectingHostNotes=false;
     struct UserPreset {juce::String name,id,bank,source;juce::File sample;std::array<juce::File,pocket::kitCapacity> kit;int kitCount=8;juce::var parameters,pads;bool isKit=false;};

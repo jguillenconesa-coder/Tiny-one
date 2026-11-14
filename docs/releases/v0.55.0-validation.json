@@ -1,0 +1,68 @@
+{
+  "version": "0.55.0",
+  "date": "2026-11-14",
+  "base_commit": "036e2a5cfd4d68716c8f505d97dc38d2525ac290",
+  "change": "Optional authored host MIDI output for local keys and sequencer/arpeggiator, COM control, automation, global state and bounded cleanup",
+  "provenance": "Host scheduling/source ownership/overflow are authored adaptations; no original USB transport equivalence claimed",
+  "linux_release": {
+    "status": "success",
+    "passed": 147,
+    "total": 147,
+    "seconds": 298.88,
+    "products": [
+      "VST3",
+      "Standalone"
+    ]
+  },
+  "router_sanitizers": {
+    "status": "success",
+    "scope": "HostMidiOutputTests only",
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false
+  },
+  "new_realtime": {
+    "status": "success",
+    "prepared_buffers": true,
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "blocks": [
+      64,
+      257
+    ],
+    "workloads": 6,
+    "tracked_callbacks": 1536,
+    "tracked_heap_calls": 0,
+    "tracking_linux": "C++ new/delete and C malloc/calloc/realloc/free wrappers",
+    "limitation": "A cold/replaced host JUCE MidiBuffer may allocate; not a universal callback allocation-free claim"
+  },
+  "existing_realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 77.54,
+    "metrics_sha256": "61ac819aa5b9a97a2699a9fe0e0cfaea182e8080af23e968a9f611820696fbd0"
+  },
+  "ui": {
+    "status": "success",
+    "environment": "Xvfb with xfwm4, native JUCE menu",
+    "checks": [
+      "COM popup snapshot inspected",
+      "first menu item selected with keyboard",
+      "output flag enabled"
+    ],
+    "screenshot_sha256": "c09f1ad70927af34987a80aa3d09b579aa61ba4a9dc28d3d2c5db044cd26c633"
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "physical_midi_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10
+}

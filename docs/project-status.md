@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 13 de noviembre de 2026
+# Estado y entregas del proyecto — 14 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -45,6 +45,26 @@ Hay instalador Windows y builds multiplataforma en CI. El CI 0.19 pasó también
 Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
+
+## Entrega funcional 0.55.0: salida MIDI al host
+
+[COM → Send keys and sequencer to host MIDI](host-midi-output.md) habilita teclas
+locales y secuenciador/arpegiador hacia el host. Parámetro automatizable global,
+desactivado por defecto, persistente y añadido al final de los parámetros.
+Canales locales conservados; secuenciador en canal 1; sin eco de la entrada.
+Limpieza al desactivar, detener secuencia, Panic, cambio de modo, restauración y
+desbordamiento. Reloj, ownership y adaptación del host propios: no se presenta
+como integración del transporte USB original.
+
+147/147 suites Release Linux, núcleo del router ASan/UBSan y flujo COM gráfico
+aprobados. Seis cargas nuevas con buffers preparados y 1.536 callbacks sin heap
+rastreado; las 1.446 cargas de regresión también pasan. Un buffer MIDI frío o
+sustituido por el host puede crecer: no se afirma ausencia universal de heap.
+VST3 y standalone compilados en Linux; CI del producto pendiente de publicación.
+[Evidencia](releases/v0.55.0-validation.json). Sin instaladores; ≈70 % ±10.
+Ableton real, fidelidad acústica y productores/scheduler originales pendientes.
+Siguiente bloque: servicio activo de voz y sus productores, manteniendo una
+ruta funcional propia donde el original siga inaccesible.
 
 ## Bloque de investigación: sincronización de selección
 
@@ -1164,6 +1184,6 @@ con macOS cancelado se conserva como historial en su evidencia.
 Todos los tamaños contiguos 1–32 y copias 0–128; sin sustituciones de código/L1
 en este ensayo. Endpoint ocupado y finalizaciones suministrados: no se ejecuta
 driver físico ni se recupera su temporización/propiedad de requests.
-Release, ASan/UBSan y tres regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953): Linux x64 y Windows/MSVC x64 aprobados; macOS en cola.
+Release, ASan/UBSan y tres regresiones aprobados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953): aprobado en Linux x64, Windows/MSVC x64 y macOS ARM64.
 Plugin 0.54.0 sin salida MIDI del host nueva, sin instaladores. Avance ≈70 % ±10,
 acústica pendiente. Siguiente frente: adaptación MIDI al host y servicio activo de voz.

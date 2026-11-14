@@ -302,25 +302,23 @@
     "databaseId": 43508701953,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43508701953",
     "headSha": "9fef2ef085b5ba14f6483545bd100916177a570a",
-    "status": "queued",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "validate (macos-15)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "validate (ubuntu-latest)",
         "status": "completed",
-        "conclusion": "success",
-        "platform": "Linux X64"
+        "conclusion": "success"
       },
       {
         "name": "validate (windows-2022)",
         "status": "completed",
-        "conclusion": "success",
-        "platform": "Windows X64"
+        "conclusion": "success"
       }
     ]
   }
