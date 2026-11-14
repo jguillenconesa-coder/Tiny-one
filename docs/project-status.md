@@ -58,7 +58,8 @@ conservan su política. No se recupera el servicio L1 ni su temporización.
 Oráculos de 768 y 4.552 registros conservados, seis streams Engine y pruebas del
 procesador real en nueve escenarios con callbacks 64/257. ASan/UBSan del servicio
 y ambos oráculos aprobados. 150/150 suites Linux, VST3/standalone compilados
-y 1.446 cargas de tiempo real sin heap rastreado. CI del producto pendiente de publicación.
+y 1.446 cargas de tiempo real sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185) en cola sobre `ddfb735`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.57.0-validation.json). Sin instaladores; ≈70 % ±10.
 Fidelidad acústica y Ableton real pendientes. Siguiente: reinicio Mono y retirada
 por voz, conservando límites explícitos entre núcleo y servicio propio.

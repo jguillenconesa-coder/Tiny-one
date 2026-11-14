@@ -89,7 +89,28 @@
     }
   },
   "native_ci": {
-    "status": "pending publication"
+    "databaseId": 43631625185,
+    "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43631625185",
+    "headSha": "ddfb735af4fbad24d4489d9be5c7e20e72c35a35",
+    "status": "queued",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "build (windows-2022)",
+        "status": "queued",
+        "conclusion": ""
+      },
+      {
+        "name": "build (ubuntu-latest)",
+        "status": "queued",
+        "conclusion": ""
+      },
+      {
+        "name": "build (macos-latest)",
+        "status": "queued",
+        "conclusion": ""
+      }
+    ]
   },
   "authored_boundaries": [
     "Host 88.2kHz/128-frame scheduling",
@@ -113,5 +134,6 @@
     "additional_prepared_host_midi_workloads": 6,
     "additional_prepared_host_midi_callbacks": 1536,
     "limitation": "Prepared MIDI buffers; no universal absence of allocation for cold/replaced host buffers"
-  }
+  },
+  "implementation_commit": "ddfb735af4fbad24d4489d9be5c7e20e72c35a35"
 }
