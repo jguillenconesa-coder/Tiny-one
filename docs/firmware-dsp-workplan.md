@@ -1231,6 +1231,17 @@ nota; tiempo de cola del host ampliado. Se comprueba a seis tasas y se extiende 
 prueba real del procesador a 27 escenarios Poly/Mono/Legato, callbacks 64/257 y A/B
 del dueño anterior. ASan/UBSan nuevo, regresión polifónica y 151/151 suites Linux
 aprobados; VST3/standalone compilados y 1.446 cargas sin heap rastreado.
-[CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) en cola sobre `f1917ff`
+[CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) aprobado sobre `f1917ff`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel). Sin instaladores, ≈70 % ±10; acústica, Ableton real y scheduler
 L1 pendientes. Siguiente: Unison y composición de las seis voces.
+
+
+## Unison de Dr. Wave — 2026-11-19, 0.59.0
+
+[Seis voces con desviación Q31](drwave246-unison.md), prioridad por canal y Glide,
+con parámetro propio, interfaz y estado. 768 registros originales conservados;
+semilla separada, composición, consumidor pendiente y mezcla media propios.
+153/153 suites Linux, sanitizadores, nueve pares reales 64/257 y UI aprobados.
+VST3/standalone compilados; 1.446 cargas base y seis nuevas Unison sin heap
+rastreado. CI del producto pendiente de publicación. Sin instaladores, ≈70 % ±10. Siguiente: contrastar
+Cluster de seis voces. La acústica y Ableton real siguen pendientes.

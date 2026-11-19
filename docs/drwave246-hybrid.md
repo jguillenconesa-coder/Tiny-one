@@ -1,5 +1,8 @@
 # Dr. Wave 246: integración híbrida
 
+Desde 0.59.0 se añade [Unison de seis voces](drwave246-unison.md), apagado por
+defecto, con desviación Q31 contrastada y composición/mezcla propias.
+
 Desde 0.58.0 se amplía a [reinicio Mono y retirada con cola](drwave246-mono-retirement.md).
 Los detalles históricos siguientes deben leerse con esa actualización.
 

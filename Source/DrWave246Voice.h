@@ -3,6 +3,7 @@
 #include "DrWave246Kernel.h"
 #include "Phase246.h"
 #include "Envelope246Transition.h"
+#include "Voice246UnisonPitch.h"
 namespace pocket {
 inline constexpr std::array<const char*,4> drWave246Ids{{"drWave246Blue","drWave246Green","drWave246White","drWave246Orange"}};
 inline constexpr std::array<const char*,4> drWave246EnvelopeIds{{"drWave246Attack","drWave246Decay","drWave246Sustain","drWave246Release"}};
@@ -31,7 +32,10 @@ struct DrWave246Voice {
     bool initialized=false;
     int dynamicsNote=-1;float dynamicsVelocity=-1;
     int restartNote=0;float restartVelocity=0;
-    uint32_t renderedPitch=0;
+    uint32_t renderedPitch=0;int32_t pitchDeviation=0;
+    uint32_t pitchWord(double frequency) const noexcept {
+        return uint32_t(reference::voice246ApplyUnison(int32_t(hostPitch(frequency)),pitchDeviation));
+    }
     bool restartQueued=false,restartArmed=false,restartCancelled=false,restartMono=false;
     unsigned drainSamples=0,quietSamples=0;
     bool draining=false,drainComplete=false;
@@ -76,7 +80,7 @@ struct DrWave246Voice {
         if(cursor==128){
             bool committed=false;
             if(restartQueued){
-                reference::adsr246RequestRestart(output.envelope,hostPitch(frequency),uint16_t(velocityCode(restartVelocity)*256));
+                reference::adsr246RequestRestart(output.envelope,pitchWord(frequency),uint16_t(velocityCode(restartVelocity)*256));
                 // The verified active mono-style branch writes new velocity and
                 // note gain with its request; busy poly preserves the old words.
                 if(restartMono)applyDynamics(restartNote,restartVelocity);
@@ -89,7 +93,7 @@ struct DrWave246Voice {
                 state.construct(0);waves={};runtime={};runtime.settings={0x100,0,32768,262144};counter=0;
                 restartArmed=false;committed=true;
             }
-            if(!restartArmed&&!restartCancelled&&!committed)renderedPitch=hostPitch(frequency);
+            if(!restartArmed&&!restartCancelled&&!committed)renderedPitch=pitchWord(frequency);
             std::array<int16_t,4> bounded{};
             for(size_t i=0;i<4;++i)bounded[i]=int16_t(std::clamp(int(controls[i]),0,drWave246Max[i]));
             std::array<uint32_t,128> pitch{};

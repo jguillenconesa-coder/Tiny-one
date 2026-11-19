@@ -3,6 +3,7 @@
 #include "DrWave246Activation.h"
 #include "Voice246PolyRelease.h"
 #include "Adsr246Pool.h"
+#include "Voice246UnisonPitch.h"
 namespace pocket::reference {
 enum class DrWave246NoteModesStatus { unsupported, gated, disabled, appended };
 struct DrWave246NoteModesResult {
@@ -35,12 +36,8 @@ inline DrWave246NoteModesResult drWave246NoteModes(
             env.noteOn();env.gain=(env.gain&0xffff0000u)|gain;
             if(!drWave246CoreNoteOn(waves,loaded,selected,int(i))){++result.blocked;continue;}
         }
-        random=random*1664525u+1013904223u;
-        const auto high=random>>16;
-        const auto signedHigh=high<32768u?int32_t(high):int32_t(high)-65536;
-        const auto step=int32_t(floorDivide(signedHigh,active?512:256));
-        const auto deviation=signedPhase((uint32_t(step)*i)<<16);
-        const auto pitch=saturate32(int64_t(base)+multiplyQ31(base,deviation));
+        const auto deviation=voice246UnisonDeviation(random,i,active);
+        const auto pitch=voice246ApplyUnison(base,deviation);
         registers.velocity[i]=velocity;
         if(active){
             adsr246RequestRestart(env,uint32_t(pitch),uint16_t(velocity));

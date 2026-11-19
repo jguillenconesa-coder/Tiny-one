@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 14 de noviembre de 2026
+# Estado y entregas del proyecto — 19 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -46,6 +46,23 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega funcional 0.59.0: Unison en Dr. Wave
+
+[Seis voces y desviación Q31](drwave246-unison.md): botón propio en Set 2,
+automatización, guardado/slots/clipboard y estado anterior apagado. Usa prioridad
+de última nota, Glide, sustain y canal interno 17; mezcla media de seis voces.
+Las operaciones de desviación del selector 3 están contrastadas bajo entradas
+explícitas; seed, prioridad, clock, servicio y mezcla siguen siendo propios.
+
+Oráculo original de 768 registros y prueba de ejecución a seis tasas aprobados.
+153/153 suites Linux, sanitizadores y nueve pares reales 64/257 aprobados.
+Sesión/slots/clipboard, migración y botón del editor comprobados; 1.446 cargas
+base y seis nuevas Unison (1.536 callbacks) sin heap rastreado. VST3/standalone
+compilados. CI del producto pendiente de publicación.
+[Evidencia](releases/v0.59.0-validation.json). Sin instaladores; ≈70 % ±10.
+Siguiente frente: contrastar la composición de seis voces en Cluster antes de
+extender el modo. Acústica y Ableton real pendientes.
+
 ## Entrega funcional 0.58.0: Mono y retirada de Dr. Wave
 
 [Reinicio y cola de salida](drwave246-mono-retirement.md): Mono conserva el nivel
@@ -58,7 +75,7 @@ A seis tasas se prueban palabras Mono, rampa, fallback, sustain, Panic y
 reutilización durante la cola. ASan/UBSan del ensayo nuevo y la regresión
 polifónica aprobados. 27 escenarios reales Poly/Mono/Legato aprobados con
 callbacks 64/257 y A/B de dueño anterior. 151/151 suites Linux, VST3/standalone
-compilados y 1.446 cargas sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) en cola sobre `f1917ff`
+compilados y 1.446 cargas sin heap rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/43648090842) aprobado sobre `f1917ff`
 (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.58.0-validation.json). Sin instaladores; ≈70 % ±10.
 Fidelidad acústica y Ableton real pendientes. Siguiente: modo Unison y composición

@@ -81,6 +81,8 @@ private:
     juce::TextButton cleanSample{"CLEAN SAMPLE"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> cleanAttachment;
     juce::ComboBox hybridVoiceMode;
+    juce::TextButton drWaveUnison{"UNISON"};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> unisonAttachment;
     juce::Slider hybridGlide;
     juce::Label hybridGlideLabel;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> hybridModeAttachment;

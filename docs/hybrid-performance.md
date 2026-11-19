@@ -1,5 +1,9 @@
 # Dr. Wave y Cluster: Mono, Legato y Glide
 
+Desde 0.59.0, Dr. Wave dispone además de [Unison de seis voces](drwave246-unison.md)
+con botón propio. Sustituye temporalmente el modo seleccionado y usa Glide;
+las tres opciones originales del selector se conservan.
+
 En **set 2 / T2**, junto a la ADSR, selecciona **POLY**, **MONO** o **LEGATO**.
 **GLIDE** establece un portamento de 0–2000 ms entre notas solapadas. Los dos
 controles también están disponibles como parámetros del host: `Hybrid: Voice

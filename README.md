@@ -1,4 +1,8 @@
-# Pocket One 0.58.0
+# Pocket One 0.59.0
+
+**Unison en Dr. Wave**: seis voces, desviación Q31 contrastada y servicio híbrido,
+con Glide, prioridad por canal, automatización y guardado. Desactivado por defecto.
+[Guía](docs/drwave246-unison.md) · [Validación](docs/releases/v0.59.0-validation.json).
 
 **Mono y retirada de Dr. Wave**: reinicio con rampa contrastada, dinámica por nota
 y finalización después de la cola de filtros/SRC, con servicio propio explícito.

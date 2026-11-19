@@ -1,0 +1,139 @@
+{
+  "version": "0.59.0",
+  "date": "2026-11-19",
+  "base_commit": "0fa2043",
+  "change": "DrWave six-voice Unison with recovered Q31 deviation arithmetic, authored group scheduling/average mix, UI, automation and persistent sound state",
+  "original_reference": {
+    "fixtures_regenerated": false,
+    "selector_records": 768,
+    "shared_helper": "Source/Voice246UnisonPitch.h",
+    "source": "Previously verified DrWave selector 1-3 original fixture corpus",
+    "commercial_mode_identity_inferred": false,
+    "original_scheduler_recovered": false
+  },
+  "core": {
+    "status": "success",
+    "rates": [
+      8000,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "checks": [
+      "Six Q31 pitch and pending-word delivery paths",
+      "Six-voice priority/fallback and independent channels",
+      "Sustain and internal channel 17",
+      "Retirement, Panic and mode/engine transitions"
+    ]
+  },
+  "processor": {
+    "status": "success",
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "blocks": [
+      64,
+      257
+    ],
+    "checks": [
+      "Bit-identical audio across callback partitions",
+      "Panic without resurrection",
+      "Automation and session persistence",
+      "Legacy default off",
+      "Slots and clipboard",
+      "Visible UI button toggles actual parameter"
+    ],
+    "underlying_modes": [
+      "Poly",
+      "Mono",
+      "Legato"
+    ],
+    "callback_partition_pairs": 9,
+    "seconds": 2.12
+  },
+  "new_realtime": {
+    "status": "success",
+    "workloads": 6,
+    "prepared_callbacks": 1536,
+    "tracking": "C++ new/delete and Linux malloc/calloc/realloc/free wrappers; callback thread",
+    "limitation": "Prepared buffers; not a universal absence of heap for cold/replaced host buffers",
+    "tracked_heap_calls": 0
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": [
+      "DrWave246UnisonTests",
+      "DrWave246NoteModesTests"
+    ],
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false,
+    "full_plugin_sanitized": false,
+    "log_sha256": "bd45d2251a573713345a4d3666e0facccafdef608490c04b47adc660d9f5a2a7"
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 153,
+    "total": 153,
+    "runs": [
+      {
+        "scope": "All 147 non-product suites",
+        "passed": 147,
+        "total": 147,
+        "seconds": 406.33
+      },
+      {
+        "scope": "All six product suites",
+        "passed": 6,
+        "total": 6,
+        "seconds": 249.87
+      }
+    ],
+    "products": [
+      "VST3",
+      "Standalone"
+    ],
+    "module_version": "0.59.0",
+    "log_sha256": {
+      "drwave-unison-core-ctest.log": "0ce1ae03e579898faf2774e07a3736806612e830c75bcb5f38642232d85c4e0e",
+      "drwave-unison-product-ctest.log": "b678cda5408beb6d8f75ddb098558ce072d8e848e8ad539b1055935398db237c"
+    }
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "authored_boundaries": [
+    "Unison product identity and last-note priority",
+    "Initial isolated RNG seed 0x554e4953 and cadence",
+    "A440 base pitch, Glide and 128-sample clock",
+    "Pending service, Core reset and retirement",
+    "Mean of six contributions and output SRC/filter/mix"
+  ],
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10,
+  "ui": {
+    "status": "success",
+    "environment": "Native JUCE editor in own Xvfb/xfwm4 display",
+    "checks": [
+      "Visible Unison button clicked and actual parameter enabled",
+      "Active button contrast reviewed after correction"
+    ],
+    "screenshot_sha256": "20e9044c4ca51c72e10de628c6936e35c6ebdb1e017da5bcff2b68256cbd1518"
+  },
+  "existing_realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 134.16,
+    "metrics_sha256": "d10b896d69acafa2de7da581d29099a9145e0e47c6591d1df74ea739184e7b82",
+    "additional_prepared_host_midi_workloads": 6,
+    "additional_prepared_host_midi_callbacks": 1536
+  }
+}

@@ -53,7 +53,7 @@ struct Parameters {
     bool crank246=false;int crank246Angle=0,crank246Amount=16000,crank246Destination=0,crank246Colour=0;
     bool bend246=false,bend246Reverse=false;int bend246Colour=0,bend246Destination=0,bend246Amount=16000,bend246Angle=8192;
     bool midi246=false;std::array<int,4> midi246Routes{{1,2,3,4}};
-    int hybridVoiceMode=0;float hybridGlideMs=0;
+    int hybridVoiceMode=0;float hybridGlideMs=0;bool drWave246Unison=false;
     bool random246=false;std::array<int16_t,4> random246Controls{{2000,4000,0,24000}};
     bool tremolo246=false;int tremolo246Shape=0;std::array<int16_t,4> tremolo246Controls{{16000,0,0,16000}};
     bool phase246=false,phase246Envelope=false;std::array<int16_t,4> phase246Controls{{0,29491,0,0}},phase246Adsr{{64,8064,32767,8192}};
@@ -97,8 +97,9 @@ public:
         return {};
     }
     float bend246Level() const noexcept {return bendControl.level();}
-    void reset() {elementVoiceInput.reset();elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
+    void reset() {unisonRng=0x554e4953u;elementVoiceInput.reset();elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false,bool drum=false,bool sampler=false) noexcept {
+        if(mode!=6)unisonActive=false;
         sampler=mode==3&&sampler;
         if(selectionInitialized&&sampler!=selectedSampler){voices={};held.clear();}
         selectedSampler=sampler;
@@ -111,9 +112,10 @@ public:
         if(mode==8&&(!selectionInitialized||selectedEngine!=8))dnaContext.prepare();
         selectedEngine=mode;selectedDigital=digital;selectionInitialized=true;
     }
-    void configureHybridPerformance(int mode,float milliseconds) noexcept {
+    void configureHybridPerformance(int mode,float milliseconds,bool unison=false) noexcept {
         mode=std::clamp(mode,0,2);
-        if(mode!=hybridMode){if(hybridPerformance()){voices={};held.clear();}hybridMode=mode;}
+        const bool wanted=unison&&selectedEngine==6;
+        if(mode!=hybridMode||wanted!=unisonActive){if(hybridPerformance()){voices={};held.clear();}hybridMode=mode;if(wanted!=unisonActive)unisonRng=0x554e4953u;unisonActive=wanted;}
         glideMs=std::isfinite(milliseconds)?std::clamp(milliseconds,0.f,2000.f):0.f;
     }
     void setSample(Sample data) {if(data.drumPcm.empty()&&!data.frames.empty())data.prepareDrumPcm(); sample=std::move(data); voices={}; }
@@ -186,7 +188,7 @@ public:
         if(selectedDrum){drumBank.allNotesOff(channel);return;}
         if(selectedEngine==11){dboxBank.allNotesOff(channel);return;}
         if(monophonic()){
-            if(channel==0){held.clear();voices[0].keyDown=false;voices[0].released=true;pedals.fill(false);}
+            if(channel==0){held.clear();for(size_t i=0;i<heldVoiceCount();++i){voices[i].keyDown=false;voices[i].released=true;}pedals.fill(false);}
             else {held.removeChannel(channel);pedals[channelIndex(channel)]=false;updateHeldVoice();}
             return;
         }
@@ -212,7 +214,7 @@ public:
     const std::array<int16_t,4>& filterControls() const noexcept {return filterModulated;}
     float next(const Parameters& target,float elementExternal=0) {
         selectEngine(target.engine,target.digital246,target.drum246,target.sampler246);
-        configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs);
+        configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs,target.drWave246Unison);
         const bool nativeDrum=target.engine==5&&target.drum246;
         const bool nativeDbox=target.engine==11;
         const bool nativeFm=target.engine==0&&!target.digital246;
@@ -403,7 +405,7 @@ public:
                 if(amplitude<.0001f) v.active=false;
             }
             v.time+=1/sampleRate;
-            float contribution=s*amplitude*(nativeDrWave?1.f:v.velocity)*.16f;
+            float contribution=s*amplitude*(nativeDrWave?1.f:v.velocity)*.16f*(nativeDrWave&&unisonActive?1.f/6:1.f);
             if((nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
             v.lastOutput=contribution;sum+=contribution;
         }
@@ -456,33 +458,38 @@ private:
         double phase=0,modPhase=0,frequency=440,samplePosition=0,time=0,drumPhase=0;
     };
     bool hybridPerformance() const noexcept {return selectedSampler||isHybridEngine(selectedEngine)||(selectedEngine==0&&!selectedDigital);}
-    bool monophonic() const noexcept {return hybridPerformance()&&hybridMode!=0;}
+    bool monophonic() const noexcept {return hybridPerformance()&&(hybridMode!=0||unisonActive);}
+    size_t heldVoiceCount() const noexcept {return unisonActive?6u:1u;}
     void playHeldVoice(bool overlap) noexcept {
-        auto& v=voices[0];const int id=held.current;
+        for(size_t i=0;i<heldVoiceCount();++i)playHeldVoiceAt(overlap,i);
+    }
+    void playHeldVoiceAt(bool overlap,size_t index) noexcept {
+        auto& v=voices[index];const bool wasActive=v.active;const int id=held.current;
         const auto& n=held.notes[size_t(id)];
         const bool continuing=overlap&&v.active&&!v.released;
         const double from=v.glide.value;
-        if(hybridMode==1&&selectedEngine==6&&v.active){
+        if((hybridMode==1||unisonActive)&&selectedEngine==6&&v.active){
             v.drWave246.requestRestart(id%128,n.velocity,true);
             v.randomLfo.noteOn();v.valueVoice.noteOn();v.age=++age;v.stealRemaining=0;
-        }else if(hybridMode==1||!continuing){
+        }else if(hybridMode==1||unisonActive||!continuing){
             const auto tail=v.active?v.lastOutput:0.f;const auto randomState=v.randomLfo;const auto valueState=v.valueVoice;
             v={};v.randomLfo=randomState;v.randomLfo.noteOn();v.valueVoice=valueState;v.valueVoice.noteOn();v.age=++age;
             v.cluster246.context.random=uint32_t(v.age)*2654435761u;
             v.stealTail=tail;v.stealRemaining=tail!=0?unsigned(sampleRate*.003):0;
         }
+        if(unisonActive)v.drWave246.pitchDeviation=reference::voice246UnisonDeviation(unisonRng,unsigned(index),wasActive);
         v.active=true;v.released=false;v.keyDown=n.down;v.note=id%128;v.channel=id/128+1;v.velocity=n.velocity;
         v.frequency=440.*std::exp2((v.note-69)/12.);
         v.glide.start(continuing?from:v.frequency,v.frequency,continuing?glideMs:0,sampleRate);
     }
     void updateHeldVoice() noexcept {
         const int latest=held.latest();
-        if(latest<0){held.current=-1;voices[0].keyDown=false;voices[0].released=true;return;}
+        if(latest<0){held.current=-1;for(size_t i=0;i<heldVoiceCount();++i){voices[i].keyDown=false;voices[i].released=true;}return;}
         if(latest!=held.current){held.current=latest;playHeldVoice(true);}
-        else voices[0].keyDown=held.notes[size_t(latest)].down;
+        else for(size_t i=0;i<heldVoiceCount();++i)voices[i].keyDown=held.notes[size_t(latest)].down;
     }
     HybridHeldNotes held;
-    int hybridMode=0;float glideMs=0;
+    int hybridMode=0;float glideMs=0;bool unisonActive=false;uint32_t unisonRng=0x554e4953u;
     Cluster246Config clusterConfig;bool nativeClusterActive=false,clusterControlsInitialized=false;
     std::array<float,4> clusterWords{};std::array<int16_t,4> clusterRaw{};
     DrWave246Config drWaveConfig;bool nativeDrWaveActive=false,drWaveControlsInitialized=false;int selectedEngine=0;bool selectedDigital=false,selectionInitialized=false;
