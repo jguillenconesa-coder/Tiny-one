@@ -58,7 +58,8 @@ Oráculo original de 768 registros y prueba de ejecución a seis tasas aprobados
 153/153 suites Linux, sanitizadores y nueve pares reales 64/257 aprobados.
 Sesión/slots/clipboard, migración y botón del editor comprobados; 1.446 cargas
 base y seis nuevas Unison (1.536 callbacks) sin heap rastreado. VST3/standalone
-compilados. CI del producto pendiente de publicación.
+compilados. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) en cola sobre `3753993`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.59.0-validation.json). Sin instaladores; ≈70 % ±10.
 Siguiente frente: contrastar la composición de seis voces en Cluster antes de
 extender el modo. Acústica y Ableton real pendientes.

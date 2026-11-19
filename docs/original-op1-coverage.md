@@ -375,5 +375,6 @@ con parámetro propio, interfaz y estado. 768 registros originales conservados;
 semilla separada, composición, consumidor pendiente y mezcla media propios.
 153/153 suites Linux, sanitizadores, nueve pares reales 64/257 y UI aprobados.
 VST3/standalone compilados; 1.446 cargas base y seis nuevas Unison sin heap
-rastreado. CI del producto pendiente de publicación. Sin instaladores, ≈70 % ±10. Siguiente: contrastar
+rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) en cola sobre `3753993`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel). Sin instaladores, ≈70 % ±10. Siguiente: contrastar
 Cluster de seis voces. La acústica y Ableton real siguen pendientes.
