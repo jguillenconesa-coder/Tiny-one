@@ -58,7 +58,8 @@ El fallo UI macOS de 0.59 se registra como tal. La prueba ahora espera el clic y
 la actualización efectiva, con diagnóstico y peer AppKit, sin depender de un
 muestreo fijo de 500 ms. 155/155 suites Linux, sanitizadores y UI local aprobados; VST3/standalone
 compilados. 1.446 cargas base y seis nuevas Cluster sin heap rastreado.
-La corrección UI requiere revalidación macOS nativa; CI pendiente de publicación.
+La corrección UI requiere revalidación macOS nativa; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391398) en curso sobre `253bb21`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.60.0-validation.json). Sin instaladores; ≈70 % ±10.
 Siguiente: contexto/RNG compartido de Cluster. Acústica y Ableton real pendientes.
 

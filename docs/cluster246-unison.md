@@ -62,9 +62,12 @@ C++ ya verificado, bajo controles, tablas, pitch y semillas explícitos:
 
 [Evidencia de entrega](releases/v0.60.0-validation.json) registra resultados,
 sanitizadores y CI. No hay extracciones originales nuevas ni instaladores.
-La fidelidad acústica y Ableton real siguen pendientes. Siguiente frente:
-contrastar el contexto/RNG compartido de Cluster antes de sustituir los contextos
-independientes del adaptador.
+La fidelidad acústica y Ableton real siguen pendientes. Siguiente frente: integrar el [contexto/RNG compartido ya contrastado](cluster246-core-routing.md)
+antes de sustituir los contextos independientes del adaptador. Ese oráculo tiene
+1.024 registros/131.072 muestras intercalando seis slots bajo orden suministrado;
+no es una mezcla completa ni prueba del reloj original. No hace falta regenerar
+sus fixtures. La integración deberá definir el orden de reset/render/decay y
+verificar su consumo de RNG, sin asumir que sea el scheduler del aparato.
 
 ## Comprobación de interfaz en macOS
 
