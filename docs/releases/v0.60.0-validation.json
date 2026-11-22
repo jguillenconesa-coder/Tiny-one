@@ -100,12 +100,16 @@
   "ui": {
     "local_status": "success: actual DrWave and Cluster windows and control bindings reviewed",
     "method": "Event/parameter/selector/Glide readiness, 5-second bounded diagnostic; native peer on macOS",
-    "native_macos_fix_verified": false,
+    "native_macos_fix_verified": true,
     "screenshots_sha256": {
       "unison-ui060-drwave.png": "20e9044c4ca51c72e10de628c6936e35c6ebdb1e017da5bcff2b68256cbd1518",
       "unison-ui060-cluster.png": "8113e8df713accd621af7e244a31981f306486ea1e65a7ba021f0e649515a8c2"
     },
-    "test_process_watchdog_seconds": 60
+    "test_process_watchdog_seconds": 60,
+    "macos_ui_seconds": {
+      "drwave246_unison_plugin": 2.57,
+      "cluster246_unison_plugin": 3.37
+    }
   },
   "linux_release": {
     "status": "success",
@@ -139,25 +143,36 @@
     "databaseId": 45069391398,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391398",
     "headSha": "253bb21173847eddcf85a8b21625c50fb2b2b620",
-    "status": "in_progress",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "success",
     "jobs": [
       {
         "name": "build (macos-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (windows-2022)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (ubuntu-latest)",
-        "status": "in_progress",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
-    ]
+    ],
+    "suite_counts": {
+      "Linux x64": 155,
+      "Windows MSVC x64": 157,
+      "macOS Intel": 155
+    },
+    "macos_build": "Universal arm64/x86_64; runtime tests on Intel",
+    "log_sha256": {
+      "cluster-unison-linux-ci.log": "c3be75833e9983c33b03103d9b233c22dbb92f2d67aef27ceac636b808c10def",
+      "cluster-unison-windows-ci.log": "c847c10c831ec8a9c6a756fa31a8663424725ea9231e87c86162ad7dc400c465",
+      "cluster-unison-macos-final.log": "87032571f48d8bcdc01567d85b65712dffb3c4480a95d358597ae175312eb27e"
+    }
   },
   "authored_boundaries": [
     "Cluster group scheduling, priority, seed/context per voice and Glide",
@@ -180,5 +195,98 @@
     "additional_prepared_drwave_unison_workloads": 6,
     "additional_prepared_host_midi_workloads": 6
   },
-  "implementation_commit": "253bb21173847eddcf85a8b21625c50fb2b2b620"
+  "implementation_commit": "253bb21173847eddcf85a8b21625c50fb2b2b620",
+  "triggered_regression_ci": [
+    {
+      "databaseId": 45069391278,
+      "name": "Validate MIDI LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391278",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391230,
+      "name": "Validate Crank LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391230",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391202,
+      "name": "Validate Crank voice gain and pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391202",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391368,
+      "name": "Validate Element voice gain",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391368",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391373,
+      "name": "Validate Bend LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391373",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391276,
+      "name": "Validate Bend voice gain and pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391276",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391242,
+      "name": "Validate D-box reconstructed render and pad adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391242",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391344,
+      "name": "Validate melodic sampler reader and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391344",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391211,
+      "name": "Validate Element voice pitch",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391211",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391257,
+      "name": "Validate Element FX input audio",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391257",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391203,
+      "name": "Validate Element LFO callbacks and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391203",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391294,
+      "name": "Validate Bend and Crank FX input audio",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391294",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "databaseId": 45069391396,
+      "name": "Validate drum sampler reader and host adapter",
+      "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391396",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
 }

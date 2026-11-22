@@ -68,6 +68,11 @@ antes de sustituir los contextos independientes del adaptador. Ese oráculo tien
 no es una mezcla completa ni prueba del reloj original. No hace falta regenerar
 sus fixtures. La integración deberá definir el orden de reset/render/decay y
 verificar su consumo de RNG, sin asumir que sea el scheduler del aparato.
+Los harnesses existentes de routing Cluster y de selectores VoiceCtl vigilan
+la misma palabra RNG `0xff802bc8`. Eso identifica una dependencia compartida,
+pero no demuestra el orden conjunto de reset Core, desviación VoiceCtl y render.
+La siguiente composición debe preservar esa palabra entre llamadas y comparar
+la historia completa; no basta con sustituir seis semillas por una sin ensayo.
 
 ## Comprobación de interfaz en macOS
 
@@ -79,4 +84,5 @@ para atribuir el fallo a una condición concreta de visibilidad/toggle/parámetr
 Ahora la prueba observa el clic real, el parámetro y la reacción de selector/Glide,
 con plazo máximo de 5 s y diagnóstico separado. En AppKit crea un peer nativo,
 en lugar de probar un editor sin ventana. Conserva las aserciones funcionales;
-la validación nativa de esta corrección queda registrada en el CI de 0.60.0.
+la corrección está aprobada en macOS nativo en el CI de 0.60.0: ambas pruebas
+UI pasan y la suite completa alcanza 155/155 (Windows: 157/157; Linux: 155/155).

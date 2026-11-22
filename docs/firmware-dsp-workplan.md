@@ -1257,6 +1257,6 @@ El grupo y sus contextos/mezcla/clock siguen siendo propios. Se conservan las tr
 normalizaciones aproximadas. La prueba UI de macOS sustituye el plazo fijo por
 observación del clic y reacción del editor, con peer AppKit y límite/diagnóstico.
 155/155 suites Linux, sanitizadores, UI local y tiempo real aprobados.
-VST3/standalone compilados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391398) en curso sobre `253bb21`
-(Linux, Windows/MSVC y macOS universal/pruebas Intel). Incluye revalidación macOS de la prueba UI. Sin instaladores; ≈70 % ±10. Siguiente:
+VST3/standalone compilados; [CI nativo](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/45069391398) aprobado sobre `253bb21`
+(Linux, Windows/MSVC y macOS universal/pruebas Intel). Ambas pruebas UI aprobadas en macOS nativo. Sin instaladores; ≈70 % ±10. Siguiente:
 contexto/RNG compartido Cluster. Acústica y Ableton real pendientes.
