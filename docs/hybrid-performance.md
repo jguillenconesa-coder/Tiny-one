@@ -1,5 +1,9 @@
 # Dr. Wave y Cluster: Mono, Legato y Glide
 
+Desde 0.60.0, [Cluster también dispone de Unison](cluster246-unison.md), con
+parámetro independiente y su gestión de reset/relevo híbrida. No usa el consumidor
+pendiente de Dr. Wave.
+
 Desde 0.59.0, Dr. Wave dispone además de [Unison de seis voces](drwave246-unison.md)
 con botón propio. Sustituye temporalmente el modo seleccionado y usa Glide;
 las tres opciones originales del selector se conservan.

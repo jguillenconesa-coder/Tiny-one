@@ -82,6 +82,7 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> cleanAttachment;
     juce::ComboBox hybridVoiceMode;
     juce::TextButton drWaveUnison{"UNISON"};
+    int unisonEngine=6;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> unisonAttachment;
     juce::Slider hybridGlide;
     juce::Label hybridGlideLabel;

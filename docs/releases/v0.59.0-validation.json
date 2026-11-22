@@ -107,25 +107,26 @@
     "databaseId": 44556152629,
     "url": "https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629",
     "headSha": "3753993c7926ad1b4d2e7cd0c852f985b79f304a",
-    "status": "queued",
-    "conclusion": "",
+    "status": "completed",
+    "conclusion": "failure",
     "jobs": [
       {
         "name": "build (macos-latest)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "failure"
       },
       {
         "name": "build (windows-2022)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       },
       {
         "name": "build (ubuntu-latest)",
-        "status": "queued",
-        "conclusion": ""
+        "status": "completed",
+        "conclusion": "success"
       }
-    ]
+    ],
+    "failure_scope": "macOS drwave246_unison_plugin UI assertion; 152/153 suites passed. Linux/Windows success."
   },
   "authored_boundaries": [
     "Unison product identity and last-note priority",

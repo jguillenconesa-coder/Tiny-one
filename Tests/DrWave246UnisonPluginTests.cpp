@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 #include "PluginProcessor.h"
+#include "UnisonUiProbe.h"
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -43,7 +44,6 @@ int main(int argc,char** argv){try{
   for(int i=0;i<256;++i){a.clear();m.clear();if(i%4==0)m.addEvent(juce::MidiMessage::noteOn(1+i%3,48+i%36,.8f),0);if(i%4==2)m.addEvent(juce::MidiMessage::allNotesOff(1+i%3),0);if(i%64==48)synth->requestPanic();if(i%64==32)unison(*synth,false);if(i%64==40)unison(*synth,true);tracking=true;synth->processBlock(a,m);tracking=false;}check(heapCalls==0,"Heap in prepared Unison callbacks");
  }
  p->applyDrWave246Init();p->setScreenPage(1);std::unique_ptr<juce::AudioProcessorEditor> editor(p->createEditor());editor->setVisible(true);juce::TextButton* button=nullptr;for(auto* child:editor->getChildren())if(child->getComponentID()=="drwave-unison")button=dynamic_cast<juce::TextButton*>(child);check(button!=nullptr,"Unison control missing");
- if(argc>1){editor->addToDesktop(juce::ComponentPeer::windowHasTitleBar);editor->toFront(true);}
- bool selected=false,captured=argc==1;juce::Timer::callAfterDelay(150,[button]{button->triggerClick();});juce::Timer::callAfterDelay(500,[&]{selected=button->isVisible()&&button->getToggleState()&&p->phaseParameters().getRawParameterValue("drWave246Unison")->load()>.5f;if(argc>1){juce::FileOutputStream stream(juce::File(juce::String::fromUTF8(argv[1])));juce::PNGImageFormat png;captured=png.writeImageToStream(editor->createComponentSnapshot(editor->getLocalBounds()),stream);}juce::MessageManager::getInstance()->stopDispatchLoop();});juce::MessageManager::getInstance()->runDispatchLoop();check(selected&&captured,"Unison UI did not toggle parameter");
+ check(checkUnisonUi(*editor,*button,p->phaseParameters(),"drWave246Unison",argc>1?argv[1]:nullptr),"Unison UI did not toggle parameter");
  std::cout<<"PASS: Unison automation/state/legacy/slots/clipboard, nine 64-257 processor pairs, UI toggle and six prepared workloads /1536 callbacks without tracked heap\n";
 }catch(const std::exception& e){tracking=false;std::cerr<<e.what()<<'\n';return 1;}}

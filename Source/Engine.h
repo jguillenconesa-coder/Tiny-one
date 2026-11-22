@@ -53,7 +53,7 @@ struct Parameters {
     bool crank246=false;int crank246Angle=0,crank246Amount=16000,crank246Destination=0,crank246Colour=0;
     bool bend246=false,bend246Reverse=false;int bend246Colour=0,bend246Destination=0,bend246Amount=16000,bend246Angle=8192;
     bool midi246=false;std::array<int,4> midi246Routes{{1,2,3,4}};
-    int hybridVoiceMode=0;float hybridGlideMs=0;bool drWave246Unison=false;
+    int hybridVoiceMode=0;float hybridGlideMs=0;bool drWave246Unison=false,cluster246Unison=false;
     bool random246=false;std::array<int16_t,4> random246Controls{{2000,4000,0,24000}};
     bool tremolo246=false;int tremolo246Shape=0;std::array<int16_t,4> tremolo246Controls{{16000,0,0,16000}};
     bool phase246=false,phase246Envelope=false;std::array<int16_t,4> phase246Controls{{0,29491,0,0}},phase246Adsr{{64,8064,32767,8192}};
@@ -99,7 +99,7 @@ public:
     float bend246Level() const noexcept {return bendControl.level();}
     void reset() {unisonRng=0x554e4953u;elementVoiceInput.reset();elementControl={};elementFeedback=0;crankControl={};bendControl={};midiCC.fill(64);drumBank.reset();selectedDrum=false;selectedSampler=false;dboxBank.reset();dsynthContext={};dsynthContext.initialize();dsynthControlsInitialized=nativeDsynthActive=false;voltageControlsInitialized=false;nativeVoltageActive=false;dnaContext.prepare();dnaControlsInitialized=false;nativeDnaActive=false;selectionInitialized=false;stringControlsInitialized=false;nativeStringActive=false;fmControlsInitialized=false;nativeFmActive=false;held.clear(); voices={};randomRng=0x52414e44u; tremoloActive=false;delayValid=0; write=0; filter=0; current={}; lfoPhase=0; bends.fill(1); pedals.fill(false); cachedAttack=cachedDecay=cachedRelease=cachedMacro=-1;cleanMix=0;modulatedFilterMix=0;cleanInitialized=false;phaseControlsInitialized=false;digitalControlsInitialized=false;nativeEnvelopeActive=false;nativeSamplerEnvelopeActive=false;nativeDigitalActive=false;nativeDrWaveActive=false;nativeClusterActive=false;drWaveControlsInitialized=false;clusterControlsInitialized=false;filterControlsInitialized=false;punchEffect.reset();valueEffect.reset();randomFx.reset();valueActive=valueVoiceActive=false;punchMix=0;punchActive=false; }
     void selectEngine(int mode,bool digital=false,bool drum=false,bool sampler=false) noexcept {
-        if(mode!=6)unisonActive=false;
+        if(mode!=selectedEngine||(mode!=6&&mode!=7))unisonActive=false;
         sampler=mode==3&&sampler;
         if(selectionInitialized&&sampler!=selectedSampler){voices={};held.clear();}
         selectedSampler=sampler;
@@ -114,7 +114,7 @@ public:
     }
     void configureHybridPerformance(int mode,float milliseconds,bool unison=false) noexcept {
         mode=std::clamp(mode,0,2);
-        const bool wanted=unison&&selectedEngine==6;
+        const bool wanted=unison&&(selectedEngine==6||selectedEngine==7);
         if(mode!=hybridMode||wanted!=unisonActive){if(hybridPerformance()){voices={};held.clear();}hybridMode=mode;if(wanted!=unisonActive)unisonRng=0x554e4953u;unisonActive=wanted;}
         glideMs=std::isfinite(milliseconds)?std::clamp(milliseconds,0.f,2000.f):0.f;
     }
@@ -214,7 +214,7 @@ public:
     const std::array<int16_t,4>& filterControls() const noexcept {return filterModulated;}
     float next(const Parameters& target,float elementExternal=0) {
         selectEngine(target.engine,target.digital246,target.drum246,target.sampler246);
-        configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs,target.drWave246Unison);
+        configureHybridPerformance(target.hybridVoiceMode,target.hybridGlideMs,target.engine==6?target.drWave246Unison:target.engine==7?target.cluster246Unison:false);
         const bool nativeDrum=target.engine==5&&target.drum246;
         const bool nativeDbox=target.engine==11;
         const bool nativeFm=target.engine==0&&!target.digital246;
@@ -405,7 +405,7 @@ public:
                 if(amplitude<.0001f) v.active=false;
             }
             v.time+=1/sampleRate;
-            float contribution=s*amplitude*(nativeDrWave?1.f:v.velocity)*.16f*(nativeDrWave&&unisonActive?1.f/6:1.f);
+            float contribution=s*amplitude*(nativeDrWave?1.f:v.velocity)*.16f*((nativeDrWave||nativeCluster)&&unisonActive?1.f/6:1.f);
             if((nativeDsynth||nativeVoltage||nativeDna||nativeString||nativeFm||nativeDrWave||nativeCluster)&&v.stealRemaining){const float weight=float(v.stealRemaining)/float(std::max(1u,unsigned(sampleRate*.003)));contribution=contribution*(1-weight)+v.stealTail*weight;--v.stealRemaining;}
             v.lastOutput=contribution;sum+=contribution;
         }
@@ -477,7 +477,7 @@ private:
             v.cluster246.context.random=uint32_t(v.age)*2654435761u;
             v.stealTail=tail;v.stealRemaining=tail!=0?unsigned(sampleRate*.003):0;
         }
-        if(unisonActive)v.drWave246.pitchDeviation=reference::voice246UnisonDeviation(unisonRng,unsigned(index),wasActive);
+        if(unisonActive){const auto deviation=reference::voice246UnisonDeviation(unisonRng,unsigned(index),wasActive);if(selectedEngine==6)v.drWave246.pitchDeviation=deviation;else v.cluster246.pitchDeviation=deviation;}
         v.active=true;v.released=false;v.keyDown=n.down;v.note=id%128;v.channel=id/128+1;v.velocity=n.velocity;
         v.frequency=440.*std::exp2((v.note-69)/12.);
         v.glide.start(continuing?from:v.frequency,v.frequency,continuing?glideMs:0,sampleRate);

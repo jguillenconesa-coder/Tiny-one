@@ -1,5 +1,9 @@
 # Cluster 246: motor híbrido tocable
 
+Desde 0.60.0 se añade [Unison de seis voces](cluster246-unison.md), con parámetro
+propio apagado por defecto. La composición y mezcla siguen siendo híbridas;
+no se afirma recuperación del scheduler original del grupo.
+
 Selecciona **08 / CLUSTER** o **BROWSE → Cluster 246 Hybrid → Init / Cluster**.
 El init es un sonido propio; la réplica completa de presets originales sigue
 reservada para la etapa final.

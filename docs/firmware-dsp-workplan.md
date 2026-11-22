@@ -1243,6 +1243,20 @@ con parámetro propio, interfaz y estado. 768 registros originales conservados;
 semilla separada, composición, consumidor pendiente y mezcla media propios.
 153/153 suites Linux, sanitizadores, nueve pares reales 64/257 y UI aprobados.
 VST3/standalone compilados; 1.446 cargas base y seis nuevas Unison sin heap
-rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) en cola sobre `3753993`
+rastreado. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) falló en la prueba UI de macOS sobre `3753993`; Linux/Windows aprobados
 (Linux, Windows/MSVC y macOS universal/pruebas Intel). Sin instaladores, ≈70 % ±10. Siguiente: contrastar
 Cluster de seis voces. La acústica y Ableton real siguen pendientes.
+
+
+## Cluster Unison y prueba UI macOS — 2026-11-22, 0.60.0
+
+[Seis voces Cluster](cluster246-unison.md) con estado, automatización y control
+independiente. 96 bloques/12.288 muestras del adaptador comparan contra el núcleo
+verificado bajo tablas/semillas explícitas; no son ejecuciones originales nuevas.
+El grupo y sus contextos/mezcla/clock siguen siendo propios. Se conservan las tres
+normalizaciones aproximadas. La prueba UI de macOS sustituye el plazo fijo por
+observación del clic y reacción del editor, con peer AppKit y límite/diagnóstico.
+155/155 suites Linux, sanitizadores, UI local y tiempo real aprobados.
+VST3/standalone compilados; CI pendiente de publicación, incluida revalidación
+macOS de la prueba UI. Sin instaladores; ≈70 % ±10. Siguiente:
+contexto/RNG compartido Cluster. Acústica y Ableton real pendientes.

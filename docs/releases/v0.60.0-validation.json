@@ -1,0 +1,159 @@
+{
+  "version": "0.60.0",
+  "date": "2026-11-22",
+  "base_commit": "34edd53",
+  "change": "Cluster six-voice hybrid Unison, independent state/UI binding, verified-kernel composition and event-driven native UI regression check",
+  "original_reference": {
+    "fixtures_regenerated": false,
+    "cluster_activation_records": 1024,
+    "cluster_activation_samples": 131072,
+    "new_original_instruction_runs": false,
+    "cluster_selector3_full_dispatch_verified": false
+  },
+  "composition": {
+    "status": "success",
+    "voices": 6,
+    "oscillator_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "blocks": 96,
+    "samples": 12288,
+    "known_normalization_blocks": 60,
+    "authored_normalization_blocks": 36,
+    "reference": "Independent supplied-context calls to previously verified Cluster C++ reset/block/release kernel",
+    "checks": [
+      "Complete 108-byte state",
+      "RNG state",
+      "Raw block samples and Q31 pitch provider"
+    ]
+  },
+  "core_lifecycle": {
+    "status": "success",
+    "rates": [
+      8000,
+      44100,
+      48000,
+      88200,
+      96000,
+      192000
+    ],
+    "checks": [
+      "Six voices and last-note/channel priority",
+      "Sustain, fallback and channel17",
+      "Panic, release and Poly restoration"
+    ]
+  },
+  "processor": {
+    "status": "success",
+    "rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "underlying_modes": [
+      "Poly",
+      "Mono",
+      "Legato"
+    ],
+    "callback_partition_pairs": 9,
+    "blocks": [
+      64,
+      257
+    ],
+    "checks": [
+      "Exact callback partition audio",
+      "State, legacy default off, slots and clipboard",
+      "Actual UI click, parameter and mode/Glide reaction",
+      "Panic without resurrection"
+    ],
+    "seconds": 1.61
+  },
+  "new_realtime": {
+    "status": "success",
+    "workloads": 6,
+    "prepared_callbacks": 1536,
+    "tracked_heap_calls": 0,
+    "tracking": "C++ new/delete and Linux malloc/calloc/realloc/free; callback thread",
+    "limitation": "Prepared buffers; no universal cold/replaced host-buffer heap claim"
+  },
+  "sanitizers": {
+    "status": "success",
+    "scope": [
+      "Cluster246UnisonTests"
+    ],
+    "asan": true,
+    "ubsan": true,
+    "leak_detection": false,
+    "full_plugin_sanitized": false,
+    "log_sha256": "5f3871d6c153a9b830c813148b949c34c395b3c891b5c06721581c251fbdcba1"
+  },
+  "ui": {
+    "local_status": "success: actual DrWave and Cluster windows and control bindings reviewed",
+    "method": "Event/parameter/selector/Glide readiness, 5-second bounded diagnostic; native peer on macOS",
+    "native_macos_fix_verified": false,
+    "screenshots_sha256": {
+      "unison-ui060-drwave.png": "20e9044c4ca51c72e10de628c6936e35c6ebdb1e017da5bcff2b68256cbd1518",
+      "unison-ui060-cluster.png": "8113e8df713accd621af7e244a31981f306486ea1e65a7ba021f0e649515a8c2"
+    },
+    "test_process_watchdog_seconds": 60
+  },
+  "linux_release": {
+    "status": "success",
+    "passed": 155,
+    "total": 155,
+    "runs": [
+      {
+        "scope": "All 148 non-product suites",
+        "passed": 148,
+        "total": 148,
+        "seconds": 329.68
+      },
+      {
+        "scope": "All seven product suites",
+        "passed": 7,
+        "total": 7,
+        "seconds": 205.75
+      }
+    ],
+    "products": [
+      "VST3",
+      "Standalone"
+    ],
+    "module_version": "0.60.0",
+    "log_sha256": {
+      "cluster-unison-core-ctest.log": "f7c3949449fc2b272a69db6dadd466adb5f372b7d5358909125bbaad0030301b",
+      "cluster-unison-product-ctest.log": "f3587845c58c2d5ce72595c10713cf330fad472464dc624f0a5a0c70c1165880"
+    }
+  },
+  "native_ci": {
+    "status": "pending publication"
+  },
+  "authored_boundaries": [
+    "Cluster group scheduling, priority, seed/context per voice and Glide",
+    "Use of DrWave-context Q31 deviation arithmetic in Cluster host group",
+    "Three missing normalizations for counts 2/3/8",
+    "Cluster reset/3ms replacement, external float velocity and retirement",
+    "Mean mix, output filtering and SRC"
+  ],
+  "installers_generated": false,
+  "real_ableton_validated": false,
+  "acoustic_fidelity_measured": false,
+  "planning_percent": 70,
+  "planning_uncertainty_points": 10,
+  "existing_realtime": {
+    "status": "success",
+    "workloads": 1446,
+    "tracked_heap_calls": 0,
+    "seconds": 120.57,
+    "metrics_sha256": "aaab154eb820ebea0a5c69c9d5ca1b3a1f813193c6979c378efd4bd9dd5e1f22",
+    "additional_prepared_drwave_unison_workloads": 6,
+    "additional_prepared_host_midi_workloads": 6
+  }
+}

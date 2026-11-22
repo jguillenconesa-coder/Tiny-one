@@ -1,4 +1,4 @@
-# Estado y entregas del proyecto — 19 de noviembre de 2026
+# Estado y entregas del proyecto — 22 de noviembre de 2026
 
 Objetivo: instrumento inspirado en OP-1 original, standalone macOS/Windows y
 VST3 para Ableton Live; avanzar hacia la reconstrucción verificable de motores,
@@ -46,6 +46,22 @@ Falta validación actual en Ableton real de ambos sistemas; el
 CI nativo o Wine no demuestra por sí solo aceptación del scanner de Live,
 latencia física o ausencia de dropouts. No se afirma que el 100 % esté cerca.
 
+## Entrega funcional 0.60.0: Cluster Unison y prueba UI de macOS
+
+[Seis voces Cluster](cluster246-unison.md) con parámetro independiente en Set 2,
+automatización y guardado. La composición compara 96 bloques/12.288 muestras
+contra el núcleo ya verificado bajo entradas explícitas; no es un nuevo oráculo
+original del grupo completo. Normalizaciones 2/3/8, contextos, mezcla, reloj,
+reset/relevo de 3 ms y retirada mantienen sus fronteras híbridas.
+
+El fallo UI macOS de 0.59 se registra como tal. La prueba ahora espera el clic y
+la actualización efectiva, con diagnóstico y peer AppKit, sin depender de un
+muestreo fijo de 500 ms. 155/155 suites Linux, sanitizadores y UI local aprobados; VST3/standalone
+compilados. 1.446 cargas base y seis nuevas Cluster sin heap rastreado.
+La corrección UI requiere revalidación macOS nativa; CI pendiente de publicación.
+[Evidencia](releases/v0.60.0-validation.json). Sin instaladores; ≈70 % ±10.
+Siguiente: contexto/RNG compartido de Cluster. Acústica y Ableton real pendientes.
+
 ## Entrega funcional 0.59.0: Unison en Dr. Wave
 
 [Seis voces y desviación Q31](drwave246-unison.md): botón propio en Set 2,
@@ -58,7 +74,7 @@ Oráculo original de 768 registros y prueba de ejecución a seis tasas aprobados
 153/153 suites Linux, sanitizadores y nueve pares reales 64/257 aprobados.
 Sesión/slots/clipboard, migración y botón del editor comprobados; 1.446 cargas
 base y seis nuevas Unison (1.536 callbacks) sin heap rastreado. VST3/standalone
-compilados. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) en cola sobre `3753993`
+compilados. [CI del producto](https://github.com/jguillenconesa-coder/Tiny-one/actions/runs/44556152629) falló en la prueba UI de macOS sobre `3753993`; Linux/Windows aprobados
 (Linux, Windows/MSVC y macOS universal/pruebas Intel).
 [Evidencia](releases/v0.59.0-validation.json). Sin instaladores; ≈70 % ±10.
 Siguiente frente: contrastar la composición de seis voces en Cluster antes de

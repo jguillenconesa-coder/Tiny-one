@@ -2,6 +2,7 @@
 #pragma once
 #include "Cluster246.h"
 #include "Phase246.h"
+#include "Voice246UnisonPitch.h"
 namespace pocket {
 inline constexpr std::array<const char*,4> cluster246Ids{{"cluster246Blue","cluster246Green","cluster246White","cluster246Orange"}};
 inline constexpr std::array<const char*,4> cluster246EnvelopeIds{{"cluster246Attack","cluster246Decay","cluster246Sustain","cluster246Release"}};
@@ -23,7 +24,7 @@ struct Cluster246Voice {
     Phase246Voice output;
     unsigned cursor=128;
     double previousInput=0,previousDc=0;
-    bool initialized=false,releaseSent=false;
+    bool initialized=false,releaseSent=false;int32_t pitchDeviation=0;uint32_t renderedPitch=0;
     float source(double frequency,const std::array<int16_t,4>& controls,
                  const std::array<int16_t,4>& adsr,const Cluster246Config& config,
                  const Phase246Config& rate,bool released) noexcept {
@@ -33,7 +34,8 @@ struct Cluster246Voice {
         if(released&&!releaseSent){reference::cluster246Release(state);releaseSent=true;}
         if(cursor==128){
             std::array<uint32_t,128> pitch{};
-            pitch.fill(uint32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5));
+            const auto base=int32_t(std::clamp(frequency,0.,Phase246Config::internalRate*.49)/Phase246Config::internalRate*4294967296.+.5);
+            renderedPitch=uint32_t(reference::voice246ApplyUnison(base,pitchDeviation));pitch.fill(renderedPitch);
             output.tremolo.pitchBlock(pitch,rate.table);output.midi.pitchBlock(pitch);output.bend.pitchBlock(pitch);
             if(!reference::cluster246Block(state,context,bounded,config.tables,pitch,rate.table,block))block.fill(0);
             reference::cluster246DisplayDecay(context);cursor=0;

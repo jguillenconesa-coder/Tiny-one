@@ -1,4 +1,8 @@
-# Pocket One 0.59.0
+# Pocket One 0.60.0
+
+**Unison en Cluster**: seis voces con control y estado propios, comparación de
+96 bloques contra el núcleo verificado y mezcla híbrida explícita.
+[Guía](docs/cluster246-unison.md) · [Validación](docs/releases/v0.60.0-validation.json).
 
 **Unison en Dr. Wave**: seis voces, desviación Q31 contrastada y servicio híbrido,
 con Glide, prioridad por canal, automatización y guardado. Desactivado por defecto.
